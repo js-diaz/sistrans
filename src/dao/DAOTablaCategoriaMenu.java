@@ -23,7 +23,7 @@ import vos.*;
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
  * @author Monitores 2017-20
  */
-public class DAOTablaCOndicionesZona {
+public class DAOTablaCategoriaMenu {
 
 
 	/**
@@ -40,7 +40,7 @@ public class DAOTablaCOndicionesZona {
 	 * Metodo constructor que crea DAOVideo
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
-	public DAOTablaCOndicionesZona() {
+	public DAOTablaCategoriaMenu() {
 		recursos = new ArrayList<Object>();
 	}
 
@@ -205,6 +205,11 @@ public class DAOTablaCOndicionesZona {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+	}
+
+	public void borrarCategoriasPorNombreCategoria(String nombre) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

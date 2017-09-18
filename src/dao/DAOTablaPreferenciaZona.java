@@ -207,4 +207,9 @@ public class DAOTablaPreferenciaZona {
 		prepStmt.executeQuery();
 	}
 
+	public void modificarPorZonaEliminada(String nombreZona) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

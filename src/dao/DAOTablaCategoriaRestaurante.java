@@ -1,4 +1,13 @@
-
+/**-------------------------------------------------------------------
+ * $Id$
+ * Universidad de los Andes (Bogotá - Colombia)
+ * Departamento de Ingeniería de Sistemas y Computación
+ *
+ * Materia: Sistemas Transaccionales
+ * Ejercicio: VideoAndes
+ * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
+ * -------------------------------------------------------------------
+ */
 package dao;
 
 
@@ -14,7 +23,7 @@ import vos.*;
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
  * @author Monitores 2017-20
  */
-public class DAOTablaPreferencia {
+public class DAOTablaCategoriaRestaurante {
 
 
 	/**
@@ -31,7 +40,7 @@ public class DAOTablaPreferencia {
 	 * Metodo constructor que crea DAOVideo
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
-	public DAOTablaPreferencia() {
+	public DAOTablaCategoriaRestaurante() {
 		recursos = new ArrayList<Object>();
 	}
 
@@ -196,6 +205,11 @@ public class DAOTablaPreferencia {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+	}
+
+	public void borrarCategoriasPorNombreCategoria(String nombre) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

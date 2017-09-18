@@ -1,13 +1,4 @@
-/**-------------------------------------------------------------------
- * $Id$
- * Universidad de los Andes (Bogotá - Colombia)
- * Departamento de Ingeniería de Sistemas y Computación
- *
- * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
- * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
- * -------------------------------------------------------------------
- */
+
 package dao;
 
 
@@ -18,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.*;
+import vos.Usuario.Rol;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
@@ -37,7 +29,7 @@ public class DAOTablaRol {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAORol
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaRol() {
@@ -60,7 +52,7 @@ public class DAOTablaRol {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parametro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parámetro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -69,142 +61,132 @@ public class DAOTablaRol {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexión a la base de datos, saca todos los rols de la base de datos
+	 * <b>SQL Statement:</b> SELECT * FROM ROL;
+	 * @return Arraylist con los rols de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public ArrayList<Rol> darRols() throws SQLException, Exception {
+		ArrayList<Rol> rols = new ArrayList<Rol>();
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM ROL";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
 		while (rs.next()) {
-			String name = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
+			
+			rols.add(buscarRol(rs.getString("NOMBRE")));
 		}
-		return videos;
+		return rols;
 	}
 
+	
 
 	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
+	 * Metodo que busca el/los rols con el nombre que entra como parámetro.
+	 * @param name - Nombre de el/los rols a buscar
+	 * @return ArrayList con los rols encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public Rol buscarRolsPorName(String name) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
+		String sql = "SELECT * FROM ROL WHERE NOMBRE LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
-		while (rs.next()) {
+		Rol rol = null;
+		if (rs.next()) {
 			String name2 = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
+			rol=buscarRol(name2);
 		}
 
-		return videos;
+		return rol;
 	}
-	
 	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * Metodo que agrega el rol que entra como parámetro a la base de datos.
+	 * @param rol - el rol a agregar. rol !=  null
+	 * <b> post: </b> se ha agregado el rol a la base de datos en la transaction actual. pendiente que el rol master
+	 * haga commit para que el rol baje  a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el rol a la base de datos
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
+	public void addRol(Rol rol) throws SQLException, Exception {
+
+		String sql = "INSERT INTO ROL VALUES (";
+		sql += convertirRol(rol) + ")";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+
+	/**
+	 * Metodo que elimina el rol que entra como parámetro en la base de datos.
+	 * @param rol - el rol a borrar. rol !=  null
+	 * <b> post: </b> se ha borrado el rol en la base de datos en la transaction actual. pendiente que el rol master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el rol.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void deleteRol(Rol rol) throws SQLException, Exception {
+
+		borrarUsuariosConRol(convertirRol(rol));
+		String sql = "DELETE FROM ROL";
+		sql += " WHERE NOMBRE LIKE '" + convertirRol(rol)+"'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+	/**
+	 * Borra los usuarios que tienen este rol en el sistema.<br>
+	 * @param nombreRol Rol en String
+	 */
+	private void borrarUsuariosConRol(String nombreRol) throws SQLException, Exception {
+		DAOTablaUsuario usuario = new DAOTablaUsuario();
+		usuario.setConn(this.conn);
+		usuario.borrarPorRol(nombreRol);
+	}
+
+	/**
+	 * Método que permite transofrmar un parámetro String en un rol.<br>
+	 * @param nombreRol Nombre del rol a convertir.<br>
+	 * @return Retorna el rol.
+	 */
+	private Rol buscarRol(String nombreRol) {
+		switch(nombreRol)
+		{
+		case "LOCAL": return Rol.LOCAL;
+		case "CLIENTE": return Rol.CLIENTE;
+		case "OPERADOR": return Rol.OPERADOR;
+		case "PROVEEDOR": return Rol.PROVEEDOR;
+		case "ORGANIZADORES": return Rol.ORGANIZADORES;
+		default: return null;
+		}
+	}
+	/**
+	 * Método que convierte un rol en un String.<br>
+	 * @param rol Rol a convertir.<br>
+	 * @return Retorna el rol convertido a String-
+	 */
+	private String convertirRol(Rol rol)
 	{
-		Video video = null;
-
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		if(rs.next()) {
-			String name = rs.getString("NAME");
-			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
+		switch(rol)
+		{
+		case LOCAL: return "LOCAL";
+		case CLIENTE:
+			return "CLIENTE";
+		case OPERADOR:
+			return "OPERADOR";
+		case ORGANIZADORES:
+			return "ORGANIZADORES";
+		case PROVEEDOR:
+			return "PROVEEDOR";
+		default:
+			return null;
 		}
-
-		return video;
 	}
-
-	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void addVideo(Video video) throws SQLException, Exception {
-
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
-	}
-	
-	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
-
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
-
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-
-	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
-
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-
 }

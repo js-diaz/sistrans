@@ -1,13 +1,4 @@
-/**-------------------------------------------------------------------
- * $Id$
- * Universidad de los Andes (Bogotá - Colombia)
- * Departamento de Ingeniería de Sistemas y Computación
- *
- * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
- * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
- * -------------------------------------------------------------------
- */
+
 package dao;
 
 
@@ -21,7 +12,7 @@ import vos.*;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
- * @author Monitores 2017-20
+ * @author s.guzmanm
  */
 public class DAOTablaZona {
 
@@ -37,7 +28,7 @@ public class DAOTablaZona {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAOZona
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaZona() {
@@ -69,142 +60,234 @@ public class DAOTablaZona {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexión a la base de datos, saca todos los zonas de la base de datos
+	 * <b>SQL Statement:</b> SELECT * FROM ZONAS;
+	 * @return Arraylist con los zonas de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public ArrayList<Zona> darZonas() throws SQLException, Exception {
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM ZONA";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
-		while (rs.next()) {
-			String name = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
-		}
-		return videos;
+		return convertirEntidadZona(rs);
 	}
 
 
+	
+
 	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
+	 * Metodo que busca el/los zonas con el nombre que entra como parametro.
+	 * @param name - Nombre de el/los zonas a buscar
+	 * @return ArrayList con los zonas encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public Zona buscarZonasPorName(String name) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
+		String sql = "SELECT * FROM ZONA WHERE NOMBRE LIKE '" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		while (rs.next()) {
-			String name2 = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
-		}
+		ArrayList<Zona> zonas= convertirEntidadZona(rs);
+		return zonas.get(0);
+	}
+	
 
-		return videos;
+	/**
+	 * Metodo que agrega la zona que entra como parametro a la base de datos.
+	 * @param zona - la zona a agregar. zona !=  null
+	 * <b> post: </b> se ha agregado la zona a la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que la zona baje  a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar la zona a la base de datos
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void addZona(Zona zona) throws SQLException, Exception {
+
+		String sql = "INSERT INTO ZONA VALUES (";
+		sql += "'"+zona.getNombre() + "',";
+		sql += zona.getCapacidad() + ",";
+		sql +="'"+ convertirBooleano(zona.isIngresoEspecial())+"',";
+		sql+="'"+convertirBooleano(zona.isAbiertaActualmente())+"',";
+		sql+=zona.getCapacidadOcupada()+")";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		
+		insertarCondicionesTecnicas(zona);
+		insertarRestaurantes(zona);
+
+	}
+	
+	
+
+	/**
+	 * Metodo que actualiza la zona que entra como parámetro en la base de datos.
+	 * @param zona - la zona a actualizar. zona !=  null
+	 * <b> post: </b> se ha actualizado la zona en la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la zona.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void updateZona(Zona zona) throws SQLException, Exception {
+
+		String sql = "UPDATE ZONA SET ";
+		sql += "CAPACIDAD=" + zona.getCapacidad() + ",";
+		sql+="INGRESOESPECIAL='"+convertirBooleano(zona.isIngresoEspecial())+"',";
+		sql+="ABIERTAACTUALMENTE='"+convertirBooleano(zona.isAbiertaActualmente())+"',";
+		sql+="CAPACIDADOCUPADA="+zona.getCapacidadOcupada();
+		sql += " WHERE NOMBRE LIKE '" + zona.getNombre()+"'";
+
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+
+	/**
+	 * Metodo que elimina la zona que entra como parametro en la base de datos.
+	 * @param zona - la zona a borrar. zona !=  null
+	 * <b> post: </b> se ha borrado la zona en la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la zona.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void deleteZona(Zona zona) throws SQLException, Exception {
+
+		borrarRestaurantes(zona);
+		borrarCondiciones(zona);
+		modificarPreferencias(zona.getNombre());
+		borrarReservas(zona.getNombre());
+		
+		String sql = "DELETE FROM ZONA";
+		sql += " WHERE NOMBRE LIKE " + zona.getNombre();
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
 	}
 	
 	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Crea un arreglo de zonas con el set de resultados pasado por parámetro.<br>
+	 * @param rs Set de resultados.<br>
+	 * @return zonas Lista de zonas convertidas.<br>
+	 * @throws SQLException Algún problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepción.
 	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
+	private ArrayList<Zona> convertirEntidadZona(ResultSet rs) throws SQLException, Exception
 	{
-		Video video = null;
-
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		if(rs.next()) {
-			String name = rs.getString("NAME");
-			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
+		ArrayList<Zona> zonas = new ArrayList<>();
+		while (rs.next()) {
+			int capacidad=rs.getInt("CAPACIDAD");
+			boolean ingresoEspecial=false;
+			if(rs.getString("INGRESOESPECIAL").equals("1")) ingresoEspecial=true;
+			boolean abiertaActualmente=false;
+			if(rs.getString("ABIERTAACTUALMENTE").equals("1")) abiertaActualmente=true;
+			int capacidadOcupada=rs.getInt("CAPACIDADOCUPADA");
+			String nombre=rs.getString("NOMBRE");
+			ArrayList<CondicionTecnica> condiciones= accederACondicionesZona(nombre);
+			ArrayList<Restaurante> restaurantes= accederARestaurantes(nombre);
+			zonas.add(new Zona(capacidad, ingresoEspecial, abiertaActualmente, capacidadOcupada, nombre, condiciones, restaurantes));
 		}
-
-		return video;
+		return zonas;
 	}
-
 	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Retorna las condiciones técnicas del nombre de la zona dada por parámetro.<br>
+	 * @param nombre Nombre de la zona.<br>
+	 * @return Lista de condiciones técnicas.
 	 */
-	public void addVideo(Video video) throws SQLException, Exception {
-
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
+	private ArrayList<CondicionTecnica> accederACondicionesZona(String nombre) throws SQLException, Exception {
+		DAOTablaCondicionesZona condiciones= new DAOTablaCondicionesZona();
+		condiciones.setConn(this.conn);
+		return condiciones.consultarZona(nombre);
 	}
-	
 	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Retorna una lista de los restuarantes presentes en esta zona.<br>
+	 * @param nombreZona Nombre de la zona a buscar.<br>
+	 * @return Lista de los restaurantes presentes en la zona.
 	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
-
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
-
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
+	private ArrayList<Restaurante> accederARestaurantes(String nombreZona) throws SQLException, Exception{
+		DAOTablaRestaurante restaurante = new DAOTablaRestaurante();
+		restaurante.setConn(this.conn);
+		return restaurante.consultarPorZona(nombreZona);
 	}
-
 	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Inserta las condiciones técnicas en la tabla DAO de CondicionesZona.<br>
+	 * @param zona Zona a insertar sus condiciones.<br>
+	 * @throws SQLException Si hay algún error en la base de datos<br>
+	 * @throws Exception Si hay algún otro error en general.
 	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
-
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
+	private void insertarCondicionesTecnicas(Zona zona) throws SQLException, Exception {
+		DAOTablaCondicionesZona condiciones= new DAOTablaCondicionesZona();
+		condiciones.setConn(this.conn);
+		condiciones.insertarPorZona(zona.getNombre(),zona.getCondiciones());
 	}
-
+	/**
+	 * Inserta en los restaurantes con la tabla DAO de Restaurantes.<br>
+	 * @param zona Zona a insertar sus restaurantes.<br>
+	 * @throws SQLException Arroja una excepción SQL correspondiente.<br>
+	 * @throws Exception Cualquier otro error.
+	 */
+	private void insertarRestaurantes(Zona zona) throws SQLException, Exception
+	{
+		DAOTablaRestaurante restaurante= new DAOTablaRestaurante();
+		restaurante.setConn(this.conn);
+		restaurante.insertarPorZona(zona.getRestaurantes());
+	}
+	/**
+	 * Convierte un booleano en un caracter 0(false) o 1 (true)
+	 * @param booleano
+	 * @return 0 o 1
+	 */
+	private String convertirBooleano(boolean booleano) {
+		if(booleano) return "1";
+		return "0";
+	}
+	/**
+	 * Borra los restaurantes relacionados a dicha zona.<br>
+	 * @param zona Zona de donde se borran
+	 */
+	private void borrarRestaurantes (Zona zona) throws SQLException, Exception
+	{
+		DAOTablaRestaurante restaurante= new DAOTablaRestaurante();
+		restaurante.setConn(this.conn);
+		restaurante.eliminarRestaurantes(zona.getRestaurantes());
+	}
+	/**
+	 * Borra las condiciones técnicas relacionadas a dicha zona.<br>
+	 * @param zona Zona de donde se borran.
+	 * 
+	 */
+	private void borrarCondiciones(Zona zona) throws SQLException, Exception
+	{
+		DAOTablaCondicionesZona condiciones = new DAOTablaCondicionesZona();
+		condiciones.setConn(this.conn);
+		condiciones.eliminarCondicionesPorZona(zona.getNombre());
+	}
+	/**
+	 * Modifica el valor de las preferencias de usuario a nulo cuando se borra la zona.<br>
+	 * @param nombreZona Nombre de la zona para analizar preferencias.
+	 */
+	private void modificarPreferencias(String nombreZona) throws SQLException, Exception
+	{
+		DAOTablaPreferenciaZona preferencia = new DAOTablaPreferenciaZona();
+		preferencia.setConn(this.conn);
+		preferencia.modificarPorZonaEliminada(nombreZona);
+	}
+	/**
+	 * Elimina reservas hechas a esta zona.<br>
+	 * @param nombreZona Nombre de la zona para analizar reservas.
+	 */
+	private void borrarReservas(String nombreZona)
+	{
+		DAOTablaReserva reserva= new DAOTablaReserva();
+		reserva.setConn(this.conn);
+		reserva.borrarPorZona(nombreZona);
+	}
 }
