@@ -207,4 +207,9 @@ public class DAOTablaUsuario {
 		prepStmt.executeQuery();
 	}
 
+	public void borrarPorRol(String nombreRol) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

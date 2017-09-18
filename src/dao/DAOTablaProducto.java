@@ -207,4 +207,9 @@ public class DAOTablaProducto {
 		prepStmt.executeQuery();
 	}
 
+	public void borrarProductosPorTipo(String nombrePlato) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
