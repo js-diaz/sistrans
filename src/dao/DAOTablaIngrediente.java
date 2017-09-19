@@ -1,13 +1,4 @@
-/**-------------------------------------------------------------------
- * $Id$
- * Universidad de los Andes (Bogotá - Colombia)
- * Departamento de Ingeniería de Sistemas y Computación
- *
- * Materia: Sistemas Transaccionales
- * Ejercicio: IngredienteAndes
- * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
- * -------------------------------------------------------------------
- */
+
 package dao;
 
 
@@ -192,6 +183,7 @@ public class DAOTablaIngrediente {
 		DAOTablaPerteneceAProducto prod= new DAOTablaPerteneceAProducto();
 		prod.setConn(this.conn);
 		prod.borrarIngredienteDeLista(id);
+		prod.cerrarRecursos();
 	}
 
 }
