@@ -149,6 +149,7 @@ public class DAOTablaRol {
 		DAOTablaUsuario usuario = new DAOTablaUsuario();
 		usuario.setConn(this.conn);
 		usuario.borrarPorRol(nombreRol);
+		usuario.cerrarRecursos();
 	}
 
 	/**

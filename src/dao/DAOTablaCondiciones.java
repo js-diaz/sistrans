@@ -92,14 +92,14 @@ public class DAOTablaCondiciones {
 	 */
 	public CondicionTecnica buscarCondicionTecnicasPorName(String name) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM CONDICIONTECNICA WHERE NAME LIKE'" + name + "'";
+		String sql = "SELECT * FROM CONDICIONTECNICA WHERE NOMBRE LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		CondicionTecnica c= null;
 		if (rs.next()) {
-			String name2 = rs.getString("NAME");
+			String name2 = rs.getString("NOMBRE");
 			
 			c= new CondicionTecnica(name2);
 		}
@@ -117,8 +117,8 @@ public class DAOTablaCondiciones {
 	 */
 	public void addCondicionTecnica(CondicionTecnica condicion) throws SQLException, Exception {
 
-		String sql = "INSERT INTO CONDICIONTECNICA VALUES (";
-		sql += condicion.getNombre() + ")";
+		String sql = "INSERT INTO CONDICIONTECNICA VALUES ('";
+		sql += condicion.getNombre() + "')";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -152,7 +152,7 @@ public class DAOTablaCondiciones {
 		DAOTablaCondicionesZona cond = new DAOTablaCondicionesZona();
 		cond.setConn(this.conn);
 		cond.eliminarCondicionesPorCondicion(nombre);
-		
+		cond.cerrarRecursos();
 	}
 
 }

@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.*;
 
@@ -23,7 +24,7 @@ import vos.*;
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
  * @author Monitores 2017-20
  */
-public class DAOTablaUsuario {
+public class DAOTablaPerteneceAProducto {
 
 
 	/**
@@ -40,7 +41,7 @@ public class DAOTablaUsuario {
 	 * Metodo constructor que crea DAOVideo
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
-	public DAOTablaUsuario() {
+	public DAOTablaPerteneceAProducto() {
 		recursos = new ArrayList<Object>();
 	}
 
@@ -215,6 +216,32 @@ public class DAOTablaUsuario {
 	public Usuario buscarUsuarioPorId(Long idUsuario) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void borrarIngredienteDeLista(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public ArrayList<Ingrediente> buscarIngredientesPorId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+		
+	}
+
+	public void agregarIngredientesPorId(Long id, List<Ingrediente> ingredientes) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void borrarIngredientesPorIdPlato(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void actualizarIngredientes(Long id, List<Categoria> categorias) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

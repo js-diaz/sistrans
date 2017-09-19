@@ -29,7 +29,7 @@ import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import tm.VideoAndesTM;
+import tm.RotondAndesTM;
 import vos.Video;
 
 /**
@@ -68,7 +68,7 @@ public class VideoAndesServices {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getVideos() {
-		VideoAndesTM tm = new VideoAndesTM(getPath());
+		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Video> videos;
 		try {
 			videos = tm.darVideos();
@@ -90,7 +90,7 @@ public class VideoAndesServices {
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getVideo( @PathParam( "id" ) Long id )
 	{
-		VideoAndesTM tm = new VideoAndesTM( getPath( ) );
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
 			Video v = tm.buscarVideoPorId( id );
@@ -113,7 +113,7 @@ public class VideoAndesServices {
 	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getVideoName( @QueryParam("nombre") String name) {
-		VideoAndesTM tm = new VideoAndesTM(getPath());
+		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Video> videos;
 		try {
 			if (name == null || name.length() == 0)
@@ -136,7 +136,7 @@ public class VideoAndesServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addVideo(Video video) {
-		VideoAndesTM tm = new VideoAndesTM(getPath());
+		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			tm.addVideo(video);
 		} catch (Exception e) {
@@ -156,7 +156,7 @@ public class VideoAndesServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addVideo(List<Video> videos) {
-		VideoAndesTM tm = new VideoAndesTM(getPath());
+		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			tm.addVideos(videos);
 		} catch (Exception e) {
@@ -175,7 +175,7 @@ public class VideoAndesServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateVideo(Video video) {
-		VideoAndesTM tm = new VideoAndesTM(getPath());
+		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			tm.updateVideo(video);
 		} catch (Exception e) {
@@ -194,7 +194,7 @@ public class VideoAndesServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteVideo(Video video) {
-		VideoAndesTM tm = new VideoAndesTM(getPath());
+		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			tm.deleteVideo(video);
 		} catch (Exception e) {

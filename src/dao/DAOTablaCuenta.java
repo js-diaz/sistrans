@@ -4,7 +4,7 @@
  * Departamento de Ingeniería de Sistemas y Computación
  *
  * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
+ * Ejercicio: CuentaAndes
  * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
  * -------------------------------------------------------------------
  */
@@ -16,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import vos.*;
 
@@ -37,7 +39,7 @@ public class DAOTablaCuenta {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAOCuenta
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaCuenta() {
@@ -69,119 +71,137 @@ public class DAOTablaCuenta {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexión a la base de datos, saca todos los cuentas de la base de datos
+	 * <b>SQL Statement:</b> SELECT * FROM CUENTAS;
+	 * @return Arraylist con los cuentas de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public ArrayList<Cuenta> darCuentas() throws SQLException, Exception {
+		ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM CUENTA";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			String name = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
+			String numeroCuenta = rs.getString("NUMEROCUENTA");
+			Double valor = rs.getDouble("VALOR");
+			Date fecha = rs.getDate("FECHA");
+			ArrayList<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
+			ArrayList<PedidoProd> productos= darPedidosProductos(numeroCuenta);
+			Usuario u = buscarUsuarioPorId(rs.getLong("USUARIO"));
+			
+			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u));
 		}
-		return videos;
+		return cuentas;
 	}
 
 
+
 	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
+	 * Metodo que busca la cuenta con el número de cuenta que entra como parametro.
+	 * @param numeroCuenta - Nombre de el/los cuentas a buscar
+	 * @return Cuenta encontrada
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public Cuenta buscarCuentasPorNumeroDeCuenta(String numeroCuenta) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
+		String sql = "SELECT * FROM CUENTA WHERE NUMEROCUENTA LIKE'" + numeroCuenta + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		Cuenta c=null;
+
+		if (rs.next()) {
+			String numCuenta = rs.getString("NUMEROCUENTA");
+			Double valor = rs.getDouble("VALOR");
+			Date fecha = rs.getDate("FECHA");
+			ArrayList<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
+			ArrayList<PedidoProd> productos= darPedidosProductos(numeroCuenta);
+			Usuario u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
+			
+			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u));
+		}
+
+		return c;
+	}
+	
+	/**
+	 * Metodo que busca las cuentas con el id de usuario dado por parámetro que entra como parametro.
+	 * @param id - Id de usuario
+	 * @return Cuenta dada
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public ArrayList<Cuenta> buscarCuentasPorId(Long id) throws SQLException, Exception {
+		ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
+
+		String sql = "SELECT * FROM CUENTA WHERE IDUSUARIO =" + id + "";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			String name2 = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
+			String numCuenta = rs.getString("NUMEROCUENTA");
+			Double valor = rs.getDouble("VALOR");
+			Date fecha = rs.getDate("FECHA");
+			ArrayList<PedidoMenu> menus= darPedidosMenus(numCuenta);
+			ArrayList<PedidoProd> productos= darPedidosProductos(numCuenta);
+			Usuario u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
+			cuentas.add(new Cuenta(productos,menus,valor,numCuenta,fecha,u));
 		}
-
-		return videos;
+		return cuentas;
 	}
+	//Cuenta c = new Cuenta(pedidoProd, pedidoMenu, valor, numeroCuenta, fecha, cliente);
+
 	
 	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * Metodo que agrega la cuenta que entra como parametro a la base de datos.
+	 * @param c - la cuenta a agregar. cuenta !=  null
+	 * <b> post: </b> se ha agregado la cuenta a la base de datos en la transaction actual. pendiente que la cuenta master
+	 * haga commit para que la cuenta baje  a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar la cuenta a la base de datos
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
-	{
-		Video video = null;
+	public void addCuenta(Cuenta c) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		if(rs.next()) {
-			String name = rs.getString("NAME");
-			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
-		}
-
-		return video;
-	}
-
-	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void addVideo(Video video) throws SQLException, Exception {
-
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
-
+		String sql = "INSERT INTO CUENTA VALUES (";
+		sql += c.getValor() + ",'";
+		sql += c.getNumeroCuenta() + "',";
+		sql += c.getFecha()+",";
+		sql+= c.getCliente().getId()+")";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		insertarProducto(c);
+		insertarMenu(c);
 
 	}
 	
+	
+
 	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
+	 * Metodo que actualiza la cuenta que entra como parametro en la base de datos.
+	 * @param video - la cuenta a actualizar. video !=  null
+	 * <b> post: </b> se ha actualizado la cuenta en la base de datos en la transaction actual. pendiente que la cuenta master
 	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la cuenta.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
+	public void updateCuenta(Cuenta c) throws SQLException, Exception {
 
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
+		String sql = "UPDATE CUENTA SET ";
+		sql += "VALOR=" + c.getValor() + ",";
+		sql += "FECHA=" + c.getFecha();
+		sql += " WHERE NUMEROCUENTA LIKE '" + c.getNumeroCuenta()+"'";
 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -190,21 +210,101 @@ public class DAOTablaCuenta {
 	}
 
 	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
+	 * Metodo que elimina la cuenta que entra como parametro en la base de datos.
+	 * @param c - la cuenta a borrar. c !=  null
+	 * <b> post: </b> se ha borrado la cuenta en la base de datos en la transaction actual. pendiente que la cuenta master
 	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la cuenta.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
+	public void deleteCuenta(Cuenta c) throws SQLException, Exception {
 
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
+		eliminarProductos(c.getNumeroCuenta());
+		eliminarMenus(c.getNumeroCuenta());
+		String sql = "DELETE FROM CUENTA";
+		sql += " WHERE NUMEROCUENTA = " + c.getNumeroCuenta();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+	}
+	/**
+	 * Busca el usuario por el id dado.<br>
+	 * @param int1 Id del usuario.<br>
+	 * @return Usuario buscado
+	 */
+	private Usuario buscarUsuarioPorId(Long int1) throws SQLException, Exception {
+		DAOTablaUsuario u= new DAOTablaUsuario();
+		u.setConn(this.conn);
+		Usuario usuario=u.buscarUsuarioPorId(int1);
+		u.cerrarRecursos();
+		return usuario;
+	}
+	/**
+	 * Busca los pedidos productos con el número de cuenta dado.<br>
+	 * @param numeroCuenta Número de cuenta.<br>
+	 * @return Lista con pedidos producto.
+	 */
+	private ArrayList<PedidoProd> darPedidosProductos(String numeroCuenta) throws SQLException, Exception {
+		DAOTablaPedidoProducto p  = new DAOTablaPedidoProducto();
+		p.setConn(this.conn);
+		ArrayList<PedidoProd> list=p.buscarProductosPorNumCuenta(numeroCuenta);
+		p.cerrarRecursos();
+		return list;
+	}
+	/**
+	 * Busca los pedidos menú con el número de cuenta dado.<br>
+	 * @param numeroCuenta Número de cuenta.<br>
+	 * @return Lista con pedidos menú.
+	 */
+	private ArrayList<PedidoMenu> darPedidosMenus(String numeroCuenta) throws SQLException, Exception {
+		DAOTablaPedidoMenu m = new DAOTablaPedidoMenu();
+		m.setConn(this.conn);
+		ArrayList<PedidoMenu> list = m.buscarProductosPorNumCuenta(numeroCuenta);
+		m.cerrarRecursos();
+		return list;
+	}
+	/**
+	 * Inserta los pedidosMenu con la cuenta dada por parámetro.<br>
+	 * @param c Cuenta a insertar menús.
+	 */
+	private void insertarMenu(Cuenta c) throws SQLException, Exception {
+		DAOTablaPedidoMenu menus = new DAOTablaPedidoMenu();
+		menus.setConn(this.conn);
+		menus.insertarPorCuenta(c);
+		menus.cerrarRecursos();
+	}
+	/**
+	 * Inserta los pedidosProducto con la cuenta dada por parámetro.<br>
+	 * @param c Cuenta a insertar productos.
+	 */
+	private void insertarProducto(Cuenta c) throws SQLException, Exception {
+		DAOTablaPedidoProducto productos = new DAOTablaPedidoProducto();
+		productos.setConn(this.conn);
+		productos.insertarPorCuenta(c);
+		productos.cerrarRecursos();
+		
+	}
+	/**
+	 * Elimina los pedidosMenu que tienen este número de cuenta.<br>
+	 * @param numeroCuenta Número de la cuenta a eliminar pedidos menú.
+	 */
+	private void eliminarMenus(String numeroCuenta) throws SQLException, Exception {
+		DAOTablaPedidoMenu menus = new DAOTablaPedidoMenu();
+		menus.setConn(this.conn);
+		menus.eliminarPorNumeroCuenta(numeroCuenta);
+		menus.cerrarRecursos();
+		
+	}
+	/**
+	 * Elimina los pedidosProducto que tienen este número de cuenta.<br>
+	 * @param numeroCuenta Número de la cuenta a eliminar pedidos producto.
+	 */
+	private void eliminarProductos(String numeroCuenta) throws SQLException, Exception {
+		DAOTablaPedidoProducto prod= new DAOTablaPedidoProducto();
+		prod.setConn(this.conn);
+		prod.eliminarPorNumeroCuenta(numeroCuenta);
+		prod.cerrarRecursos();
 	}
 
 }

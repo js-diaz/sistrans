@@ -153,6 +153,7 @@ public class DAOTablaCategoria {
 		DAOTablaCategoriaMenu menu = new DAOTablaCategoriaMenu();
 		menu.setConn(this.conn);
 		menu.borrarCategoriasPorNombreCategoria(nombre);
+		menu.cerrarRecursos();
 	}
 	/**
 	 * Borra todas las categorías con el nombre dado de la tabla DAOCategoriaMenu.<br>
@@ -162,6 +163,7 @@ public class DAOTablaCategoria {
 		DAOTablaCategoriaRestaurante restaurante = new DAOTablaCategoriaRestaurante();
 		restaurante.setConn(this.conn);
 		restaurante.borrarCategoriasPorNombreCategoria(nombre);
+		restaurante.cerrarRecursos();
 	}
 	/**
 	 * Borra todas las categorías con el nombre dado de la tabla DAOCategoriaMenu.<br>
@@ -171,6 +173,7 @@ public class DAOTablaCategoria {
 		DAOTablaCategoriaProducto producto = new DAOTablaCategoriaProducto();
 		producto.setConn(this.conn);
 		producto.borrarCategoriasPorNombreCategoria(nombre);
+		producto.cerrarRecursos();
 	}
 
 }

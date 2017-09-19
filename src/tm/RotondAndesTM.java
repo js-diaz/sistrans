@@ -20,7 +20,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import dao.DAOTablaCondiciones;
 import dao.DAOTablaVideos;
+import vos.CondicionTecnica;
 import vos.Video;
 
 /**
@@ -28,8 +30,7 @@ import vos.Video;
  * Fachada en patron singleton de la aplicacion
  * @author Monitores 2017-20
  */
-public class VideoAndesTM {
-
+public class RotondAndesTM {
 
 	/**
 	 * Atributo estatico que contiene el path relativo del archivo que tiene los datos de la conexion
@@ -74,7 +75,7 @@ public class VideoAndesTM {
 	 * inicializa los atributos que se usan par la conexion a la base de datos.
 	 * @param contextPathP - path absoluto en el servidor del contexto del deploy actual
 	 */
-	public VideoAndesTM(String contextPathP) {
+	public RotondAndesTM(String contextPathP) {
 		connectionDataPath = contextPathP + CONNECTION_DATA_FILE_NAME_REMOTE;
 		initConnectionData();
 	}
@@ -380,5 +381,15 @@ public class VideoAndesTM {
 			}
 		}
 	}
+	/*
+	public static void main(String[] args) throws SQLException,Exception {
+		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData");
+		DAOTablaCondiciones cond = new DAOTablaCondiciones();
+		cond.setConn(tm.darConexion());
+		System.out.println(cond.buscarCondicionTecnicasPorName("Incapacitado").getNombre());
+		cond.cerrarRecursos();
+		tm.conn=null;
+		
+	}*/
 
 }

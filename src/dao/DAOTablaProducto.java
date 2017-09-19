@@ -4,7 +4,7 @@
  * Departamento de Ingeniería de Sistemas y Computación
  *
  * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
+ * Ejercicio: ProductoAndes
  * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
  * -------------------------------------------------------------------
  */
@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.*;
+import vos.Producto.Tipos_De_Plato;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
@@ -37,7 +38,7 @@ public class DAOTablaProducto {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAOProducto
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaProducto() {
@@ -69,147 +70,357 @@ public class DAOTablaProducto {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexión a la base de datos, saca todos los productos de la base de datos
+	 * <b>SQL Statement:</b> SELECT * FROM PRODUCTOS;
+	 * @return Arraylist con los productos de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public ArrayList<Producto> darProductos() throws SQLException, Exception {
+		ArrayList<Producto> productos = new ArrayList<Producto>();
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM PRODUCTO";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
+		DAOTablaTipos_De_Plato tipos = new DAOTablaTipos_De_Plato();
+		tipos.setConn(conn);
 		while (rs.next()) {
-			String name = rs.getString("NAME");
+			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
+			Tipos_De_Plato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
+			Double prcio =rs.getDouble("PRECIO");
+			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
+			String descripcion  = rs.getString("DESCRIPCION");
+			String traduccion = rs.getString("TRADUCCION");
+			Double tiempo = rs.getDouble("TIEMPO");
+			ArrayList<Ingrediente> ingredientes=buscarIngredientes(id);
+			ArrayList<Categoria> categorias=buscarCategorias(id);
+			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
+			productos.add(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id, ingredientes, categorias));
 		}
-		return videos;
+		tipos.cerrarRecursos();
+		return productos;
 	}
 
 
 	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
+	 * Metodo que busca el/los productos con el nombre que entra como parametro.
+	 * @param name - Nombre de el/los productos a buscar
+	 * @return ArrayList con los productos encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public ArrayList<Producto> buscarProductosPorName(String name) throws SQLException, Exception {
+		ArrayList<Producto> productos = new ArrayList<Producto>();
 
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
+		String sql = "SELECT * FROM PRODUCTO WHERE NOMBRE LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
+		DAOTablaTipos_De_Plato tipos = new DAOTablaTipos_De_Plato();
 		while (rs.next()) {
-			String name2 = rs.getString("NAME");
+			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
+			Tipos_De_Plato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
+			Double prcio =rs.getDouble("PRECIO");
+			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
+			String descripcion  = rs.getString("DESCRIPCION");
+			String traduccion = rs.getString("TRADUCCION");
+			Double tiempo = rs.getDouble("TIEMPO");
+			ArrayList<Ingrediente> ingredientes=buscarIngredientes(id);
+			ArrayList<Categoria> categorias=buscarCategorias(id);
+			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
+			productos.add(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id, ingredientes, categorias));
+		
 		}
+		tipos.cerrarRecursos();
 
-		return videos;
+		return productos;
 	}
 	
 	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
+	 * Metodo que busca el producto con el id que entra como parametro.
+	 * @param name - Id de el producto a buscar
+	 * @return Producto encontrado
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
+	public Producto buscarProductoPorId(Long id) throws SQLException, Exception 
 	{
-		Video video = null;
+		Producto producto = null;
 
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
+		String sql = "SELECT * FROM PRODUCTO WHERE ID =" + id;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
+		DAOTablaTipos_De_Plato tipos = new DAOTablaTipos_De_Plato();
 		if(rs.next()) {
-			String name = rs.getString("NAME");
+			String nombre = rs.getString("NOMBRE");
 			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
+			Tipos_De_Plato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
+			Double prcio =rs.getDouble("PRECIO");
+			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
+			String descripcion  = rs.getString("DESCRIPCION");
+			String traduccion = rs.getString("TRADUCCION");
+			Double tiempo = rs.getDouble("TIEMPO");
+			ArrayList<Ingrediente> ingredientes=buscarIngredientes(id);
+			ArrayList<Categoria> categorias=buscarCategorias(id);
+			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
+			producto=(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id2, ingredientes, categorias));
+		
 		}
+		tipos.cerrarRecursos();
 
-		return video;
+		return producto;
 	}
 
 	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
+	 * Metodo que agrega el producto que entra como parametro a la base de datos.
+	 * @param producto - el producto a agregar. producto !=  null
+	 * <b> post: </b> se ha agregado el producto a la base de datos en la transaction actual. pendiente que el producto master
+	 * haga commit para que el producto baje  a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el producto a la base de datos
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void addVideo(Video video) throws SQLException, Exception {
+	public void addProducto(Producto producto) throws SQLException, Exception {
 
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
+		String sql = "INSERT INTO PRODUCTO VALUES (";
+		sql += "IDPRODUCTO.NEXTVAL" + ",'";
+		sql += producto.getNombre() + "','";
+		sql += convertirTipo(producto.getTipo())+"','";
+		sql+= convertirBooleano(producto.isPersonalizable())+"',";
+		sql+=producto.getPrecio()+",'";
+		sql+=producto.getTraduccion()+"','";
+		sql+=producto.getDescripcion()+"',";
+		sql+=producto.getCostoProduccion()+",";
+		sql+=producto.getTiempo()+ ")";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		agregarIngredientes(producto);
+		agregarCategorias(producto);
 
 	}
-	
+
 	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
+	 * Metodo que actualiza el producto que entra como parametro en la base de datos.
+	 * @param producto - el producto a actualizar. producto !=  null
+	 * <b> post: </b> se ha actualizado el producto en la base de datos en la transaction actual. pendiente que el producto master
 	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el producto.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
+	public void updateProducto(Producto producto) throws SQLException, Exception {
 
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
+		String sql = "UPDATE PRODUCTO SET ";
+		sql += "NOMBRE='" + producto.getNombre() + "',";
+		sql += "TIPO='" + convertirTipo(producto.getTipo()) + "',";
+		sql += "PERZONALIZABLE='" + convertirBooleano(producto.isPersonalizable()) + "',";
+		sql += "PRECIO=" + producto.getPrecio() + ",";
+		sql += "TRADUCCION='" + producto.getTraduccion() + "',";
+		sql += "DESCRIPCION='" + producto.getDescripcion() + "',";
+		sql += "COSTOPRODUCCION=" + producto.getCostoProduccion() + ",";
+		sql += "TIEMPO=" + producto.getTiempo();
+
+		sql += " WHERE ID = " + producto.getId();
 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		actualizarIngredientes(producto);
+		actualizarCategorias(producto);
 	}
+
 
 	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
+	 * Metodo que elimina el producto que entra como parametro en la base de datos.
+	 * @param producto - el producto a borrar. producto !=  null
+	 * <b> post: </b> se ha borrado el producto en la base de datos en la transaction actual. pendiente que el producto master
 	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el producto.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
+	public void deleteProducto(Producto producto) throws SQLException, Exception {
 
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
-
+		borrarIngredientesDePlato(producto.getId());
+		borrarCategoriasDePlato(producto.getId());
+		String sql = "DELETE FROM PRODUCTO";
+		sql += " WHERE ID = " + producto.getId();
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
-
-	public void borrarProductosPorTipo(String nombrePlato) {
-		// TODO Auto-generated method stub
+	/**
+	 * Borra todos los productos del tipo dado por parámetro.<br>
+	 * @param nombreTipo
+	 */
+	public void borrarProductosPorTipo(String nombreTipo) throws SQLException, Exception {
+		ArrayList<Producto> productos = darProductosPorTipo(nombreTipo);
+		for(Producto producto: productos)
+		{
+			deleteProducto(producto);
+		}
 		
 	}
+	/**
+	 * Busca los platos con el criterio de tipo dado.<br>
+	 * @param nombreTipo Nombre del tipo.<br>
+	 * @return Lista con paltos del tipo dado.<br>
+	 * @throws SQLException Si algo falla con la BD.<br>
+	 * @throws Exception Si alguna otra cosa falla.
+	 */
+	public ArrayList<Producto> darProductosPorTipo(String nombreTipo) throws SQLException, Exception {
+		ArrayList<Producto> productos = new ArrayList<Producto>();
+
+		String sql = "SELECT * FROM PRODUCTO WHERE TIPO LIKE'" + nombreTipo + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		DAOTablaTipos_De_Plato tipos = new DAOTablaTipos_De_Plato();
+		while (rs.next()) {
+			String nombre = rs.getString("NOMBRE");
+			Long id = rs.getLong("ID");
+			Tipos_De_Plato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
+			Double prcio =rs.getDouble("PRECIO");
+			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
+			String descripcion  = rs.getString("DESCRIPCION");
+			String traduccion = rs.getString("TRADUCCION");
+			Double tiempo = rs.getDouble("TIEMPO");
+			ArrayList<Ingrediente> ingredientes=buscarIngredientes(id);
+			ArrayList<Categoria> categorias=buscarCategorias(id);
+			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
+			productos.add(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id, ingredientes, categorias));
+		
+		}
+		tipos.cerrarRecursos();
+
+		return productos;
+	}
+
+	/**
+	 * Lista de categorías del producto dado.<br>
+	 * @param id Id del producto.<br>
+	 * @return Lista de categorías.
+	 */
+	private ArrayList<Categoria> buscarCategorias(Long id) {
+		DAOTablaCategoriaProducto prod= new DAOTablaCategoriaProducto();
+		prod.setConn(conn);
+		ArrayList<Categoria> c =prod.buscarCategoriasPorId(id);
+		prod.cerrarRecursos();
+		return c;
+	}
+	/**
+	 * Convierte un parámetro asumido como 0 o 1 en un valor booleano.<br>
+	 * @param string Parámetro a convertir<br>
+	 * @return true o false.
+	 */
+	private boolean convertirABooleano(String string) {
+		if(string.equals("1")) return true;
+		return false;
+	}
+	/**
+	 * BUsca los ingredientes del producto por id del mismo.<br>
+	 * @param id Id del producto a buscar.<br>
+	 * @return Lista de ingredientes del producto.
+	 */
+	private ArrayList<Ingrediente> buscarIngredientes(Long id) {
+		DAOTablaPerteneceAProducto ing = new DAOTablaPerteneceAProducto();
+		ing.setConn(this.conn);
+		ArrayList<Ingrediente> i=ing.buscarIngredientesPorId(id);
+		ing.cerrarRecursos();
+		return i;
+	}
+
+	/**
+	 * Agrega las cateogrías a la tabla usando el producto dado por parámetro.<br>
+	 * @param producto Producto con categorías.
+	 */
+	private void agregarCategorias(Producto producto) throws SQLException, Exception {
+		DAOTablaCategoriaProducto cat = new DAOTablaCategoriaProducto();
+		cat.setConn(this.conn);
+		cat.agregarCategoriasPorId(producto.getId(),producto.getCategorias());
+	}
+	/**
+	 * Agrega los ingredientes a la tabla usando el producto dado por parámetro.<br>
+	 * @param producto Producto con ingredientes.
+	 */
+	private void agregarIngredientes(Producto producto) {
+		DAOTablaPerteneceAProducto ing = new DAOTablaPerteneceAProducto();
+		ing.setConn(conn);
+		ing.agregarIngredientesPorId(producto.getId(),producto.getIngredientes());
+	}
+	/**
+	 * Convierte el tipo recibido como parámetro en un String.<br>
+	 * @param tipo Tipo recibido.<br>
+	 * @return Tipo convertido en String.
+	 */
+	private String convertirTipo(Tipos_De_Plato tipo) {
+		switch(tipo)
+		{
+		case ENTRADA: return "ENTRADA";
+		case PLATO_FUERTE: return "PLATO FUERTE";
+		case POSTRE: return "POSTRE";
+		case BEBIDA: return "BEBIDA";
+		case ACOMPANAMIENTO: return "ACOMPAÑAMIENTO";
+		default: return null;
+		}
+	}
+	/**
+	 * Convierte un booleano en u string.<br>
+	 * @param booleano Booleano.<br>
+	 * @return 0 o 1.
+	 */
+	private String convertirBooleano(boolean booleano) {
+		if(booleano) return "1";
+		return "0";
+	}
+	/**
+	 * Borra todas las categorías de un plato con id.<br>
+	 * @param id Id del plato a borrar categorías.
+	 */
+	private void borrarCategoriasDePlato(Long id) {
+		DAOTablaCategoriaProducto cat = new DAOTablaCategoriaProducto();
+		cat.borrarCategoriasPorId(id);
+		cat.cerrarRecursos();
+	}
+	/**
+	 * Borra todos los ingredientes de un plato con id.<br>
+	 * @param id Id del plato a borrar ingredientes.<br>
+	 */
+	private void borrarIngredientesDePlato(Long id) {
+		DAOTablaPerteneceAProducto p = new DAOTablaPerteneceAProducto();
+		p.borrarIngredientesPorIdPlato(id);
+		p.cerrarRecursos();
+		
+	}
+	/**
+	 * Actualiza las categorías de un producto dado.<br>
+	 * @param producto Producto dado
+	 */
+	private void actualizarCategorias(Producto producto) {
+		DAOTablaCategoriaProducto tab = new DAOTablaCategoriaProducto();
+		tab.actualizarCategoria(producto.getId(),producto.getCategorias());
+		tab.cerrarRecursos();
+	}
+	/**
+	 * Actualiza los ingredientes de un producto dado.<br>
+	 * @param producto Producto dado
+	 */
+	private void actualizarIngredientes(Producto producto) {
+		DAOTablaPerteneceAProducto tab = new DAOTablaPerteneceAProducto();
+		tab.actualizarIngredientes(producto.getId(),producto.getCategorias());
+		tab.cerrarRecursos();
+	}
+	
 
 }

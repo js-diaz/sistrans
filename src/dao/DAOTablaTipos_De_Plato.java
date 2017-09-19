@@ -152,10 +152,11 @@ public class DAOTablaTipos_De_Plato {
 	 * Borra los productos del tipo dado por parámetro.<br>
 	 * @param nombreTipo Nombre del tipo a borrar. 
 	 */
-	private void borrarProductosPorTipo(String nombrePlato) throws SQLException, Exception {
+	private void borrarProductosPorTipo(String nombreTipo) throws SQLException, Exception {
 		DAOTablaProducto producto = new DAOTablaProducto();
 		producto.setConn(this.conn);
-		producto.borrarProductosPorTipo(nombrePlato);
+		producto.borrarProductosPorTipo(nombreTipo);
+		producto.cerrarRecursos();
 	}
 
 	/**

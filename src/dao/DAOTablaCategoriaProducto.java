@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.*;
 
@@ -208,6 +209,26 @@ public class DAOTablaCategoriaProducto {
 	}
 
 	public void borrarCategoriasPorNombreCategoria(String nombre) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public ArrayList<Categoria> buscarCategoriasPorId(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void agregarCategoriasPorId(Long id, List<Categoria> categorias) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void borrarCategoriasPorId(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void actualizarCategoria(Long id, List<Categoria> categorias) {
 		// TODO Auto-generated method stub
 		
 	}

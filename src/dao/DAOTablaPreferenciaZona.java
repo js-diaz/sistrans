@@ -1,13 +1,4 @@
-/**-------------------------------------------------------------------
- * $Id$
- * Universidad de los Andes (Bogotá - Colombia)
- * Departamento de Ingeniería de Sistemas y Computación
- *
- * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
- * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
- * -------------------------------------------------------------------
- */
+
 package dao;
 
 
@@ -16,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.*;
 
@@ -37,7 +29,7 @@ public class DAOTablaPreferenciaZona {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAOPreferencia
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaPreferenciaZona() {
@@ -60,7 +52,7 @@ public class DAOTablaPreferenciaZona {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parametro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parámetro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -69,147 +61,149 @@ public class DAOTablaPreferenciaZona {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexión a la base de datos, saca todos los preferencias con id dado de la base de datos
+	 * @param id Id del usuario
+	 * @return Arraylist con los preferencias de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public ArrayList<Zona> buscarZonaPorId(Long id) throws SQLException, Exception {
+		ArrayList<Zona> preferencias = new ArrayList<>();
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM PREFERENCIAZONA WHERE IDUSUARIO ="+id;
 
+		DAOTablaZona zona = new DAOTablaZona();
+		zona.setConn(conn);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
 		while (rs.next()) {
-			String name = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
+			String name = rs.getString("NOMBREZONA");
+			preferencias.add(zona.buscarZonasPorName(name) );
 		}
-		return videos;
+		zona.cerrarRecursos();
+		return preferencias;
 	}
-
-
 	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
+	 * Metodo que, usando la conexión a la base de datos, saca todos los preferencias con zona dada de la base de datos
+	 * @param cat Categoría
+	 * @return Arraylist con los preferencias de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public ArrayList<Preferencia> buscarZonaPorZona(Zona cat) throws SQLException, Exception {
+		ArrayList<Preferencia> preferencias = new ArrayList<>();
 
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
+		String sql = "SELECT * FROM PREFERENCIAZONA WHERE NOMBRECATEGORIA LIKE '"+cat.getNombre()+"'";
 
+		DAOTablaPreferencia zona = new DAOTablaPreferencia();
+		zona.setConn(conn);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
 		while (rs.next()) {
-			String name2 = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
+			Long id = rs.getLong("IDUSUARIO");
+			preferencias.add(zona.buscarPreferenciaPorId(id) );
 		}
-
-		return videos;
+		zona.cerrarRecursos();
+		return preferencias;
 	}
-	
 	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Inserta preferencias por el id de Usuario, teniendo una lista de zonas.<br>
+	 * @param idUsuario Id del usuario.<br>
+	 * @param zonas Listado de zonas.<br>
+	 * @throws SQLException Si hay un error en la base de datos.<br>
+	 * @throws Exception Cualquier otro error.
 	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
-	{
-		Video video = null;
-
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		if(rs.next()) {
-			String name = rs.getString("NAME");
-			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
+	public void insertarPreferenciasZona(Long idUsuario, List<Zona> zonas) throws SQLException, Exception {
+		String sql ="";
+		for(Zona c: zonas)
+		{
+			sql = "INSERT INTO PREFERENCIAZONA VALUES (";
+			sql += idUsuario+ ",'";
+			sql += c.getNombre() + ")";
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			prepStmt.executeQuery();
 		}
-
-		return video;
 	}
-
-	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void addVideo(Video video) throws SQLException, Exception {
-
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
-	}
-	
-	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
-
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
-
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-
-	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
-
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-
-	public void modificarPorZonaEliminada(String nombreZona) {
+	//DEBERÍA?
+	public void actualizarPreferenciaPorId(Long idUsuario, List<Zona> zonas) throws SQLException, Exception{
 		// TODO Auto-generated method stub
-		
+		ArrayList<Zona> cat =buscarZonaPorId(idUsuario);
+		boolean encontrado=false;
+		for(Zona c: zonas)
+		{
+			encontrado=false;
+			for(Zona d: cat)
+			{
+				if(c.getNombre().equals(d.getNombre())) 
+					{
+						encontrado=true;
+						break;
+					}
+			}
+			if(!encontrado)
+			{
+				
+			}
+		}
 	}
+
+	/**
+	 * Metodo que elimina la preferencia por zona que entra como parámetro en la base de datos.
+	 * @param idUsuario - Id de la preferencia por zona a borrar. preferencia !=  null
+	 * <b> post: </b> se ha borrado la preferencia por zona en la base de datos en la transaction actual. pendiente que la preferencia por zona master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la preferencia por zona.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */	
+	public void borrarPorId(Long idUsuario) throws SQLException, Exception {
+		
+		String sql = "DELETE FROM PREFERENCIAZONA";
+		sql += " WHERE IDUSUARIO = " + idUsuario;
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();		
+	}
+	
+	/**
+	 * Metodo que elimina la preferencia por zona que entra como parámetro en la base de datos.
+	 * @param id - Nombre de la zona a borrar. preferencia !=  null
+	 * <b> post: </b> se ha borrado la preferencia por zona en la base de datos en la transaction actual. pendiente que la preferencia por zona master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la preferencia por zona.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */	
+	public void modificarPorZonaEliminada(String id) throws SQLException, Exception {
+		
+		String sql = "DELETE FROM PREFERENCIAZONA";
+		sql += " WHERE NOMBREZONA LIKE' " + id+"'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();		
+	}
+	
+	/**
+	 * Metodo que elimina la preferencia por zona que entra como parámetro en la base de datos.
+	 * @param idUusario - Id de la preferencia por zona a borrar. preferencia !=  null
+	 * @param id - Nombre de la zona a borrar. preferencia !=  null
+	 * <b> post: </b> se ha borrado la preferencia por zona en la base de datos en la transaction actual. pendiente que la preferencia por zona master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la preferencia por zona.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */	
+	public void borrarMulticriterio(Long idUsuario, String id) throws SQLException, Exception {
+		
+		String sql = "DELETE FROM PREFERENCIAZONA";
+		sql += " WHERE IDUSUARIO = " + idUsuario +" AND NOMBREZONA LIKE '"+id+"'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();		
+	}
+
 
 }

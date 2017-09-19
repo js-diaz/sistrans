@@ -227,6 +227,7 @@ public class DAOTablaZona {
 		DAOTablaCondicionesZona condiciones= new DAOTablaCondicionesZona();
 		condiciones.setConn(this.conn);
 		condiciones.insertarPorZona(zona.getNombre(),zona.getCondiciones());
+		condiciones.cerrarRecursos();
 	}
 	/**
 	 * Inserta en los restaurantes con la tabla DAO de Restaurantes.<br>
@@ -239,6 +240,7 @@ public class DAOTablaZona {
 		DAOTablaRestaurante restaurante= new DAOTablaRestaurante();
 		restaurante.setConn(this.conn);
 		restaurante.insertarPorZona(zona.getRestaurantes());
+		restaurante.cerrarRecursos();
 	}
 	/**
 	 * Convierte un booleano en un caracter 0(false) o 1 (true)
@@ -258,6 +260,7 @@ public class DAOTablaZona {
 		DAOTablaRestaurante restaurante= new DAOTablaRestaurante();
 		restaurante.setConn(this.conn);
 		restaurante.eliminarRestaurantes(zona.getRestaurantes());
+		restaurante.cerrarRecursos();
 	}
 	/**
 	 * Borra las condiciones técnicas relacionadas a dicha zona.<br>
@@ -269,6 +272,7 @@ public class DAOTablaZona {
 		DAOTablaCondicionesZona condiciones = new DAOTablaCondicionesZona();
 		condiciones.setConn(this.conn);
 		condiciones.eliminarCondicionesPorZona(zona.getNombre());
+		condiciones.cerrarRecursos();
 	}
 	/**
 	 * Modifica el valor de las preferencias de usuario a nulo cuando se borra la zona.<br>
@@ -279,6 +283,7 @@ public class DAOTablaZona {
 		DAOTablaPreferenciaZona preferencia = new DAOTablaPreferenciaZona();
 		preferencia.setConn(this.conn);
 		preferencia.modificarPorZonaEliminada(nombreZona);
+		preferencia.cerrarRecursos();
 	}
 	/**
 	 * Elimina reservas hechas a esta zona.<br>
@@ -289,5 +294,6 @@ public class DAOTablaZona {
 		DAOTablaReserva reserva= new DAOTablaReserva();
 		reserva.setConn(this.conn);
 		reserva.borrarPorZona(nombreZona);
+		reserva.cerrarRecursos();
 	}
 }

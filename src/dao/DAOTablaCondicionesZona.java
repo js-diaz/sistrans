@@ -95,6 +95,7 @@ public class DAOTablaCondicionesZona {
 		String sql = "SELECT * FROM CONDICIONZONA WHERE CONDICIONTECNICANOMBRE LIKE '"+nombreCondicion+"'";
 
 		DAOTablaZona zona= new DAOTablaZona();
+		zona.setConn(conn);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
@@ -102,6 +103,7 @@ public class DAOTablaCondicionesZona {
 			String name = rs.getString("ZONANOMBRE");
 			condiciones.add(zona.buscarZonasPorName(name));
 		}
+		zona.cerrarRecursos();
 		return condiciones;
 	}
 	/**

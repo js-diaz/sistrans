@@ -4,7 +4,7 @@
  * Departamento de Ingeniería de Sistemas y Computación
  *
  * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
+ * Ejercicio: IngredienteAndes
  * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
  * -------------------------------------------------------------------
  */
@@ -37,7 +37,7 @@ public class DAOTablaIngrediente {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAOIngrediente
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaIngrediente() {
@@ -60,7 +60,7 @@ public class DAOTablaIngrediente {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parametro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parámetro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -69,98 +69,76 @@ public class DAOTablaIngrediente {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexión a la base de datos, saca todos los ingredientes de la base de datos
+	 * <b>SQL Statement:</b> SELECT * FROM INGREDIENTES;
+	 * @return Arraylist con los ingredientes de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public ArrayList<Ingrediente> darIngredientes() throws SQLException, Exception {
+		ArrayList<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM INGREDIENTE";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			String name = rs.getString("NAME");
+			String name = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
+			String descripcion = rs.getString("DESCRIPCION");
+			String traduccion= rs.getString("TRADUCCION");
+			ingredientes.add(new Ingrediente(name, descripcion, traduccion, id));
 		}
-		return videos;
+		return ingredientes;
 	}
 
 
-	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
-
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		while (rs.next()) {
-			String name2 = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
-		}
-
-		return videos;
-	}
 	
 	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
+	 * Metodo que busca el ingrediente con el id que entra como parámetro.
+	 * @param name - Id de el ingrediente a buscar
+	 * @return Ingrediente encontrado
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
+	public Ingrediente buscarIngredientePorId(Long id) throws SQLException, Exception 
 	{
-		Video video = null;
+		Ingrediente ingrediente = null;
 
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
+		String sql = "SELECT * FROM INGREDIENTE WHERE ID =" + id;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		if(rs.next()) {
-			String name = rs.getString("NAME");
+			String name = rs.getString("NOMBRE");
 			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
+			String descripcion = rs.getString("DESCRIPCION");
+			String traduccion= rs.getString("TRADUCCION");
+			ingrediente=new Ingrediente(name, descripcion, traduccion, id2);
 		}
 
-		return video;
+		return ingrediente;
 	}
 
 	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
+	 * Metodo que agrega el ingrediente que entra como parámetro a la base de datos.
+	 * @param ingrediente - el ingrediente a agregar. ingrediente !=  null
+	 * <b> post: </b> se ha agregado el ingrediente a la base de datos en la transaction actual. pendiente que el ingrediente master
+	 * haga commit para que el ingrediente baje  a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el ingrediente a la base de datos
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void addVideo(Video video) throws SQLException, Exception {
+	public void addIngrediente(Ingrediente ingrediente) throws SQLException, Exception {
 
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
+		String sql = "INSERT INTO INGREDIENTE VALUES (";
+		sql +=   "IDINGREDIENTE.nextval,'";
+		sql += ingrediente.getNombre() + "','";
+		sql+=ingrediente.getDescripcion()+"','";
+		sql += ingrediente.getTraduccion() + "')";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -169,19 +147,20 @@ public class DAOTablaIngrediente {
 	}
 	
 	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
+	 * Metodo que actualiza el ingrediente que entra como parámetro en la base de datos.
+	 * @param ingrediente - el ingrediente a actualizar. ingrediente !=  null
+	 * <b> post: </b> se ha actualizado el ingrediente en la base de datos en la transaction actual. pendiente que el ingrediente master
 	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el ingrediente.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
+	public void updateIngrediente(Ingrediente ingrediente) throws SQLException, Exception {
 
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
+		String sql = "UPDATE INGREDIENTE SET ";
+		sql += "NOMBRE='" + ingrediente.getNombre() + "',";
+		sql += "DESCRIPCION='" + ingrediente.getDescripcion()+"',";
+		sql+="TRADUCCION='"+ingrediente.getTraduccion()+"'";
+		sql += " WHERE ID = " + ingrediente.getId();
 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -190,21 +169,29 @@ public class DAOTablaIngrediente {
 	}
 
 	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
+	 * Metodo que elimina el ingrediente que entra como parámetro en la base de datos.
+	 * @param ingrediente - el ingrediente a borrar. ingrediente !=  null
+	 * <b> post: </b> se ha borrado el ingrediente en la base de datos en la transaction actual. pendiente que el ingrediente master
 	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el ingrediente.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
+	public void deleteIngrediente(Ingrediente ingrediente) throws SQLException, Exception {
 
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
+		borrarIngredienteDeProducto(ingrediente.getId());
+		
+		String sql = "DELETE FROM INGREDIENTE";
+		sql += " WHERE ID = " + ingrediente.getId();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+	}
+
+	private void borrarIngredienteDeProducto(Long id) {
+		DAOTablaPerteneceAProducto prod= new DAOTablaPerteneceAProducto();
+		prod.setConn(this.conn);
+		prod.borrarIngredienteDeLista(id);
 	}
 
 }
