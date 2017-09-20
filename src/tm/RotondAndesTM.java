@@ -11,6 +11,7 @@
 package tm;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,10 +21,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import dao.DAOTablaCategoria;
 import dao.DAOTablaCondiciones;
+import dao.DAOTablaIngrediente;
+import dao.DAOTablaPreferencia;
+import dao.DAOTablaProducto;
+import dao.DAOTablaUsuario;
 import dao.DAOTablaVideos;
+import dao.DAOTablaZona;
 import vos.CondicionTecnica;
+import vos.Cuenta;
+import vos.Ingrediente;
+import vos.Preferencia;
+import vos.Producto;
+import vos.Producto.Tipos_De_Plato;
+import vos.Restaurante;
+import vos.Usuario;
+import vos.Usuario.Rol;
 import vos.Video;
+import vos.Zona;
+import vos.Categoria;
 
 /**
  * Transaction Manager de la aplicacion (TM)
@@ -381,15 +398,49 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	/*
+	
 	public static void main(String[] args) throws SQLException,Exception {
 		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData");
-		DAOTablaCondiciones cond = new DAOTablaCondiciones();
-		cond.setConn(tm.darConexion());
-		System.out.println(cond.buscarCondicionTecnicasPorName("Incapacitado").getNombre());
-		cond.cerrarRecursos();
-		tm.conn=null;
+		CondicionTecnica c1=new CondicionTecnica("E");
+		CondicionTecnica c2 = new CondicionTecnica("FG");
 		
-	}*/
+		
+		ArrayList<Ingrediente> ingrediente = new ArrayList<>();
+		Ingrediente i1= new Ingrediente("a","b","c",0l);
+		Ingrediente i2= new Ingrediente ("c","d","e",1l);
+		ingrediente.add(i1);
+		ingrediente.add(i2);
+		//DAOTablaIngrediente ing = new DAOTablaIngrediente();
+		//ing.setConn(tm.darConexion());
+		//ing.addIngrediente(i1);
+		//ing.addIngrediente(i2);
+		//ing.cerrarRecursos();
+		ArrayList<Categoria> categorias = new ArrayList<>();
+		categorias.add(new Categoria("Mexicano"));
+		categorias.add(new Categoria("Picante"));
+		
+		DAOTablaUsuario u = new DAOTablaUsuario();
+		u.setConn(tm.darConexion());
+		u.addUsuario(new Usuario("Sergio", 1l, "s.guzmanm", Rol.CLIENTE, new Preferencia(0.0,12.4,new ArrayList<Zona>(),categorias), new ArrayList<Cuenta>(), null));
+		/*DAOTablaPreferencia pr= new DAOTablaPreferencia();
+		pr.setConn(tm.darConexion());
+		pr.addPreferencia(0l, new Preferencia(0.0,12.4,new ArrayList<Zona>(),categorias));
+		pr.cerrarRecursos();
+		DAOTablaCategoria c = new DAOTablaCategoria();
+		c.setConn(tm.darConexion());
+		c.addCategoria(new Categoria("Mexicano"));
+		c.addCategoria(new Categoria("Picante"));
+		c.cerrarRecursos();
+		DAOTablaProducto p = new DAOTablaProducto();
+		p.setConn(tm.darConexion());
+		p.addProducto(new Producto(true, "ss", 12.4, Tipos_De_Plato.PLATO_FUERTE, "D", "e", 12.4, 10.0, new Long(0l), ingrediente, categorias));
+		p.cerrarRecursos();
+		tm.conn=null;*/
+		
+		
+		
+		
+		
+	}
 
 }

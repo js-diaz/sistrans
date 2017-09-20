@@ -117,8 +117,8 @@ public class DAOTablaCategoria {
 	 */
 	public void addCategoria(Categoria c) throws SQLException, Exception {
 
-		String sql = "INSERT INTO CATEGORIA VALUES (";
-		sql += c.getNombre() + ")";
+		String sql = "INSERT INTO CATEGORIA VALUES ('";
+		sql += c.getNombre() + "')";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

@@ -307,4 +307,14 @@ public class DAOTablaCuenta {
 		prod.cerrarRecursos();
 	}
 
+	public void actualizarCuentas(Long long1, List<Cuenta> historial) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void borrarHistorialCliente(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

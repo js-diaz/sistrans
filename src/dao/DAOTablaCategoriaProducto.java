@@ -215,7 +215,7 @@ public class DAOTablaCategoriaProducto {
 
 	public ArrayList<Categoria> buscarCategoriasPorId(Long id) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	public void agregarCategoriasPorId(Long id, List<Categoria> categorias) {

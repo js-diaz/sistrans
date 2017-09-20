@@ -121,7 +121,7 @@ public class DAOTablaPreferenciaCategoria {
 		{
 			sql = "INSERT INTO PREFERENCIACATEGORIA VALUES (";
 			sql += idUsuario+ ",'";
-			sql += c.getNombre() + ")";
+			sql += c.getNombre() + "')";
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
 			prepStmt.executeQuery();

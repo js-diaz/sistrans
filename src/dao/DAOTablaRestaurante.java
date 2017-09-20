@@ -161,4 +161,24 @@ public class DAOTablaRestaurante {
 		
 	}
 
+	public Restaurante darRestauranteDeUsuario(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertarPorIdDuenho(Long id, Restaurante restaurante) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void actualizarRestaurantesDeUsuario(Long id, Restaurante restaurante) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void borrarRestaurantePorId(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

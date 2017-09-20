@@ -333,4 +333,9 @@ public class DAOTablaPreferencia {
 		usuario.cerrarRecursos();
 		if (u==null) throw new Exception ("No existe el usuario");
 	}
+
+	public void actualizarPreferenciasDeUsuario(Long id, Preferencia preferencia) {
+		// TODO Auto-generated method stub
+		
+	}
 }
