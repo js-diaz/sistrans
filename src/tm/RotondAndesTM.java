@@ -435,11 +435,7 @@ public class RotondAndesTM {
 		p.setConn(tm.darConexion());
 		p.addProducto(new Producto(true, "ss", 12.4, Tipos_De_Plato.PLATO_FUERTE, "D", "e", 12.4, 10.0, new Long(0l), ingrediente, categorias));
 		p.cerrarRecursos();
-		tm.conn=null;*/
-		
-		
-		
-		
+		tm.conn=null;*/		
 		
 	}
 
