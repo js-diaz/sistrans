@@ -312,15 +312,17 @@ public class DAOTablaCuenta {
 		prod.eliminarPorNumeroCuenta(numeroCuenta);
 		prod.cerrarRecursos();
 	}
-
-	public void actualizarCuentas(Long long1, List<Cuenta> historial) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void borrarHistorialCliente(Long id) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Borra el historial de un cliente por su id.<br>
+	 * @param id Id del cliente a borrar su historial.<br>
+	 * @throws Exception Si alguna cosa sale mal.<br>
+	 * @throws SQLException Si algo sale mal respecto a la base de datos.
+	 */
+	public void borrarHistorialCliente(Long id) throws SQLException, Exception {
+		String sql ="DELETE FROM CUENTA WHERE USUARIOID ="+id;
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
 	}
 
 }

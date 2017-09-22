@@ -127,29 +127,6 @@ public class DAOTablaPreferenciaZona {
 			prepStmt.executeQuery();
 		}
 	}
-	//DEBERÍA?
-	public void actualizarPreferenciaPorId(Long idUsuario, List<Zona> zonas) throws SQLException, Exception{
-		// TODO Auto-generated method stub
-		ArrayList<Zona> cat =buscarZonaPorId(idUsuario);
-		boolean encontrado=false;
-		for(Zona c: zonas)
-		{
-			encontrado=false;
-			for(Zona d: cat)
-			{
-				if(c.getNombre().equals(d.getNombre())) 
-					{
-						encontrado=true;
-						break;
-					}
-			}
-			if(!encontrado)
-			{
-				
-			}
-		}
-	}
-
 	/**
 	 * Metodo que elimina la preferencia por zona que entra como parámetro en la base de datos.
 	 * @param idUsuario - Id de la preferencia por zona a borrar. preferencia !=  null

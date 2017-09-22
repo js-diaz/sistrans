@@ -127,29 +127,6 @@ public class DAOTablaPreferenciaCategoria {
 			prepStmt.executeQuery();
 		}
 	}
-	//DEBERÍA?
-	public void actualizarPreferenciaPorId(Long idUsuario, List<Categoria> categorias) throws SQLException, Exception{
-		// TODO Auto-generated method stub
-		ArrayList<Categoria> cat =buscarCategoriaPorId(idUsuario);
-		boolean encontrado=false;
-		for(Categoria c: categorias)
-		{
-			encontrado=false;
-			for(Categoria d: cat)
-			{
-				if(c.getNombre().equals(d.getNombre())) 
-					{
-						encontrado=true;
-						break;
-					}
-			}
-			if(!encontrado)
-			{
-				
-			}
-		}
-	}
-
 	/**
 	 * Metodo que elimina la preferencia por categoría que entra como parámetro en la base de datos.
 	 * @param idUsuario - Id de la preferencia por categoría a borrar. preferencia !=  null
