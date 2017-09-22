@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -175,7 +176,7 @@ public class DAOTablaCuenta {
 		String sql = "INSERT INTO CUENTA VALUES (";
 		sql += c.getValor() + ",'";
 		sql += c.getNumeroCuenta() + "',";
-		sql += c.getFecha()+",";
+		sql += dateFormat(c.getFecha())+",";
 		sql+= c.getCliente().getId()+")";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -187,6 +188,11 @@ public class DAOTablaCuenta {
 	}
 	
 	
+
+	private String dateFormat(Date fecha) {
+		SimpleDateFormat x = new SimpleDateFormat("dd/mm/yyyy hh24:mi:ss");
+		return "TODATE('"+x.format(fecha)+"','dd/mm/yyyy hh24:mi:ss')";
+	}
 
 	/**
 	 * Metodo que actualiza la cuenta que entra como parametro en la base de datos.
@@ -200,7 +206,7 @@ public class DAOTablaCuenta {
 
 		String sql = "UPDATE CUENTA SET ";
 		sql += "VALOR=" + c.getValor() + ",";
-		sql += "FECHA=" + c.getFecha();
+		sql += "FECHA=" + dateFormat(c.getFecha());
 		sql += " WHERE NUMEROCUENTA LIKE '" + c.getNumeroCuenta()+"'";
 
 
