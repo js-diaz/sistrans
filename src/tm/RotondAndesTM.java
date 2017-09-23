@@ -129,7 +129,7 @@ public class RotondAndesTM {
 	/**
 	 * Retorna las categorías del sistema.<br>
 	 * @return Lista de categorías.<br>
-	 * @throws Exception Si llega a pasar algo.
+	 * @throws Exception Si existe algún tipo de error Si llega a pasar algo.
 	 */
 	public List<Categoria> categoriaDarCategorias() throws Exception{
 		List<Categoria> categorias;
@@ -166,7 +166,12 @@ public class RotondAndesTM {
 		}
 		return categorias;
 	}
-	
+	/**
+	 * Busca la categoría por nombre.<br>
+	 * @param name Nombre de categoría.<br>
+	 * @return Categoría.<br>
+	 * @throws Exception Si existe algún tipo de error Si sucede algún error.
+	 */
 	public Categoria categoriaBuscarCategoriasPorName(String name) throws Exception
 	{
 		DAOTablaCategoria dao= new DAOTablaCategoria();
@@ -203,7 +208,11 @@ public class RotondAndesTM {
 		}
 		return c;
 	}
-	
+	/**
+	 * Añade una categoría.<br>
+	 * @param c Categoría a agregar.<br>
+	 * @throws Exception Si existe algún tipo de error Si ahay algún error.
+	 */
 	public void categoriaAddCategoria(Categoria c) throws Exception
 	{
 		DAOTablaCategoria dao = new DAOTablaCategoria();
@@ -238,7 +247,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra una categoría.<br>
+	 * @param c Categoría a borrar.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error.
+	 */
 	public void categoriaDeleteCategoria (Categoria c) throws Exception
 	{
 		DAOTablaCategoria dao = new DAOTablaCategoria();
@@ -281,7 +294,11 @@ public class RotondAndesTM {
 	//CategoriaRestaurante
 	
 	//Condiciones
-	
+	/**
+	 * Retorna todas las condiciones del sistema.<br>
+	 * @return Condiciones en lista.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error.
+	 */
 	public List<CondicionTecnica> condicionDarCondicionesTecnicas() throws Exception
 	{
 		DAOTablaCondiciones dao = new DAOTablaCondiciones();
@@ -318,7 +335,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca la condición por nombre.<br>
+	 * @param name Nombre.<br>
+	 * @return La condición con el nombre.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error.
+	 */
 	public CondicionTecnica condicionBuscarCondicionTecnicasPorName(String name) throws Exception
 	{
 		DAOTablaCondiciones dao= new DAOTablaCondiciones();
@@ -355,7 +377,11 @@ public class RotondAndesTM {
 		}
 		return c;
 	}
-	
+	/**
+	 * Añade una condición.<br>
+	 * @param c COndición
+	 * @throws Exception Si existe algún tipo de error Si hay algún error.
+	 */
 	public void condicionAddCondicionTecnica(CondicionTecnica c) throws Exception 
 	{
 		DAOTablaCondiciones dao = new DAOTablaCondiciones();
@@ -390,7 +416,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra una condición del sistema.<br>
+	 * @param c COndición.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error.
+	 */
 	public void condicionDeleteCondicionTecnica(CondicionTecnica c) throws Exception
 	{
 		DAOTablaCondiciones dao = new DAOTablaCondiciones();
@@ -426,6 +456,12 @@ public class RotondAndesTM {
 		}
 	}
 	//CondicionesZona
+	/**
+	 * Consulta condiciones por zona.<br>
+	 * @param nombreZona Nombre de la zona.<br>
+	 * @return Lista de condiciones.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error.
+	 */
 	public List<CondicionTecnica> condicionZonaConsultarZona(String nombreZona) throws Exception
 	{
 		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
@@ -463,7 +499,12 @@ public class RotondAndesTM {
 		return list;
 		
 	}
-	
+	/**
+	 * Consulta las zonas que cumplen con la condición.<br>
+	 * @param nombreCondicion Nombre de la condición.<br>
+	 * @return Zonas con la condición.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error.
+	 */
 	public List<Zona> condicionZonaConsultarPorCondicion (String nombreCondicion) throws Exception
 	{
 		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
@@ -500,7 +541,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Inserta condiciones por el nombre de la zona.<br>
+	 * @param nombreZona Nombre de la zona.<br>
+	 * @param condiciones Listado de condiciones.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error.
+	 */
 	public void condicionZonaInsertarPorZona(String nombreZona, List<CondicionTecnica> condiciones) throws Exception
 	{
 		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
@@ -535,7 +581,12 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Inserta zonas por el nombre de condición.<br>
+	 * @param nombre Nombre de la condición.<br>
+	 * @param zonas Zonas a insertar.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay errores.
+	 */
 	public void condicionZonaInsertarPorCondicion(String nombre, List<Zona> zonas) throws Exception
 	{
 		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
@@ -570,7 +621,12 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Insertar por condición y zona.<br>
+	 * @param nombreCondicion Nombre de la condición.<br>
+	 * @param nombreZona Nombre de la zona.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error.
+	 */
 	public void condicionZonaInsertarPorCondicionYZona(String nombreCondicion, String nombreZona) throws Exception
 	{
 		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
@@ -605,7 +661,12 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Elimina la relación de una zona con una condición específica.<br>
+	 * @param nombreZona Nombre de la zona.<br>
+	 * @param nombreCondicion Nombre de la condición.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay errores.
+	 */
 	public void condicionZonaEliminarCondicion(String nombreZona, String nombreCondicion) throws Exception
 	{
 		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
@@ -640,7 +701,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Elimina todas las condiciones por zona.<br>
+	 * @param nombreZona Nombre de zona.<br>
+	 * @throws Exception Si existe algún tipo de error SI hay errores.
+	 */
 	public void condicionZonaEliminarCondicionesPorZona(String nombreZona) throws Exception
 	{
 		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
@@ -675,7 +740,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Elimina condiciones por nombre de la condición técnica.<br>
+	 * @param condicionTecnica Nombre de condición.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay errores.
+	 */
 	public void condicionZonaEliminarCondicionesPorCondicion(String condicionTecnica) throws Exception
 	{
 		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
@@ -711,7 +780,11 @@ public class RotondAndesTM {
 		}
 	}
 	//Cuenta
-	
+	/**
+	 * Retorna todas las cuentas del sistema.<br>
+	 * @return Cuentas en lista.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error
+	 */
 	public List<Cuenta> cuentaDarCuentas() throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
@@ -748,7 +821,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca una cuenta por su número.<br>
+	 * @param numeroCuenta Número de cuenta.<br>
+	 * @return Cuenta con el número.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay algún error
+	 */
 	public Cuenta cuentaBuscarCuentasPorNumeroDeCuenta(String numeroCuenta) throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
@@ -785,7 +863,12 @@ public class RotondAndesTM {
 		}
 		return c;
 	}
-	
+	/**
+	 * Busca cuentas por un id de usuario<br>
+	 * @param id Id de usuario.<br>
+	 * @return Lista de cuentas.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay errores
+	 */
 	public List<Cuenta> cuentaBuscarCuentasPorId(Long id) throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
@@ -822,10 +905,15 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Agrega una cuetna.<br>
+	 * @param c Cuenta.<br>
+	 * @throws Exception Si existe algún tipo de error Si hay errores
+	 */
 	public void cuentaAddCuenta(Cuenta c) throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
+		//TODO Checho: Se deben verificar los pedidos de menús y productos.
 		try
 		{
 			this.conn=darConexion();
@@ -857,7 +945,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Actualiza una cuenta.<br>
+	 * @param c Cuenta
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void cuentaUpdateCuenta(Cuenta c) throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
@@ -892,7 +984,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra una cuenta.<br>
+	 * @param c Cuenta<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void cuentaDeleteCuenta (Cuenta c) throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
@@ -927,7 +1023,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra el historial de un cliente.<br>
+	 * @param id Id usuario<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void cuentaBorrarHistorialCliente(Long id) throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
@@ -963,6 +1063,11 @@ public class RotondAndesTM {
 		}
 	}
 	//Ingrediente
+	/**
+	 * Retorna una lista de ingredientes en el sistema.<br>
+	 * @return Lista de ingredientes.<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Ingrediente> ingredienteDarIngredientes() throws Exception
 	{
 		ArrayList<Ingrediente> list = null;
@@ -999,7 +1104,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca un ingrediente por id.<br>
+	 * @param id Id del ingrediente.<br>
+	 * @return Ingrediente.<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public Ingrediente ingredienteBuscarIngredientePorId(Long id) throws Exception
 	{
 		Ingrediente i = null;
@@ -1036,7 +1146,11 @@ public class RotondAndesTM {
 		}
 		return i;
 	}
-	
+	/**
+	 * Agrega una ingrediente al sistema.<br>
+	 * @param ingrediente Ingrediente.<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void ingredienteAddIngrediente(Ingrediente ingrediente) throws Exception
 	{
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
@@ -1071,7 +1185,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Actualiza un ingrediente<br>
+	 * @param ingrediente Ingrediente.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void ingredienteUpdateIngrediente(Ingrediente ingrediente) throws Exception
 	{
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
@@ -1106,7 +1224,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra un ingrediente <br>
+	 * @param ingrediente Ingrediente.<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void ingredienteDeleteIngrediente(Ingrediente ingrediente) throws Exception
 	{
 		DAOTablaIngrediente dao = new DAOTablaIngrediente();
@@ -1148,6 +1270,11 @@ public class RotondAndesTM {
 	//PerteneceAProducto
 	
 	//Preferencia
+	/**
+	 * Retorna preferencias del sistema.<br>
+	 * @return Lista de preferencias.<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Preferencia> preferenciaDarPreferencias() throws Exception
 	{
 		DAOTablaPreferencia dao = new DAOTablaPreferencia();
@@ -1184,7 +1311,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca preferencias por id de cliente.<br>
+	 * @param id Id del cliente.<br>
+	 * @return Preferencia de ese cliente.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public Preferencia preferenciaBuscarPreferenciaPorId(Long id) throws Exception
 	{
 		Preferencia p =null;
@@ -1221,7 +1353,13 @@ public class RotondAndesTM {
 		}
 		return p;
 	}
-	
+	/**
+	 * Busca preferencias en un rango dado.<br>
+	 * @param ini Precio inicial.<br>
+	 * @param fin Precio final.<br>
+	 * @return Preferencias en lista.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Preferencia> preferenciaBuscarPreferenciaPorRango(Double ini, Double fin) throws Exception
 	{
 		DAOTablaPreferencia dao = new DAOTablaPreferencia();
@@ -1258,10 +1396,25 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Agrega una preferencia a un usuario.<br>
+	 * @param idUsuario Id del usuario.<br>
+	 * @param p Preferencia.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaAddPreferencia(Long idUsuario, Preferencia p) throws Exception
 	{
 		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		for(Categoria c: p.getCategorias())
+		{
+			if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
+				throw new Exception("La categoría del usuario no existe "+c.getNombre());
+		}
+		for(Zona z: p.getZonas())
+		{
+			if(zonaBuscarZonasPorName(z.getNombre())==null)
+				throw new Exception("La zona del usuario no existe "+z.getNombre());
+		}
 		try
 		{
 			this.conn=darConexion();
@@ -1293,7 +1446,12 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Actualiza una preferencia de un usuario a nivel de precio.<br>
+	 * @param idUsuario Id del usuario.<br>
+	 * @param p Preferencia.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaActualizarPreferenciasDePrecioDeUsuario(Long idUsuario, Preferencia p) throws Exception
 	{
 		DAOTablaPreferencia dao = new DAOTablaPreferencia();
@@ -1328,7 +1486,12 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra la preferencia del usuario.<br>
+	 * @param idUsuario Id del usuario.<br>
+	 * @param p Preferencia.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaDeletePreferencia(Long idUsuario, Preferencia p) throws Exception
 	{
 		DAOTablaPreferencia dao = new DAOTablaPreferencia();
@@ -1364,7 +1527,12 @@ public class RotondAndesTM {
 		}
 	}
 	//PreferenciaCategoria
-	
+	/**
+	 * Busca las preferencias por categoría de un usuario.<br>
+	 * @param id Id del usuario.<br>
+	 * @return Lista de categorías que prefiere.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Categoria> buscarCategoriasPorId(Long id) throws Exception
 	{
 		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
@@ -1401,7 +1569,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca los usuarios que prefieren una categoría.<br>
+	 * @param cat Categoría.<br>
+	 * @return Listado de preferencias correspondientes.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Preferencia> preferenciaCategoriaBuscarCategoriaPorCategoria(Categoria cat) throws Exception
 	{
 		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
@@ -1438,7 +1611,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Inserta preferenciasCategoría por idUsuario.<br>
+	 * @param idUsuario Id de usuario.<br>
+	 * @param categorias Listado de categorías.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaCategoriaInsertarPreferenciasPorCategoria(Long idUsuario,List<Categoria> categorias) throws Exception
 	{
 		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
@@ -1473,7 +1651,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borrar preferenciasCategoría por id.<br>
+	 * @param idUsuario Id de usuario.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaCategoriaBorrarPorId(Long idUsuario) throws Exception
 	{
 		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
@@ -1508,7 +1690,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra preferenciasCategoría por id de categorías.<br>
+	 * @param id Nombre de categoría.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaCategoriaBorrarPorCategoria(String id) throws Exception
 	{
 		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
@@ -1543,7 +1729,12 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra usando los dos criterios de la tabla.<br>
+	 * @param idUsuario Id de usuario.<br>
+	 * @param id Id de categoría /nombre.<br>
+	 * @throws Exception Si existe algún tipo de error 
+	 */
 	public void preferenciaCategoriaBorrarMulticriterio(Long idUsuario, String id) throws Exception
 	{
 		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
@@ -1580,7 +1771,12 @@ public class RotondAndesTM {
 	}
 	
 	///PreferenciaZona
-	
+	/**
+	 * Retorna un listado de zonas para el id de preferencia.<br>
+	 * @param id Id del usuario.<br>
+	 * @return Lista de zonas.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Zona> preferenciaZonaBuscarZonasPorId(Long id) throws Exception
 	{
 		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
@@ -1617,7 +1813,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Retorna preferencias por una zona dada.<br>
+	 * @param cat Nombre de la zona.<br>
+	 * @return Listado de preferencias.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Preferencia> preferenciaZonaBuscarZonaPorZona(Zona cat) throws Exception
 	{
 		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
@@ -1654,7 +1855,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Inserta preferencias de zona por id de usuario.<br>
+	 * @param idUsuario Id del usuario.<br>
+	 * @param zonas Listado de zonas.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaZonaInsertarPreferenciasZona(Long idUsuario, List<Zona> zonas) throws Exception
 	{
 		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
@@ -1689,7 +1895,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra preferencias de zona por id.<br>
+	 * @param idUsuario Id del usuario.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaZonaBorrarPorId(Long idUsuario) throws Exception
 	{
 		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
@@ -1724,7 +1934,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Modifica las preferencias si se elimina una zona.<br>
+	 * @param id Id del usuario.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaZonaModificarPorZonaEliminada(String id) throws Exception
 	{
 		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
@@ -1759,7 +1973,12 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra usando los dos criterios de la tabla.<br>
+	 * @param idUsuario Id del usuario.<br>
+	 * @param id Id o nombre de la zona.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void preferenciaZonaBorrarMulticriterio(Long idUsuario,String id) throws Exception
 	{
 		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
@@ -1795,6 +2014,11 @@ public class RotondAndesTM {
 		}
 	}
 	//Producto
+	/**
+	 * Da los productos del sistema.<br>
+	 * @return Productos en lista.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Producto> productoDarProductos() throws Exception
 	{
 		List<Producto> list =null;
@@ -1831,7 +2055,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca los productos que posean el nombre dado.<br>
+	 * @param name Nombre.<br>
+	 * @return Listado de productos.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Producto> productoBuscarProductoPorName(String name) throws Exception
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
@@ -1868,7 +2097,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca productos por id dado.<br>
+	 * @param id Id del producto.<br>
+	 * @return Producto con el id.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public Producto productoBuscarProductoPorId(Long id) throws Exception
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
@@ -1905,10 +2139,20 @@ public class RotondAndesTM {
 		}
 		return p;
 	}
-	
+	/**
+	 * Agrega el producto.<br>
+	 * @param producto Producto.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void productoAddProducto(Producto producto) throws Exception
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
+		// TODO C1: Cuando Sebastián añada su parte debo verificar que los ingredientes del prducto existan.
+		for(Categoria c: producto.getCategorias())
+		{
+			if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
+				throw new Exception("La categoría buscada no existe "+c.getNombre());
+		}
 		try
 		{
 			this.conn=darConexion();
@@ -1940,7 +2184,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Actualiza el producto.<br>
+	 * @param producto Producto.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void productoUpdateProducto(Producto producto) throws Exception
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
@@ -1975,7 +2223,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra el producto.<br>
+	 * @param producto Producto.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void deleteProducto(Producto producto) throws Exception
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
@@ -2010,7 +2262,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra productos por tipo.<br>
+	 * @param nombreTipo Nombre del tipo.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void productoBorrarProductosPorTipo(String nombreTipo) throws Exception
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
@@ -2045,7 +2301,12 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Da productos por tipo.<br>
+	 * @param nombreTipo Nombre del tipo.<br>
+	 * @return Listado de productos.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Producto> productoDarProductosPorTipo(String nombreTipo) throws Exception
 	{
 		List<Producto> list =null;
@@ -2087,6 +2348,11 @@ public class RotondAndesTM {
 	//Restaurante
 	
 	//Rol
+	/**
+	 * Da los roles en el sistema.<br>
+	 * @return Litado de roles.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Rol> rolDarRols() throws Exception
 	{
 		DAOTablaRol dao = new DAOTablaRol();
@@ -2123,7 +2389,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca un rol por nombre.<br>
+	 * @param name Nombre
+	 * @return Rol por nombre.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public Rol rolBuscarRolsPorName(String name) throws Exception
 	{
 		DAOTablaRol dao = new DAOTablaRol();
@@ -2160,7 +2431,11 @@ public class RotondAndesTM {
 		}
 		return r;
 	}
-	
+	/**
+	 * Agrega un rol al sistema.<br>
+	 * @param rol Rol
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void rolAddRol(Rol rol) throws Exception
 	{
 		DAOTablaRol dao = new DAOTablaRol();
@@ -2195,7 +2470,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra un rol del sistema.<br>
+	 * @param rol Rol
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void rolDeleteRol(Rol rol) throws Exception
 	{
 		DAOTablaRol dao = new DAOTablaRol();
@@ -2231,6 +2510,11 @@ public class RotondAndesTM {
 		}
 	}
 	//TiposPlato
+	/**
+	 * Da los tipos de plato en el sistema.<br>
+	 * @return Listado de tipos.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<TiposDePlato> tiposDarTipos_De_Plato() throws Exception
 	{
 		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
@@ -2267,7 +2551,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca el tipo por nombre.<br>
+	 * @param name Nombre<br>
+	 * @return Tipo dado.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public TiposDePlato tiposBuscarTipos_De_PlatosPorName(String name) throws Exception
 	{
 		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
@@ -2305,7 +2594,11 @@ public class RotondAndesTM {
 		return tipo;
 		
 	}
-	
+	/**
+	 * Agrega un nuevo tipo al sistema.<br>
+	 * @param tipo TIpo dado.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void tiposAddTipos_De_Plato(TiposDePlato tipo) throws Exception
 	{
 		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
@@ -2340,7 +2633,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra un tipo del sistema.<br>
+	 * @param tipo Tipo.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void tiposDeleteTipos_De_Plato(TiposDePlato tipo) throws Exception
 	{
 		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
@@ -2376,6 +2673,11 @@ public class RotondAndesTM {
 		}
 	}
 	//Usuario
+	/**
+	 * Da los usuarios del sistema.<br>
+	 * @return Listado de usuarios.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Usuario> usuarioDarUsuarios() throws Exception
 	{
 		List<Usuario> list =null;
@@ -2412,7 +2714,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca usuarios por nombre.<br>
+	 * @param nombre Nombre de usuario.<br>
+	 * @return Listado de usuarios.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Usuario> usuarioBuscarUsuariosPorName(String nombre) throws Exception
 	{
 		List<Usuario> list =null;
@@ -2449,7 +2756,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca usuarios por rol.<br>
+	 * @param nombreRol Nombre del rol.<br>
+	 * @return Listado de usuarios.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Usuario> usuarioBuscarUsuarioPorRol(String nombreRol) throws Exception
 	{
 		List<Usuario> list=null;
@@ -2486,7 +2798,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca al usuario por id.<br>
+	 * @param id Id del usuario.<br>
+	 * @return Usuario buscado.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public Usuario usuarioBuscarUsuarioPorId(Long id) throws Exception
 	{
 		Usuario u =null;
@@ -2523,10 +2840,28 @@ public class RotondAndesTM {
 		}
 		return u;
 	}
-	
+	/**
+	 * Agrega un usuario al sistema.<br>
+	 * @param usuario Usuario a agregar.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void usuarioAddUsuario(Usuario usuario) throws Exception
 	{
 		DAOTablaUsuario dao = new DAOTablaUsuario();
+		Preferencia p = usuario.getPreferencia();
+		if(p!=null)
+		{
+			for(Categoria c: p.getCategorias())
+			{
+				if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
+					throw new Exception("La categoría del usuario no existe "+c.getNombre());
+			}
+			for(Zona z: p.getZonas())
+			{
+				if(zonaBuscarZonasPorName(z.getNombre())==null)
+					throw new Exception("La zona del usuario no existe "+z.getNombre());
+			}
+		}
 		try
 		{
 			this.conn=darConexion();
@@ -2558,7 +2893,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Actualiza al usuario.<br>
+	 * @param usuario usuario.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void usuarioUpdateUsuario(Usuario usuario) throws Exception
 	{
 		DAOTablaUsuario dao = new DAOTablaUsuario();
@@ -2593,7 +2932,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra al usuario del sistema.<br>
+	 * @param usuario Usuario.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void usuarioDeleteUsuario(Usuario usuario) throws Exception
 	{
 		DAOTablaUsuario dao = new DAOTablaUsuario();
@@ -2628,7 +2971,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra a los usuarios con un rol dado.<br>
+	 * @param nombreRol Nombre del rol.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void usuarioBorrarPorRol(String nombreRol) throws Exception
 	{
 		DAOTablaUsuario dao = new DAOTablaUsuario();
@@ -2664,7 +3011,11 @@ public class RotondAndesTM {
 		}
 	}
 	//Zona
-	
+	/**
+	 * Retorna las zonas del sistema.<br>
+	 * @return Zonas.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public List<Zona> zonaDarZonas() throws Exception
 	{
 		List<Zona> list =null;
@@ -2701,7 +3052,12 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+	/**
+	 * Busca una zona por nombre.<br>
+	 * @param name Nombre de zona.<br>
+	 * @return La zona.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public Zona zonaBuscarZonasPorName(String name) throws Exception
 	{
 		Zona z =null;
@@ -2738,10 +3094,19 @@ public class RotondAndesTM {
 		}
 		return z;
 	}
-	
+	/**
+	 * Agrega una zona.<br>
+	 * @param zona Zona.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void zonaAddZona(Zona zona) throws Exception
 	{
 		DAOTablaZona dao = new DAOTablaZona();
+		for(CondicionTecnica c: zona.getCondiciones())
+		{
+			if(condicionBuscarCondicionTecnicasPorName(c.getNombre())==null) 
+				throw new Exception("Hay condiciones de la zona que no existen en el sistema con "+c.getNombre());
+		}
 		try
 		{
 			this.conn=darConexion();
@@ -2773,7 +3138,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Actualiza una zona.<br>
+	 * @param zona Zona.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void zonaUpdateZona(Zona zona) throws Exception
 	{
 		DAOTablaZona dao = new DAOTablaZona();
@@ -2808,7 +3177,11 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	/**
+	 * Borra una zona.<br>
+	 * @param zona Zona.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
 	public void zonaDeleteZona(Zona zona) throws Exception
 	{
 		DAOTablaZona dao = new DAOTablaZona();
@@ -2849,7 +3222,7 @@ public class RotondAndesTM {
 	/**
 	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
 	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
-	 * @throws Exception -  cualquier error que se genere durante la transaccion
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
 	 */
 	public List<Video> darVideos() throws Exception {
 		List<Video> videos;
@@ -2887,7 +3260,7 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que busca el/los videos en la base de datos con el nombre entra como parametro.
 	 * @param name - Nombre del video a buscar. name != null
 	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
-	 * @throws Exception -  cualquier error que se genere durante la transaccion
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
 	 */
 	public List<Video> buscarVideosPorName(String name) throws Exception {
 		List<Video> videos;
@@ -2925,7 +3298,7 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que busca el video en la base de datos con el id que entra como parametro.
 	 * @param name - Id del video a buscar. name != null
 	 * @return Video - Resultado de la busqueda
-	 * @throws Exception -  cualquier error que se genere durante la transaccion
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
 	 */
 	public Video buscarVideoPorId(Long id) throws Exception {
 		Video video;
@@ -2963,7 +3336,7 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que agrega un solo video a la base de datos.
 	 * <b> post: </b> se ha agregado el video que entra como parametro
 	 * @param video - el video a agregar. video != null
-	 * @throws Exception - cualquier error que se genere agregando el video
+	 * @throws Exception Si existe algún tipo de error - cualquier error que se genere agregando el video
 	 */
 	public void addVideo(Video video) throws Exception {
 		DAOTablaVideos daoVideos = new DAOTablaVideos();
@@ -3000,7 +3373,7 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que agrega los videos que entran como parametro a la base de datos.
 	 * <b> post: </b> se han agregado los videos que entran como parametro
 	 * @param videos - objeto que modela una lista de videos y se estos se pretenden agregar. videos != null
-	 * @throws Exception - cualquier error que se genera agregando los videos
+	 * @throws Exception Si existe algún tipo de error - cualquier error que se genera agregando los videos
 	 */
 	public void addVideos(List<Video> videos) throws Exception {
 		DAOTablaVideos daoVideos = new DAOTablaVideos();
@@ -3044,7 +3417,7 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que actualiza el video que entra como parametro a la base de datos.
 	 * <b> post: </b> se ha actualizado el video que entra como parametro
 	 * @param video - Video a actualizar. video != null
-	 * @throws Exception - cualquier error que se genera actualizando los videos
+	 * @throws Exception Si existe algún tipo de error - cualquier error que se genera actualizando los videos
 	 */
 	public void updateVideo(Video video) throws Exception {
 		DAOTablaVideos daoVideos = new DAOTablaVideos();
@@ -3080,7 +3453,7 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que elimina el video que entra como parametro a la base de datos.
 	 * <b> post: </b> se ha eliminado el video que entra como parametro
 	 * @param video - Video a eliminar. video != null
-	 * @throws Exception - cualquier error que se genera actualizando los videos
+	 * @throws Exception Si existe algún tipo de error - cualquier error que se genera actualizando los videos
 	 */
 	public void deleteVideo(Video video) throws Exception {
 		DAOTablaVideos daoVideos = new DAOTablaVideos();
@@ -3117,38 +3490,9 @@ public class RotondAndesTM {
 		CondicionTecnica c1=new CondicionTecnica("E");
 		CondicionTecnica c2 = new CondicionTecnica("FG");
 		
-		
-		ArrayList<Ingrediente> ingrediente = new ArrayList<>();
-		Ingrediente i1= new Ingrediente("a","b","c",0l);
-		Ingrediente i2= new Ingrediente ("c","d","e",1l);
-		ingrediente.add(i1);
-		ingrediente.add(i2);
-		//DAOTablaIngrediente ing = new DAOTablaIngrediente();
-		//ing.setConn(tm.darConexion());
-		//ing.addIngrediente(i1);
-		//ing.addIngrediente(i2);
-		//ing.cerrarRecursos();
-		ArrayList<Categoria> categorias = new ArrayList<>();
-		categorias.add(new Categoria("Mexicano"));
-		categorias.add(new Categoria("Picante"));
-		
-		DAOTablaUsuario u = new DAOTablaUsuario();
-		u.setConn(tm.darConexion());
-		u.addUsuario(new Usuario("Sergio", 1l, "s.guzmanm", Rol.CLIENTE, new Preferencia(0.0,12.4,new ArrayList<Zona>(),categorias), new ArrayList<Cuenta>(), null));
-		/*DAOTablaPreferencia pr= new DAOTablaPreferencia();
-		pr.setConn(tm.darConexion());
-		pr.addPreferencia(0l, new Preferencia(0.0,12.4,new ArrayList<Zona>(),categorias));
-		pr.cerrarRecursos();
-		DAOTablaCategoria c = new DAOTablaCategoria();
-		c.setConn(tm.darConexion());
-		c.addCategoria(new Categoria("Mexicano"));
-		c.addCategoria(new Categoria("Picante"));
-		c.cerrarRecursos();
-		DAOTablaProducto p = new DAOTablaProducto();
-		p.setConn(tm.darConexion());
-		p.addProducto(new Producto(true, "ss", 12.4, Tipos_De_Plato.PLATO_FUERTE, "D", "e", 12.4, 10.0, new Long(0l), ingrediente, categorias));
-		p.cerrarRecursos();
-		tm.conn=null;*/		
+		ArrayList<CondicionTecnica> c = new ArrayList<>();
+		c.add(c2);
+		tm.zonaAddZona(new Zona(10, false, true, 3, "hola", c, new ArrayList<Restaurante>()));
 		
 	}
 

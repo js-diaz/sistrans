@@ -122,7 +122,7 @@ public class DAOTablaCondicionesZona {
 		{
 			sql="INSERT INTO CONDICIONZONA VALUES (";
 			sql+="'"+c.getNombre()+"',";
-			sql+="'"+nombreZona+"'";
+			sql+="'"+nombreZona+"')";
 			prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
 			prepStmt.executeQuery();
@@ -144,7 +144,7 @@ public class DAOTablaCondicionesZona {
 		{
 			sql="INSERT INTO CONDICIONZONA VALUES (";
 			sql+="'"+nombre+"',";
-			sql+="'"+z.getNombre()+"'";
+			sql+="'"+z.getNombre()+"')";
 			prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
 			prepStmt.executeQuery();
@@ -164,7 +164,7 @@ public class DAOTablaCondicionesZona {
 		PreparedStatement prepStmt = null;
 			sql="INSERT INTO CONDICIONZONA VALUES (";
 			sql+="'"+nombreCondicion+"',";
-			sql+="'"+nombreZona+"'";
+			sql+="'"+nombreZona+"')";
 			prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
 			prepStmt.executeQuery();
