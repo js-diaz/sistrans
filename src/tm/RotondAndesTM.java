@@ -2228,7 +2228,7 @@ public class RotondAndesTM {
 	 * @param producto Producto.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void deleteProducto(Producto producto) throws Exception
+	public void productoDeleteProducto(Producto producto) throws Exception
 	{
 		DAOTablaProducto dao = new DAOTablaProducto();
 		try
