@@ -235,6 +235,18 @@ public class DAOTablaCuenta {
 		prepStmt.executeQuery();
 	}
 	/**
+	 * Borra el historial de un cliente por su id.<br>
+	 * @param id Id del cliente a borrar su historial.<br>
+	 * @throws Exception Si alguna cosa sale mal.<br>
+	 * @throws SQLException Si algo sale mal respecto a la base de datos.
+	 */
+	public void borrarHistorialCliente(Long id) throws SQLException, Exception {
+		String sql ="DELETE FROM CUENTA WHERE USUARIOID ="+id;
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+	/**
 	 * Busca el usuario por el id dado.<br>
 	 * @param int1 Id del usuario.<br>
 	 * @return Usuario buscado
@@ -312,17 +324,6 @@ public class DAOTablaCuenta {
 		prod.eliminarPorNumeroCuenta(numeroCuenta);
 		prod.cerrarRecursos();
 	}
-	/**
-	 * Borra el historial de un cliente por su id.<br>
-	 * @param id Id del cliente a borrar su historial.<br>
-	 * @throws Exception Si alguna cosa sale mal.<br>
-	 * @throws SQLException Si algo sale mal respecto a la base de datos.
-	 */
-	public void borrarHistorialCliente(Long id) throws SQLException, Exception {
-		String sql ="DELETE FROM CUENTA WHERE USUARIOID ="+id;
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
+	
 
 }

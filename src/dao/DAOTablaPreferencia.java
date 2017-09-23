@@ -176,7 +176,7 @@ public class DAOTablaPreferencia {
 	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la preferencia.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void updatePreferencia(Long idUsuario,Preferencia p) throws SQLException, Exception {
+	public void actualizarPreferenciasDePrecioDeUsuario(Long idUsuario,Preferencia p) throws SQLException, Exception {
 
 		verificarusuario(idUsuario);
 		String sql = "UPDATE PREFERENCIA SET ";
@@ -190,8 +190,6 @@ public class DAOTablaPreferencia {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
-		actualizarPreferenciaZona(idUsuario,p);
-		actualizarPreferenciaCategoria(idUsuario,p);
 	}
 
 	
@@ -266,32 +264,7 @@ public class DAOTablaPreferencia {
 		pref.cerrarRecursos();
 		return z;
 	}
-	/**
-	 * Actualiza las preferencias de categoría de un usuario.<br>
-	 * @param idUsuario Id del usuario.<br>
-	 * @param p Preferencia
-	 * @throws SQLException Si algo sale mal en la BD.<br>
-	 * @throws Exception Cualquier otra cosa mala.
-	 */
-	private void actualizarPreferenciaCategoria(Long idUsuario, Preferencia p) throws SQLException, Exception {
-		DAOTablaPreferenciaCategoria pref = new DAOTablaPreferenciaCategoria();
-		pref.setConn(conn);
-		pref.actualizarPreferenciaPorId(idUsuario,p.getCategorias());
-		pref.cerrarRecursos();
-	}
-	/**
-	 * Actualiza las preferencias de zona de un usuario.<br>
-	 * @param idUsuario Id del usuario.<br>
-	 * @param p Preferencia.<br>
-	 * @throws SQLException Si algo sale mal en la BD.<br>
-	 * @throws Exception Cualquier otra cosa mala.
-	 */
-	private void actualizarPreferenciaZona(Long idUsuario, Preferencia p) throws SQLException, Exception{
-		DAOTablaPreferenciaZona pref = new DAOTablaPreferenciaZona();
-		pref.setConn(conn);
-		pref.actualizarPreferenciaPorId(idUsuario,p.getZonas());
-		pref.cerrarRecursos();
-	}
+	
 	
 	/**
 	 * Inserta preferencias por zona con la preferencia dada.<br>
@@ -332,10 +305,5 @@ public class DAOTablaPreferencia {
 		Usuario u = usuario.buscarUsuarioPorId(idUsuario);
 		usuario.cerrarRecursos();
 		if (u==null) throw new Exception ("No existe el usuario");
-	}
-
-	public void actualizarPreferenciasDeUsuario(Long id, Preferencia preferencia) {
-		// TODO Auto-generated method stub
-		
 	}
 }

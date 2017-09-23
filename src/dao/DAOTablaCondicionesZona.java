@@ -210,8 +210,8 @@ public class DAOTablaCondicionesZona {
 	}
 	/**
 	 * Elimina las condiciones por nombreDeCondicion dada en parámetro.<br>
-	 * @param nombreZona Nombre de la zona a eliminar diferente de nulo.<br>
-	 * <b> post: </b> se ha borrado la zona en la base de datos en la transaction actual. pendiente que la master
+	 * @param condicionTecnica Nombre de la condición a eliminar diferente de nulo.<br>
+	 * <b> post: </b> se ha borrado la condición en la base de datos en la transaction actual. pendiente que la master
 	 * haga commit para que los cambios bajen a la base de datos.
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.

@@ -178,7 +178,10 @@ public class DAOTablaIngrediente {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
-
+	/**
+	 * Borra todos los ingredientes de la tabla de productos con el id dado.<br>
+	 * @param id Id del ingrediente a borrar.
+	 */
 	private void borrarIngredienteDeProducto(Long id) {
 		DAOTablaPerteneceAProducto prod= new DAOTablaPerteneceAProducto();
 		prod.setConn(this.conn);

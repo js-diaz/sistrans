@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.*;
-import vos.Producto.Tipos_De_Plato;
+import vos.Producto.TiposDePlato;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
@@ -85,12 +85,12 @@ public class DAOTablaProducto {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		DAOTablaTipos_De_Plato tipos = new DAOTablaTipos_De_Plato();
+		DAOTablaTiposProducto tipos = new DAOTablaTiposProducto();
 		tipos.setConn(conn);
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
-			Tipos_De_Plato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
+			TiposDePlato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
 			Double prcio =rs.getDouble("PRECIO");
 			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
 			String descripcion  = rs.getString("DESCRIPCION");
@@ -121,11 +121,11 @@ public class DAOTablaProducto {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-		DAOTablaTipos_De_Plato tipos = new DAOTablaTipos_De_Plato();
+		DAOTablaTiposProducto tipos = new DAOTablaTiposProducto();
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
-			Tipos_De_Plato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
+			TiposDePlato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
 			Double prcio =rs.getDouble("PRECIO");
 			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
 			String descripcion  = rs.getString("DESCRIPCION");
@@ -158,11 +158,11 @@ public class DAOTablaProducto {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-		DAOTablaTipos_De_Plato tipos = new DAOTablaTipos_De_Plato();
+		DAOTablaTiposProducto tipos = new DAOTablaTiposProducto();
 		if(rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			Long id2 = rs.getLong("ID");
-			Tipos_De_Plato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
+			TiposDePlato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
 			Double prcio =rs.getDouble("PRECIO");
 			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
 			String descripcion  = rs.getString("DESCRIPCION");
@@ -286,11 +286,11 @@ public class DAOTablaProducto {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-		DAOTablaTipos_De_Plato tipos = new DAOTablaTipos_De_Plato();
+		DAOTablaTiposProducto tipos = new DAOTablaTiposProducto();
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
-			Tipos_De_Plato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
+			TiposDePlato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
 			Double prcio =rs.getDouble("PRECIO");
 			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
 			String descripcion  = rs.getString("DESCRIPCION");
@@ -364,7 +364,7 @@ public class DAOTablaProducto {
 	 * @param tipo Tipo recibido.<br>
 	 * @return Tipo convertido en String.
 	 */
-	private String convertirTipo(Tipos_De_Plato tipo) {
+	private String convertirTipo(TiposDePlato tipo) {
 		switch(tipo)
 		{
 		case ENTRADA: return "ENTRADA";

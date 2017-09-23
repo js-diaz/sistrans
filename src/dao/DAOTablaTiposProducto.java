@@ -9,13 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.*;
-import vos.Producto.Tipos_De_Plato;
+import vos.Producto.TiposDePlato;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
  * @author s.guzmanm
  */
-public class DAOTablaTipos_De_Plato {
+public class DAOTablaTiposProducto {
 
 
 	/**
@@ -32,7 +32,7 @@ public class DAOTablaTipos_De_Plato {
 	 * Metodo constructor que crea DAOTipos_De_Plato
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
-	public DAOTablaTipos_De_Plato() {
+	public DAOTablaTiposProducto() {
 		recursos = new ArrayList<Object>();
 	}
 
@@ -67,8 +67,8 @@ public class DAOTablaTipos_De_Plato {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Tipos_De_Plato> darTipos_De_Platos() throws SQLException, Exception {
-		ArrayList<Tipos_De_Plato> tipos = new ArrayList<Tipos_De_Plato>();
+	public ArrayList<TiposDePlato> darTipos_De_Platos() throws SQLException, Exception {
+		ArrayList<TiposDePlato> tipos = new ArrayList<TiposDePlato>();
 
 		String sql = "SELECT * FROM TIPOSDEPLATO";
 
@@ -91,8 +91,8 @@ public class DAOTablaTipos_De_Plato {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public Tipos_De_Plato buscarTipos_De_PlatosPorName(String name) throws SQLException, Exception {
-		ArrayList<Tipos_De_Plato> tipos = new ArrayList<Tipos_De_Plato>();
+	public TiposDePlato buscarTipos_De_PlatosPorName(String name) throws SQLException, Exception {
+		ArrayList<TiposDePlato> tipos = new ArrayList<TiposDePlato>();
 
 		String sql = "SELECT * FROM TIPOSDEPLATO WHERE NOMBRE LIKE'" + name + "'";
 
@@ -100,7 +100,7 @@ public class DAOTablaTipos_De_Plato {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		Tipos_De_Plato tipo = null;
+		TiposDePlato tipo = null;
 		if (rs.next()) {
 			String name2 = rs.getString("NOMBRE");
 			tipo=convertirAPlato(name2);
@@ -118,7 +118,7 @@ public class DAOTablaTipos_De_Plato {
 	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el tipo a la base de datos
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void addTipos_De_Plato(Tipos_De_Plato tipo) throws SQLException, Exception {
+	public void addTipos_De_Plato(TiposDePlato tipo) throws SQLException, Exception {
 
 		String sql = "INSERT INTO TIPOSDEPLATO VALUES (";
 		sql += "'"+ convertirPlato(tipo) + "')";
@@ -138,7 +138,7 @@ public class DAOTablaTipos_De_Plato {
 	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el tipo.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void deleteTipos_De_Plato(Tipos_De_Plato tipo) throws SQLException, Exception {
+	public void deleteTipos_De_Plato(TiposDePlato tipo) throws SQLException, Exception {
 
 		borrarProductosPorTipo(convertirPlato(tipo));
 		String sql = "DELETE FROM TIPOSDEPLATO";
@@ -164,7 +164,7 @@ public class DAOTablaTipos_De_Plato {
 	 * @param tipo Tipo de plato.<br>
 	 * @return Mensaje string
 	 */
-	private String convertirPlato(Tipos_De_Plato tipo)
+	private String convertirPlato(TiposDePlato tipo)
 	{
 		switch(tipo)
 		{
@@ -181,15 +181,15 @@ public class DAOTablaTipos_De_Plato {
 	 * @param nombreTipo Nombre del tipo a convertir.<br>
 	 * @return Tipo de plato correspondiente.
 	 */
-	private Tipos_De_Plato convertirAPlato(String nombreTipo)
+	private TiposDePlato convertirAPlato(String nombreTipo)
 	{
 		switch (nombreTipo)
 		{
-		case"ENTRADA": return Tipos_De_Plato.ENTRADA;
-		case "POSTRE": return Tipos_De_Plato.POSTRE;
-		case "PLATO FUERTE": return Tipos_De_Plato.PLATO_FUERTE;
-		case "ACOMPAÑAMIENTO": return Tipos_De_Plato.ACOMPANAMIENTO;
-		case "BEBIDA": return Tipos_De_Plato.BEBIDA;
+		case"ENTRADA": return TiposDePlato.ENTRADA;
+		case "POSTRE": return TiposDePlato.POSTRE;
+		case "PLATO FUERTE": return TiposDePlato.PLATO_FUERTE;
+		case "ACOMPAÑAMIENTO": return TiposDePlato.ACOMPANAMIENTO;
+		case "BEBIDA": return TiposDePlato.BEBIDA;
 		default: return null;
 		}
 	}

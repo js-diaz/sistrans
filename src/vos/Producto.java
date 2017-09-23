@@ -16,7 +16,7 @@ public class Producto {
 	 * @author jc161
 	 *
 	 */
-	public enum Tipos_De_Plato{
+	public enum TiposDePlato{
 		POSTRE,BEBIDA,PLATO_FUERTE,
 		ACOMPANAMIENTO,ENTRADA;
 	}
@@ -39,7 +39,7 @@ public class Producto {
 	 * Tipo del producto
 	 */
 	@JsonProperty(value="tipo")
-	private Tipos_De_Plato tipo;
+	private TiposDePlato tipo;
 	/**
 	 * Descripcion del producto.
 	 */
@@ -87,7 +87,7 @@ public class Producto {
 	 * @param costoProduccion<br>
 	 * @param id <br>
 	 */
-	public Producto(@JsonProperty(value="personalizable")boolean personalizable, @JsonProperty(value="nombre")String nombre,@JsonProperty(value="precio") double prcio, @JsonProperty(value="tipo")Tipos_De_Plato tipo, @JsonProperty(value="descripcion")String descripcion,
+	public Producto(@JsonProperty(value="personalizable")boolean personalizable, @JsonProperty(value="nombre")String nombre,@JsonProperty(value="precio") double prcio, @JsonProperty(value="tipo")TiposDePlato tipo, @JsonProperty(value="descripcion")String descripcion,
 			@JsonProperty(value="traduccion")String traduccion, @JsonProperty(value="tiempo")double tiempo, @JsonProperty(value="costoProduccion")double costoProduccion, @JsonProperty(value="id")Long id
 			,@JsonProperty(value="ingredientes") List<Ingrediente> ingredientes, @JsonProperty(value="categorias")List<Categoria> categorias) {
 		super();
@@ -149,14 +149,14 @@ public class Producto {
 	 * Obtiene el tipo de plato.<br>
 	 * @return tipo
 	 */
-	public Tipos_De_Plato getTipo() {
+	public TiposDePlato getTipo() {
 		return tipo;
 	}
 	/**
 	 * Modifica el tipo de plato al dado por parámetro.<br>
 	 * @param tipo
 	 */
-	public void setTipo(Tipos_De_Plato tipo) {
+	public void setTipo(TiposDePlato tipo) {
 		this.tipo = tipo;
 	}
 	/**

@@ -21,20 +21,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import dao.DAOTablaCategoria;
-import dao.DAOTablaCondiciones;
-import dao.DAOTablaIngrediente;
-import dao.DAOTablaPreferencia;
-import dao.DAOTablaProducto;
-import dao.DAOTablaUsuario;
-import dao.DAOTablaVideos;
-import dao.DAOTablaZona;
+import dao.*;
 import vos.CondicionTecnica;
 import vos.Cuenta;
 import vos.Ingrediente;
 import vos.Preferencia;
 import vos.Producto;
-import vos.Producto.Tipos_De_Plato;
+import vos.Producto.TiposDePlato;
 import vos.Restaurante;
 import vos.Usuario;
 import vos.Usuario.Rol;
@@ -132,7 +125,2727 @@ public class RotondAndesTM {
 	///////Transacciones////////////////////
 	////////////////////////////////////////
 
-
+	//CATEGORIA
+	/**
+	 * Retorna las categorías del sistema.<br>
+	 * @return Lista de categorías.<br>
+	 * @throws Exception Si llega a pasar algo.
+	 */
+	public List<Categoria> categoriaDarCategorias() throws Exception{
+		List<Categoria> categorias;
+		DAOTablaCategoria dao= new DAOTablaCategoria();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			categorias=dao.darCategorias();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return categorias;
+	}
+	
+	public Categoria categoriaBuscarCategoriasPorName(String name) throws Exception
+	{
+		DAOTablaCategoria dao= new DAOTablaCategoria();
+		Categoria c=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			c=dao.buscarCategoriasPorName(name);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return c;
+	}
+	
+	public void categoriaAddCategoria(Categoria c) throws Exception
+	{
+		DAOTablaCategoria dao = new DAOTablaCategoria();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addCategoria(c);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void categoriaDeleteCategoria (Categoria c) throws Exception
+	{
+		DAOTablaCategoria dao = new DAOTablaCategoria();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteCategoria(c);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	//CategoriaProducto
+	
+	//CategoriaMenu
+	
+	//CategoriaRestaurante
+	
+	//Condiciones
+	
+	public List<CondicionTecnica> condicionDarCondicionesTecnicas() throws Exception
+	{
+		DAOTablaCondiciones dao = new DAOTablaCondiciones();
+		List<CondicionTecnica> list= null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darCondicionTecnicas();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public CondicionTecnica condicionBuscarCondicionTecnicasPorName(String name) throws Exception
+	{
+		DAOTablaCondiciones dao= new DAOTablaCondiciones();
+		CondicionTecnica c =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			c=dao.buscarCondicionTecnicasPorName(name);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return c;
+	}
+	
+	public void condicionAddCondicionTecnica(CondicionTecnica c) throws Exception 
+	{
+		DAOTablaCondiciones dao = new DAOTablaCondiciones();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addCondicionTecnica(c);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void condicionDeleteCondicionTecnica(CondicionTecnica c) throws Exception
+	{
+		DAOTablaCondiciones dao = new DAOTablaCondiciones();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteCondicionTecnica(c);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//CondicionesZona
+	public List<CondicionTecnica> condicionZonaConsultarZona(String nombreZona) throws Exception
+	{
+		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
+		List<CondicionTecnica> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.consultarZona(nombreZona);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+		
+	}
+	
+	public List<Zona> condicionZonaConsultarPorCondicion (String nombreCondicion) throws Exception
+	{
+		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
+		List<Zona> list = null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.consultarPorCondicion(nombreCondicion);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public void condicionZonaInsertarPorZona(String nombreZona, List<CondicionTecnica> condiciones) throws Exception
+	{
+		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.insertarPorZona(nombreZona, condiciones);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void condicionZonaInsertarPorCondicion(String nombre, List<Zona> zonas) throws Exception
+	{
+		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.insertarPorCondicion(nombre, zonas);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void condicionZonaInsertarPorCondicionYZona(String nombreCondicion, String nombreZona) throws Exception
+	{
+		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.insertarPorCondicionYZona(nombreCondicion, nombreZona);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void condicionZonaEliminarCondicion(String nombreZona, String nombreCondicion) throws Exception
+	{
+		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarCondicion(nombreZona, nombreCondicion);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void condicionZonaEliminarCondicionesPorZona(String nombreZona) throws Exception
+	{
+		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarCondicionesPorZona(nombreZona);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void condicionZonaEliminarCondicionesPorCondicion(String condicionTecnica) throws Exception
+	{
+		DAOTablaCondicionesZona dao = new DAOTablaCondicionesZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarCondicionesPorCondicion(condicionTecnica);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//Cuenta
+	
+	public List<Cuenta> cuentaDarCuentas() throws Exception
+	{
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		List<Cuenta> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darCuentas();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public Cuenta cuentaBuscarCuentasPorNumeroDeCuenta(String numeroCuenta) throws Exception
+	{
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		Cuenta c =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			c=dao.buscarCuentasPorNumeroDeCuenta(numeroCuenta);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return c;
+	}
+	
+	public List<Cuenta> cuentaBuscarCuentasPorId(Long id) throws Exception
+	{
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		List<Cuenta> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarCuentasPorId(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public void cuentaAddCuenta(Cuenta c) throws Exception
+	{
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addCuenta(c);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void cuentaUpdateCuenta(Cuenta c) throws Exception
+	{
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateCuenta(c);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void cuentaDeleteCuenta (Cuenta c) throws Exception
+	{
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteCuenta(c);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void cuentaBorrarHistorialCliente(Long id) throws Exception
+	{
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.borrarHistorialCliente(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//Ingrediente
+	public List<Ingrediente> ingredienteDarIngredientes() throws Exception
+	{
+		ArrayList<Ingrediente> list = null;
+		DAOTablaIngrediente dao = new DAOTablaIngrediente();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darIngredientes();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public Ingrediente ingredienteBuscarIngredientePorId(Long id) throws Exception
+	{
+		Ingrediente i = null;
+		DAOTablaIngrediente dao = new DAOTablaIngrediente();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			i=dao.buscarIngredientePorId(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return i;
+	}
+	
+	public void ingredienteAddIngrediente(Ingrediente ingrediente) throws Exception
+	{
+		DAOTablaIngrediente dao = new DAOTablaIngrediente();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addIngrediente(ingrediente);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void ingredienteUpdateIngrediente(Ingrediente ingrediente) throws Exception
+	{
+		DAOTablaIngrediente dao = new DAOTablaIngrediente();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateIngrediente(ingrediente);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void ingredienteDeleteIngrediente(Ingrediente ingrediente) throws Exception
+	{
+		DAOTablaIngrediente dao = new DAOTablaIngrediente();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteIngrediente(ingrediente);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//PedidoMenu
+	
+	//PedidoProducto
+	
+	//PerteneceAProducto
+	
+	//Preferencia
+	public List<Preferencia> preferenciaDarPreferencias() throws Exception
+	{
+		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		List<Preferencia> list = null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darPreferencias();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public Preferencia preferenciaBuscarPreferenciaPorId(Long id) throws Exception
+	{
+		Preferencia p =null;
+		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			p=dao.buscarPreferenciaPorId(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return p;
+	}
+	
+	public List<Preferencia> preferenciaBuscarPreferenciaPorRango(Double ini, Double fin) throws Exception
+	{
+		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		List<Preferencia> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarPreferenciaPorRango(ini, fin);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public void preferenciaAddPreferencia(Long idUsuario, Preferencia p) throws Exception
+	{
+		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addPreferencia(idUsuario, p);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void preferenciaActualizarPreferenciasDePrecioDeUsuario(Long idUsuario, Preferencia p) throws Exception
+	{
+		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.actualizarPreferenciasDePrecioDeUsuario(idUsuario, p);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void preferenciaDeletePreferencia(Long idUsuario, Preferencia p) throws Exception
+	{
+		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deletePreferencia(idUsuario, p);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//PreferenciaCategoria
+	
+	public List<Categoria> buscarCategoriasPorId(Long id) throws Exception
+	{
+		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
+		List<Categoria> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarCategoriaPorId(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public List<Preferencia> preferenciaCategoriaBuscarCategoriaPorCategoria(Categoria cat) throws Exception
+	{
+		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
+		List<Preferencia> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarCategoriaPorCategoria(cat);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public void preferenciaCategoriaInsertarPreferenciasPorCategoria(Long idUsuario,List<Categoria> categorias) throws Exception
+	{
+		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.insertarPreferenciasCategoria(idUsuario, categorias);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void preferenciaCategoriaBorrarPorId(Long idUsuario) throws Exception
+	{
+		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.borrarPorId(idUsuario);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void preferenciaCategoriaBorrarPorCategoria(String id) throws Exception
+	{
+		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.borrarPorCategoria(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void preferenciaCategoriaBorrarMulticriterio(Long idUsuario, String id) throws Exception
+	{
+		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.borrarMulticriterio(idUsuario, id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	///PreferenciaZona
+	
+	public List<Zona> preferenciaZonaBuscarZonasPorId(Long id) throws Exception
+	{
+		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
+		List<Zona> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarZonaPorId(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public List<Preferencia> preferenciaZonaBuscarZonaPorZona(Zona cat) throws Exception
+	{
+		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
+		List<Preferencia> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarZonaPorZona(cat);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public void preferenciaZonaInsertarPreferenciasZona(Long idUsuario, List<Zona> zonas) throws Exception
+	{
+		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.insertarPreferenciasZona(idUsuario, zonas);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void preferenciaZonaBorrarPorId(Long idUsuario) throws Exception
+	{
+		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.borrarPorId(idUsuario);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void preferenciaZonaModificarPorZonaEliminada(String id) throws Exception
+	{
+		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.modificarPorZonaEliminada(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void preferenciaZonaBorrarMulticriterio(Long idUsuario,String id) throws Exception
+	{
+		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.borrarMulticriterio(idUsuario, id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//Producto
+	public List<Producto> productoDarProductos() throws Exception
+	{
+		List<Producto> list =null;
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darProductos();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public List<Producto> productoBuscarProductoPorName(String name) throws Exception
+	{
+		DAOTablaProducto dao = new DAOTablaProducto();
+		List<Producto> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarProductosPorName(name);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public Producto productoBuscarProductoPorId(Long id) throws Exception
+	{
+		DAOTablaProducto dao = new DAOTablaProducto();
+		Producto p =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			p=dao.buscarProductoPorId(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return p;
+	}
+	
+	public void productoAddProducto(Producto producto) throws Exception
+	{
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addProducto(producto);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void productoUpdateProducto(Producto producto) throws Exception
+	{
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateProducto(producto);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void deleteProducto(Producto producto) throws Exception
+	{
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteProducto(producto);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void productoBorrarProductosPorTipo(String nombreTipo) throws Exception
+	{
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.borrarProductosPorTipo(nombreTipo);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public List<Producto> productoDarProductosPorTipo(String nombreTipo) throws Exception
+	{
+		List<Producto> list =null;
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darProductosPorTipo(nombreTipo);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	//Reserva
+	
+	//Restaurante
+	
+	//Rol
+	public List<Rol> rolDarRols() throws Exception
+	{
+		DAOTablaRol dao = new DAOTablaRol();
+		List<Rol> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darRols();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public Rol rolBuscarRolsPorName(String name) throws Exception
+	{
+		DAOTablaRol dao = new DAOTablaRol();
+		Rol r =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			r=dao.buscarRolsPorName(name);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return r;
+	}
+	
+	public void rolAddRol(Rol rol) throws Exception
+	{
+		DAOTablaRol dao = new DAOTablaRol();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addRol(rol);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void rolDeleteRol(Rol rol) throws Exception
+	{
+		DAOTablaRol dao = new DAOTablaRol();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteRol(rol);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//TiposPlato
+	public List<TiposDePlato> tiposDarTipos_De_Plato() throws Exception
+	{
+		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
+		List<TiposDePlato> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darTipos_De_Platos();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public TiposDePlato tiposBuscarTipos_De_PlatosPorName(String name) throws Exception
+	{
+		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
+		TiposDePlato tipo=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			tipo=dao.buscarTipos_De_PlatosPorName(name);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return tipo;
+		
+	}
+	
+	public void tiposAddTipos_De_Plato(TiposDePlato tipo) throws Exception
+	{
+		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addTipos_De_Plato(tipo);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void tiposDeleteTipos_De_Plato(TiposDePlato tipo) throws Exception
+	{
+		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteTipos_De_Plato(tipo);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//Usuario
+	public List<Usuario> usuarioDarUsuarios() throws Exception
+	{
+		List<Usuario> list =null;
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darUsuarios();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public List<Usuario> usuarioBuscarUsuariosPorName(String nombre) throws Exception
+	{
+		List<Usuario> list =null;
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarUsuariosPorName(nombre);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public List<Usuario> usuarioBuscarUsuarioPorRol(String nombreRol) throws Exception
+	{
+		List<Usuario> list=null;
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarUsuarioPorRol(nombreRol);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public Usuario usuarioBuscarUsuarioPorId(Long id) throws Exception
+	{
+		Usuario u =null;
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			u=dao.buscarUsuarioPorId(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return u;
+	}
+	
+	public void usuarioAddUsuario(Usuario usuario) throws Exception
+	{
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addUsuario(usuario);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void usuarioUpdateUsuario(Usuario usuario) throws Exception
+	{
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateUsuario(usuario);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void usuarioDeleteUsuario(Usuario usuario) throws Exception
+	{
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteUsuario(usuario);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void usuarioBorrarPorRol(String nombreRol) throws Exception
+	{
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.borrarPorRol(nombreRol);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//Zona
+	
+	public List<Zona> zonaDarZonas() throws Exception
+	{
+		List<Zona> list =null;
+		DAOTablaZona dao = new DAOTablaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darZonas();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	public Zona zonaBuscarZonasPorName(String name) throws Exception
+	{
+		Zona z =null;
+		DAOTablaZona dao = new DAOTablaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			z=dao.buscarZonasPorName(name);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return z;
+	}
+	
+	public void zonaAddZona(Zona zona) throws Exception
+	{
+		DAOTablaZona dao = new DAOTablaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addZona(zona);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void zonaUpdateZona(Zona zona) throws Exception
+	{
+		DAOTablaZona dao = new DAOTablaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateZona(zona);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void zonaDeleteZona(Zona zona) throws Exception
+	{
+		DAOTablaZona dao = new DAOTablaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteZona(zona);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	
+	//VIDEOANDES-EJEMPLO
 	/**
 	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
 	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda

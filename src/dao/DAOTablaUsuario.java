@@ -183,7 +183,13 @@ public class DAOTablaUsuario {
 		return usuario;
 	}
 	
-
+	/**
+	 * Retorna una lista de usuarios que tienen el rol dado por parámetro.<br>
+	 * @param nombreRol Nombre del rol.<br>
+	 * @return Lista de usuarios.<br>
+	 * @throws SQLException Si algo sale mal en la BD.<br>
+	 * @throws Exception Si cualquier otra cosa sale mal.
+	 */
 	public ArrayList<Usuario> buscarUsuarioPorRol(String nombreRol)throws SQLException, Exception {
 		ArrayList<Usuario> usuario = new ArrayList<>();
 
@@ -303,8 +309,6 @@ public class DAOTablaUsuario {
 		pref.setConn(this.conn);
 		cuenta.setConn(this.conn);
 		rest.actualizarRestaurantesDeUsuario(usuario.getId(),usuario.getRestaurante());
-		pref.actualizarPreferenciasDeUsuario(usuario.getId(),usuario.getPreferencia());
-		cuenta.actualizarCuentas(usuario.getId(),usuario.getHistorial());
 		rest.cerrarRecursos();
 		pref.cerrarRecursos();
 		cuenta.cerrarRecursos();
