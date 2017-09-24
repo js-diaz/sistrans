@@ -1,13 +1,4 @@
-/**-------------------------------------------------------------------
- * $Id$
- * Universidad de los Andes (Bogotá - Colombia)
- * Departamento de Ingeniería de Sistemas y Computación
- *
- * Materia: Sistemas Transaccionales
- * Ejercicio: ZonaAndes
- * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
- * -------------------------------------------------------------------
- */
+
 package rest;
 
 
@@ -86,7 +77,7 @@ public class ZonaServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombre :[a-zA-Z]}" )
+	@Path( "{nombre :[a-zA-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getZonaName( @PathParam("nombre") String name) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());

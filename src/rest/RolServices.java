@@ -25,7 +25,7 @@ import vos.Usuario.Rol;
 
 /**
  * Clase que expone servicios REST con ruta base: http://"ip o nombre de host":8080/RolAndes/rest/rols/...
- * @author Monitores 2017-20
+ * @author s.guzmanm
  */
 @Path("rols")
 public class RolServices {
@@ -102,7 +102,8 @@ public class RolServices {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addRol(Rol rol) {
+	@Path("{nombre:[A-Z]+}")
+	public Response addRol(@PathParam("nombre")String rol) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			tm.rolAddRol(rol);
@@ -123,7 +124,8 @@ public class RolServices {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteRol(Rol rol) {
+	@Path("{nombre:[A-Z]+}")
+	public Response deleteRol(@PathParam("nombre")String rol) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			tm.rolDeleteRol(rol);

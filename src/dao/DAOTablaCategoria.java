@@ -99,7 +99,7 @@ public class DAOTablaCategoria {
 
 		Categoria c=null;
 		if (rs.next()) {
-			String name2 = rs.getString("NAME");
+			String name2 = rs.getString("NOMBRE");
 			c=new Categoria(name2);
 		}
 

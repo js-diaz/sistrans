@@ -17,8 +17,16 @@ public class Usuario {
 	 *
 	 */
 	public enum Rol {
-		CLIENTE,LOCAL,OPERADOR,
-		PROVEEDOR,ORGANIZADORES;
+		@JsonProperty("cliente")
+		CLIENTE,
+		@JsonProperty("local")
+		LOCAL,
+		@JsonProperty("operador")
+		OPERADOR,
+		@JsonProperty("proveedor")
+		PROVEEDOR,
+		@JsonProperty("organizadores")
+		ORGANIZADORES;
 	}
 	
 	/**

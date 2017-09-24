@@ -2436,14 +2436,14 @@ public class RotondAndesTM {
 	 * @param rol Rol
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void rolAddRol(Rol rol) throws Exception
+	public void rolAddRol(String rol) throws Exception
 	{
 		DAOTablaRol dao = new DAOTablaRol();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.addRol(rol);
+			dao.addRol(DAOTablaRol.buscarRol(rol));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -2475,14 +2475,14 @@ public class RotondAndesTM {
 	 * @param rol Rol
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void rolDeleteRol(Rol rol) throws Exception
+	public void rolDeleteRol(String rol) throws Exception
 	{
 		DAOTablaRol dao = new DAOTablaRol();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.deleteRol(rol);
+			dao.deleteRol(DAOTablaRol.buscarRol(rol));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -2599,14 +2599,14 @@ public class RotondAndesTM {
 	 * @param tipo TIpo dado.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void tiposAddTipos_De_Plato(TiposDePlato tipo) throws Exception
+	public void tiposAddTipos_De_Plato(String tipo) throws Exception
 	{
 		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.addTipos_De_Plato(tipo);
+			dao.addTipos_De_Plato(DAOTablaTiposProducto.convertirAPlato(tipo));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -2638,14 +2638,14 @@ public class RotondAndesTM {
 	 * @param tipo Tipo.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void tiposDeleteTipos_De_Plato(TiposDePlato tipo) throws Exception
+	public void tiposDeleteTipos_De_Plato(String tipo) throws Exception
 	{
 		DAOTablaTiposProducto dao = new DAOTablaTiposProducto();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.deleteTipos_De_Plato(tipo);
+			dao.deleteTipos_De_Plato(DAOTablaTiposProducto.convertirAPlato(tipo));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -2892,6 +2892,7 @@ public class RotondAndesTM {
 				throw exception;
 			}
 		}
+		
 	}
 	/**
 	 * Actualiza al usuario.<br>
@@ -3487,12 +3488,7 @@ public class RotondAndesTM {
 	
 	public static void main(String[] args) throws SQLException,Exception {
 		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData");
-		CondicionTecnica c1=new CondicionTecnica("E");
-		CondicionTecnica c2 = new CondicionTecnica("FG");
-		
-		ArrayList<CondicionTecnica> c = new ArrayList<>();
-		c.add(c2);
-		tm.zonaAddZona(new Zona(10, false, true, 3, "hola", c, new ArrayList<Restaurante>()));
+		System.out.println(tm.rolBuscarRolsPorName("PROVEEDOR"));
 		
 	}
 

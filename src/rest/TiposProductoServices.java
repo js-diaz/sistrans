@@ -104,7 +104,8 @@ public class TiposProductoServices {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addTiposDePlato(TiposDePlato tipo) {
+	@Path("{nombre: [A-Z]+}")
+	public Response addTiposDePlato(@PathParam("nombre")String tipo) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			tm.tiposAddTipos_De_Plato(tipo);
@@ -127,7 +128,8 @@ public class TiposProductoServices {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteTiposDePlato(TiposDePlato tipo) {
+	@Path("{nombre: [A-Z]+}")
+	public Response deleteTiposDePlato(@PathParam("nombre") String tipo) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			tm.tiposDeleteTipos_De_Plato(tipo);

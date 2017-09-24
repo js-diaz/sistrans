@@ -164,7 +164,7 @@ public class DAOTablaTiposProducto {
 	 * @param tipo Tipo de plato.<br>
 	 * @return Mensaje string
 	 */
-	private String convertirPlato(TiposDePlato tipo)
+	public static String convertirPlato(TiposDePlato tipo)
 	{
 		switch(tipo)
 		{
@@ -181,7 +181,7 @@ public class DAOTablaTiposProducto {
 	 * @param nombreTipo Nombre del tipo a convertir.<br>
 	 * @return Tipo de plato correspondiente.
 	 */
-	private TiposDePlato convertirAPlato(String nombreTipo)
+	public static TiposDePlato convertirAPlato(String nombreTipo)
 	{
 		switch (nombreTipo)
 		{

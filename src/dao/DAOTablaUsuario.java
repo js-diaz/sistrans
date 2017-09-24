@@ -375,5 +375,18 @@ public class DAOTablaUsuario {
 		default: return null;
 		}
 	}
+	
+	/**
+	 * Obtiene el índice actual del ingrediente.<br>
+	 * @param Índice actual.<br>
+	 */
+	public int getCurrentIndex() throws SQLException, Exception
+	{
+		String sql = "SELECT last_number FROM user_sequences WHERE sequence_name = 'IDUSUARIO'";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs=prepStmt.executeQuery();
+		return rs.getInt("LAST_NUMBER");
+	}
 
 }

@@ -19,7 +19,7 @@ public class Cuenta {
 	/**
 	 * Lista de pedido de menús
 	 */
-	@JsonProperty (value="PedidoMenu")
+	@JsonProperty (value="pedidoMenu")
 	private List<PedidoMenu> pedidoMenu;
 	/**
 	 * Valor total de la cuenta

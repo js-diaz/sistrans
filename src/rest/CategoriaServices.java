@@ -80,7 +80,7 @@ public class CategoriaServices {
 	@GET
 	@Path( "{name: [a-zA-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getCategoria( @PathParam( "nombre" ) String name )
+	public Response getCategoria( @PathParam( "name" ) String name )
 	{
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
@@ -118,7 +118,6 @@ public class CategoriaServices {
 	
     /**
      * Metodo que expone servicio REST usando DELETE que elimina el video que recibe en Json
-     * <b>URL: </b> http://"ip o nombre de host":8080/CategoriaAndes/rest/videos
      * @param video - video a aliminar. 
      * @return Json con el video que elimino o Json con el error que se produjo
      */

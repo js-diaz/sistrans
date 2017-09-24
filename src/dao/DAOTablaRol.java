@@ -100,7 +100,7 @@ public class DAOTablaRol {
 		ResultSet rs = prepStmt.executeQuery();
 		Rol rol = null;
 		if (rs.next()) {
-			String name2 = rs.getString("NAME");
+			String name2 = rs.getString("NOMBRE");
 			rol=buscarRol(name2);
 		}
 
@@ -157,7 +157,7 @@ public class DAOTablaRol {
 	 * @param nombreRol Nombre del rol a convertir.<br>
 	 * @return Retorna el rol.
 	 */
-	private Rol buscarRol(String nombreRol) {
+	public static Rol buscarRol(String nombreRol) {
 		switch(nombreRol)
 		{
 		case "LOCAL": return Rol.LOCAL;
@@ -173,8 +173,9 @@ public class DAOTablaRol {
 	 * @param rol Rol a convertir.<br>
 	 * @return Retorna el rol convertido a String-
 	 */
-	private String convertirRol(Rol rol)
+	public static String convertirRol(Rol rol)
 	{
+		if(rol==null) return "NOEXISTE";
 		switch(rol)
 		{
 		case LOCAL: return "LOCAL";
@@ -187,7 +188,7 @@ public class DAOTablaRol {
 		case PROVEEDOR:
 			return "PROVEEDOR";
 		default:
-			return null;
+			return "NOEXISTE";
 		}
 	}
 }

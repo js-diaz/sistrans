@@ -13,7 +13,7 @@ public class Zona {
 	/**
 	 * Capacidad de la zona.
 	 */
-	@JsonProperty(value="zona")
+	@JsonProperty(value="capacidad")
 	private int capacidad;
 	/**
 	 * Posibilidad de ingreso especial.

@@ -121,6 +121,7 @@ public class UsuarioServices {
 				throw new Exception("Nombre del usuario no valido");
 			usuarios = tm.usuarioBuscarUsuariosPorName(name);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(usuarios).build();
@@ -143,6 +144,7 @@ public class UsuarioServices {
 				throw new Exception("Nombre del rol no valido");
 			usuarios = tm.usuarioBuscarUsuarioPorRol(nombreRol);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(usuarios).build();
