@@ -12,6 +12,7 @@ package tm;
 
 import java.io.File;
 
+
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,15 +25,17 @@ import java.util.Properties;
 import dao.*;
 import vos.CondicionTecnica;
 import vos.Cuenta;
+import vos.CuentaMinimum;
 import vos.Ingrediente;
 import vos.Preferencia;
 import vos.Producto;
 import vos.Producto.TiposDePlato;
 import vos.Restaurante;
 import vos.Usuario;
-import vos.Usuario.Rol;
+import vos.UsuarioMinimum.Rol;
 import vos.Video;
 import vos.Zona;
+import vos.ZonaMinimum;
 import vos.Categoria;
 
 /**
@@ -869,10 +872,10 @@ public class RotondAndesTM {
 	 * @return Lista de cuentas.<br>
 	 * @throws Exception Si existe algún tipo de error Si hay errores
 	 */
-	public List<Cuenta> cuentaBuscarCuentasPorId(Long id) throws Exception
+	public List<CuentaMinimum> cuentaBuscarCuentasPorId(Long id) throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
-		List<Cuenta> list =null;
+		List<CuentaMinimum> list =null;
 		try
 		{
 			this.conn=darConexion();
@@ -1410,7 +1413,7 @@ public class RotondAndesTM {
 			if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
 				throw new Exception("La categoría del usuario no existe "+c.getNombre());
 		}
-		for(Zona z: p.getZonas())
+		for(ZonaMinimum z: p.getZonaMinimums())
 		{
 			if(zonaBuscarZonasPorName(z.getNombre())==null)
 				throw new Exception("La zona del usuario no existe "+z.getNombre());
@@ -1533,7 +1536,7 @@ public class RotondAndesTM {
 	 * @return Lista de categorías que prefiere.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<Categoria> buscarCategoriasPorId(Long id) throws Exception
+	public List<Categoria> preferenciaCategoriaBuscarCategoriasPorId(Long id) throws Exception
 	{
 		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
 		List<Categoria> list =null;
@@ -1777,10 +1780,10 @@ public class RotondAndesTM {
 	 * @return Lista de zonas.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<Zona> preferenciaZonaBuscarZonasPorId(Long id) throws Exception
+	public List<ZonaMinimum> preferenciaZonaBuscarZonasPorId(Long id) throws Exception
 	{
 		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
-		List<Zona> list=null;
+		List<ZonaMinimum> list=null;
 		try
 		{
 			this.conn=darConexion();
@@ -1861,7 +1864,7 @@ public class RotondAndesTM {
 	 * @param zonas Listado de zonas.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void preferenciaZonaInsertarPreferenciasZona(Long idUsuario, List<Zona> zonas) throws Exception
+	public void preferenciaZonaInsertarPreferenciasZona(Long idUsuario, List<ZonaMinimum> zonas) throws Exception
 	{
 		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
 		try
@@ -2856,7 +2859,7 @@ public class RotondAndesTM {
 				if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
 					throw new Exception("La categoría del usuario no existe "+c.getNombre());
 			}
-			for(Zona z: p.getZonas())
+			for(ZonaMinimum z: p.getZonaMinimums())
 			{
 				if(zonaBuscarZonasPorName(z.getNombre())==null)
 					throw new Exception("La zona del usuario no existe "+z.getNombre());

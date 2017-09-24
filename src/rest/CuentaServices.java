@@ -22,6 +22,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
 import vos.Cuenta;
+import vos.CuentaMinimum;
 
 /**
  * Clase que expone servicios REST con ruta base: http://"ip o nombre de host":8080/CuentaAndes/rest/cuentas/...
@@ -84,7 +85,7 @@ public class CuentaServices {
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
-			List<Cuenta> v = tm.cuentaBuscarCuentasPorId( id );
+			List<CuentaMinimum> v = tm.cuentaBuscarCuentasPorId( id );
 			return Response.status( 200 ).entity( v ).build( );			
 		}
 		catch( Exception e )

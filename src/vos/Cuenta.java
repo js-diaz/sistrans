@@ -1,6 +1,7 @@
 package vos;
 
 import java.util.Date;
+
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -10,37 +11,23 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * @author jc161
  *
  */
-public class Cuenta {
+public class Cuenta extends CuentaMinimum {
 	/**
 	 * Lista de pedidos de productos
 	 */
 	@JsonProperty(value="pedidoProd")
-	private List<PedidoProd> pedidoProd;
+	private List<PedidoProdMinimum> pedidoProd;
 	/**
 	 * Lista de pedido de menús
 	 */
 	@JsonProperty (value="pedidoMenu")
-	private List<PedidoMenu> pedidoMenu;
-	/**
-	 * Valor total de la cuenta
-	 */
-	@JsonProperty(value="valor")
-	private double valor;
-	/**
-	 * Número de la cuenta
-	 */
-	@JsonProperty (value="numeroCuenta")
-	private String numeroCuenta;
-	/**
-	 * Fecha de creación
-	 */
-	@JsonProperty (value="fecha")
-	private Date fecha;
+	private List<PedidoMenuMinimum> pedidoMenu;
+	
 	/**
 	 * Cliente al que hace referencia la cuenta
 	 */
 	@JsonProperty (value="cliente")
-	private Usuario cliente;
+	private UsuarioMinimum cliente;
 	
 	
 	/**
@@ -52,91 +39,48 @@ public class Cuenta {
 	 * @param fecha Fecha de la cuenta.<br>
 	 * @param cliente Cliente al que se le factura.
 	 */
-	public Cuenta(@JsonProperty(value="pedidoProd")List<PedidoProd> pedidoProd, @JsonProperty(value="pedidoMenu")List<PedidoMenu> pedidoMenu, @JsonProperty(value="valor")double valor, @JsonProperty(value="numeroCuenta")String numeroCuenta,
-			@JsonProperty(value="fecha")Date fecha, @JsonProperty(value="cliente")Usuario cliente) {
-		super();
+	public Cuenta(@JsonProperty(value="pedidoProd")List<PedidoProdMinimum> pedidoProd, @JsonProperty(value="pedidoMenu")List<PedidoMenuMinimum> pedidoMenu, @JsonProperty(value="valor")double valor, @JsonProperty(value="numeroCuenta")String numeroCuenta,
+			@JsonProperty(value="fecha")Date fecha, @JsonProperty(value="cliente")UsuarioMinimum cliente) {
+		super(valor,numeroCuenta,fecha);
 		this.pedidoProd = pedidoProd;
 		this.pedidoMenu = pedidoMenu;
-		this.valor = valor;
-		this.numeroCuenta = numeroCuenta;
-		this.fecha = fecha;
+		
 		this.cliente = cliente;
 	}
 	/**
 	 * Obtiene el listado de pedidos de productos.<br>
 	 * @return pedidoProd.
 	 */
-	public List<PedidoProd> getPedidoProd() {
+	public List<PedidoProdMinimum> getPedidoProdMinimum() {
 		return pedidoProd;
 	}
 	/**
 	 * Modifica el pedido del producto al dado por parámetro.<br>
 	 * @param pedidoProd Modifica el listado respectivo.
 	 */
-	public void setPedidoProd(List<PedidoProd> pedidoProd) {
+	public void setPedidoProdMinimum(List<PedidoProdMinimum> pedidoProd) {
 		this.pedidoProd = pedidoProd;
 	}
 	/**
 	 * Obtiene el listado de pedidos del menú.<br>
 	 * @return pedidoMenu
 	 */
-	public List<PedidoMenu> getPedidoMenu() {
+	public List<PedidoMenuMinimum> getPedidoMenuMinimum() {
 		return pedidoMenu;
 	}
 	/**
 	 * Modifica el listado de pedidos de menú al dado por parámetro.<br>
 	 * @param pedidoMenu 
 	 */
-	public void setPedidoMenu(List<PedidoMenu> pedidoMenu) {
+	public void setPedidoMenuMinimum(List<PedidoMenuMinimum> pedidoMenu) {
 		this.pedidoMenu = pedidoMenu;
 	}
-	/**
-	 * Obtiene el valor de la cuenta.<br>
-	 * @return valor
-	 */
-	public double getValor() {
-		return valor;
-	}
-	/**
-	 * Modifica el valor de la cuenta al dado por parámetro.<br>
-	 * @param valor
-	 */
-	public void setValor(double valor) {
-		this.valor = valor;
-	}
-	/**
-	 * Obtiene el número de cuenta.<br>
-	 * @return numeroCuenta
-	 */
-	public String getNumeroCuenta() {
-		return numeroCuenta;
-	}
-	/**
-	 * Cambia el número de cuenta al dado por parámetro.<br>
-	 * @param numeroCuenta
-	 */
-	public void setNumeroCuenta(String numeroCuenta) {
-		this.numeroCuenta = numeroCuenta;
-	}
-	/**
-	 * Obtiene la fecha de creación de la cuenta.<br>
-	 * @return fecha
-	 */
-	public Date getFecha() {
-		return fecha;
-	}
-	/**
-	 * Cambia la fecha a la dada por parámetro.<br>
-	 * @param fecha
-	 */
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
+	
 	/**
 	 * Obtiene el cliente de la cuenta.<br>
 	 * @return cliente
 	 */
-	public Usuario getCliente()
+	public UsuarioMinimum getCliente()
 	{
 		return cliente;
 	}
@@ -144,7 +88,7 @@ public class Cuenta {
 	 * Modifica el cliente al dado por parámetro.<br>
 	 * @param c
 	 */
-	public void setCliente (Usuario c)
+	public void setCliente (UsuarioMinimum c)
 	{
 		cliente=c;
 	}
@@ -152,7 +96,7 @@ public class Cuenta {
 	 * Agrega un pedido de menú a la cuenta.<br>
 	 * @param p Pedido de menú a agregar.
 	 */
-	public void agregarPedidoMenu(PedidoMenu p)
+	public void agregarPedidoMenuMinimum(PedidoMenuMinimum p)
 	{
 		pedidoMenu.add(p);
 		valor+=p.darValor();
@@ -161,7 +105,7 @@ public class Cuenta {
 	 * Remover pedido de menú<br>
 	 * @param p Pedido de menú a remover.
 	 */
-	public void removerPedidoMenu(PedidoMenu p)
+	public void removerPedidoMenuMinimum(PedidoMenuMinimum p)
 	{
 		valor-=p.darValor();
 		pedidoMenu.remove(p);
@@ -170,7 +114,7 @@ public class Cuenta {
 	 * Agrega un pedido de producto.<br>
 	 * @param p Pedido de producto a añadir.
 	 */
-	public void agregarPedidoProducto(PedidoProd p)
+	public void agregarPedidoProd(PedidoProdMinimum p)
 	{
 		pedidoProd.add(p);
 		valor+=p.darValor();
@@ -179,7 +123,7 @@ public class Cuenta {
 	 * Remueve un pedido de producto de la cuenta.<br>
 	 * @param p Pedido de producto a remover.
 	 */
-	public void removerPedidoProducto(PedidoProd p)
+	public void removerPedidoProd(PedidoProdMinimum p)
 	{
 		valor-=p.darValor();
 		pedidoProd.remove(p);

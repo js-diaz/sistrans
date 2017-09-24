@@ -3,13 +3,14 @@ package dao;
 
 
 import java.sql.Connection; 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.*;
-import vos.Usuario.Rol;
+import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación

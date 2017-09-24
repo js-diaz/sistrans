@@ -146,7 +146,7 @@ public class DAOTablaRestaurante {
 		prepStmt.executeQuery();
 	}
 
-	public ArrayList<Restaurante> consultarPorZona(String nombreZona) {
+	public ArrayList<RestauranteMinimum> consultarPorZona(String nombreZona) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -156,12 +156,12 @@ public class DAOTablaRestaurante {
 		
 	}
 
-	public void eliminarRestaurantes(List<Restaurante> restaurantes) {
+	public void eliminarRestaurantes(List<RestauranteMinimum> list) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public Restaurante darRestauranteDeUsuario(Long id) {
+	public RestauranteMinimum darRestauranteDeUsuario(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -171,12 +171,22 @@ public class DAOTablaRestaurante {
 		
 	}
 
-	public void actualizarRestaurantesDeUsuario(Long id, Restaurante restaurante) {
+	public void actualizarRestaurantesDeUsuario(Long id, RestauranteMinimum restauranteMinimum) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	public void borrarRestaurantePorId(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public RestauranteMinimum darRestauranteMinimumDeUsuario(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void eliminarRestauranteMinimums(List<RestauranteMinimum> restauranteMinimums) {
 		// TODO Auto-generated method stub
 		
 	}

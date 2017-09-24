@@ -100,6 +100,25 @@ public class DAOTablaZona {
 	
 
 	/**
+	 * Metodo que busca el/los zonas con el nombre que entra como parametro.
+	 * @param name - Nombre de el/los zonas a buscar
+	 * @return ArrayList con los zonas encontrados
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public ZonaMinimum buscarZonasMinimumPorName(String name) throws SQLException, Exception {
+
+		String sql = "SELECT * FROM ZONA WHERE NOMBRE LIKE '" + name + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		ArrayList<ZonaMinimum> zonas= convertirEntidadZonaMinimum(rs);
+		return zonas.get(0);
+	}
+
+	/**
 	 * Metodo que agrega la zona que entra como parametro a la base de datos.
 	 * @param zona - la zona a agregar. zona !=  null
 	 * <b> post: </b> se ha agregado la zona a la base de datos en la transaction actual. pendiente que la master
@@ -121,8 +140,6 @@ public class DAOTablaZona {
 		prepStmt.executeQuery();
 		
 		insertarCondicionesTecnicas(zona);
-		insertarRestaurantes(zona);
-
 	}
 	
 	
@@ -160,7 +177,7 @@ public class DAOTablaZona {
 	 */
 	public void deleteZona(Zona zona) throws SQLException, Exception {
 
-		borrarRestaurantes(zona);
+		borrarRestauranteMinimums(zona);
 		borrarCondiciones(zona);
 		modificarPreferencias(zona.getNombre());
 		borrarReservas(zona.getNombre());
@@ -192,8 +209,31 @@ public class DAOTablaZona {
 			int capacidadOcupada=rs.getInt("CAPACIDADOCUPADA");
 			String nombre=rs.getString("NOMBRE");
 			ArrayList<CondicionTecnica> condiciones= accederACondicionesZona(nombre);
-			ArrayList<Restaurante> restaurantes= accederARestaurantes(nombre);
+			ArrayList<RestauranteMinimum> restaurantes= accederARestauranteMinimums(nombre);
 			zonas.add(new Zona(capacidad, ingresoEspecial, abiertaActualmente, capacidadOcupada, nombre, condiciones, restaurantes));
+		}
+		return zonas;
+	}
+	
+	/**
+	 * Crea un arreglo de zonas con el set de resultados pasado por parámetro.<br>
+	 * @param rs Set de resultados.<br>
+	 * @return zonas Lista de zonas convertidas.<br>
+	 * @throws SQLException Algún problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepción.
+	 */
+	private ArrayList<ZonaMinimum> convertirEntidadZonaMinimum(ResultSet rs) throws SQLException, Exception
+	{
+		ArrayList<ZonaMinimum> zonas = new ArrayList<>();
+		while (rs.next()) {
+			int capacidad=rs.getInt("CAPACIDAD");
+			boolean ingresoEspecial=false;
+			if(rs.getString("INGRESOESPECIAL").equals("1")) ingresoEspecial=true;
+			boolean abiertaActualmente=false;
+			if(rs.getString("ABIERTAACTUALMENTE").equals("1")) abiertaActualmente=true;
+			int capacidadOcupada=rs.getInt("CAPACIDADOCUPADA");
+			String nombre=rs.getString("NOMBRE");
+			zonas.add(new ZonaMinimum(capacidad, ingresoEspecial, abiertaActualmente, capacidadOcupada, nombre));
 		}
 		return zonas;
 	}
@@ -212,7 +252,7 @@ public class DAOTablaZona {
 	 * @param nombreZona Nombre de la zona a buscar.<br>
 	 * @return Lista de los restaurantes presentes en la zona.
 	 */
-	private ArrayList<Restaurante> accederARestaurantes(String nombreZona) throws SQLException, Exception{
+	private ArrayList<RestauranteMinimum> accederARestauranteMinimums(String nombreZona) throws SQLException, Exception{
 		DAOTablaRestaurante restaurante = new DAOTablaRestaurante();
 		restaurante.setConn(this.conn);
 		return restaurante.consultarPorZona(nombreZona);
@@ -229,19 +269,7 @@ public class DAOTablaZona {
 		condiciones.insertarPorZona(zona.getNombre(),zona.getCondiciones());
 		condiciones.cerrarRecursos();
 	}
-	/**
-	 * Inserta en los restaurantes con la tabla DAO de Restaurantes.<br>
-	 * @param zona Zona a insertar sus restaurantes.<br>
-	 * @throws SQLException Arroja una excepción SQL correspondiente.<br>
-	 * @throws Exception Cualquier otro error.
-	 */
-	private void insertarRestaurantes(Zona zona) throws SQLException, Exception
-	{
-		DAOTablaRestaurante restaurante= new DAOTablaRestaurante();
-		restaurante.setConn(this.conn);
-		restaurante.insertarPorZona(zona.getRestaurantes());
-		restaurante.cerrarRecursos();
-	}
+	
 	/**
 	 * Convierte un booleano en un caracter 0(false) o 1 (true)
 	 * @param booleano
@@ -255,11 +283,11 @@ public class DAOTablaZona {
 	 * Borra los restaurantes relacionados a dicha zona.<br>
 	 * @param zona Zona de donde se borran
 	 */
-	private void borrarRestaurantes (Zona zona) throws SQLException, Exception
+	private void borrarRestauranteMinimums (Zona zona) throws SQLException, Exception
 	{
 		DAOTablaRestaurante restaurante= new DAOTablaRestaurante();
 		restaurante.setConn(this.conn);
-		restaurante.eliminarRestaurantes(zona.getRestaurantes());
+		restaurante.eliminarRestaurantes(zona.getRestauranteMinimums());
 		restaurante.cerrarRecursos();
 	}
 	/**

@@ -4,13 +4,15 @@ package dao;
 
 import java.sql.Connection; 
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.*;
-import vos.Usuario.Rol;
+import vos.UsuarioMinimum;
+import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
@@ -90,8 +92,8 @@ public class DAOTablaUsuario {
 			String correo = rs.getString("CORREO");
 			Rol r = convertirARol(rs.getString("ROL"));
 			Preferencia p = pref.buscarPreferenciaPorId(id);
-			ArrayList<Cuenta> historial=hist.buscarCuentasPorId(id);
-			Restaurante restaurante = rest.darRestauranteDeUsuario(id);
+			ArrayList<CuentaMinimum> historial=hist.buscarCuentasPorId(id);
+			RestauranteMinimum restaurante = rest.darRestauranteMinimumDeUsuario(id);
 			usuarios.add(new Usuario(name,id,correo,r,p,historial,restaurante));
 		}
 		rest.cerrarRecursos();
@@ -131,8 +133,8 @@ public class DAOTablaUsuario {
 			String correo = rs.getString("CORREO");
 			Rol r = convertirARol(rs.getString("ROL"));
 			Preferencia p = pref.buscarPreferenciaPorId(id);
-			ArrayList<Cuenta> historial=hist.buscarCuentasPorId(id);
-			Restaurante restaurante = rest.darRestauranteDeUsuario(id);
+			ArrayList<CuentaMinimum> historial=hist.buscarCuentasPorId(id);
+			RestauranteMinimum restaurante = rest.darRestauranteDeUsuario(id);
 			usuarios.add(new Usuario(name,id,correo,r,p,historial,restaurante));
 		}
 
@@ -172,8 +174,8 @@ public class DAOTablaUsuario {
 			String correo = rs.getString("CORREO");
 			Rol r = convertirARol(rs.getString("ROL"));
 			Preferencia p = pref.buscarPreferenciaPorId(id);
-			ArrayList<Cuenta> historial=hist.buscarCuentasPorId(id);
-			Restaurante restaurante = rest.darRestauranteDeUsuario(id);
+			ArrayList<CuentaMinimum> historial=hist.buscarCuentasPorId(id);
+			RestauranteMinimum restaurante = rest.darRestauranteDeUsuario(id);
 			usuario=(new Usuario(name,id2,correo,r,p,historial,restaurante));
 		}
 
@@ -212,8 +214,8 @@ public class DAOTablaUsuario {
 			String correo = rs.getString("CORREO");
 			Rol r = convertirARol(rs.getString("ROL"));
 			Preferencia p = pref.buscarPreferenciaPorId(id2);
-			ArrayList<Cuenta> historial=hist.buscarCuentasPorId(id2);
-			Restaurante restaurante = rest.darRestauranteDeUsuario(id2);
+			ArrayList<CuentaMinimum> historial=hist.buscarCuentasPorId(id2);
+			RestauranteMinimum restaurante = rest.darRestauranteDeUsuario(id2);
 			usuario.add(new Usuario(name,id2,correo,r,p,historial,restaurante));
 		}
 
@@ -249,10 +251,7 @@ public class DAOTablaUsuario {
 		rest.setConn(this.conn);
 		pref.setConn(this.conn);
 		cuenta.setConn(this.conn);
-		rest.insertarPorIdDuenho(usuario.getId(), usuario.getRestaurante());
 		pref.addPreferencia(usuario.getId(), usuario.getPreferencia());
-		for(Cuenta c: usuario.getHistorial())
-		cuenta.addCuenta(c);
 		
 		pref.cerrarRecursos();
 		rest.cerrarRecursos();
@@ -387,6 +386,36 @@ public class DAOTablaUsuario {
 		recursos.add(prepStmt);
 		ResultSet rs=prepStmt.executeQuery();
 		return rs.getInt("LAST_NUMBER");
+	}
+
+	
+	/**
+	 * Metodo que busca el usuario con el id que entra como parámetro.
+	 * @param name - Id de el usuario a buscar
+	 * @return Usuario encontrado
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public UsuarioMinimum buscarUsuarioMinimumPorId(Long id) throws SQLException, Exception 
+	{
+		UsuarioMinimum usuario = null;
+
+		
+		String sql = "SELECT * FROM USUARIO WHERE ID =" + id;
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		if(rs.next()) {
+			String name = rs.getString("NOMBRE");
+			Long id2 = rs.getLong("ID");
+			String correo = rs.getString("CORREO");
+			Rol r = convertirARol(rs.getString("ROL"));
+			
+			usuario=(new UsuarioMinimum(name,id2,correo, r));
+		}
+		return usuario;
 	}
 
 }

@@ -45,7 +45,7 @@ public class RandomData {
 		FileWriter writer = new FileWriter(new File("./Docs/datos/ingrediente.txt"));
 		for(int i=0;i<25;i++)
 		{
-			std="INSERT INTO INGREDIENTE (ID,NOMBRE,DESCRIPCION,TRADUCCION) VALUES ("+(i+1)+",";
+			std="INSERT INTO INGREDIENTE (ID,NOMBRE,DESCRIPCION,TRADUCCION) VALUES (IDINGREDIENTE.NEXTVAL,";
 			std+=randomString()+","+randomString()+","+randomString()+");\n";
 			fw.write(std);
 			std="";
@@ -152,7 +152,7 @@ public class RandomData {
 			precio=Math.random()*1000;
 			if(precio>100) costo=precio-100; else costo=0;
 			std="INSERT INTO PRODUCTO (ID,NOMBRE,TIPO,PERSONALIZABLE,PRECIO,DESCRIPCION,TRADUCCION,COSTOPRODUCCION,TIEMPO) "
-					+ "VALUES ("+(i+1)+",";
+					+ "VALUES (IDPRODUCTO.NEXTVAL,";
 			std+=randomString()+","+randomRest(tipos)+","+(int)(Math.random()*100)%2+","+precio+","+randomString()+","+randomString()+","+costo+","+(Math.random()*100)+");\n";
 			fw.write(std);
 			std="";
@@ -171,7 +171,7 @@ public class RandomData {
 		ArrayList<String> roles = rolesToString();
 		for(int i=0;i<50;i++)
 		{
-			std="INSERT INTO USUARIO (ID,CORREO,NOMBRE,ROL) VALUES ("+(i+1)+",";
+			std="INSERT INTO USUARIO (ID,CORREO,NOMBRE,ROL) VALUES (IDUSUARIO.NEXTVAL,";
 			std+=randomString()+","+randomString()+","+randomRest(roles)+");";
 			fw.write(std+"\n");
 			writer.write((i+1)+"\n");
@@ -325,14 +325,14 @@ public class RandomData {
 		
 		//CICLO A MODIFICAR PARA ESCRIBIR LÍNEAS
 		RandomData r = new RandomData();
-		/*r.writeIngredientToFile("./Docs/pruebas/ing.txt");
+		r.writeIngredientToFile("./Docs/pruebas/ing.txt");
 		r.writeProductoToFile("./Docs/pruebas/producto.txt");
 		r.writeZona("./Docs/pruebas/zona.txt");
 		r.writeToZonaCond("./Docs/pruebas/condZona.txt");
-		r.writeUsuario("./Docs/pruebas/usuario.txt");*/
+		r.writeUsuario("./Docs/pruebas/usuario.txt");
 		r.writePreferencia("./Docs/pruebas/preferencias.txt");
 		r.writeToPreferenciaCategoria("./Docs/pruebas/preferenciaCategoria.txt");
 		r.writeToPreferenciaZona("./Docs/pruebas/preferenciaZona.txt");
-		//r.writeToCuenta("./Docs/pruebas/cuentas.txt");
+		r.writeToCuenta("./Docs/pruebas/cuentas.txt");
 	}
 }

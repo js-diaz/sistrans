@@ -91,9 +91,9 @@ public class DAOTablaCuenta {
 			String numeroCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			ArrayList<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
-			ArrayList<PedidoProd> productos= darPedidosProductos(numeroCuenta);
-			Usuario u = buscarUsuarioPorId(rs.getLong("USUARIO"));
+			ArrayList<PedidoMenuMinimum> menus= darPedidosMenus(numeroCuenta);
+			ArrayList<PedidoProdMinimum> productos= darPedidosProductos(numeroCuenta);
+			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
 			
 			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u));
 		}
@@ -123,9 +123,9 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			ArrayList<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
-			ArrayList<PedidoProd> productos= darPedidosProductos(numeroCuenta);
-			Usuario u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
+			ArrayList<PedidoMenuMinimum> menus= darPedidosMenus(numeroCuenta);
+			ArrayList<PedidoProdMinimum> productos= darPedidosProductos(numeroCuenta);
+			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
 			
 			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u));
 		}
@@ -140,8 +140,8 @@ public class DAOTablaCuenta {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Cuenta> buscarCuentasPorId(Long id) throws SQLException, Exception {
-		ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
+	public ArrayList<CuentaMinimum> buscarCuentasPorId(Long id) throws SQLException, Exception {
+		ArrayList<CuentaMinimum> cuentas = new ArrayList<>();
 
 		String sql = "SELECT * FROM CUENTA WHERE IDUSUARIO =" + id + "";
 
@@ -153,10 +153,7 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			ArrayList<PedidoMenu> menus= darPedidosMenus(numCuenta);
-			ArrayList<PedidoProd> productos= darPedidosProductos(numCuenta);
-			Usuario u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
-			cuentas.add(new Cuenta(productos,menus,valor,numCuenta,fecha,u));
+			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha));
 		}
 		return cuentas;
 	}
@@ -250,10 +247,10 @@ public class DAOTablaCuenta {
 	 * @param int1 Id del usuario.<br>
 	 * @return Usuario buscado
 	 */
-	private Usuario buscarUsuarioPorId(Long int1) throws SQLException, Exception {
+	private UsuarioMinimum buscarUsuarioPorId(Long int1) throws SQLException, Exception {
 		DAOTablaUsuario u= new DAOTablaUsuario();
 		u.setConn(this.conn);
-		Usuario usuario=u.buscarUsuarioPorId(int1);
+		UsuarioMinimum usuario=u.buscarUsuarioMinimumPorId(int1);
 		u.cerrarRecursos();
 		return usuario;
 	}
@@ -262,10 +259,10 @@ public class DAOTablaCuenta {
 	 * @param numeroCuenta Número de cuenta.<br>
 	 * @return Lista con pedidos producto.
 	 */
-	private ArrayList<PedidoProd> darPedidosProductos(String numeroCuenta) throws SQLException, Exception {
+	private ArrayList<PedidoProdMinimum> darPedidosProductos(String numeroCuenta) throws SQLException, Exception {
 		DAOTablaPedidoProducto p  = new DAOTablaPedidoProducto();
 		p.setConn(this.conn);
-		ArrayList<PedidoProd> list=p.buscarProductosPorNumCuenta(numeroCuenta);
+		ArrayList<PedidoProdMinimum> list=p.buscarProductosPorNumCuenta(numeroCuenta);
 		p.cerrarRecursos();
 		return list;
 	}
@@ -274,10 +271,10 @@ public class DAOTablaCuenta {
 	 * @param numeroCuenta Número de cuenta.<br>
 	 * @return Lista con pedidos menú.
 	 */
-	private ArrayList<PedidoMenu> darPedidosMenus(String numeroCuenta) throws SQLException, Exception {
+	private ArrayList<PedidoMenuMinimum> darPedidosMenus(String numeroCuenta) throws SQLException, Exception {
 		DAOTablaPedidoMenu m = new DAOTablaPedidoMenu();
 		m.setConn(this.conn);
-		ArrayList<PedidoMenu> list = m.buscarProductosPorNumCuenta(numeroCuenta);
+		ArrayList<PedidoMenuMinimum> list = m.buscarProductosPorNumCuenta(numeroCuenta);
 		m.cerrarRecursos();
 		return list;
 	}
@@ -334,6 +331,11 @@ public class DAOTablaCuenta {
 		recursos.add(prepStmt);
 		ResultSet rs=prepStmt.executeQuery();
 		return rs.getInt("LAST_NUMBER");
+	}
+
+	public ArrayList<CuentaMinimum> buscarCuentaMinimumsPorId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

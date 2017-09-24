@@ -217,7 +217,7 @@ public class DAOTablaPedidoProducto {
 		
 	}
 
-	public ArrayList<PedidoProd> buscarProductosPorNumCuenta(String numeroCuenta) {
+	public ArrayList<PedidoProdMinimum> buscarProductosPorNumCuenta(String numeroCuenta) {
 		// TODO Auto-generated method stub
 		return null;
 	}

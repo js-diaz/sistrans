@@ -25,7 +25,7 @@ public class Preferencia {
 	 * Listado de zonas de preferencia.
 	 */
 	@JsonProperty(value="zonas")
-	private List<Zona> zonas;
+	private List<ZonaMinimum> zonas;
 	/**
 	 * Lista de categorías de preferencia.
 	 */
@@ -38,7 +38,7 @@ public class Preferencia {
 	 * @param zonas<br>
 	 * @param categorias<br>
 	 */
-	public Preferencia(@JsonProperty(value="precioInicial")Double precioInicial, @JsonProperty(value="precioFinal")Double precioFinal, @JsonProperty(value="zonas")List<Zona> zonas, @JsonProperty(value="categorias")List<Categoria> categorias) {
+	public Preferencia(@JsonProperty(value="precioInicial")Double precioInicial, @JsonProperty(value="precioFinal")Double precioFinal, @JsonProperty(value="zonas")List<ZonaMinimum> zonas, @JsonProperty(value="categorias")List<Categoria> categorias) {
 		super();
 		this.precioInicial = precioInicial;
 		this.precioFinal = precioFinal;
@@ -77,14 +77,14 @@ public class Preferencia {
 	 * Obtiene un listado de zonas de preferencia.<br>
 	 * @return zonas
 	 */
-	public List<Zona> getZonas() {
+	public List<ZonaMinimum> getZonaMinimums() {
 		return zonas;
 	}
 	/**
 	 * Modifica las zonas de preferencia a aquella lista dada por parámetro.<br>
 	 * @param zonas
 	 */
-	public void setZonas(List<Zona> zonas) {
+	public void setZonaMinimums(List<ZonaMinimum> zonas) {
 		this.zonas = zonas;
 	}
 	/**
@@ -119,17 +119,17 @@ public class Preferencia {
 	}
 	/**
 	 * Agrega una zona a la lista respectiva.<br>
-	 * @param z Zona a agregar.
+	 * @param z ZonaMinimum a agregar.
 	 */
-	public void agregarZona(Zona z)
+	public void agregarZonaMinimum(ZonaMinimum z)
 	{
 		zonas.add(z);
 	}
 	/**
 	 * Remueve una zona de la lista respectiva.<br>
-	 * @param z Zona a remover.
+	 * @param z ZonaMinimum a remover.
 	 */
-	public void removerZona(Zona z)
+	public void removerZonaMinimum(ZonaMinimum z)
 	{
 		zonas.remove(z);
 	}

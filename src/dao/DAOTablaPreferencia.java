@@ -77,7 +77,7 @@ public class DAOTablaPreferencia {
 
 		while (rs.next()) {
 			Long id= rs.getLong("IDUSUARIO");
-			ArrayList<Zona> zonas = obtenerZonasPorId(id);
+			ArrayList<ZonaMinimum> zonas = obtenerZonaMinimumsPorId(id);
 			ArrayList<Categoria> categorias = obtenerCategoriasPorId(id);
 			Double inicial = rs.getDouble("PRECIOINICIAL");
 			Double finalP = rs.getDouble("PRECIOFINAL");
@@ -104,7 +104,7 @@ public class DAOTablaPreferencia {
 		ResultSet rs = prepStmt.executeQuery();
 
 		if(rs.next()) {
-			ArrayList<Zona> zonas = obtenerZonasPorId(id);
+			ArrayList<ZonaMinimum> zonas = obtenerZonaMinimumsPorId(id);
 			ArrayList<Categoria> categorias = obtenerCategoriasPorId(id);
 			Double inicial = rs.getDouble("PRECIOINICIAL");
 			Double finalP = rs.getDouble("PRECIOFINAL");
@@ -132,7 +132,7 @@ public class DAOTablaPreferencia {
 		
 		while(rs.next()) {
 			Long id =rs.getLong("IDUSUARIO");
-			ArrayList<Zona> zonas = obtenerZonasPorId(id);
+			ArrayList<ZonaMinimum> zonas = obtenerZonaMinimumsPorId(id);
 			ArrayList<Categoria> categorias = obtenerCategoriasPorId(id);
 			p.add(new Preferencia(ini, fin, zonas,categorias));
 		}
@@ -161,7 +161,7 @@ public class DAOTablaPreferencia {
 		prepStmt.executeQuery();
 		
 		insertarPreferenciaCategorias(idUsuario,p);
-		insertarPreferenciaZonas(idUsuario,p);
+		insertarPreferenciaZonaMinimums(idUsuario,p);
 		
 
 	}
@@ -207,7 +207,7 @@ public class DAOTablaPreferencia {
 
 		verificarusuario(idUsuario);
 		borrarPreferenciasCategoriaPorId(idUsuario);
-		borrarPreferenciasZonaPorId(idUsuario);
+		borrarPreferenciasZonaMinimumPorId(idUsuario);
 		String sql = "DELETE FROM PREFERENCIA";
 		sql += " WHERE IDUSUARIO = " + idUsuario;
 
@@ -221,7 +221,7 @@ public class DAOTablaPreferencia {
 	 * @throws SQLException En caso de que falle la base de datos.<br>
 	 * @throws Exception Si algo mñas falla.
 	 */
-	private void borrarPreferenciasZonaPorId(Long idUsuario) throws SQLException, Exception{
+	private void borrarPreferenciasZonaMinimumPorId(Long idUsuario) throws SQLException, Exception{
 		DAOTablaPreferenciaZona zonas = new DAOTablaPreferenciaZona();
 		zonas.setConn(this.conn);
 		zonas.borrarPorId(idUsuario);
@@ -257,10 +257,10 @@ public class DAOTablaPreferencia {
 	 * @param id Id de la preferencia.<br>
 	 * @return Las zonas de la preferencia
 	 */
-	private ArrayList<Zona> obtenerZonasPorId(Long id) throws SQLException, Exception {
+	private ArrayList<ZonaMinimum> obtenerZonaMinimumsPorId(Long id) throws SQLException, Exception {
 		DAOTablaPreferenciaZona pref = new DAOTablaPreferenciaZona();
 		pref.setConn(this.conn);
-		ArrayList<Zona> z = pref.buscarZonaPorId(id);
+		ArrayList<ZonaMinimum> z = pref.buscarZonaPorId(id);
 		pref.cerrarRecursos();
 		return z;
 	}
@@ -273,11 +273,11 @@ public class DAOTablaPreferencia {
 	 * @throws SQLException Si hay un error en la BD.<br>
 	 * @throws Exception Si hay cualquier otro error.
 	 */
-	private void insertarPreferenciaZonas(Long idUsuario, Preferencia p) throws SQLException, Exception {
+	private void insertarPreferenciaZonaMinimums(Long idUsuario, Preferencia p) throws SQLException, Exception {
 
 		DAOTablaPreferenciaZona zona = new DAOTablaPreferenciaZona();
 		zona.setConn(conn);
-		zona.insertarPreferenciasZona(idUsuario,p.getZonas());
+		zona.insertarPreferenciasZona(idUsuario,p.getZonaMinimums());
 		zona.cerrarRecursos();
 	}
 	/**

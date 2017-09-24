@@ -67,8 +67,8 @@ public class DAOTablaPreferenciaZona {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Zona> buscarZonaPorId(Long id) throws SQLException, Exception {
-		ArrayList<Zona> preferencias = new ArrayList<>();
+	public ArrayList<ZonaMinimum> buscarZonaPorId(Long id) throws SQLException, Exception {
+		ArrayList<ZonaMinimum> preferencias = new ArrayList<>();
 
 		String sql = "SELECT * FROM PREFERENCIAZONA WHERE IDUSUARIO ="+id;
 
@@ -79,7 +79,7 @@ public class DAOTablaPreferenciaZona {
 		ResultSet rs = prepStmt.executeQuery();
 		while (rs.next()) {
 			String name = rs.getString("NOMBREZONA");
-			preferencias.add(zona.buscarZonasPorName(name) );
+			preferencias.add(zona.buscarZonasMinimumPorName(name) );
 		}
 		zona.cerrarRecursos();
 		return preferencias;
@@ -111,13 +111,13 @@ public class DAOTablaPreferenciaZona {
 	/**
 	 * Inserta preferencias por el id de Usuario, teniendo una lista de zonas.<br>
 	 * @param idUsuario Id del usuario.<br>
-	 * @param zonas Listado de zonas.<br>
+	 * @param list Listado de zonas.<br>
 	 * @throws SQLException Si hay un error en la base de datos.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
-	public void insertarPreferenciasZona(Long idUsuario, List<Zona> zonas) throws SQLException, Exception {
+	public void insertarPreferenciasZona(Long idUsuario, List<ZonaMinimum> list) throws SQLException, Exception {
 		String sql ="";
-		for(Zona c: zonas)
+		for(ZonaMinimum c: list)
 		{
 			sql = "INSERT INTO PREFERENCIAZONA VALUES (";
 			sql += idUsuario+ ",'";
