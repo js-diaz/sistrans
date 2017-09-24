@@ -252,7 +252,6 @@ public class DAOTablaUsuario {
 		pref.setConn(this.conn);
 		cuenta.setConn(this.conn);
 		pref.addPreferencia(usuario.getId(), usuario.getPreferencia());
-		
 		pref.cerrarRecursos();
 		rest.cerrarRecursos();
 		cuenta.cerrarRecursos();

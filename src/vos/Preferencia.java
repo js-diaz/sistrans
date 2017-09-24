@@ -101,40 +101,5 @@ public class Preferencia {
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
-	/**
-	 * Agrega una categoría a la lista respectiva.<br>
-	 * @param c Categoría nueva
-	 */
-	public void agregarCategoria(Categoria c)
-	{
-		categorias.add(c);
-	}
-	/**
-	 * Remueve una categoría de lalista respectiva.<br>
-	 * @param c Categoría a eliminar.
-	 */
-	public void removerCategoria(Categoria c)
-	{
-		categorias.remove(c);
-	}
-	/**
-	 * Agrega una zona a la lista respectiva.<br>
-	 * @param z ZonaMinimum a agregar.
-	 */
-	public void agregarZonaMinimum(ZonaMinimum z)
-	{
-		zonas.add(z);
-	}
-	/**
-	 * Remueve una zona de la lista respectiva.<br>
-	 * @param z ZonaMinimum a remover.
-	 */
-	public void removerZonaMinimum(ZonaMinimum z)
-	{
-		zonas.remove(z);
-	}
-	
-	
-	
 	
 }

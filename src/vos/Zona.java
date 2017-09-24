@@ -65,53 +65,6 @@ public class Zona extends ZonaMinimum {
 	public void setRestauranteMinimums(List<RestauranteMinimum> restaurantes) {
 		this.restaurantes = restaurantes;
 	}
-	/**
-	 * Agrega un restaurante a la zona.<br>
-	 * @param restaurante RestauranteMinimum a agregar.<br>
-	 */
-	public void agregarRestauranteMinimum(RestauranteMinimum restaurante)
-	{
-		restaurantes.add(restaurante);
-	}
-	/**
-	 * Elimina un restaurante de la zona asignada.<br>
-	 * @param r RestauranteMinimum a eliminar.
-	 */
-	public void eliminarRestauranteMinimum(RestauranteMinimum r)
-	{
-		restaurantes.remove(r);
-	}
-	/**
-	 * Agrega una condición a la lista dada.<br>
-	 * @param c Condición técnica.
-	 */
-	public void agregarCondicionTecnica(CondicionTecnica c)
-	{
-		condiciones.add(c);
-	}
-	/**
-	 * Elimina una condición de la lista dada.<br>
-	 * @param c Condición técnica.
-	 */
-	public void removerCondicionTecnica(CondicionTecnica c)
-	{
-		condiciones.remove(c);
-	}
-	/**
-	 * Aumenta la capacidad de la zona en el valor dado.<br>
-	 * @param cantidad
-	 */
-	public void aumentarCapacidad(int cantidad)
-	{
-		capacidadOcupada+=cantidad;
-	}
-	/**
-	 * Reduce la capacidad de la zona dada.<br>
-	 * @param cantidad
-	 */
-	public void reducirCapacidad(int cantidad)
-	{
-		capacidadOcupada-=cantidad;
-	}
+	
 
 }

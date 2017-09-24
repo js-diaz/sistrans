@@ -257,59 +257,6 @@ public class Producto {
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
-	/**
-	 * Agrega un nuevo ingrediente a la lista.<br>
-	 * @param i Ingrediente
-	 */
-	public void agregarIngrediente(Ingrediente i)
-	{
-		ingredientes.add(i);
-	}
-	/**
-	 * Remueve un ingrediente de la lista.<br>
-	 * @param i Ingrediente a remover
-	 */
-	public void removerIngrediente(Ingrediente i)
-	{
-		ingredientes.remove(i);
-		
-	}
-	/**
-	 * Agrega una nueva categoría a la lista.<br>
-	 * @param c Categoria a usar.
-	 */
-	public void agregarCategoria(Categoria c)
-	{
-		categorias.add(c);
-		
-	}
-	/**
-	 * Remover una categoría de la lista.<br>
-	 * @param c Categoría a usar.
-	 */
-	public void removerCategoria(Categoria c)
-	{
-		categorias.remove(c);
-	}
-	/**
-	 * Remplaza uno de los ingredientes dados y retorna una nueva instancia del producto.<br>
-	 * @param ingredienteActual Nombre del actual.<br>
-	 * @param ingredienteNuevo Nombre del ingrediente nuevo.
-	 */
-	public Producto cambiarProducto(String ingredienteActual, String ingredienteNuevo)
-	{
-		//TODO
-		return null;
-	}
-	/**
-	 * Personaliza el producto retornando uno nuevo como resultado.<br>
-	 * @param ingredientes Lista de ingredientes para personalizar.
-	 */
-	public Producto personalizarPlato(List<Ingrediente> ingredientes)
-	{
-		//TODO
-		return null;
-	}
 	
 	
 	
