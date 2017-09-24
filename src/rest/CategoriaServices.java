@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -22,6 +23,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
 import vos.Categoria;
+import vos.Usuario;
+import vos.UsuarioMinimum.Rol;
 import vos.Categoria;
 
 /**
@@ -106,9 +109,16 @@ public class CategoriaServices {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCategoria(Categoria video) {
+	public Response addCategoria(Categoria video, @HeaderParam("id") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
 		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR))) throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			tm.categoriaAddCategoria(video);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -124,9 +134,16 @@ public class CategoriaServices {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCategoria(Categoria c) {
+	public Response deleteCategoria(Categoria c, @HeaderParam("id") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
 		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR))) throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			tm.categoriaDeleteCategoria(c);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
