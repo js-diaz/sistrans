@@ -9,6 +9,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
+import vos.Usuario;
 import vos.UsuarioMinimum.Rol;
 
 /**
@@ -80,10 +82,15 @@ public class RolServices {
 	@GET
 	@Path( "{nombre:[A-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getRolName(@PathParam("nombre") String name) {
+	public Response getRolName(@PathParam("nombre") String name, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Rol rols;
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			if (name == null || name.length() == 0)
 				throw new Exception("Nombre del rol no valido");
 			rols = tm.rolBuscarRolsPorName(name);
@@ -104,9 +111,14 @@ public class RolServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{nombre:[A-Z]+}")
-	public Response addRol(@PathParam("nombre")String rol) {
+	public Response addRol(@PathParam("nombre")String rol, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.rolAddRol(rol);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -126,9 +138,14 @@ public class RolServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{nombre:[A-Z]+}")
-	public Response deleteRol(@PathParam("nombre")String rol) {
+	public Response deleteRol(@PathParam("nombre")String rol, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.rolDeleteRol(rol);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

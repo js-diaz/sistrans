@@ -9,6 +9,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -22,7 +23,9 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
+import vos.Usuario;
 import vos.Producto.TiposDePlato;
+import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase que expone servicios REST con ruta base: http://"ip o nombre de host":8080/TiposDePlatoAndes/rest/tipos/...
@@ -105,9 +108,14 @@ public class TiposProductoServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{nombre: [A-Z]+}")
-	public Response addTiposDePlato(@PathParam("nombre")String tipo) {
+	public Response addTiposDePlato(@PathParam("nombre")String tipo, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.tiposAddTipos_De_Plato(tipo);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -129,9 +137,14 @@ public class TiposProductoServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{nombre: [A-Z]+}")
-	public Response deleteTiposDePlato(@PathParam("nombre") String tipo) {
+	public Response deleteTiposDePlato(@PathParam("nombre") String tipo, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.tiposDeleteTipos_De_Plato(tipo);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

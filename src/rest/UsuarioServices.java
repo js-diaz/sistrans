@@ -18,6 +18,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -90,18 +91,28 @@ public class UsuarioServices {
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getUsuario( @PathParam( "id" ) Long id )
+	public Response getUsuario( @PathParam( "id" ) Long id, @HeaderParam("usuario") Long usuarioId )
 	{
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
-		try
-		{
-			Usuario v = tm.usuarioBuscarUsuarioPorId( id );
-			return Response.status( 200 ).entity( v ).build( );			
-		}
-		catch( Exception e )
-		{
-			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
-		}
+		
+			
+			try
+			{
+				Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+				if(usuarioId!=id && !(u.getRol().equals(Rol.OPERADOR)))
+				{
+					throw new Exception("El usuario no tiene permitido usar el sistema");
+				}
+				Usuario v = tm.usuarioBuscarUsuarioPorId( id );
+				return Response.status( 200 ).entity( v ).build( );			
+			}
+			catch( Exception e )
+			{
+				return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+			}
+		
+		
+		
 	}
 
     /**
@@ -114,10 +125,15 @@ public class UsuarioServices {
 	@GET
 	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getUsuarioName( @QueryParam("nombre") String name) {
+	public Response getUsuarioName( @QueryParam("nombre") String name, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Usuario> usuarios;
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			if (name == null || name.length() == 0)
 				throw new Exception("Nombre del usuario no valido");
 			usuarios = tm.usuarioBuscarUsuariosPorName(name);
@@ -137,10 +153,15 @@ public class UsuarioServices {
 	@GET
 	@Path( "{rol}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getUsuarioPorRol( @QueryParam("rol") String nombreRol) {
+	public Response getUsuarioPorRol( @QueryParam("rol") String nombreRol, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Usuario> usuarios;
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			if (nombreRol == null || nombreRol.length() == 0)
 				throw new Exception("Nombre del rol no valido");
 			usuarios = tm.usuarioBuscarUsuarioPorRol(nombreRol);
@@ -161,9 +182,14 @@ public class UsuarioServices {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addUsuario(Usuario usuario) {
+	public Response addUsuario(Usuario usuario, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.usuarioAddUsuario(usuario);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -181,9 +207,14 @@ public class UsuarioServices {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateUsuario(Usuario usuario) {
+	public Response updateUsuario(Usuario usuario, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)) || usuario.getId()!=usuarioId)
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.usuarioUpdateUsuario(usuario);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -200,9 +231,14 @@ public class UsuarioServices {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteUsuario(Usuario usuario) {
+	public Response deleteUsuario(Usuario usuario, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)) || usuario.getId()!=usuarioId)
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.usuarioDeleteUsuario(usuario);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -220,9 +256,14 @@ public class UsuarioServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{rol:[A-Z]+}")
-	public Response deleteUsuarioPorRol(@QueryParam("rol")String nombreRol) {
+	public Response deleteUsuarioPorRol(@QueryParam("rol")String nombreRol, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)) )
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			if (nombreRol == null || nombreRol.length() == 0)
 				throw new Exception("Nombre del rol no valido");
 			tm.usuarioBorrarPorRol(nombreRol);
