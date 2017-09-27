@@ -105,6 +105,7 @@ public class RolServices {
      * Metodo que expone servicio REST usando POST que agrega el rol que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/RolAndes/rest/rols/rol
      * @param rol - rol a agregar
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el rol que agrego o Json con el error que se produjo
      */
 	@POST
@@ -132,6 +133,7 @@ public class RolServices {
      * Metodo que expone servicio REST usando DELETE que elimina el rol que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/RolAndes/rest/rols
      * @param rol - rol a aliminar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el rol que elimino o Json con el error que se produjo
      */
 	@DELETE

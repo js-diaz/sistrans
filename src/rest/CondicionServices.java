@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -22,6 +23,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
 import vos.CondicionTecnica;
+import vos.Usuario;
+import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase que expone servicios REST con ruta base: http://"ip o nombre de host":8080/CondicionTecnicaAndes/rest/condiciones/...
@@ -97,14 +100,20 @@ public class CondicionServices {
      * Metodo que expone servicio REST usando POST que agrega la zona que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/CondicionTecnicaAndes/rest/condiciones/zona
      * @param zona - zona a agregar
+     * @param id_ Id del usuario que realiza la solicitud.
      * @return Json con la zona que agrego o Json con el error que se produjo
      */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCondicionTecnica(CondicionTecnica zona) {
+	public Response addCondicionTecnica(CondicionTecnica zona, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!u.getRol().equals(Rol.OPERADOR))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.condicionAddCondicionTecnica(zona);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -118,14 +127,20 @@ public class CondicionServices {
      * Metodo que expone servicio REST usando DELETE que elimina la zona que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/CondicionTecnicaAndes/rest/condiciones
      * @param zona - zona a aliminar. 
+     * @param id_ Id del usuario que realiza la solicitud.
      * @return Json con la zona que elimino o Json con el error que se produjo
      */
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCondicionTecnica(CondicionTecnica zona) {
+	public Response deleteCondicionTecnica(CondicionTecnica zona, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!u.getRol().equals(Rol.OPERADOR))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.condicionDeleteCondicionTecnica(zona);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

@@ -17,6 +17,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -31,6 +32,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
 import vos.Producto;
+import vos.Usuario;
+import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase que expone servicios REST con ruta base: http://"ip o nombre de host":8080/ProductoAndes/rest/productos/...
@@ -151,14 +154,20 @@ public class ProductoServices {
      * Metodo que expone servicio REST usando POST que agrega el producto que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/producto
      * @param producto - producto a agregar
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el producto que agrego o Json con el error que se produjo
      */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addProducto(Producto producto) {
+	public Response addProducto(Producto producto, @HeaderParam("usuarioId")Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.productoAddProducto(producto);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -170,14 +179,20 @@ public class ProductoServices {
      * Metodo que expone servicio REST usando PUT que actualiza el producto que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos
      * @param producto - producto a actualizar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el producto que actualizo o Json con el error que se produjo
      */
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateProducto(Producto producto) {
+	public Response updateProducto(Producto producto, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.productoUpdateProducto(producto);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -189,14 +204,20 @@ public class ProductoServices {
      * Metodo que expone servicio REST usando DELETE que elimina el producto que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos
      * @param producto - producto a aliminar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el producto que elimino o Json con el error que se produjo
      */
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteProducto(Producto producto) {
+	public Response deleteProducto(Producto producto, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.productoDeleteProducto(producto);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

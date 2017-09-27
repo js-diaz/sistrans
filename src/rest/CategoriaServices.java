@@ -104,12 +104,13 @@ public class CategoriaServices {
      * Metodo que expone servicio REST usando POST que agrega el video que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/CategoriaAndes/rest/videos/video
      * @param video - video a agregar
+     * @param id_ Id del usuario que realiza la solicitud.
      * @return Json con el video que agrego o Json con el error que se produjo
      */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCategoria(Categoria video, @HeaderParam("id") Long id) {
+	public Response addCategoria(Categoria video, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -129,12 +130,13 @@ public class CategoriaServices {
     /**
      * Metodo que expone servicio REST usando DELETE que elimina el video que recibe en Json
      * @param video - video a aliminar. 
+     * @param id_ Id del usuario que realiza la solicitud.
      * @return Json con el video que elimino o Json con el error que se produjo
      */
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCategoria(Categoria c, @HeaderParam("id") Long id) {
+	public Response deleteCategoria(Categoria c, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {

@@ -84,7 +84,8 @@ public class UsuarioServices {
 	 /**
      * Metodo que expone servicio REST usando GET que busca el usuario con el id que entra como parametro
      * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios/<<id>>" para la busqueda"
-     * @param name - Nombre del usuario a buscar que entra en la URL como parametro 
+     * @param id - Id del usuario a buscar que entra en la URL como parametro 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el/los usuarios encontrados con el nombre que entra como parametro o json con 
      * el error que se produjo
      */
@@ -94,12 +95,10 @@ public class UsuarioServices {
 	public Response getUsuario( @PathParam( "id" ) Long id, @HeaderParam("usuario") Long usuarioId )
 	{
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
-		
-			
 			try
 			{
 				Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-				if(usuarioId!=id && !(u.getRol().equals(Rol.OPERADOR)))
+				if(usuarioId!=id && !(u.getRol().equals(Rol.OPERADOR)) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=id))
 				{
 					throw new Exception("El usuario no tiene permitido usar el sistema");
 				}
@@ -115,34 +114,6 @@ public class UsuarioServices {
 		
 	}
 
-    /**
-     * Metodo que expone servicio REST usando GET que busca el usuario con el nombre que entra como parametro
-     * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios/nombre/nombre?nombre=<<nombre>>" para la busqueda"
-     * @param name - Nombre del usuario a buscar que entra en la URL como parametro 
-     * @return Json con el/los usuarios encontrados con el nombre que entra como parametro o json con 
-     * el error que se produjo
-     */
-	@GET
-	@Path( "{nombre}" )
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getUsuarioName( @QueryParam("nombre") String name, @HeaderParam("usuarioId") Long usuarioId) {
-		RotondAndesTM tm = new RotondAndesTM(getPath());
-		List<Usuario> usuarios;
-		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)))
-			{
-				throw new Exception("El usuario no tiene permitido usar el sistema");
-			}
-			if (name == null || name.length() == 0)
-				throw new Exception("Nombre del usuario no valido");
-			usuarios = tm.usuarioBuscarUsuariosPorName(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(usuarios).build();
-	}
 	/**
      * Metodo que expone servicio REST usando GET que busca el usuario con el nombre que entra como parametro
      * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios/nombre/nombre?nombre=<<nombre>>" para la busqueda"
@@ -177,6 +148,7 @@ public class UsuarioServices {
      * Metodo que expone servicio REST usando POST que agrega el usuario que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios/usuario
      * @param usuario - usuario a agregar
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el usuario que agrego o Json con el error que se produjo
      */
 	@POST
@@ -202,6 +174,7 @@ public class UsuarioServices {
      * Metodo que expone servicio REST usando PUT que actualiza el usuario que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios
      * @param usuario - usuario a actualizar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el usuario que actualizo o Json con el error que se produjo
      */
 	@PUT
@@ -226,6 +199,7 @@ public class UsuarioServices {
      * Metodo que expone servicio REST usando DELETE que elimina el usuario que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios
      * @param usuario - usuario a aliminar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el usuario que elimino o Json con el error que se produjo
      */
 	@DELETE
@@ -250,6 +224,7 @@ public class UsuarioServices {
      * Metodo que expone servicio REST usando DELETE que elimina el usuario que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios
      * @param usuario - usuario a aliminar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el usuario que elimino o Json con el error que se produjo
      */
 	@DELETE

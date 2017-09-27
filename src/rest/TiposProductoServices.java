@@ -102,6 +102,7 @@ public class TiposProductoServices {
      * Metodo que expone servicio REST usando POST que agrega el tipo que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/TiposDePlatoAndes/rest/tipos/tipo
      * @param tipo - tipo a agregar
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el tipo que agrego o Json con el error que se produjo
      */
 	@POST
@@ -131,6 +132,7 @@ public class TiposProductoServices {
      * Metodo que expone servicio REST usando DELETE que elimina el tipo que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/TiposDePlatoAndes/rest/tipos
      * @param tipo - tipo a aliminar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el tipo que elimino o Json con el error que se produjo
      */
 	@DELETE

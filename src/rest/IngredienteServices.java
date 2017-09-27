@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -22,6 +23,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
 import vos.Ingrediente;
+import vos.Usuario;
+import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase que expone servicios REST con ruta base: http://"ip o nombre de host":8080/IngredienteAndes/rest/ingredientes/...
@@ -53,15 +56,21 @@ public class IngredienteServices {
 	/**
 	 * Metodo que expone servicio REST usando GET que da todos los ingredientes de la base de datos.
 	 * <b>URL: </b> http://"ip o nombre de host":8080/IngredienteAndes/rest/ingredientes
+	 * @param usuarioId Id del usuario que realiza la solicitud.
 	 * @return Json con todos los ingredientes de la base de datos o json con 
      * el error que se produjo
 	 */
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getIngredientes() {
+	public Response getIngredientes(@HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Ingrediente> ingredientes;
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(u.getRol().equals(Rol.CLIENTE))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			ingredientes = tm.ingredienteDarIngredientes();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -73,17 +82,23 @@ public class IngredienteServices {
      * Metodo que expone servicio REST usando GET que busca el ingrediente con el id que entra como parametro
      * <b>URL: </b> http://"ip o nombre de host":8080/IngredienteAndes/rest/ingredientes/<<id>>" para la busqueda"
      * @param name - Nombre del ingrediente a buscar que entra en la URL como parametro 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el/los ingredientes encontrados con el nombre que entra como parametro o json con 
      * el error que se produjo
      */
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getIngrediente( @PathParam( "id" ) Long id )
+	public Response getIngrediente( @PathParam( "id" ) Long id ,@HeaderParam("usuarioId") Long usuarioId)
 	{
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(u.getRol().equals(Rol.CLIENTE))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			Ingrediente v = tm.ingredienteBuscarIngredientePorId( id );
 			return Response.status( 200 ).entity( v ).build( );			
 		}
@@ -99,14 +114,20 @@ public class IngredienteServices {
      * Metodo que expone servicio REST usando POST que agrega el ingrediente que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/IngredienteAndes/rest/ingredientes/ingrediente
      * @param ingrediente - ingrediente a agregar
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el ingrediente que agrego o Json con el error que se produjo
      */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addIngrediente(Ingrediente ingrediente) {
+	public Response addIngrediente(Ingrediente ingrediente, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!u.getRol().equals(Rol.OPERADOR))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.ingredienteAddIngrediente(ingrediente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -120,14 +141,20 @@ public class IngredienteServices {
      * Metodo que expone servicio REST usando PUT que actualiza el ingrediente que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/IngredienteAndes/rest/ingredientes
      * @param ingrediente - ingrediente a actualizar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el ingrediente que actualizo o Json con el error que se produjo
      */
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateIngrediente(Ingrediente ingrediente) {
+	public Response updateIngrediente(Ingrediente ingrediente,@HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!u.getRol().equals(Rol.OPERADOR))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.ingredienteUpdateIngrediente(ingrediente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -139,14 +166,20 @@ public class IngredienteServices {
      * Metodo que expone servicio REST usando DELETE que elimina el ingrediente que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/IngredienteAndes/rest/ingredientes
      * @param ingrediente - ingrediente a aliminar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con el ingrediente que elimino o Json con el error que se produjo
      */
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteIngrediente(Ingrediente ingrediente) {
+	public Response deleteIngrediente(Ingrediente ingrediente, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!u.getRol().equals(Rol.OPERADOR))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
 			tm.ingredienteDeleteIngrediente(ingrediente);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

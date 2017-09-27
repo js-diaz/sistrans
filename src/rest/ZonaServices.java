@@ -100,6 +100,7 @@ public class ZonaServices {
      * Metodo que expone servicio REST usando POST que agrega la zona que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/ZonaAndes/rest/zonas/zona
      * @param zona - zona a agregar
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con la zona que agrego o Json con el error que se produjo
      */
 	@POST
@@ -124,6 +125,7 @@ public class ZonaServices {
      * Metodo que expone servicio REST usando PUT que actualiza la zona que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/ZonaAndes/rest/zonas
      * @param zona - zona a actualizar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con la zona que actualizo o Json con el error que se produjo
      */
 	@PUT
@@ -148,6 +150,7 @@ public class ZonaServices {
      * Metodo que expone servicio REST usando DELETE que elimina la zona que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/ZonaAndes/rest/zonas
      * @param zona - zona a aliminar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
      * @return Json con la zona que elimino o Json con el error que se produjo
      */
 	@DELETE
