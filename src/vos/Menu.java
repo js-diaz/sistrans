@@ -1,5 +1,5 @@
 package vos;
 
-public class Menu {
+public class Menu extends MenuMinimum{
 
 }
