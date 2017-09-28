@@ -24,6 +24,7 @@ import java.util.Properties;
 
 import dao.*;
 import vos.CondicionTecnica;
+import vos.Criterio;
 import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.Ingrediente;
@@ -3220,7 +3221,81 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+	//CRITERIOS
+	//VIDEOANDES-EJEMPLO
+		/**
+		 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
+		 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
+		 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+		 */
+		public List<Zona> criteriosOrganizarPorZonaUniversal(List<Criterio> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento) throws Exception {
+			List<Zona> videos=null;
+			DAOTablaCriterio daoVideos=null;
+			try 
+			{
+				//////transaccion
+				daoVideos=new DAOTablaCriterio();
+				videos = daoVideos.generarListaFiltradaZonas(criteriosOrganizacion,criteriosAgrupamiento);
+
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daoVideos.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return videos;
+		}
+
+		/**
+		 * Metodo que modela la transaccion que busca el/los videos en la base de datos con el nombre entra como parametro.
+		 * @param name - Nombre del video a buscar. name != null
+		 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
+		 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+		 */
+		public List<Video> buscarVideosPorName(String name) throws Exception {
+			List<Video> videos;
+			DAOTablaVideos daoVideos = new DAOTablaVideos();
+			try 
+			{
+				//////transaccion
+				this.conn = darConexion();
+				daoVideos.setConn(conn);
+				videos = daoVideos.buscarVideosPorName(name);
+
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daoVideos.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return videos;
+		}
 	
 	//VIDEOANDES-EJEMPLO
 	/**

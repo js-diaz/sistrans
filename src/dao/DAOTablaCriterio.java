@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.*;
 
@@ -394,5 +395,47 @@ public class DAOTablaCriterio {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
+
+	public List<Zona> generarListaFiltradaZonas(List<Criterio> criteriosOrganizacion,
+			List<Criterio> criteriosAgrupamiento) throws SQLException, Exception {
+		List<Criterio> existentesOrd=new ArrayList<>();
+		List<Criterio> existentesAgrup= new ArrayList<>();
+		List<Zona> lista= new ArrayList<>();
+		for(Criterio c: criteriosOrganizacion)
+		{
+			if(existentesOrd.indexOf(c)>=0) continue;
+			existentesOrd.add(c);
+		}
+		for(Criterio c: criteriosAgrupamiento)
+		{
+			if(existentesAgrup.indexOf(c)>=0) continue;
+			existentesAgrup.add(c);
+		}
+		String sql="SELECT * FROM ZONA Z";
+		if(existentesAgrup.size()>0)
+		{
+			sql+="GROUP BY "+existentesAgrup.get(0).getNombre();
+			existentesAgrup.remove(0);
+			for(Criterio c: existentesAgrup)
+				sql+=", "+c.getNombre();
+		}
+		if(existentesOrd.size()>0)
+		{
+			sql+="GROUP BY "+existentesOrd.get(0).getNombre();
+			existentesOrd.remove(0);
+			for(Criterio c: existentesOrd)
+				sql+=", "+c.getNombre();
+		}
+		
+		PreparedStatement prep =conn.prepareStatement(sql);
+		recursos.add(prep);
+		ResultSet r =prep.executeQuery();
+		DAOTablaZona z = new DAOTablaZona();
+		z.setConn(this.conn);
+		lista=z.convertirEntidadZona(r);
+		z.cerrarRecursos();
+		return lista;
+	}
+	
 
 }

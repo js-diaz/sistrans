@@ -170,6 +170,23 @@ public class ZonaServices {
 		}
 		return Response.status(200).entity(zona).build();
 	}
+	
+	@DELETE
+	@Path("{nombre: [a-zA-Z]+}")
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pruebaFiltros( @PathParam("nombre") String name) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Zona zonas;
+		try {
+			if (name == null || name.length() == 0)
+				throw new Exception("Nombre dla zona no valido");
+			zonas = tm.zonaBuscarZonasPorName(name);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zonas).build();
+	}
 
 
 }
