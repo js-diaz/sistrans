@@ -75,11 +75,7 @@ public class PreferenciaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Preferencia> preferencias;
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)))
-			{
-				throw new Exception("El usuario no tiene permitido usar el sistema");
-			}
+			tm=new RotondAndesTM(getPath());
 			preferencias = tm.preferenciaDarPreferencias();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -225,6 +221,8 @@ public class PreferenciaServices {
 		}
 		return Response.status(200).entity(preferencia).build();
 	}
+	
+	
 
 
 }

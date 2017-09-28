@@ -1822,7 +1822,7 @@ public class RotondAndesTM {
 	 * @return Listado de preferencias.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<Preferencia> preferenciaZonaBuscarZonaPorZona(Zona cat) throws Exception
+	public List<Preferencia> preferenciaZonaBuscarZonaPorZona(String cat) throws Exception
 	{
 		DAOTablaPreferenciaZona dao = new DAOTablaPreferenciaZona();
 		List<Preferencia> list =null;

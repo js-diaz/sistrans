@@ -4,6 +4,7 @@ package rest;
 
 import java.util.List;
 
+
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -20,7 +21,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
-
 import tm.RotondAndesTM;
 import vos.CondicionTecnica;
 import vos.Usuario;

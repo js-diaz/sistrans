@@ -86,15 +86,15 @@ public class DAOTablaPreferenciaZona {
 	}
 	/**
 	 * Metodo que, usando la conexión a la base de datos, saca todos los preferencias con zona dada de la base de datos
-	 * @param cat Categoría
+	 * @param cat nombreZona
 	 * @return Arraylist con los preferencias de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Preferencia> buscarZonaPorZona(Zona cat) throws SQLException, Exception {
+	public ArrayList<Preferencia> buscarZonaPorZona(String cat) throws SQLException, Exception {
 		ArrayList<Preferencia> preferencias = new ArrayList<>();
 
-		String sql = "SELECT * FROM PREFERENCIAZONA WHERE NOMBRECATEGORIA LIKE '"+cat.getNombre()+"'";
+		String sql = "SELECT * FROM PREFERENCIAZONA WHERE NOMBRECATEGORIA LIKE '"+cat+"'";
 
 		DAOTablaPreferencia zona = new DAOTablaPreferencia();
 		zona.setConn(conn);
