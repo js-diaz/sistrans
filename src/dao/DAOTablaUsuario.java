@@ -236,7 +236,7 @@ public class DAOTablaUsuario {
 	public void addUsuario(Usuario usuario) throws SQLException, Exception {
 
 		String sql = "INSERT INTO USUARIO VALUES (";
-		sql += usuario.getId() + ",'";
+		sql += "IDUSUARIO.NEXTVAL,'";
 		sql += usuario.getCorreo() + "','";
 		sql += usuario.getNombre()+"','";
 		sql+=convertirRol(usuario.getRol())+ "')";
@@ -245,16 +245,11 @@ public class DAOTablaUsuario {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
-		DAOTablaRestaurante rest = new DAOTablaRestaurante();
 		DAOTablaPreferencia pref = new DAOTablaPreferencia();
-		DAOTablaCuenta cuenta = new DAOTablaCuenta();
-		rest.setConn(this.conn);
 		pref.setConn(this.conn);
-		cuenta.setConn(this.conn);
+		if(usuario.getPreferencia()!=null)
 		pref.addPreferencia(usuario.getId(), usuario.getPreferencia());
 		pref.cerrarRecursos();
-		rest.cerrarRecursos();
-		cuenta.cerrarRecursos();
 	}
 	/**
 	 * Convierte un rol en un String.<br>
@@ -416,8 +411,14 @@ public class DAOTablaUsuario {
 		}
 		return usuario;
 	}
-	
-	public UsuarioCompleto darTodaLaInfoDeUnCliente(Long id) throws Exception, SQLException
+	/**
+	 * Da toda la información de un usuario. Método necesario para el requerimiento de consulta 3.<br>
+	 * @param id Id del usuario.<br>
+	 * @return UsuarioCompleto con toda la información solicitada.<br>
+	 * @throws Exception Si sucede cualquier error.<br>
+	 * @throws SQLException Si hay un error de BD.
+	 */
+	public UsuarioCompleto darTodaLaInfoDeUnCliente(Long id) throws SQLException, Exception
 	{
 		
 		DAOTablaPreferencia pref = new DAOTablaPreferencia();
@@ -448,7 +449,13 @@ public class DAOTablaUsuario {
 		pref.cerrarRecursos();
 		return usuario;
 	}
-
+	/**
+	 * Retorna un arreglo con las frecuencias del usuario para los siete días de la semana.<br>
+	 * @param id Id del usuario.<br>
+	 * @return Frecuencias del usuario.<br>
+	 * @throws SQLException Si hay algún error de la BD.<br>
+	 * @throws Exception Si sucede cualquier otra excepción.
+	 */
 	private int[]darFrecuencias(Long id) throws SQLException, Exception {
 		String sql="SELECT idusuario, to_char(fecha,'D') AS DIA, COUNT(*) AS FRECUENCIA "
 				+ "FROM CUENTA  "

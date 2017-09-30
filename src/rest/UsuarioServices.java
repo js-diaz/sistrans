@@ -183,7 +183,7 @@ public class UsuarioServices {
      * @return Json con el usuario que agrego o Json con el error que se produjo
      */
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addUsuario(Usuario usuario, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
@@ -215,7 +215,7 @@ public class UsuarioServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || usuario.getId()!=usuarioId)
+			if(!(u.getRol().equals(Rol.OPERADOR))  && usuario.getId()!=usuarioId)
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -240,7 +240,7 @@ public class UsuarioServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || usuario.getId()!=usuarioId)
+			if(!(u.getRol().equals(Rol.OPERADOR)) && usuario.getId()!=usuarioId)
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}

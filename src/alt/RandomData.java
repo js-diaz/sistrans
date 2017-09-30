@@ -288,7 +288,7 @@ public class RandomData {
 		{
 			std="";
 			std="INSERT INTO CUENTA (VALOR,NUMEROCUENTA,FECHA,IDUSUARIO) VALUES (";
-			std+=(Math.random()*300)+","+"'"+i+"',"+"TO_DATE('"+randomDate()+"','dd/mm/yyyy hh24:mi:ss'),"+randomNumber(usuarios)+");";
+			std+=(Math.random()*300)+","+" 'NUMCUENTA.NEXTVAL' ,"+"TO_DATE('"+randomDate()+"','dd/mm/yyyy hh24:mi:ss'),"+randomNumber(usuarios)+");";
 			fw.write(std+"\n");
 			writer.write(i+"\n");
 		}
@@ -310,7 +310,7 @@ public class RandomData {
 	private ArrayList<String> rolesToString()
 	{
 		ArrayList<String> s = new ArrayList<>();
-		s.add("LOCAL");s.add("CLIENTE");s.add("ORGANIZADORES");s.add("PROVEEDOR");
+		s.add("LOCAL");s.add("CLIENTE");s.add("OPERADOR");s.add("PROVEEDOR");
 		return s;
 	}
 	

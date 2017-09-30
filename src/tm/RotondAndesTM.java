@@ -1411,11 +1411,13 @@ public class RotondAndesTM {
 	public void preferenciaAddPreferencia(Long idUsuario, Preferencia p) throws Exception
 	{
 		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		if(p.getCategorias()!=null)
 		for(Categoria c: p.getCategorias())
 		{
 			if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
 				throw new Exception("La categoría del usuario no existe "+c.getNombre());
 		}
+		if(p.getZonaMinimums()!=null)
 		for(ZonaMinimum z: p.getZonaMinimums())
 		{
 			if(zonaBuscarZonasPorName(z.getNombre())==null)

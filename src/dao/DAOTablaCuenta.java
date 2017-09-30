@@ -237,7 +237,7 @@ public class DAOTablaCuenta {
 	 * @throws SQLException Si algo sale mal respecto a la base de datos.
 	 */
 	public void borrarHistorialCliente(Long id) throws SQLException, Exception {
-		String sql ="DELETE FROM CUENTA WHERE USUARIOID ="+id;
+		String sql ="DELETE FROM CUENTA WHERE IDUSUARIO ="+id;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
