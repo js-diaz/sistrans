@@ -92,6 +92,8 @@ public class ZonaServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(zonas==null)return Response.status( 404 ).entity( zonas ).build( );			
+
 		return Response.status(200).entity(zonas).build();
 	}
 

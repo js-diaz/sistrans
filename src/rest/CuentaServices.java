@@ -136,6 +136,7 @@ public class CuentaServices {
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
+			if(c==null)return Response.status( 404 ).entity(c).build( );			
 			return Response.status(200).entity(c).build();
 		}
 		catch (Exception e)

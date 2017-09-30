@@ -100,6 +100,7 @@ public class IngredienteServices {
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
 			Ingrediente v = tm.ingredienteBuscarIngredientePorId( id );
+			if(v==null)return Response.status( 404 ).entity( v ).build( );			
 			return Response.status( 200 ).entity( v ).build( );			
 		}
 		catch( Exception e )

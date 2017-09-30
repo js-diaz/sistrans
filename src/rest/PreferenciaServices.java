@@ -105,6 +105,8 @@ public class PreferenciaServices {
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
 			Preferencia v = tm.preferenciaBuscarPreferenciaPorId( id );
+			if(v==null)return Response.status( 404 ).entity( v ).build( );			
+
 			return Response.status( 200 ).entity( v ).build( );			
 		}
 		catch( Exception e )

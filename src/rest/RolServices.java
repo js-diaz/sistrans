@@ -97,6 +97,8 @@ public class RolServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(rols==null)return Response.status( 404 ).entity( rols ).build( );			
+
 		return Response.status(200).entity(rols).build();
 	}
 

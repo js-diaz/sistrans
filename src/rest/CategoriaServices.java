@@ -91,6 +91,7 @@ public class CategoriaServices {
 			if(name==null || name.length()==0)
 				throw new Exception("El nombre de la categoría es inválido");
 			Categoria v = tm.categoriaBuscarCategoriasPorName( name );
+			if(v==null) return Response.status( 404 ).entity( v ).build( );			
 			return Response.status( 200 ).entity( v ).build( );			
 		}
 		catch( Exception e )

@@ -70,6 +70,8 @@ public class PreferenciaCategoriaServices {
 			if (cat == null || cat.length() == 0)
 				throw new Exception("Nombre de la categoría no válido");
 			preferencias = tm.preferenciaCategoriaBuscarCategoriaPorCategoria(new Categoria(cat));
+			if(preferencias.isEmpty())return Response.status( 404 ).entity( preferencias ).build( );			
+
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -95,6 +97,7 @@ public class PreferenciaCategoriaServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(categorias.isEmpty())return Response.status( 404 ).entity( categorias ).build( );			
 		return Response.status(200).entity(categorias).build();
 	}
     /**

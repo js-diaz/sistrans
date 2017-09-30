@@ -104,6 +104,8 @@ public class UsuarioServices {
 					throw new Exception("El usuario no tiene permitido usar el sistema");
 				}
 				Usuario v = tm.usuarioBuscarUsuarioPorId( id );
+				if(v==null)return Response.status( 404 ).entity( v ).build( );			
+
 				return Response.status( 200 ).entity( v ).build( );			
 			}
 			catch( Exception e )
