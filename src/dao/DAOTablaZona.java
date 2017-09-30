@@ -95,6 +95,7 @@ public class DAOTablaZona {
 		ResultSet rs = prepStmt.executeQuery();
 
 		ArrayList<Zona> zonas= convertirEntidadZona(rs);
+		if(zonas.isEmpty()) return null;
 		return zonas.get(0);
 	}
 	
@@ -115,6 +116,7 @@ public class DAOTablaZona {
 		ResultSet rs = prepStmt.executeQuery();
 
 		ArrayList<ZonaMinimum> zonas= convertirEntidadZonaMinimum(rs);
+		if(zonas.isEmpty()) return null;
 		return zonas.get(0);
 	}
 
@@ -183,7 +185,7 @@ public class DAOTablaZona {
 		borrarReservas(zona.getNombre());
 		
 		String sql = "DELETE FROM ZONA";
-		sql += " WHERE NOMBRE LIKE " + zona.getNombre();
+		sql += " WHERE NOMBRE LIKE '" + zona.getNombre()+"'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

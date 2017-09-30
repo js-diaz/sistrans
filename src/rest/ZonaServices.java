@@ -112,7 +112,7 @@ public class ZonaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -137,7 +137,7 @@ public class ZonaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR) ||u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -162,7 +162,7 @@ public class ZonaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR)|| u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -182,7 +182,7 @@ public class ZonaServices {
 		Zona zonas;
 		try {
 			if (name == null || name.length() == 0)
-				throw new Exception("Nombre dla zona no valido");
+				throw new Exception("Nombre de la zona no valido");
 			zonas = tm.zonaBuscarZonasPorName(name);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

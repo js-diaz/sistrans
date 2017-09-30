@@ -91,9 +91,9 @@ public class UsuarioServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{id: \\d+}" )
+	@Path( "{id:\\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getUsuario( @PathParam( "id" ) Long id, @HeaderParam("usuario") Long usuarioId )
+	public Response getUsuario( @PathParam( "id" ) Long id, @HeaderParam("usuarioId") Long usuarioId )
 	{
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 			try

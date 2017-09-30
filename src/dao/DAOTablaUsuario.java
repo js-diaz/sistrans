@@ -202,7 +202,7 @@ public class DAOTablaUsuario {
 		hist.setConn(this.conn);
 		rest.setConn(this.conn);
 		
-		String sql = "SELECT * FROM USUARIO WHERE ROL LIKE ='" + nombreRol+"'";
+		String sql = "SELECT * FROM USUARIO WHERE ROL LIKE '" + nombreRol+"'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

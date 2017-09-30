@@ -62,7 +62,7 @@ public class PreferenciaCategoriaServices {
      * el error que se produjo
 	 */
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
+	@Produces( MediaType.APPLICATION_JSON )
 	public Response getPreferenciaCategoriaPorCategoria(@HeaderParam("categoria")String cat) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Preferencia> preferencias;
@@ -86,7 +86,7 @@ public class PreferenciaCategoriaServices {
      * el error que se produjo
      */
 	@GET
-	@Produces( { MediaType.APPLICATION_JSON } )
+	@Produces( MediaType.APPLICATION_JSON  )
 	public Response getCondicionesZonaPorCategoria( @HeaderParam("preferencia") Long preferencia) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Categoria> categorias;

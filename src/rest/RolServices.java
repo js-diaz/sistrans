@@ -94,11 +94,10 @@ public class RolServices {
 			if (name == null || name.length() == 0)
 				throw new Exception("Nombre del rol no valido");
 			rols = tm.rolBuscarRolsPorName(name);
+			if(rols==null)return Response.status( 404 ).entity( rols ).build( );			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		if(rols==null)return Response.status( 404 ).entity( rols ).build( );			
-
 		return Response.status(200).entity(rols).build();
 	}
 
