@@ -197,7 +197,7 @@ public class DAOTablaZona {
 	 * @throws SQLException Algún problema de la base de datos.<br>
 	 * @throws Exception Cualquier otra excepción.
 	 */
-	private ArrayList<Zona> convertirEntidadZona(ResultSet rs) throws SQLException, Exception
+	public ArrayList<Zona> convertirEntidadZona(ResultSet rs) throws SQLException, Exception
 	{
 		ArrayList<Zona> zonas = new ArrayList<>();
 		while (rs.next()) {

@@ -74,6 +74,8 @@ public class PreferenciaZonaServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(preferencias.isEmpty())return Response.status( 404 ).entity( preferencias ).build( );			
+
 		return Response.status(200).entity(preferencias).build();
 	}
 
@@ -96,6 +98,8 @@ public class PreferenciaZonaServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(zonas.isEmpty())return Response.status( 404 ).entity( zonas ).build( );			
+
 		return Response.status(200).entity(zonas).build();
 	}
     /**

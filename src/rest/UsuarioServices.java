@@ -33,6 +33,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
 import vos.Usuario;
+import vos.UsuarioCompleto;
 import vos.UsuarioMinimum.Rol;
 
 /**
@@ -103,6 +104,8 @@ public class UsuarioServices {
 					throw new Exception("El usuario no tiene permitido usar el sistema");
 				}
 				Usuario v = tm.usuarioBuscarUsuarioPorId( id );
+				if(v==null)return Response.status( 404 ).entity( v ).build( );			
+
 				return Response.status( 200 ).entity( v ).build( );			
 			}
 			catch( Exception e )
@@ -113,7 +116,35 @@ public class UsuarioServices {
 		
 		
 	}
-
+	/**
+	 * REQUERIMIENTO DE CONSULTA 3
+     * Metodo que expone servicio REST usando GET que busca el usuario con el id que entra como parametro
+     * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios/nombre/nombre?nombre=<<nombre>>" para la busqueda"
+     * @param name - Nombre del usuario a buscar que entra en la URL como parametro 
+     * @return Json con el/los usuarios encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@GET
+	@Path("completo/{id:\\d+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUsuarioCompleto( @PathParam("id") Long id, @HeaderParam("usuarioId") Long usuarioId) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		UsuarioCompleto usuario=null;
+		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
+			if (id == null || id<0)
+				throw new Exception("Id no válida");
+			usuario=tm.usuarioCompletoBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(usuario).build();
+	}
 	/**
      * Metodo que expone servicio REST usando GET que busca el usuario con el nombre que entra como parametro
      * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios/nombre/nombre?nombre=<<nombre>>" para la busqueda"
@@ -122,8 +153,8 @@ public class UsuarioServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{rol}" )
-	@Produces( { MediaType.APPLICATION_JSON } )
+	@Path( "rol" )
+	@Produces(  MediaType.APPLICATION_JSON  )
 	public Response getUsuarioPorRol( @QueryParam("rol") String nombreRol, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Usuario> usuarios;

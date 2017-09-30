@@ -416,5 +416,57 @@ public class DAOTablaUsuario {
 		}
 		return usuario;
 	}
+	
+	public UsuarioCompleto darTodaLaInfoDeUnCliente(Long id) throws Exception, SQLException
+	{
+		
+		DAOTablaPreferencia pref = new DAOTablaPreferencia();
+		DAOTablaCuenta hist = new DAOTablaCuenta();
+		DAOTablaRestaurante rest = new DAOTablaRestaurante();
+		pref.setConn(this.conn);
+		hist.setConn(this.conn);
+		rest.setConn(this.conn);
+		String sql = "SELECT * FROM USUARIO WHERE ID =" + id;
+
+		UsuarioCompleto usuario=null;
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		if (rs.next()) {
+			String name = rs.getString("NOMBRE");
+			Long id2 = rs.getLong("ID");
+			String correo = rs.getString("CORREO");
+			Rol r = convertirARol(rs.getString("ROL"));
+			Preferencia p = pref.buscarPreferenciaPorId(id);
+			ArrayList<CuentaMinimum> historial=hist.buscarCuentasPorId(id);
+			RestauranteMinimum restaurante = rest.darRestauranteDeUsuario(id);
+			int[] frecuencias=darFrecuencias(id2);
+			usuario=(new UsuarioCompleto(name,id2,correo,r,p,historial,restaurante, frecuencias));
+		}
+		rest.cerrarRecursos();
+		hist.cerrarRecursos();
+		pref.cerrarRecursos();
+		return usuario;
+	}
+
+	private int[]darFrecuencias(Long id) throws SQLException, Exception {
+		String sql="SELECT idusuario, to_char(fecha,'D') AS DIA, COUNT(*) AS FRECUENCIA "
+				+ "FROM CUENTA  "
+				+ "WHERE idusuario="+id
+				+ "GROUP BY idusuario, to_char(fecha,'D') "
+				+ "ORDER BY idusuario, to_char(fecha,'D') ";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		int[] frecuencias=new int[7];
+		int i=1;
+		while(rs.next())
+		{
+			int conteo=rs.getInt("FRECUENCIA");
+			int dia=rs.getInt("DIA");
+			frecuencias[dia-1]=conteo;
+		}
+		return frecuencias;
+	}
 
 }

@@ -94,6 +94,8 @@ public class TiposProductoServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(tipos==null)return Response.status( 404 ).entity( tipos ).build( );			
+
 		return Response.status(200).entity(tipos).build();
 	}
 
@@ -121,6 +123,7 @@ public class TiposProductoServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		
 		return Response.status(200).entity(tipo).build();
 	}
 	

@@ -97,6 +97,8 @@ public class ProductoServices {
 		try
 		{
 			Producto v = tm.productoBuscarProductoPorId( id );
+			if(v==null)return Response.status( 404 ).entity( v ).build( );			
+
 			return Response.status( 200 ).entity( v ).build( );			
 		}
 		catch( Exception e )
