@@ -25,10 +25,14 @@ import java.util.Properties;
 
 import dao.*;
 import vos.CondicionTecnica;
+import vos.ContenedoraCriterios;
 import vos.ContenedoraInformacion;
 import vos.Criterio;
 import vos.Criterio.Agregaciones;
+import vos.CriterioAgregacion;
+import vos.CriterioOrden;
 import vos.CriterioVerdad;
+import vos.CriterioVerdadHaving;
 import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.Ingrediente;
@@ -3276,14 +3280,17 @@ public class RotondAndesTM {
 	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
 	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
 	 */
-	public List<ContenedoraInformacion> criteriosOrganizarPorZonaUniversal(List<Criterio> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento, List<Criterio> agregaciones,CriterioVerdad where, CriterioVerdad having) throws Exception {
+	public List<ContenedoraInformacion> criteriosOrganizarPorZonaUniversal(String nombreZona,
+			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having) throws Exception {
 		List<ContenedoraInformacion> videos=null;
 		DAOTablaCriterio daoVideos=null;
 		try 
 		{
 			//////transaccion
 			daoVideos=new DAOTablaCriterio();
-			videos = daoVideos.generarListaFiltradaZonas(criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
+			daoVideos.setConn(darConexion());
+			videos = daoVideos.generarListaFiltradaZonas(nombreZona,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -3577,25 +3584,6 @@ public class RotondAndesTM {
 	}
 	
 	public static void main(String[] args) throws SQLException,Exception {
-		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData");
-		DAOTablaCriterio c= new DAOTablaCriterio();
-		ArrayList<Criterio> agrup= new ArrayList<Criterio>();
-		agrup.add(new Criterio("CAPACIDAD",false));
-		ArrayList<Criterio> ord= new ArrayList<Criterio>();
-		ord.add(new Criterio("CAPACIDAD"));
-		ord.add(new Criterio("INGRESOESPECIAL"));
-		
-		ArrayList<Criterio> ag=new ArrayList<>();
-		ag.add(new Criterio("CAPACIDAD", Agregaciones.MAX, false));
-		ag.add(new Criterio("CAPACIDADOCUPADA", Agregaciones.MIN, true));
-		ag.add(new Criterio("ABIERTAACTUALMENTE", Agregaciones.AVG, false));
-
-		CriterioVerdad where= new CriterioVerdad(new Criterio("NOMBRE"),"'k%'",null,true);
-		CriterioVerdad having= new CriterioVerdad(new Criterio("NOMBRE",null,false),"1","<=",false);
-		c.setConn(tm.darConexion());    
-		List<ContenedoraInformacion> zonas= c.generarListaFiltradaZonas(agrup, ord, ag,where,having);
-		c.cerrarRecursos();
-		System.out.println(zonas.toString());
 		
 	}
 

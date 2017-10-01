@@ -4,6 +4,7 @@ package rest;
 
 import java.util.List;
 
+
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,9 +20,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.*;
 
 import tm.RotondAndesTM;
+import vos.ContenedoraCriterios;
+import vos.ContenedoraInformacion;
+import vos.Criterio;
+import vos.CriterioVerdad;
 import vos.Usuario;
 import vos.Zona;
 import vos.UsuarioMinimum.Rol;
@@ -173,17 +178,17 @@ public class ZonaServices {
 		return Response.status(200).entity(zona).build();
 	}
 	
-	@DELETE
-	@Path("{nombre: [a-zA-Z]+}")
+	@POST
+	@Path("completo/{nombre: [a-zA-Z]+}")
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response pruebaFiltros( @PathParam("nombre") String name) {
+	public Response pruebaFiltros( @PathParam("nombre") String name, ContenedoraCriterios c) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
-		Zona zonas;
+		List<ContenedoraInformacion> zonas;
 		try {
 			if (name == null || name.length() == 0)
 				throw new Exception("Nombre de la zona no valido");
-			zonas = tm.zonaBuscarZonasPorName(name);
+			zonas = tm.criteriosOrganizarPorZonaUniversal(name,c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

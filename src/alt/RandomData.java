@@ -10,6 +10,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.codehaus.jackson.annotate.JsonProperty;
+
+import vos.Criterio;
+import vos.CriterioVerdad;
+import vos.CriterioVerdad.PalabrasVerdad;
 
 public class RandomData {
 	
@@ -335,4 +342,6 @@ public class RandomData {
 		r.writeToPreferenciaZona("./Docs/pruebas/preferenciaZona.txt");
 		r.writeToCuenta("./Docs/pruebas/cuentas.txt");
 	}
+		 
+		
 }
