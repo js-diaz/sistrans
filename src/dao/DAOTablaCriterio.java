@@ -289,20 +289,20 @@ public class DAOTablaCriterio {
 		}
 	}
 
-	private ArrayList<String> evaluarVerdad(String nombre) throws SQLException, Exception{
-		String temp=nombre.replaceAll("\\(","").replaceAll("\\)","").trim();
-		for(CriterioVerdad.PalabrasVerdad p:CriterioVerdad.PalabrasVerdad.values())
+	private void evaluarWhere(CriterioVerdad where, ContenedoraInformacion tipos) throws SQLException, Exception{
+		String tipo=null;
+		if(where.getValorAnterior()!=null)
 		{
-			temp=temp.replaceAll(p+"","");
+			for(int i=0;i<tipos.getInformacion().size() && tipo==null;i++)
+			{
+				if(where.getValorAnterior().equals(tipos.darNombre(i)))
+					tipo=tipos.darValor(i);
+			}
 		}
-		String[] criterios=temp.split(" ");
-		ArrayList<String> lista=new ArrayList<>();
-		for(String s:criterios)
+		else
 		{
-			if(s.trim().equals("")) continue;
-			lista.add(s);
+			
 		}
-		return lista;
 	}
 
 	private String simplificarOrden(String nombre) {
