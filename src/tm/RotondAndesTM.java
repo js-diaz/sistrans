@@ -25,7 +25,10 @@ import java.util.Properties;
 
 import dao.*;
 import vos.CondicionTecnica;
+import vos.ContenedoraInformacion;
 import vos.Criterio;
+import vos.Criterio.Agregaciones;
+import vos.CriterioVerdad;
 import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.Ingrediente;
@@ -3268,42 +3271,42 @@ public class RotondAndesTM {
 		}
 	}
 	//CRITERIOS
-	//VIDEOANDES-EJEMPLO
-		/**
-		 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
-		 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
-		 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
-		 */
-		public List<Zona> criteriosOrganizarPorZonaUniversal(List<Criterio> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento) throws Exception {
-			List<Zona> videos=null;
-			DAOTablaCriterio daoVideos=null;
-			try 
-			{
-				//////transaccion
-				daoVideos=new DAOTablaCriterio();
-				videos = daoVideos.generarListaFiltradaZonas(criteriosOrganizacion,criteriosAgrupamiento);
+	/**
+	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
+	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+	 */
+	public List<ContenedoraInformacion> criteriosOrganizarPorZonaUniversal(List<Criterio> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento, List<Criterio> agregaciones,CriterioVerdad where, CriterioVerdad having) throws Exception {
+		List<ContenedoraInformacion> videos=null;
+		DAOTablaCriterio daoVideos=null;
+		try 
+		{
+			//////transaccion
+			daoVideos=new DAOTablaCriterio();
+			videos = daoVideos.generarListaFiltradaZonas(criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
 
-			} catch (SQLException e) {
-				System.err.println("SQLException:" + e.getMessage());
-				e.printStackTrace();
-				throw e;
-			} catch (Exception e) {
-				System.err.println("GeneralException:" + e.getMessage());
-				e.printStackTrace();
-				throw e;
-			} finally {
-				try {
-					daoVideos.cerrarRecursos();
-					if(this.conn!=null)
-						this.conn.close();
-				} catch (SQLException exception) {
-					System.err.println("SQLException closing resources:" + exception.getMessage());
-					exception.printStackTrace();
-					throw exception;
-				}
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoVideos.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
 			}
-			return videos;
 		}
+		return videos;
+	}
+		
 
 
 	//VIDEOANDES-EJEMPLO
@@ -3575,7 +3578,24 @@ public class RotondAndesTM {
 	
 	public static void main(String[] args) throws SQLException,Exception {
 		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData");
-		System.out.println(Arrays.toString(tm.usuarioCompletoBuscarUsuarioPorId(2l).getFrecuencias()));
+		DAOTablaCriterio c= new DAOTablaCriterio();
+		ArrayList<Criterio> agrup= new ArrayList<Criterio>();
+		agrup.add(new Criterio("CAPACIDAD",false));
+		ArrayList<Criterio> ord= new ArrayList<Criterio>();
+		ord.add(new Criterio("CAPACIDAD"));
+		ord.add(new Criterio("INGRESOESPECIAL"));
+		
+		ArrayList<Criterio> ag=new ArrayList<>();
+		ag.add(new Criterio("CAPACIDAD", Agregaciones.MAX, false));
+		ag.add(new Criterio("CAPACIDADOCUPADA", Agregaciones.MIN, true));
+		ag.add(new Criterio("ABIERTAACTUALMENTE", Agregaciones.AVG, false));
+
+		CriterioVerdad where= new CriterioVerdad(new Criterio("NOMBRE"),"'k%'",null,true);
+		CriterioVerdad having= new CriterioVerdad(new Criterio("NOMBRE",null,false),"1","<=",false);
+		c.setConn(tm.darConexion());    
+		List<ContenedoraInformacion> zonas= c.generarListaFiltradaZonas(agrup, ord, ag,where,having);
+		c.cerrarRecursos();
+		System.out.println(zonas.toString());
 		
 	}
 
