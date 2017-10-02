@@ -1,6 +1,6 @@
-insert into CUENTA (valor, numerocuenta, fecha, idusuario) values (69.61, 2534685989, '2016-12-13 14:32:51', 152);
-insert into CUENTA (valor, numerocuenta, fecha, idusuario) values (58.15, 4604174961, '2017-01-18 06:26:58', 168);
-insert into CUENTA (valor, numerocuenta, fecha, idusuario) values (47.73, 6819202295, '2017-05-07 09:31:37', 113);
+insert into CUENTA (valor, numerocuenta, fecha, idusuario) values (69.61, '2534685989', '2016-12-13 14:32:51', 152);
+insert into CUENTA (valor, numerocuenta, fecha, idusuario) values (58.15, '4604174961', '2017-01-18 06:26:58', 168);
+insert into CUENTA (valor, numerocuenta, fecha, idusuario) values (47.73, '6819202295', '2017-05-07 09:31:37', 113);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario) values (69.25, '0198003167', '2017-07-22 06:00:29', 128);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario) values (43.9, '2746440514', '2017-06-03 21:54:17', 139);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario) values (75.8, '2238492472', '2017-09-21 19:40:03', 153);
