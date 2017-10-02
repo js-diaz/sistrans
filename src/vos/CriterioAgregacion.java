@@ -8,6 +8,14 @@ import vos.Criterio.PalabrasEspeciales;
 public class CriterioAgregacion extends Criterio {
 
 	/**
+	 * Agregación respectiva
+	 */
+	private Agregaciones agregacion;
+	/**
+	 * Valor interno
+	 */
+	private String interno;
+	/**
 	 * Construye un nuevo criterio de agregación.<br>
 	 * @param valorAgrupacion Valor del atributo a analizar.<br>
 	 * @param agr Agregación a utilizar.<br>
@@ -31,15 +39,50 @@ public class CriterioAgregacion extends Criterio {
 			if(agr.equals(Agregaciones.COUNT))
 			{
 				if(!distinto)
-				nombre+="*)";
+				{
+					nombre+="*)";
+				}
 				else nombre+=")";
 			}
 			else throw new Exception("Su agregación es inválida");
 		}
 		else
 		{
+			interno=valorAgrupacion;
 			nombre+=valorAgrupacion+")";
 		}
+		agregacion=agr;
+		
 	}
+	/**
+	 * Obtiene la agregacón.<br>
+	 * @return agregacion
+	 */
+	public Agregaciones getAgregacion() {
+		return agregacion;
+	}
+	/**
+	 * Obtiene el valor interno.<br>
+	 * @return interno
+	 */
+	public String getInterno() {
+		return interno;
+	}
+	/**
+	 * Modifica la agregación al valor dado por parámetro.<br>
+	 * @param agregacion
+	 */
+	public void setAgregacion(Agregaciones agregacion) {
+		this.agregacion = agregacion;
+	}
+	/**
+	 * Modifica el valor interno al dado por parámetro.<br>
+	 * @param interno
+	 */
+	public void setInterno(String interno) {
+		this.interno = interno;
+	}
+	
+	
 	
 }

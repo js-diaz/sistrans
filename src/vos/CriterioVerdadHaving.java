@@ -48,9 +48,15 @@ public class CriterioVerdadHaving{
 	 * Criterio 2
 	 */
 	private CriterioVerdadHaving c2;
-	
+	/**
+	 * Operación guardad
+	 */
+	private String operacion;
+	/**
+	 * Crea un criterio vacío.
+	 */
 	public CriterioVerdadHaving(){
-		
+		criterios= new ArrayList<>();
 	}
 	/**
 	 * Construye un criterio de verdad generalizado para cualquier clase.<br>
@@ -102,6 +108,7 @@ public class CriterioVerdadHaving{
 		for(int i=0;i<operaciones.length && !agregado;i++) 
 			if(operaciones[i].equals(operacion))
 			{
+				this.operacion=operacion;
 				nombre=valorAnterior.getNombre()+operacion+valorComparacion;
 				agregado=true;
 			}
@@ -129,6 +136,7 @@ public class CriterioVerdadHaving{
 		for(int i=0;i<operaciones.length && !agregado;i++) 
 			if(operaciones[i].equals(operacion))
 			{
+				this.operacion=operacion;
 				nombre=valorAnterior.getNombre()+operacion+valorComparacion.getNombre();
 				agregado=true;
 			}
@@ -261,5 +269,13 @@ public class CriterioVerdadHaving{
 	 */
 	public CriterioVerdadHaving getC2() {
 		return c2;
+	}
+	/**
+	 * Obtiene la operación.<br>
+	 * @return operacion
+	 */
+	public String getOperacion()
+	{
+		return operacion;
 	}
 }

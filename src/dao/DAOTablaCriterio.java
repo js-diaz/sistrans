@@ -17,8 +17,13 @@ import vos.Criterio.Agregaciones;
  * @author s.guzmanm
  */
 public class DAOTablaCriterio {
-
-
+	/**
+	 * Enum de tipos de dato.
+	 */
+	public enum tiposDatos{
+		VARCHAR2,DATE
+	}
+	
 	/**
 	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
 	 */
@@ -247,6 +252,7 @@ public class DAOTablaCriterio {
 					if(buscarCriteriosZona(operaciones)==null)
 						throw new Exception("El criterio no existe en la base");
 				}
+				evaluarWhere(operacionesWhere,tiposDeDatoZona());
 				where+=" "+CriterioVerdad.PalabrasVerdad.AND+" "+operacionesWhere.getNombre();
 			}
 		//Verifica having
@@ -259,6 +265,7 @@ public class DAOTablaCriterio {
 					if(buscarCriteriosZona(operaciones)==null)
 						throw new Exception("El criterio no existe en la base");
 				}
+				evaluarHaving(operacionesHaving,tiposDeDatoZona());
 				having="HAVING "+operacionesHaving.getNombre();
 			}
 		String sql=select+" "+from+" "+where+" "+groupBy+" "+having+" "+orderBy;
@@ -270,38 +277,93 @@ public class DAOTablaCriterio {
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
 	}
-
-	private void evaluarHavingZona(String nombre) throws SQLException, Exception {
-		String temp=nombre.replaceAll("\\(","").replaceAll("\\)","").trim();
-		for(CriterioVerdad.PalabrasVerdad p:CriterioVerdad.PalabrasVerdad.values())
-		{
-			temp=temp.replaceAll(p+"","");
-		}
-		for(Criterio.Agregaciones a: Criterio.Agregaciones.values())
-		{
-			temp=temp.replaceAll(a+"", "");
-		}
-		String[] criterios=temp.split(" ");
-		for(String s:criterios)
-		{
-			if(s.trim().equals("")) continue;
-			if(buscarCriteriosZona(s.trim())==null) throw new Exception("Hay un criterio del having que no existe "+s);
-		}
-	}
-
 	private void evaluarWhere(CriterioVerdad where, ContenedoraInformacion tipos) throws SQLException, Exception{
 		String tipo=null;
 		if(where.getValorAnterior()!=null)
 		{
 			for(int i=0;i<tipos.getInformacion().size() && tipo==null;i++)
 			{
-				if(where.getValorAnterior().equals(tipos.darNombre(i)))
+				if(where.getValorAnterior().getNombre().equals(tipos.darNombre(i)))
 					tipo=tipos.darValor(i);
+			}
+			if(where.getCriterioComparacion()!=null)
+			{
+				String tipo2=null;
+				for(int i=0;i<tipos.getInformacion().size() && tipo2==null;i++)
+				{
+					if(where.getValorAnterior().getNombre().equals(tipos.darNombre(i)))
+						tipo2=tipos.darValor(i);
+				}
+				if(!tipo.equals(tipo2) && (tipo.equals(tiposDatos.VARCHAR2+"") ||
+						tipo2.equals(tiposDatos.VARCHAR2+"") || tipo.equals(tiposDatos.DATE+"")
+						|| tipo2.equals(tiposDatos.DATE+""))) throw new Exception("Está intentando comparar dos criterios diferentes");
+			}
+			else if (where.getComparacion()!=null)
+			{
+				if(tipo.equals(tiposDatos.VARCHAR2+""))
+					{
+						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "'"+where.getComparacion()+"'"));
+					}
+				else if (tipo.equals(tiposDatos.DATE+"")) 
+					{
+						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "TO_DATE\\('"+where.getComparacion()+"', 'yyyy/mm/dd'\\)"));
+					}
+				else
+				{
+					if(where.getOperacion()==null) throw new Exception("No se puede usar este operador para objetos diferentes a cadenas de caracteres"); 
+				}
 			}
 		}
 		else
 		{
-			
+			evaluarWhere(where.getC1(),tipos);
+			evaluarWhere(where.getC2(),tipos);
+		}
+	}
+	
+	private void evaluarHaving(CriterioVerdadHaving having, ContenedoraInformacion tipos) throws SQLException, Exception{
+		String tipo=null;
+		if(having.getValorAnterior()!=null)
+		{
+			for(int i=0;i<tipos.getInformacion().size() && tipo==null;i++)
+			{
+				if(having.getValorAnterior().getInterno().equals(tipos.darNombre(i)))
+					tipo=tipos.darValor(i);
+			}
+			if(having.getCriterioComparacion()!=null)
+			{
+				String tipo2=null;
+				for(int i=0;i<tipos.getInformacion().size() && tipo2==null;i++)
+				{
+					if(having.getValorAnterior().getInterno().equals(tipos.darNombre(i)))
+						tipo2=tipos.darValor(i);
+				}
+				if(!tipo.equals(tipo2) && (tipo.equals(tiposDatos.VARCHAR2+"") ||
+						tipo2.equals(tiposDatos.VARCHAR2+"") || tipo.equals(tiposDatos.DATE+"")
+						|| tipo2.equals(tiposDatos.DATE+""))) throw new Exception("Está intentando comparar dos criterios diferentes");
+			}
+			else if (having.getComparacion()!=null)
+			{
+				if(tipo.equals(tiposDatos.VARCHAR2+"") && (having.getValorAnterior().getAgregacion().equals(Agregaciones.MIN))
+						|| having.getValorAnterior().getAgregacion().equals(Agregaciones.MAX))
+					{
+						having.setNombre(having.getNombre().replaceAll(having.getComparacion(), "'"+having.getComparacion()+"'"));
+					}
+				else if (tipo.equals(tiposDatos.DATE+"") && (having.getValorAnterior().getAgregacion().equals(Agregaciones.MIN))
+						|| having.getValorAnterior().getAgregacion().equals(Agregaciones.MAX)) 
+					{
+						having.setNombre(having.getNombre().replaceAll(having.getComparacion(), "TO_DATE\\('"+having.getComparacion()+"', 'yyyy/mm/dd'\\)"));
+					}
+				else
+				{
+					if(having.getOperacion()==null) throw new Exception("No se puede usar este operador para objetos diferentes a cadenas de caracteres"); 
+				}
+			}
+		}
+		else
+		{
+			evaluarHaving(having.getC1(),tipos);
+			evaluarHaving(having.getC2(),tipos);
 		}
 	}
 

@@ -36,6 +36,10 @@ public class CriterioVerdad {
 	 */
 	private String comparacion;
 	/**
+	 * Operación de comparación
+	 */
+	private String operacion;
+	/**
 	 * Criterio de comparación.
 	 */
 	private Criterio criterioComparacion;
@@ -112,10 +116,15 @@ public class CriterioVerdad {
 		for(int i=0;i<operaciones.length && !agregado;i++) 
 			if(operaciones[i].equals(operacion))
 			{
+				this.operacion=operacion;
 				nombre=valorAnterior.getNombre()+operacion+valorComparacion;
 				agregado=true;
 			}
-		if(!agregado) nombre=valorAnterior.getNombre()+" "+PalabrasVerdad.LIKE+" "+valorComparacion;
+		if(!agregado) 
+			{
+			this.operacion=null;
+			nombre=valorAnterior.getNombre()+" "+PalabrasVerdad.LIKE+" "+valorComparacion;
+			}
 		if(!afirmativo) nombre=PalabrasVerdad.NOT+" ("+nombre+")";
 	}
 	 
@@ -139,6 +148,7 @@ public class CriterioVerdad {
 		for(int i=0;i<operaciones.length && !agregado;i++) 
 			if(operaciones[i].equals(operacion))
 			{
+				this.operacion=operacion;
 				nombre=valorAnterior.getNombre()+operacion+valorComparacion.getNombre();
 				agregado=true;
 			}
@@ -269,6 +279,15 @@ public class CriterioVerdad {
 	public CriterioVerdad getC2() {
 		return c2;
 	}
+	/**
+	 * Obtiene la operación.<br>
+	 * @return operacion
+	 */
+	public String getOperacion()
+	{
+		return operacion;
+	}
+	
 	
 	
 	

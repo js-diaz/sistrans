@@ -30,6 +30,7 @@ public class ContenedoraInformacion {
 	 * Crea una contenedora vacía.
 	 */
 	public ContenedoraInformacion() {
+		informacion=new ArrayList<>();
 	}
 	/**
 	 * Modifica un valor dado en la lista.<br>
