@@ -25,7 +25,14 @@ import java.util.Properties;
 
 import dao.*;
 import vos.CondicionTecnica;
+import vos.ContenedoraCriterios;
+import vos.ContenedoraInformacion;
 import vos.Criterio;
+import vos.Criterio.Agregaciones;
+import vos.CriterioAgregacion;
+import vos.CriterioOrden;
+import vos.CriterioVerdad;
+import vos.CriterioVerdadHaving;
 import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.Ingrediente;
@@ -1411,11 +1418,13 @@ public class RotondAndesTM {
 	public void preferenciaAddPreferencia(Long idUsuario, Preferencia p) throws Exception
 	{
 		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		if(p.getCategorias()!=null)
 		for(Categoria c: p.getCategorias())
 		{
 			if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
 				throw new Exception("La categoría del usuario no existe "+c.getNombre());
 		}
+		if(p.getZonaMinimums()!=null)
 		for(ZonaMinimum z: p.getZonaMinimums())
 		{
 			if(zonaBuscarZonasPorName(z.getNombre())==null)
@@ -3266,42 +3275,45 @@ public class RotondAndesTM {
 		}
 	}
 	//CRITERIOS
-	//VIDEOANDES-EJEMPLO
-		/**
-		 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
-		 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
-		 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
-		 */
-		public List<Zona> criteriosOrganizarPorZonaUniversal(List<Criterio> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento) throws Exception {
-			List<Zona> videos=null;
-			DAOTablaCriterio daoVideos=null;
-			try 
-			{
-				//////transaccion
-				daoVideos=new DAOTablaCriterio();
-				videos = daoVideos.generarListaFiltradaZonas(criteriosOrganizacion,criteriosAgrupamiento);
+	/**
+	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
+	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+	 */
+	public List<ContenedoraInformacion> criteriosOrganizarPorZonaUniversal(String nombreZona,
+			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having) throws Exception {
+		List<ContenedoraInformacion> videos=null;
+		DAOTablaCriterio daoVideos=null;
+		try 
+		{
+			//////transaccion
+			daoVideos=new DAOTablaCriterio();
+			daoVideos.setConn(darConexion());
+			videos = daoVideos.generarListaFiltradaZonas(nombreZona,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
 
-			} catch (SQLException e) {
-				System.err.println("SQLException:" + e.getMessage());
-				e.printStackTrace();
-				throw e;
-			} catch (Exception e) {
-				System.err.println("GeneralException:" + e.getMessage());
-				e.printStackTrace();
-				throw e;
-			} finally {
-				try {
-					daoVideos.cerrarRecursos();
-					if(this.conn!=null)
-						this.conn.close();
-				} catch (SQLException exception) {
-					System.err.println("SQLException closing resources:" + exception.getMessage());
-					exception.printStackTrace();
-					throw exception;
-				}
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoVideos.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
 			}
-			return videos;
 		}
+		return videos;
+	}
+		
 
 
 	//VIDEOANDES-EJEMPLO
@@ -3572,8 +3584,6 @@ public class RotondAndesTM {
 	}
 	
 	public static void main(String[] args) throws SQLException,Exception {
-		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData");
-		System.out.println(Arrays.toString(tm.usuarioCompletoBuscarUsuarioPorId(2l).getFrecuencias()));
 		
 	}
 

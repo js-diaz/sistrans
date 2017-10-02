@@ -1,30 +1,17 @@
-/**-------------------------------------------------------------------
- * $Id$
- * Universidad de los Andes (Bogot谩 - Colombia)
- * Departamento de Ingenier铆a de Sistemas y Computaci贸n
- *
- * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
- * Autor: Juan Felipe Garc铆a - jf.garcia268@uniandes.edu.co
- * -------------------------------------------------------------------
- */
 package dao;
 
-
-import java.sql.Connection; 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
-import vos.*;
+import vos.CuentaMinimum;
+import vos.PedidoMenu;
+import vos.Menu;
 
-/**
- * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaci贸n
- * @author Monitores 2017-20
- */
 public class DAOTablaPedidoMenu {
-
 
 	/**
 	 * Arraylits de recursos que se usan para la ejecuci贸n de sentencias SQL
@@ -37,14 +24,14 @@ public class DAOTablaPedidoMenu {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAOPedidoMenu
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaPedidoMenu() {
 		recursos = new ArrayList<Object>();
 	}
 
-	/**
+	/**f
 	 * Metodo que cierra todos los recursos que estan enel arreglo de recursos
 	 * <b>post: </b> Todos los recurso del arreglo de recursos han sido cerrados
 	 */
@@ -63,163 +50,163 @@ public class DAOTablaPedidoMenu {
 	 * Metodo que inicializa la connection del DAO a la base de datos con la conexi贸n que entra como parametro.
 	 * @param con  - connection a la base de datos
 	 */
-	public void setConn(Connection con){
-		this.conn = con;
+	public void setConn(Connection conn){
+		this.conn = conn;
 	}
 
 
 	/**
-	 * Metodo que, usando la conexi贸n a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexi贸n a la base de datos, saca todos los pedidoMenus de la base de datos
+	 * <b>SQL Statement:</b> SELECT * FROM PEDIDO_MENUS;
+	 * @return Arraylist con los pedidoMenus de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public List<PedidoMenu> darPedidoMenus() throws SQLException, Exception {
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM PEDIDO_MENU";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		return convertirEntidadPedidoMenu(rs);
+	}
+
+
+	/**
+	 * Metodo que busca la informacion de un menu en una cienta dados por par醡etro.
+	 * @param id - Id del menu a buscar
+	 * @param cuenta - Nombre del cuenta al que pertenece
+	 * @return ArrayList con los pedidoMenus encontrados
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public PedidoMenu buscarPedidoMenusPorNombreYCuenta(String menu, String restaurante, String cuenta) throws SQLException, Exception {
+
+		String sql = "SELECT * FROM PEDIDO_MENU WHERE NOMBRE_MENU LIKE '" + menu + "' AND NUMERO_CUENTA LIKE '" + cuenta + "'";
+		sql += " AND NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		while (rs.next()) {
-			String name = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
-		}
-		return videos;
+		List<PedidoMenu> pedidoMenus = convertirEntidadPedidoMenu(rs);
+		return pedidoMenus.get(0);
 	}
 
-
 	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * Metodo que agrega la pedidoMenu que entra como parametro a la base de datos.
+	 * @param pedidoMenu - la pedidoMenu a agregar. pedidoMenu !=  null
+	 * <b> post: </b> se ha agregado la pedidoMenu a la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que la pedidoMenu baje  a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar la pedidoMenu a la base de datos
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public void addPedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
+		String sql = "INSERT INTO PEDIDO_MENU VALUES (";
+		sql += "'" + pedidoMenu.getCuenta().getNumeroCuenta() + "', ";
+		sql += pedidoMenu.getMenu().getNombre() + ", ";
+		sql += "'" + pedidoMenu.getMenu().getRestaurante().getNombre() + "', ";
+		sql += pedidoMenu.getCantidad() + ")";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+	
+	
+
+	/**
+	 * Metodo que actualiza la pedidoMenu que entra como par谩metro en la base de datos.
+	 * @param pedidoMenu - la pedidoMenu a actualizar. pedidoMenu !=  null
+	 * <b> post: </b> se ha actualizado la pedidoMenu en la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la pedidoMenu.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void updatePedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
+
+		String sql = "UPDATE PEDIDO_MENU SET ";
+		sql += "CANTIDAD = " + pedidoMenu.getCantidad();
+		
+		sql += " WHERE NOMBRE_MENU LIKE '" + pedidoMenu.getMenu().getNombre() + "'"; 
+		sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoMenu.getMenu().getRestaurante().getNombre() + "'";
+		sql += " AND NUMERO_CUENTA LIKE '" + pedidoMenu.getCuenta().getNumeroCuenta() + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
+		prepStmt.executeQuery();
+	}
 
-		while (rs.next()) {
-			String name2 = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
-		}
+	/**
+	 * Metodo que elimina la pedidoMenu que entra como parametro en la base de datos.
+	 * @param pedidoMenu - la pedidoMenu a borrar. pedidoMenu !=  null
+	 * <b> post: </b> se ha borrado la pedidoMenu en la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la pedidoMenu.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void deletePedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
+		
+		String sql = "DELETE FROM PEDIDO_MENU";
+		sql += " WHERE NOMBRE_MENU LIKE '" + pedidoMenu.getMenu().getNombre() + "'"; 
+		sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoMenu.getMenu().getRestaurante().getNombre() + "'";
+		sql += " AND NUMERO_CUENTA LIKE '" + pedidoMenu.getCuenta().getNumeroCuenta() + "'";
 
-		return videos;
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
 	}
 	
 	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Crea un arreglo de pedidoMenus con el set de resultados pasado por par醡etro.<br>
+	 * @param rs Set de resultados.<br>
+	 * @return pedidoMenus Lista de pedidoMenus convertidas.<br>
+	 * @throws SQLException Alg煤n problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepci贸n.
 	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
+	private List<PedidoMenu> convertirEntidadPedidoMenu(ResultSet rs) throws SQLException, Exception
 	{
-		Video video = null;
-
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		if(rs.next()) {
-			String name = rs.getString("NAME");
-			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
+		DAOTablaCuenta daoCuenta = new DAOTablaCuenta();
+		DAOTablaMenu daoMenu = new DAOTablaMenu();
+		daoCuenta.setConn(conn);
+		daoMenu.setConn(conn);
+		List<PedidoMenu> pedidoMenus = new ArrayList<>();
+		while (rs.next()) {
+			int cantidad = rs.getInt("CANTIDAD");
+			Menu menu = daoMenu.buscarMenusPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
+			CuentaMinimum cuenta = daoCuenta.buscarCuentasPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
+			pedidoMenus.add(new PedidoMenu(cantidad, cuenta, menu));
 		}
-
-		return video;
-	}
-
-	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void addVideo(Video video) throws SQLException, Exception {
-
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
+		daoCuenta.cerrarRecursos();
+		daoMenu.cerrarRecursos();
+		return pedidoMenus;
 	}
 	
 	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Elimina todos los pedidoMenus pertenecientes al cuenta dado.
+	 * @param cuenta Cuenta al cual eliminarle los pedidoMenus.
+	 * @throws SQLException Alg鷑 problema de la base de datos.<br>
 	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
-
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
-
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
+	public void eliminarPedidoMenusPorCuenta(CuentaMinimum cuenta) throws SQLException {
+		String sql = "DELETE FROM PEDIDO_MENU WHERE NUMERO_CUENTA LIKE '" + cuenta.getNumeroCuenta() + "'";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.executeQuery();
 	}
 
 	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Metodo que da todos los menus de una cuenta dada
+	 * @param numeroCuenta numero de la cuenta
+	 * @return Lista con los pedidos de esta cuenta
+	 * @throws SQLException Alg煤n problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepci贸n.
 	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
-
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
+	public List<PedidoMenu> buscarMenusPorNumCuenta(String numeroCuenta) throws SQLException, Exception {
+		String sql = "SELECT * FROM PEDIDO_MENU WHERE NUMERO_CUENTA LIKE '" + numeroCuenta + "'";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		return convertirEntidadPedidoMenu(ps.executeQuery());
 	}
 
-	public void eliminarPorNumeroCuenta(String numeroCuenta) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void insertarPorCuenta(Cuenta c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public ArrayList<PedidoMenuMinimum> buscarProductosPorNumCuenta(String numeroCuenta) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

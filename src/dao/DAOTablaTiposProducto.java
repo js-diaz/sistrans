@@ -166,6 +166,7 @@ public class DAOTablaTiposProducto {
 	 */
 	public static String convertirPlato(TiposDePlato tipo)
 	{
+		if(tipo==null) return "NOEXISTE";
 		switch(tipo)
 		{
 		case ENTRADA: return "ENTRADA";
@@ -173,7 +174,7 @@ public class DAOTablaTiposProducto {
 		case POSTRE: return "POSTRE";
 		case BEBIDA: return "BEBIDA";
 		case ACOMPANAMIENTO: return "ACOMPAÑAMIENTO";
-		default: return null;
+		default: return "NOEXISTE";
 		}
 	}
 	/**

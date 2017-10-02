@@ -10,14 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vos.*;
+import vos.Criterio.Agregaciones;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación utilizando todos los criterios para requerimientos de búsqueda.
  * @author s.guzmanm
  */
 public class DAOTablaCriterio {
-
-
+	/**
+	 * Enum de tipos de dato.
+	 */
+	public enum tiposDatos{
+		VARCHAR2,DATE
+	}
+	
 	/**
 	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
 	 */
@@ -58,32 +64,29 @@ public class DAOTablaCriterio {
 	public void setConn(Connection con){
 		this.conn = con;
 	}
-
-
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los criterios de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM CRITERIO;
-	 * @return Arraylist con los criterios de la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Da todos los criterios básicos de una zona (Sus atributos).<br>
+	 * @return Criterios básicos de la zona en forma de lista.<br>
+	 * @throws SQLException SI hay un error en la BD.<br>
+	 * @throws Exception Si hay cualquier otro error.
 	 */
-	public ArrayList<Criterio> darCriteriosOrganizacionZona() throws SQLException, Exception {
-		ArrayList<Criterio> categorias = new ArrayList<>();
-
-		String sql = "SELECT * FROM CRITERIOORGZONA";
-
+	public List<Criterio> darCriteriosBasicosZona() throws SQLException, Exception
+	{
+		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'ZONA' OR TABLE_NAME "
+				+ "LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'CUENTA'))";
+		String sql = "SELECT * FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
+		List<Criterio> c=new ArrayList<>();
 		while (rs.next()) {
-			String name = rs.getString("NOMBRE");
-			categorias.add(new Criterio(name));
+			String name2 = rs.getString("COLUMN_NAME");
+			c.add(new Criterio(name2));
 		}
-		return categorias;
+
+		return c;
 	}
-
-
 	/**
 	 * Metodo que busca el criterios con el nombre que entra como parámetro.
 	 * @param name - Nombre a buscar
@@ -91,8 +94,10 @@ public class DAOTablaCriterio {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public Criterio buscarCriteriosOrgZonaPorName(String name) throws SQLException, Exception {
-		String sql = "SELECT * FROM CRITERIOORGZONA WHERE NOMBRE LIKE'" + name + "'";
+	public Criterio buscarCriteriosZona(String name) throws SQLException, Exception {
+		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'ZONA' OR TABLE_NAME "
+				+ "LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'CUENTA'))";
+		String sql = "SELECT * FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -100,342 +105,324 @@ public class DAOTablaCriterio {
 
 		Criterio c=null;
 		if (rs.next()) {
-			String name2 = rs.getString("NOMBRE");
+			String name2 = rs.getString("COLUMN_NAME");
 			c=new Criterio(name2);
 		}
 
 		return c;
 	}
-	
-	
 	/**
-	 * Metodo que agrega el criterio que entra como parámetro a la base de datos.
-	 * @param categoria - el criterio a agregar. categoria !=  null
-	 * <b> post: </b> se ha agregado el objeto a la base de datos en la transaction actual. pendiente que el master
-	 * haga commit para que el criterio baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * Retorna el tipo de dato de cada una de las columnas de zona usados en el sistema.<br>
+	 * @return Contenedora de información con los tipos de dato.<br>
+	 * @throws SQLException Excepción de la BD.<br>
+	 * @throws Exception Cualquier otro error.
 	 */
-	public void addCriterioOrgZona(Criterio c) throws SQLException, Exception {
-
-		String sql = "INSERT INTO CRITERIOORGZONA VALUES ('";
-		sql += c.getNombre() + "')";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
-	}
-	/**
-	 * Metodo que elimina el criterio que entra como parámetro en la base de datos.
-	 * @param categoría - el criterio a borrar. categoria !=  null
-	 * <b> post: </b> se ha borrado el criterio en la base de datos en la transaction actual. pendiente que el master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void deleteCriterioOrgZona(Criterio c) throws SQLException, Exception {
-
-		String sql = "DELETE FROM CRITERIOORGZONA";
-		sql += " WHERE NOMBRE LIKE '" + c.getNombre()+"'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-	
-	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los criterios de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM CRITERIO;
-	 * @return Arraylist con los criterios de la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public ArrayList<Criterio> darCriteriosAgrupamientoZona() throws SQLException, Exception {
-		ArrayList<Criterio> categorias = new ArrayList<>();
-
-		String sql = "SELECT * FROM CRITERIOGRUZONA";
-
+	public ContenedoraInformacion tiposDeDatoZona() throws SQLException, Exception
+	{
+		ContenedoraInformacion lista= new ContenedoraInformacion();
+		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'ZONA' OR TABLE_NAME "
+				+ "LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'CUENTA'))";
+		String sql = "SELECT COLUMN_NAME, DATA_TYPE FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
-		while (rs.next()) {
-			String name = rs.getString("NOMBRE");
-			categorias.add(new Criterio(name));
-		}
-		return categorias;
-	}
-
-
-	/**
-	 * Metodo que busca el criterios con el nombre que entra como parámetro.
-	 * @param name - Nombre a buscar
-	 * @return ArrayList con los criterios encontrados
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public Criterio buscarCriteriosAgrupamientoZonaPorName(String name) throws SQLException, Exception {
-		String sql = "SELECT * FROM CRITERIOGRUZONA WHERE NOMBRE LIKE'" + name + "'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		Criterio c=null;
-		if (rs.next()) {
-			String name2 = rs.getString("NOMBRE");
-			c=new Criterio(name2);
-		}
-
-		return c;
-	}
-	
-	
-	/**
-	 * Metodo que agrega el criterio que entra como parámetro a la base de datos.
-	 * @param categoria - el criterio a agregar. categoria !=  null
-	 * <b> post: </b> se ha agregado el objeto a la base de datos en la transaction actual. pendiente que el master
-	 * haga commit para que el criterio baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void addCriterioAgrupamientoZona(Criterio c) throws SQLException, Exception {
-
-		String sql = "INSERT INTO CRITERIOGRUZONA VALUES ('";
-		sql += c.getNombre() + "')";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
-	}
-	/**
-	 * Metodo que elimina el criterio que entra como parámetro en la base de datos.
-	 * @param categoría - el criterio a borrar. categoria !=  null
-	 * <b> post: </b> se ha borrado el criterio en la base de datos en la transaction actual. pendiente que el master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void deleteCriterioAgrupamientoZona(Criterio c) throws SQLException, Exception {
-
-		String sql = "DELETE FROM CRITERIOGRUZONA";
-		sql += " WHERE NOMBRE LIKE '" + c.getNombre()+"'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-	
-	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los criterios de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM CRITERIO;
-	 * @return Arraylist con los criterios de la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public ArrayList<Criterio> darCriteriosOrdenProducto() throws SQLException, Exception {
-		ArrayList<Criterio> categorias = new ArrayList<>();
-
-		String sql = "SELECT * FROM CRITERIOORGPROD";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		while (rs.next()) {
-			String name = rs.getString("NOMBRE");
-			categorias.add(new Criterio(name));
-		}
-		return categorias;
-	}
-
-
-	/**
-	 * Metodo que busca el criterios con el nombre que entra como parámetro.
-	 * @param name - Nombre a buscar
-	 * @return ArrayList con los criterios encontrados
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public Criterio buscarCriteriosOrganizacionProductoPorName(String name) throws SQLException, Exception {
-		String sql = "SELECT * FROM CRITERIOORGPROD WHERE NOMBRE LIKE'" + name + "'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		Criterio c=null;
-		if (rs.next()) {
-			String name2 = rs.getString("NOMBRE");
-			c=new Criterio(name2);
-		}
-
-		return c;
-	}
-	
-	
-	/**
-	 * Metodo que agrega el criterio que entra como parámetro a la base de datos.
-	 * @param categoria - el criterio a agregar. categoria !=  null
-	 * <b> post: </b> se ha agregado el objeto a la base de datos en la transaction actual. pendiente que el master
-	 * haga commit para que el criterio baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void addCriterioOrganizacionProducto(Criterio c) throws SQLException, Exception {
-
-		String sql = "INSERT INTO CRITERIOORGPROD VALUES ('";
-		sql += c.getNombre() + "')";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
-	}
-	/**
-	 * Metodo que elimina el criterio que entra como parámetro en la base de datos.
-	 * @param categoría - el criterio a borrar. categoria !=  null
-	 * <b> post: </b> se ha borrado el criterio en la base de datos en la transaction actual. pendiente que el master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void deleteCriterioOrganizacionProducto(Criterio c) throws SQLException, Exception {
-
-		String sql = "DELETE FROM CRITERIOORGPROD";
-		sql += " WHERE NOMBRE LIKE '" + c.getNombre()+"'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-	
-	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los criterios de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM CRITERIO;
-	 * @return Arraylist con los criterios de la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public ArrayList<Criterio> darCriteriosAgrupamientoProducto() throws SQLException, Exception {
-		ArrayList<Criterio> categorias = new ArrayList<>();
-
-		String sql = "SELECT * FROM CRITERIOGRUPPROD";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		while (rs.next()) {
-			String name = rs.getString("NOMBRE");
-			categorias.add(new Criterio(name));
-		}
-		return categorias;
-	}
-
-
-	/**
-	 * Metodo que busca el criterios con el nombre que entra como parámetro.
-	 * @param name - Nombre a buscar
-	 * @return ArrayList con los criterios encontrados
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public Criterio buscarCriteriosAgrupamiProductoPorName(String name) throws SQLException, Exception {
-		String sql = "SELECT * FROM CRITERIOGRUPPROD WHERE NOMBRE LIKE'" + name + "'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		Criterio c=null;
-		if (rs.next()) {
-			String name2 = rs.getString("NOMBRE");
-			c=new Criterio(name2);
-		}
-
-		return c;
-	}
-	
-	
-	/**
-	 * Metodo que agrega el criterio que entra como parámetro a la base de datos.
-	 * @param categoria - el criterio a agregar. categoria !=  null
-	 * <b> post: </b> se ha agregado el objeto a la base de datos en la transaction actual. pendiente que el master
-	 * haga commit para que el criterio baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void addCriterioAgrupamientoProd(Criterio c) throws SQLException, Exception {
-
-		String sql = "INSERT INTO CRITERIOGRUPPROD VALUES ('";
-		sql += c.getNombre() + "')";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
-	}
-	/**
-	 * Metodo que elimina el criterio que entra como parámetro en la base de datos.
-	 * @param categoría - el criterio a borrar. categoria !=  null
-	 * <b> post: </b> se ha borrado el criterio en la base de datos en la transaction actual. pendiente que el master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void deleteCriterioAgrupamientoProd(Criterio c) throws SQLException, Exception {
-
-		String sql = "DELETE FROM CRITERIOGRUPPROD";
-		sql += " WHERE NOMBRE LIKE '" + c.getNombre()+"'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-
-	public List<Zona> generarListaFiltradaZonas(List<Criterio> criteriosOrganizacion,
-			List<Criterio> criteriosAgrupamiento) throws SQLException, Exception {
-		List<Criterio> existentesOrd=new ArrayList<>();
-		List<Criterio> existentesAgrup= new ArrayList<>();
-		List<Zona> lista= new ArrayList<>();
-		for(Criterio c: criteriosOrganizacion)
+		while(rs.next())
 		{
-			if(existentesOrd.indexOf(c)>=0) continue;
-			existentesOrd.add(c);
+			lista.agregarInformacion(rs.getString("COLUMN_NAME"), rs.getString("DATA_TYPE"));
 		}
+		return lista;
+	}
+	
+	/**
+	 * Metodo que busca el criterios con el nombre que entra como parámetro.
+	 * @param name - Nombre a buscar
+	 * @return ArrayList con los criterios encontrados
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public Criterio buscarCriteriosProducto(String name) throws SQLException, Exception {
+		String table="SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'ZONA' OR TABLE_NAME "
+				+ "LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'CUENTA')";
+		String sql = "SELECT * FROM "+table+" WHERE NOMBRE LIKE'" + name + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		Criterio c=null;
+		if (rs.next()) {
+			String name2 = rs.getString("NOMBRE");
+			c=new Criterio(name2);
+		}
+
+		return c;
+	}
+	
+	/**
+	 * Método para generar lista filtrada de la información total de las zonas.<br>
+	 * @param criteriosOrganizacion Listado de criterios de organización.<br>
+	 * @param criteriosAgrupamiento Listado de criterios de agrupamiento.<br>
+	 * @param agregacionesSeleccion Listado de selección de agregaciones.<br>
+	 * @param operacionesWhere Operaciones con where.<br>
+	 * @param operacionesHaving Operaciones con having.<br>
+	 * @return Listado de contenedora de información con los datos dados.<br>
+	 * @throws SQLException Si hay un error con la base de datos.<br>
+	 * @throws Exception Si hay cualquier otro error.
+	 */
+	public List<ContenedoraInformacion> generarListaFiltradaZonas(String nombreZona,
+			List<CriterioOrden> criteriosOrganizacion,List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregacionesSeleccion, CriterioVerdad operacionesWhere, 
+			CriterioVerdadHaving operacionesHaving) throws SQLException, Exception {
+		//Verifica que no haya repeticiones de criterios
+		List<CriterioOrden> existentesOrd=new ArrayList<>();
+		List<Criterio> existentesAgrup= new ArrayList<>();
+		List<CriterioAgregacion> agreSelec=new ArrayList<>();
+		if(criteriosAgrupamiento!=null)
 		for(Criterio c: criteriosAgrupamiento)
 		{
 			if(existentesAgrup.indexOf(c)>=0) continue;
 			existentesAgrup.add(c);
 		}
-		String sql="SELECT * FROM ZONA Z";
+		if(criteriosOrganizacion!=null)
+		for(CriterioOrden c: criteriosOrganizacion)
+		{
+			if(existentesOrd.indexOf(c)>=0) continue;
+			if(existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+			existentesOrd.add(c);
+		}
+		if(agregacionesSeleccion!=null)
+		for(CriterioAgregacion a: agregacionesSeleccion)
+		{
+			if(agreSelec.indexOf(a)>=0) continue;
+			agreSelec.add(a);
+		}
+		//Empieza la creación de los datos del query
+		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
+		String from ="FROM ZONA";
+		String select="SELECT ";
+		String groupBy="";
+		String orderBy="";
+		String where="WHERE NOMBRE LIKE '"+nombreZona+"'";
+		String having="";
+		String temp="";
+		//Verifica agrupaciones
 		if(existentesAgrup.size()>0)
 		{
-			sql+="GROUP BY "+existentesAgrup.get(0).getNombre();
+			temp=simplificarAgrupacion(existentesAgrup.get(0).getNombre());
+			if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+				throw new Exception("Uno de los criterios no existe "+temp+".");
+			select+=existentesAgrup.get(0).getNombre();
+			groupBy+="GROUP BY "+existentesAgrup.get(0).getNombre();
 			existentesAgrup.remove(0);
 			for(Criterio c: existentesAgrup)
-				sql+=", "+c.getNombre();
+			{
+				temp=simplificarAgrupacion(c.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+					throw new Exception("Uno de los criterios no existe "+temp+".");
+				groupBy+=", "+c.getNombre();
+				select+=", "+c.getNombre();
+			}
+			for(CriterioAgregacion a:agreSelec) 
+			{
+				temp=simplificarAgrupacion(a.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+					throw new Exception("Uno de los criterios no existe");
+				select+=","+a.getNombre();
+			}
 		}
+		else select+="*";
+		//Verifica órdenes
 		if(existentesOrd.size()>0)
 		{
-			sql+="GROUP BY "+existentesOrd.get(0).getNombre();
+			temp=simplificarOrden(existentesOrd.get(0).getNombre());
+			if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+				throw new Exception("Uno de los criterios no existe");
+			orderBy+="ORDER BY "+existentesOrd.get(0).getNombre();
 			existentesOrd.remove(0);
-			for(Criterio c: existentesOrd)
-				sql+=", "+c.getNombre();
+			for(CriterioOrden c: existentesOrd)
+			{
+				temp=simplificarOrden(c.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(simplificarOrden(c.getNombre()))==null) 
+					throw new Exception("Uno de los criterios no existe");
+				orderBy+=", "+c.getNombre();
+			}
 		}
-		
+		String operaciones="";
+		//Verifica where
+		if(operacionesWhere!=null)
+			{
+				for(Criterio c:operacionesWhere.getCriterios())
+				{
+					operaciones=simplificar(c.getNombre());
+					if(operaciones.trim().equals("")) continue;
+					if(buscarCriteriosZona(operaciones)==null)
+						throw new Exception("El criterio no existe en la base");
+				}
+				evaluarWhere(operacionesWhere,tiposDeDatoZona());
+				where+=" "+CriterioVerdad.PalabrasVerdad.AND+" "+operacionesWhere.getNombre();
+			}
+		//Verifica having
+		if(operacionesHaving!=null)
+			{
+				for(CriterioAgregacion c:operacionesHaving.getCriterios())
+				{
+					operaciones=simplificar(c.getNombre());
+					if(operaciones.trim().equals("")) continue;
+					if(buscarCriteriosZona(operaciones)==null)
+						throw new Exception("El criterio no existe en la base");
+				}
+				evaluarHaving(operacionesHaving,tiposDeDatoZona());
+				having="HAVING "+operacionesHaving.getNombre();
+			}
+		String sql=select+" "+from+" "+where+" "+groupBy+" "+having+" "+orderBy;
 		PreparedStatement prep =conn.prepareStatement(sql);
 		recursos.add(prep);
+		System.out.println(sql);
 		ResultSet r =prep.executeQuery();
-		DAOTablaZona z = new DAOTablaZona();
-		z.setConn(this.conn);
-		lista=z.convertirEntidadZona(r);
-		z.cerrarRecursos();
+		
+		List<ContenedoraInformacion> cont=crearContenedora(r,select);
+		return cont;
+	}
+	private void evaluarWhere(CriterioVerdad where, ContenedoraInformacion tipos) throws SQLException, Exception{
+		String tipo=null;
+		if(where.getValorAnterior()!=null)
+		{
+			for(int i=0;i<tipos.getInformacion().size() && tipo==null;i++)
+			{
+				if(where.getValorAnterior().getNombre().equals(tipos.darNombre(i)))
+					tipo=tipos.darValor(i);
+			}
+			if(where.getCriterioComparacion()!=null)
+			{
+				String tipo2=null;
+				for(int i=0;i<tipos.getInformacion().size() && tipo2==null;i++)
+				{
+					if(where.getValorAnterior().getNombre().equals(tipos.darNombre(i)))
+						tipo2=tipos.darValor(i);
+				}
+				if(!tipo.equals(tipo2) && (tipo.equals(tiposDatos.VARCHAR2+"") ||
+						tipo2.equals(tiposDatos.VARCHAR2+"") || tipo.equals(tiposDatos.DATE+"")
+						|| tipo2.equals(tiposDatos.DATE+""))) throw new Exception("Está intentando comparar dos criterios diferentes");
+			}
+			else if (where.getComparacion()!=null)
+			{
+				if(tipo.equals(tiposDatos.VARCHAR2+""))
+					{
+						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "'"+where.getComparacion()+"'"));
+					}
+				else if (tipo.equals(tiposDatos.DATE+"")) 
+					{
+						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "TO_DATE\\('"+where.getComparacion()+"', 'yyyy/mm/dd'\\)"));
+					}
+				else
+				{
+					if(where.getOperacion()==null) throw new Exception("No se puede usar este operador para objetos diferentes a cadenas de caracteres"); 
+				}
+			}
+		}
+		else
+		{
+			evaluarWhere(where.getC1(),tipos);
+			evaluarWhere(where.getC2(),tipos);
+		}
+	}
+	
+	private void evaluarHaving(CriterioVerdadHaving having, ContenedoraInformacion tipos) throws SQLException, Exception{
+		String tipo=null;
+		if(having.getValorAnterior()!=null)
+		{
+			for(int i=0;i<tipos.getInformacion().size() && tipo==null;i++)
+			{
+				if(having.getValorAnterior().getInterno().equals(tipos.darNombre(i)))
+					tipo=tipos.darValor(i);
+			}
+			if(having.getCriterioComparacion()!=null)
+			{
+				String tipo2=null;
+				for(int i=0;i<tipos.getInformacion().size() && tipo2==null;i++)
+				{
+					if(having.getValorAnterior().getInterno().equals(tipos.darNombre(i)))
+						tipo2=tipos.darValor(i);
+				}
+				if(!tipo.equals(tipo2) && (tipo.equals(tiposDatos.VARCHAR2+"") ||
+						tipo2.equals(tiposDatos.VARCHAR2+"") || tipo.equals(tiposDatos.DATE+"")
+						|| tipo2.equals(tiposDatos.DATE+""))) throw new Exception("Está intentando comparar dos criterios diferentes");
+			}
+			else if (having.getComparacion()!=null)
+			{
+				if(tipo.equals(tiposDatos.VARCHAR2+"") && (having.getValorAnterior().getAgregacion().equals(Agregaciones.MIN))
+						|| having.getValorAnterior().getAgregacion().equals(Agregaciones.MAX))
+					{
+						having.setNombre(having.getNombre().replaceAll(having.getComparacion(), "'"+having.getComparacion()+"'"));
+					}
+				else if (tipo.equals(tiposDatos.DATE+"") && (having.getValorAnterior().getAgregacion().equals(Agregaciones.MIN))
+						|| having.getValorAnterior().getAgregacion().equals(Agregaciones.MAX)) 
+					{
+						having.setNombre(having.getNombre().replaceAll(having.getComparacion(), "TO_DATE\\('"+having.getComparacion()+"', 'yyyy/mm/dd'\\)"));
+					}
+				else
+				{
+					if(having.getOperacion()==null) throw new Exception("No se puede usar este operador para objetos diferentes a cadenas de caracteres"); 
+				}
+			}
+		}
+		else
+		{
+			evaluarHaving(having.getC1(),tipos);
+			evaluarHaving(having.getC2(),tipos);
+		}
+	}
+
+	private String simplificarOrden(String nombre) {
+		return nombre.replaceAll("DESC", "").replaceAll("ASC", "").trim();
+	}
+
+	private String simplificarAgrupacion(String nombre) {
+		String temp=nombre.replaceAll("\\(","").replaceAll("\\)","").trim();
+		for(Criterio.Agregaciones a: Criterio.Agregaciones.values())
+		{
+			if(nombre.contains(a+""))
+			{
+				temp=temp.replaceAll(a+"", "");
+				break;
+			}
+		}
+		for(Criterio.PalabrasEspeciales a: Criterio.PalabrasEspeciales.values())
+		{
+			if(nombre.contains(a+""))
+			{
+				temp=temp.replaceAll(a+"", "");
+				break;
+			}
+		}
+		temp=temp.replaceAll("\\*","");
+		temp=temp.replaceAll(Criterio.PalabrasEspeciales.DISTINCT+"", "");
+		return temp.trim();
+	}
+	
+	private String simplificar(String nombre)
+	{
+		return simplificarOrden(simplificarAgrupacion(nombre));
+	}
+
+	private List<ContenedoraInformacion> crearContenedora(ResultSet r, String select) throws SQLException, Exception {
+		select=select.replace("SELECT ", "");
+		String[] datos=select.split(",");
+		ContenedoraInformacion c=null;
+		List<ContenedoraInformacion> lista= new ArrayList<>();
+		if(r.next())
+		{
+			c=new ContenedoraInformacion(datos);
+			for(int i=0;i<datos.length;i++)
+			{
+				c.modificarInformacion(i, r.getString(datos[i].trim()));
+			}
+			lista.add(c);
+		}
 		return lista;
 	}
+	
+	
 	
 
 }

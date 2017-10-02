@@ -89,6 +89,7 @@ public class CondicionServices {
 			if (name == null || name.length() == 0)
 				throw new Exception("Nombre de la condición no valido");
 			condiciones = tm.condicionBuscarCondicionTecnicasPorName(name);
+			if(condiciones==null)return Response.status( 404 ).entity( condiciones ).build( );			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

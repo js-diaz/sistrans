@@ -125,15 +125,15 @@ public class PreferenciaServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{id: \\d+}" )
+	@Path( "rango" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getPreferenciaPorRango( @PathParam( "id" ) Long id , @HeaderParam("inicial") Double ini, @HeaderParam("final") Double fin, @HeaderParam("usuarioId") Long usuarioId)
+	public Response getPreferenciaPorRango(  @HeaderParam("inicial") Double ini, @HeaderParam("final") Double fin, @HeaderParam("usuarioId") Long usuarioId)
 	{
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=id))
+			if(!(u.getRol().equals(Rol.OPERADOR)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -160,12 +160,13 @@ public class PreferenciaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=id))
+			if(!(u.getRol().equals(Rol.OPERADOR)) && (!u.getRol().equals(Rol.CLIENTE) || u.getId()!=id))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
 			tm.preferenciaAddPreferencia(id,preferencia);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(preferencia).build();
@@ -187,7 +188,7 @@ public class PreferenciaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=id))
+			if(!(u.getRol().equals(Rol.OPERADOR)) && (!u.getRol().equals(Rol.CLIENTE) || u.getId()!=id))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -213,7 +214,7 @@ public class PreferenciaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=id))
+			if(!(u.getRol().equals(Rol.OPERADOR)) && (!u.getRol().equals(Rol.CLIENTE) || u.getId()!=id))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}

@@ -63,7 +63,7 @@ public class PreferenciaZonaServices {
      * el error que se produjo
 	 */
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON )
 	public Response getPreferenciaZonaPorZona(@HeaderParam("zona")String cat) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Preferencia> preferencias;
@@ -87,7 +87,7 @@ public class PreferenciaZonaServices {
      * el error que se produjo
      */
 	@GET
-	@Produces( { MediaType.APPLICATION_JSON } )
+	@Produces(  MediaType.APPLICATION_JSON  )
 	public Response getPreferenciasZonaPorId( @HeaderParam("preferencia") Long preferencia) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<ZonaMinimum> zonas;

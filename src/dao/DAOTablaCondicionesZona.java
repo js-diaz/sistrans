@@ -184,7 +184,7 @@ public class DAOTablaCondicionesZona {
 
 		String sql = "DELETE FROM CONDICIONZONA";
 		sql += " WHERE ZONANOMBRE LIKE '" + nombreZona+"' AND ";
-		sql+=" CONDICIONZONANOMBRE LIKE '"+ nombreCondicion+"'";
+		sql+=" CONDICIONTECNICANOMBRE LIKE '"+ nombreCondicion+"'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

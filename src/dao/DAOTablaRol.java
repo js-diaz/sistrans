@@ -104,7 +104,6 @@ public class DAOTablaRol {
 			String name2 = rs.getString("NOMBRE");
 			rol=buscarRol(name2);
 		}
-
 		return rol;
 	}
 	/**
@@ -117,8 +116,8 @@ public class DAOTablaRol {
 	 */
 	public void addRol(Rol rol) throws SQLException, Exception {
 
-		String sql = "INSERT INTO ROL VALUES (";
-		sql += convertirRol(rol) + ")";
+		String sql = "INSERT INTO ROL VALUES ('";
+		sql += convertirRol(rol) + "')";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();

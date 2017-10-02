@@ -11,19 +11,19 @@ import java.util.ArrayList;
 import vos.*;
 
 /**
- * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
+ * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaciÃ³n
  * @author Monitores 2017-20
  */
 public class DAOTablaIngrediente {
 
 
 	/**
-	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
+	 * Arraylits de recursos que se usan para la ejecuciÃ³n de sentencias SQL
 	 */
 	private ArrayList<Object> recursos;
 
 	/**
-	 * Atributo que genera la conexión a la base de datos
+	 * Atributo que genera la conexiÃ³n a la base de datos
 	 */
 	private Connection conn;
 
@@ -51,7 +51,7 @@ public class DAOTablaIngrediente {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parámetro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexiÃ³n que entra como parÃ¡metro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -60,7 +60,7 @@ public class DAOTablaIngrediente {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los ingredientes de la base de datos
+	 * Metodo que, usando la conexiÃ³n a la base de datos, saca todos los ingredientes de la base de datos
 	 * <b>SQL Statement:</b> SELECT * FROM INGREDIENTES;
 	 * @return Arraylist con los ingredientes de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -88,7 +88,7 @@ public class DAOTablaIngrediente {
 
 	
 	/**
-	 * Metodo que busca el ingrediente con el id que entra como parámetro.
+	 * Metodo que busca el ingrediente con el id que entra como parÃ¡metro.
 	 * @param name - Id de el ingrediente a buscar
 	 * @return Ingrediente encontrado
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -116,7 +116,7 @@ public class DAOTablaIngrediente {
 	}
 
 	/**
-	 * Metodo que agrega el ingrediente que entra como parámetro a la base de datos.
+	 * Metodo que agrega el ingrediente que entra como parÃ¡metro a la base de datos.
 	 * @param ingrediente - el ingrediente a agregar. ingrediente !=  null
 	 * <b> post: </b> se ha agregado el ingrediente a la base de datos en la transaction actual. pendiente que el ingrediente master
 	 * haga commit para que el ingrediente baje  a la base de datos.
@@ -126,7 +126,7 @@ public class DAOTablaIngrediente {
 	public void addIngrediente(Ingrediente ingrediente) throws SQLException, Exception {
 
 		String sql = "INSERT INTO INGREDIENTE VALUES (";
-		sql +=   "IDINGREDIENTE.nextval,'";
+		sql +=   "IDINGREDIENTE.NEXTVAL,'";
 		sql += ingrediente.getNombre() + "','";
 		sql+=ingrediente.getDescripcion()+"','";
 		sql += ingrediente.getTraduccion() + "')";
@@ -138,7 +138,7 @@ public class DAOTablaIngrediente {
 	}
 	
 	/**
-	 * Metodo que actualiza el ingrediente que entra como parámetro en la base de datos.
+	 * Metodo que actualiza el ingrediente que entra como parÃ¡metro en la base de datos.
 	 * @param ingrediente - el ingrediente a actualizar. ingrediente !=  null
 	 * <b> post: </b> se ha actualizado el ingrediente en la base de datos en la transaction actual. pendiente que el ingrediente master
 	 * haga commit para que los cambios bajen a la base de datos.
@@ -160,7 +160,7 @@ public class DAOTablaIngrediente {
 	}
 
 	/**
-	 * Metodo que elimina el ingrediente que entra como parámetro en la base de datos.
+	 * Metodo que elimina el ingrediente que entra como parÃ¡metro en la base de datos.
 	 * @param ingrediente - el ingrediente a borrar. ingrediente !=  null
 	 * <b> post: </b> se ha borrado el ingrediente en la base de datos en la transaction actual. pendiente que el ingrediente master
 	 * haga commit para que los cambios bajen a la base de datos.
@@ -169,7 +169,7 @@ public class DAOTablaIngrediente {
 	 */
 	public void deleteIngrediente(Ingrediente ingrediente) throws SQLException, Exception {
 
-		borrarIngredienteDeProducto(ingrediente.getId());
+		borrarIngredienteDeProducto(ingrediente);
 		
 		String sql = "DELETE FROM INGREDIENTE";
 		sql += " WHERE ID = " + ingrediente.getId();
@@ -181,16 +181,18 @@ public class DAOTablaIngrediente {
 	/**
 	 * Borra todos los ingredientes de la tabla de productos con el id dado.<br>
 	 * @param id Id del ingrediente a borrar.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el ingrediente.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	private void borrarIngredienteDeProducto(Long id) {
+	private void borrarIngredienteDeProducto(Ingrediente ingrediente) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto prod= new DAOTablaPerteneceAProducto();
 		prod.setConn(this.conn);
-		prod.borrarIngredienteDeLista(id);
+		prod.eliminarPorIngrediente(ingrediente);
 		prod.cerrarRecursos();
 	}
 	/**
-	 * Obtiene el índice actual del ingrediente.<br>
-	 * @param Índice actual.<br>
+	 * Obtiene el Ã­ndice actual del ingrediente.<br>
+	 * @param Ã�ndice actual.<br>
 	 */
 	public int getCurrentIndex() throws SQLException, Exception
 	{
