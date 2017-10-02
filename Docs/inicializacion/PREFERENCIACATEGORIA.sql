@@ -16,7 +16,6 @@ insert into PREFERENCIACATEGORIA (idusuario, nombrecategoria) values (182, 'Fiji
 insert into PREFERENCIACATEGORIA (idusuario, nombrecategoria) values (168, 'Cheyenne');
 insert into PREFERENCIACATEGORIA (idusuario, nombrecategoria) values (131, 'Bangladeshi');
 insert into PREFERENCIACATEGORIA (idusuario, nombrecategoria) values (159, 'Fijian');
-insert into PREFERENCIACATEGORIA (idusuario, nombrecategoria) values (137, 'Fijian');
 insert into PREFERENCIACATEGORIA (idusuario, nombrecategoria) values (192, 'Fijian');
 insert into PREFERENCIACATEGORIA (idusuario, nombrecategoria) values (110, 'Potawatomi');
 insert into PREFERENCIACATEGORIA (idusuario, nombrecategoria) values (150, 'Cuban');
