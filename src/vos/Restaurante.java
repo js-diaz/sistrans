@@ -32,13 +32,13 @@ public class Restaurante extends RestauranteMinimum
 	 * Información de los productos que vende este restaurante, en representación Minimum.
 	 */
 	@JsonProperty(value="infoProductos")
-	private List<InfoProdRestMinimum> infoProductos;
+	private List<InfoProdRest> infoProductos;
 	
 	/**
 	 * Informacion de los ingredientes que usa este restaurante, en representación Minimum.
 	 */
 	@JsonProperty(value="infoIngredientes")
-	private List<InfoIngRestMinimum> infoIngredientes;
+	private List<InfoIngRest> infoIngredientes;
 	
 	/**
 	 * Menus que vende este restaurante, en representación Minimum.
@@ -48,8 +48,8 @@ public class Restaurante extends RestauranteMinimum
 
 	public Restaurante(@JsonProperty(value="nombre")String nombre, @JsonProperty(value="pagWeb")String pagWeb,
 			@JsonProperty(value="zona") ZonaMinimum zona, @JsonProperty(value="categorias") List<Categoria> categorias,
-			@JsonProperty(value="representante") UsuarioMinimum representante, @JsonProperty(value="infoProductos") List<InfoProdRestMinimum> infoProductos,
-			@JsonProperty(value="infoIngredientes") List<InfoIngRestMinimum> infoIngredientes, @JsonProperty(value="menus") List<MenuMinimum> menus) {
+			@JsonProperty(value="representante") UsuarioMinimum representante, @JsonProperty(value="infoProductos") List<InfoProdRest> infoProductos,
+			@JsonProperty(value="infoIngredientes") List<InfoIngRest> infoIngredientes, @JsonProperty(value="menus") List<MenuMinimum> menus) {
 		super(nombre, pagWeb);
 		this.zona = zona;
 		this.categorias = categorias;
@@ -83,19 +83,19 @@ public class Restaurante extends RestauranteMinimum
 		this.representante = representante;
 	}
 
-	public List<InfoProdRestMinimum> getInfoProductos() {
+	public List<InfoProdRest> getInfoProductos() {
 		return infoProductos;
 	}
 
-	public void setInfoProductos(List<InfoProdRestMinimum> infoProductos) {
+	public void setInfoProductos(List<InfoProdRest> infoProductos) {
 		this.infoProductos = infoProductos;
 	}
 
-	public List<InfoIngRestMinimum> getInfoIngredientes() {
+	public List<InfoIngRest> getInfoIngredientes() {
 		return infoIngredientes;
 	}
 
-	public void setInfoIngredientes(List<InfoIngRestMinimum> infoIngredientes) {
+	public void setInfoIngredientes(List<InfoIngRest> infoIngredientes) {
 		this.infoIngredientes = infoIngredientes;
 	}
 

@@ -1,11 +1,11 @@
 /**-------------------------------------------------------------------
  * $Id$
- * Universidad de los Andes (Bogotá - Colombia)
- * Departamento de Ingeniería de Sistemas y Computación
+ * Universidad de los Andes (BogotÃ¡ - Colombia)
+ * Departamento de IngenierÃ­a de Sistemas y ComputaciÃ³n
  *
  * Materia: Sistemas Transaccionales
  * Ejercicio: ProductoAndes
- * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
+ * Autor: Juan Felipe GarcÃ­a - jf.garcia268@uniandes.edu.co
  * -------------------------------------------------------------------
  */
 package dao;
@@ -16,24 +16,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.*;
 import vos.Producto.TiposDePlato;
 
 /**
- * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
+ * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaciÃ³n
  * @author Monitores 2017-20
  */
 public class DAOTablaProducto {
 
 
 	/**
-	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
+	 * Arraylits de recursos que se usan para la ejecuciÃ³n de sentencias SQL
 	 */
 	private ArrayList<Object> recursos;
 
 	/**
-	 * Atributo que genera la conexión a la base de datos
+	 * Atributo que genera la conexiÃ³n a la base de datos
 	 */
 	private Connection conn;
 
@@ -61,7 +62,7 @@ public class DAOTablaProducto {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parametro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexiÃ³n que entra como parametro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -70,7 +71,7 @@ public class DAOTablaProducto {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los productos de la base de datos
+	 * Metodo que, usando la conexiÃ³n a la base de datos, saca todos los productos de la base de datos
 	 * <b>SQL Statement:</b> SELECT * FROM PRODUCTOS;
 	 * @return Arraylist con los productos de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -96,8 +97,8 @@ public class DAOTablaProducto {
 			String descripcion  = rs.getString("DESCRIPCION");
 			String traduccion = rs.getString("TRADUCCION");
 			Double tiempo = rs.getDouble("TIEMPO");
-			ArrayList<Ingrediente> ingredientes=buscarIngredientes(id);
-			ArrayList<Categoria> categorias=buscarCategorias(id);
+			List<Ingrediente> ingredientes = buscarIngredientes(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
+			List<Categoria> categorias = buscarCategorias(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
 			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
 			productos.add(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id, ingredientes, categorias));
 		}
@@ -132,8 +133,8 @@ public class DAOTablaProducto {
 			String descripcion  = rs.getString("DESCRIPCION");
 			String traduccion = rs.getString("TRADUCCION");
 			Double tiempo = rs.getDouble("TIEMPO");
-			ArrayList<Ingrediente> ingredientes=buscarIngredientes(id);
-			ArrayList<Categoria> categorias=buscarCategorias(id);
+			List<Ingrediente> ingredientes = buscarIngredientes(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
+			List<Categoria> categorias = buscarCategorias(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
 			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
 			productos.add(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id, ingredientes, categorias));
 		
@@ -170,8 +171,8 @@ public class DAOTablaProducto {
 			String descripcion  = rs.getString("DESCRIPCION");
 			String traduccion = rs.getString("TRADUCCION");
 			Double tiempo = rs.getDouble("TIEMPO");
-			ArrayList<Ingrediente> ingredientes=buscarIngredientes(id);
-			ArrayList<Categoria> categorias=buscarCategorias(id);
+			List<Ingrediente> ingredientes=buscarIngredientes(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
+			List<Categoria> categorias=buscarCategorias(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
 			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
 			producto=(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id2, ingredientes, categorias));
 		
@@ -253,8 +254,8 @@ public class DAOTablaProducto {
 	 */
 	public void deleteProducto(Producto producto) throws SQLException, Exception {
 
-		borrarIngredientesDePlato(producto.getId());
-		borrarCategoriasDePlato(producto.getId());
+		borrarIngredientesDePlato(producto);
+		borrarCategoriasDePlato(producto);
 		String sql = "DELETE FROM PRODUCTO";
 		sql += " WHERE ID = " + producto.getId();
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -262,7 +263,7 @@ public class DAOTablaProducto {
 		prepStmt.executeQuery();
 	}
 	/**
-	 * Borra todos los productos del tipo dado por parámetro.<br>
+	 * Borra todos los productos del tipo dado por parÃ¡metro.<br>
 	 * @param nombreTipo
 	 */
 	public void borrarProductosPorTipo(String nombreTipo) throws SQLException, Exception {
@@ -299,8 +300,8 @@ public class DAOTablaProducto {
 			String descripcion  = rs.getString("DESCRIPCION");
 			String traduccion = rs.getString("TRADUCCION");
 			Double tiempo = rs.getDouble("TIEMPO");
-			ArrayList<Ingrediente> ingredientes=buscarIngredientes(id);
-			ArrayList<Categoria> categorias=buscarCategorias(id);
+			List<Ingrediente> ingredientes=buscarIngredientes(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
+			List<Categoria> categorias=buscarCategorias(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
 			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
 			productos.add(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id, ingredientes, categorias));
 		
@@ -311,20 +312,22 @@ public class DAOTablaProducto {
 	}
 
 	/**
-	 * Lista de categorías del producto dado.<br>
+	 * Lista de categorÃ­as del producto dado.<br>
 	 * @param id Id del producto.<br>
-	 * @return Lista de categorías.
+	 * @return Lista de categorÃ­as.
+	 * @throws SQLException Si algo falla con la BD.<br>
+	 * @throws Exception Si alguna otra cosa falla.
 	 */
-	private ArrayList<Categoria> buscarCategorias(Long id) {
+	private List<Categoria> buscarCategorias(Producto producto) throws SQLException, Exception {
 		DAOTablaCategoriaProducto prod= new DAOTablaCategoriaProducto();
 		prod.setConn(conn);
-		ArrayList<Categoria> c =prod.buscarCategoriasPorId(id);
+		List<Categoria> c =prod.consultarPorProducto(producto);
 		prod.cerrarRecursos();
 		return c;
 	}
 	/**
-	 * Convierte un parámetro asumido como 0 o 1 en un valor booleano.<br>
-	 * @param string Parámetro a convertir<br>
+	 * Convierte un parÃ¡metro asumido como 0 o 1 en un valor booleano.<br>
+	 * @param string ParÃ¡metro a convertir<br>
 	 * @return true o false.
 	 */
 	private boolean convertirABooleano(String string) {
@@ -336,34 +339,36 @@ public class DAOTablaProducto {
 	 * @param id Id del producto a buscar.<br>
 	 * @return Lista de ingredientes del producto.
 	 */
-	private ArrayList<Ingrediente> buscarIngredientes(Long id) {
+	private List<Ingrediente> buscarIngredientes(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto ing = new DAOTablaPerteneceAProducto();
 		ing.setConn(this.conn);
-		ArrayList<Ingrediente> i=ing.buscarIngredientesPorId(id);
+		List<Ingrediente> i=ing.consultarPorProducto(producto);
 		ing.cerrarRecursos();
 		return i;
 	}
 
 	/**
-	 * Agrega las cateogrías a la tabla usando el producto dado por parámetro.<br>
-	 * @param producto Producto con categorías.
+	 * Agrega las cateogrÃ­as a la tabla usando el producto dado por parÃ¡metro.<br>
+	 * @param producto Producto con categorÃ­as.
 	 */
 	private void agregarCategorias(Producto producto) throws SQLException, Exception {
 		DAOTablaCategoriaProducto cat = new DAOTablaCategoriaProducto();
 		cat.setConn(this.conn);
-		cat.agregarCategoriasPorId(producto.getId(),producto.getCategorias());
+		for(Categoria c : producto.getCategorias())
+			cat.asociarCategoriaYProducto(c, producto);
 	}
 	/**
-	 * Agrega los ingredientes a la tabla usando el producto dado por parámetro.<br>
+	 * Agrega los ingredientes a la tabla usando el producto dado por parÃ¡metro.<br>
 	 * @param producto Producto con ingredientes.
 	 */
-	private void agregarIngredientes(Producto producto) {
+	private void agregarIngredientes(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto ing = new DAOTablaPerteneceAProducto();
 		ing.setConn(conn);
-		ing.agregarIngredientesPorId(producto.getId(),producto.getIngredientes());
+		for(Ingrediente i : producto.getIngredientes())
+			ing.asociarIngredienteYProducto(i, producto);
 	}
 	/**
-	 * Convierte el tipo recibido como parámetro en un String.<br>
+	 * Convierte el tipo recibido como parÃ¡metro en un String.<br>
 	 * @param tipo Tipo recibido.<br>
 	 * @return Tipo convertido en String.
 	 */
@@ -374,7 +379,7 @@ public class DAOTablaProducto {
 		case PLATO_FUERTE: return "PLATO FUERTE";
 		case POSTRE: return "POSTRE";
 		case BEBIDA: return "BEBIDA";
-		case ACOMPANAMIENTO: return "ACOMPAÑAMIENTO";
+		case ACOMPANAMIENTO: return "ACOMPAÃ‘AMIENTO";
 		default: return null;
 		}
 	}
@@ -388,46 +393,50 @@ public class DAOTablaProducto {
 		return "0";
 	}
 	/**
-	 * Borra todas las categorías de un plato con id.<br>
-	 * @param id Id del plato a borrar categorías.
+	 * Borra todas las categorÃ­as de un plato con id.<br>
+	 * @param id Id del plato a borrar categorÃ­as.
 	 */
-	private void borrarCategoriasDePlato(Long id) {
+	private void borrarCategoriasDePlato(Producto producto) throws SQLException, Exception {
 		DAOTablaCategoriaProducto cat = new DAOTablaCategoriaProducto();
-		cat.borrarCategoriasPorId(id);
+		cat.eliminarPorProducto(producto);
 		cat.cerrarRecursos();
 	}
 	/**
 	 * Borra todos los ingredientes de un plato con id.<br>
 	 * @param id Id del plato a borrar ingredientes.<br>
 	 */
-	private void borrarIngredientesDePlato(Long id) {
+	private void borrarIngredientesDePlato(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto p = new DAOTablaPerteneceAProducto();
-		p.borrarIngredientesPorIdPlato(id);
+		p.eliminarPorProducto(producto);
 		p.cerrarRecursos();
 		
 	}
 	/**
-	 * Actualiza las categorías de un producto dado.<br>
+	 * Actualiza las categorÃ­as de un producto dado.<br>
 	 * @param producto Producto dado
 	 */
-	private void actualizarCategorias(Producto producto) {
+	private void actualizarCategorias(Producto producto) throws SQLException, Exception {
 		DAOTablaCategoriaProducto tab = new DAOTablaCategoriaProducto();
-		tab.actualizarCategoria(producto.getId(),producto.getCategorias());
+		tab.eliminarPorProducto(producto);
+		for(Categoria c : producto.getCategorias())
+			tab.asociarCategoriaYProducto(c, producto);
 		tab.cerrarRecursos();
 	}
 	/**
 	 * Actualiza los ingredientes de un producto dado.<br>
 	 * @param producto Producto dado
 	 */
-	private void actualizarIngredientes(Producto producto) {
+	private void actualizarIngredientes(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto tab = new DAOTablaPerteneceAProducto();
-		tab.actualizarIngredientes(producto.getId(),producto.getCategorias());
+		tab.eliminarPorProducto(producto);
+		for(Ingrediente i : producto.getIngredientes())
+			tab.asociarIngredienteYProducto(i, producto);
 		tab.cerrarRecursos();
 	}
 	
 	/**
-	 * Obtiene el índice actual del producto.<br>
-	 * @param Índice actual.<br>
+	 * Obtiene el Ã­ndice actual del producto.<br>
+	 * @param Ã�ndice actual.<br>
 	 */
 	public int getCurrentIndex() throws SQLException, Exception
 	{

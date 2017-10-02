@@ -1,11 +1,11 @@
 /**-------------------------------------------------------------------
  * $Id$
- * Universidad de los Andes (Bogotá - Colombia)
- * Departamento de Ingeniería de Sistemas y Computación
+ * Universidad de los Andes (BogotÃ¡ - Colombia)
+ * Departamento de IngenierÃ­a de Sistemas y ComputaciÃ³n
  *
  * Materia: Sistemas Transaccionales
  * Ejercicio: CuentaAndes
- * Autor: Juan Felipe García - jf.garcia268@uniandes.edu.co
+ * Autor: Juan Felipe GarcÃ­a - jf.garcia268@uniandes.edu.co
  * -------------------------------------------------------------------
  */
 package dao;
@@ -30,12 +30,12 @@ public class DAOTablaCuenta {
 
 
 	/**
-	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
+	 * Arraylits de recursos que se usan para la ejecuciÃ³n de sentencias SQL
 	 */
 	private ArrayList<Object> recursos;
 
 	/**
-	 * Atributo que genera la conexión a la base de datos
+	 * Atributo que genera la conexiÃ³n a la base de datos
 	 */
 	private Connection conn;
 
@@ -63,7 +63,7 @@ public class DAOTablaCuenta {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parametro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexiÃ³n que entra como parametro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -72,7 +72,7 @@ public class DAOTablaCuenta {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los cuentas de la base de datos
+	 * Metodo que, usando la conexiÃ³n a la base de datos, saca todos los cuentas de la base de datos
 	 * <b>SQL Statement:</b> SELECT * FROM CUENTAS;
 	 * @return Arraylist con los cuentas de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -91,8 +91,8 @@ public class DAOTablaCuenta {
 			String numeroCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			ArrayList<PedidoMenuMinimum> menus= darPedidosMenus(numeroCuenta);
-			ArrayList<PedidoProdMinimum> productos= darPedidosProductos(numeroCuenta);
+			List<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
+			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
 			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
 			
 			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u));
@@ -103,7 +103,7 @@ public class DAOTablaCuenta {
 
 
 	/**
-	 * Metodo que busca la cuenta con el número de cuenta que entra como parametro.
+	 * Metodo que busca la cuenta con el nÃºmero de cuenta que entra como parametro.
 	 * @param numeroCuenta - Nombre de el/los cuentas a buscar
 	 * @return Cuenta encontrada
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -123,8 +123,8 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			ArrayList<PedidoMenuMinimum> menus= darPedidosMenus(numeroCuenta);
-			ArrayList<PedidoProdMinimum> productos= darPedidosProductos(numeroCuenta);
+			List<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
+			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
 			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
 			
 			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u));
@@ -134,7 +134,7 @@ public class DAOTablaCuenta {
 	}
 	
 	/**
-	 * Metodo que busca las cuentas con el id de usuario dado por parámetro que entra como parametro.
+	 * Metodo que busca las cuentas con el id de usuario dado por parÃ¡metro que entra como parametro.
 	 * @param id - Id de usuario
 	 * @return Cuenta dada
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -221,8 +221,8 @@ public class DAOTablaCuenta {
 	 */
 	public void deleteCuenta(Cuenta c) throws SQLException, Exception {
 
-		eliminarProductos(c.getNumeroCuenta());
-		eliminarMenus(c.getNumeroCuenta());
+		eliminarProductos(c);
+		eliminarMenus(c);
 		String sql = "DELETE FROM CUENTA";
 		sql += " WHERE NUMEROCUENTA = " + c.getNumeroCuenta();
 
@@ -255,74 +255,76 @@ public class DAOTablaCuenta {
 		return usuario;
 	}
 	/**
-	 * Busca los pedidos productos con el número de cuenta dado.<br>
-	 * @param numeroCuenta Número de cuenta.<br>
+	 * Busca los pedidos productos con el nÃºmero de cuenta dado.<br>
+	 * @param numeroCuenta NÃºmero de cuenta.<br>
 	 * @return Lista con pedidos producto.
 	 */
-	private ArrayList<PedidoProdMinimum> darPedidosProductos(String numeroCuenta) throws SQLException, Exception {
+	private List<PedidoProd> darPedidosProductos(String numeroCuenta) throws SQLException, Exception {
 		DAOTablaPedidoProducto p  = new DAOTablaPedidoProducto();
 		p.setConn(this.conn);
-		ArrayList<PedidoProdMinimum> list=p.buscarProductosPorNumCuenta(numeroCuenta);
+		List<PedidoProd> list = p.buscarProductosPorNumCuenta(numeroCuenta);
 		p.cerrarRecursos();
 		return list;
 	}
 	/**
-	 * Busca los pedidos menú con el número de cuenta dado.<br>
-	 * @param numeroCuenta Número de cuenta.<br>
-	 * @return Lista con pedidos menú.
+	 * Busca los pedidos menÃº con el nÃºmero de cuenta dado.<br>
+	 * @param numeroCuenta NÃºmero de cuenta.<br>
+	 * @return Lista con pedidos menÃº.
 	 */
-	private ArrayList<PedidoMenuMinimum> darPedidosMenus(String numeroCuenta) throws SQLException, Exception {
+	private List<PedidoMenu> darPedidosMenus(String numeroCuenta) throws SQLException, Exception {
 		DAOTablaPedidoMenu m = new DAOTablaPedidoMenu();
 		m.setConn(this.conn);
-		ArrayList<PedidoMenuMinimum> list = m.buscarProductosPorNumCuenta(numeroCuenta);
+		List<PedidoMenu> list = m.buscarMenusPorNumCuenta(numeroCuenta);
 		m.cerrarRecursos();
 		return list;
 	}
 	/**
-	 * Inserta los pedidosMenu con la cuenta dada por parámetro.<br>
-	 * @param c Cuenta a insertar menús.
+	 * Inserta los pedidosMenu con la cuenta dada por parÃ¡metro.<br>
+	 * @param c Cuenta a insertar menÃºs.
 	 */
 	private void insertarMenu(Cuenta c) throws SQLException, Exception {
 		DAOTablaPedidoMenu menus = new DAOTablaPedidoMenu();
 		menus.setConn(this.conn);
-		menus.insertarPorCuenta(c);
+		for(PedidoMenu pm : c.getPedidoMenuMinimum())
+			menus.addPedidoMenu(pm);
 		menus.cerrarRecursos();
 	}
 	/**
-	 * Inserta los pedidosProducto con la cuenta dada por parámetro.<br>
+	 * Inserta los pedidosProducto con la cuenta dada por parÃ¡metro.<br>
 	 * @param c Cuenta a insertar productos.
 	 */
 	private void insertarProducto(Cuenta c) throws SQLException, Exception {
 		DAOTablaPedidoProducto productos = new DAOTablaPedidoProducto();
 		productos.setConn(this.conn);
-		productos.insertarPorCuenta(c);
+		for(PedidoProd pp : c.getPedidoProdMinimum())
+			productos.addPedidoProd(pp);
 		productos.cerrarRecursos();
 		
 	}
 	/**
-	 * Elimina los pedidosMenu que tienen este número de cuenta.<br>
-	 * @param numeroCuenta Número de la cuenta a eliminar pedidos menú.
+	 * Elimina los pedidosMenu que tienen este nÃºmero de cuenta.<br>
+	 * @param numeroCuenta NÃºmero de la cuenta a eliminar pedidos menÃº.
 	 */
-	private void eliminarMenus(String numeroCuenta) throws SQLException, Exception {
+	private void eliminarMenus(CuentaMinimum cuenta) throws SQLException, Exception {
 		DAOTablaPedidoMenu menus = new DAOTablaPedidoMenu();
 		menus.setConn(this.conn);
-		menus.eliminarPorNumeroCuenta(numeroCuenta);
+		menus.eliminarPedidoMenusPorCuenta(cuenta);
 		menus.cerrarRecursos();
 		
 	}
 	/**
-	 * Elimina los pedidosProducto que tienen este número de cuenta.<br>
-	 * @param numeroCuenta Número de la cuenta a eliminar pedidos producto.
+	 * Elimina los pedidosProducto que tienen este nÃºmero de cuenta.<br>
+	 * @param numeroCuenta NÃºmero de la cuenta a eliminar pedidos producto.
 	 */
-	private void eliminarProductos(String numeroCuenta) throws SQLException, Exception {
+	private void eliminarProductos(CuentaMinimum cuenta) throws SQLException, Exception {
 		DAOTablaPedidoProducto prod= new DAOTablaPedidoProducto();
 		prod.setConn(this.conn);
-		prod.eliminarPorNumeroCuenta(numeroCuenta);
+		prod.eliminarPedidoProdsPorCuenta(cuenta);
 		prod.cerrarRecursos();
 	}
 	/**
-	 * Obtiene el índice actual del ingrediente.<br>
-	 * @param Índice actual.<br>
+	 * Obtiene el Ã­ndice actual del ingrediente.<br>
+	 * @param Ã�ndice actual.<br>
 	 */
 	public int getCurrentIndex() throws SQLException, Exception
 	{
