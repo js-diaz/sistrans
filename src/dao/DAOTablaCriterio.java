@@ -187,7 +187,7 @@ public class DAOTablaCriterio {
 		for(CriterioOrden c: criteriosOrganizacion)
 		{
 			if(existentesOrd.indexOf(c)>=0) continue;
-			if(existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+			if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
 			existentesOrd.add(c);
 		}
 		if(agregacionesSeleccion!=null)
