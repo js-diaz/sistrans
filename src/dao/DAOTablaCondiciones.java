@@ -93,18 +93,14 @@ public class DAOTablaCondiciones {
 	public CondicionTecnica buscarCondicionTecnicasPorName(String name) throws SQLException, Exception {
 
 		String sql = "SELECT * FROM CONDICIONTECNICA WHERE NOMBRE LIKE'" + name + "'";
-
-		System.out.println(sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		CondicionTecnica c= null;
-		System.out.println(c);
 		if (rs.next()) {
 			String name2 = rs.getString("NOMBRE");
 			c= new CondicionTecnica(name2);
 		}
-		System.out.println(c.getNombre());
 		return c;
 	}
 

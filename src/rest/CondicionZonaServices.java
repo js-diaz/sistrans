@@ -63,7 +63,8 @@ public class CondicionZonaServices {
      * el error que se produjo
 	 */
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
+	@Produces( MediaType.APPLICATION_JSON )
+	@Path("porZona")
 	public Response getCondicionesZonasPorZona(@HeaderParam("zona")String zona) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<CondicionTecnica> zonas;
@@ -74,6 +75,7 @@ public class CondicionZonaServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(zonas.isEmpty())return Response.status( 404 ).entity( zonas ).build( );			
 		return Response.status(200).entity(zonas).build();
 	}
 
@@ -85,18 +87,45 @@ public class CondicionZonaServices {
      * el error que se produjo
      */
 	@GET
-	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getCondicionesZonaPorCategoria( @HeaderParam("categoria") String condicion) {
+	@Produces(  MediaType.APPLICATION_JSON  )
+	@Path("porCondicion")
+	public Response getCondicionesZonaPorCategoria( @HeaderParam("condicion") String condicion) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Zona> zonas;
 		try {
 			if (condicion == null || condicion.length() == 0)
-				throw new Exception("Nombre de la categoría no válido");
+				throw new Exception("Nombre de la condición no válido");
 			zonas = tm.condicionZonaConsultarPorCondicion(condicion);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(zonas.isEmpty())return Response.status( 404 ).entity( zonas ).build( );			
 		return Response.status(200).entity(zonas).build();
+	}
+	
+	/**
+     * Metodo que expone servicio REST usando POST que agrega la zona que recibe en Json
+     * <b>URL: </b> http://"ip o nombre de host":8080/CondicionesZonaAndes/rest/zonas/zona
+     * @param zona - zona a agregar
+     * @param condicion - condición a agregar
+     * @param usuarioId Id del usuario que realiza la solicitud.
+     * @return Json con la zona que agrego o Json con el error que se produjo
+     */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addCondicionesZona(@HeaderParam("condicion") String condicion, @HeaderParam("zona") String zona,@HeaderParam("usuarioId")Long usuarioId) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.ORGANIZADORES)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
+			tm.condicionZonaInsertarPorCondicionYZona(condicion, zona);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zona).build();
 	}
     /**
      * Metodo que expone servicio REST usando POST que agrega la zona que recibe en Json
@@ -109,11 +138,12 @@ public class CondicionZonaServices {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("porZona")
 	public Response addCondicionesZonaPorZona( List<CondicionTecnica> condiciones, @HeaderParam("zona") String zona,@HeaderParam("usuarioId")Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -135,11 +165,12 @@ public class CondicionZonaServices {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("porCondicion")
 	public Response addCondicionesZonaPorCondicion( List<Zona> zonas, @HeaderParam("condicion") String condicion,@HeaderParam("usuarioId")Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -150,31 +181,7 @@ public class CondicionZonaServices {
 		return Response.status(200).entity(zonas).build();
 	}
 	
-	/**
-     * Metodo que expone servicio REST usando POST que agrega la zona que recibe en Json
-     * <b>URL: </b> http://"ip o nombre de host":8080/CondicionesZonaAndes/rest/zonas/zona
-     * @param zona - zona a agregar
-     * @param condicion - condición a agregar
-     * @param usuarioId Id del usuario que realiza la solicitud.
-     * @return Json con la zona que agrego o Json con el error que se produjo
-     */
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCondicionesZona( @HeaderParam("condicion") String condicion, @HeaderParam("zona") String zona,@HeaderParam("usuarioId")Long usuarioId) {
-		RotondAndesTM tm = new RotondAndesTM(getPath());
-		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
-			{
-				throw new Exception("El usuario no tiene permitido usar el sistema");
-			}
-			tm.condicionZonaInsertarPorCondicionYZona(condicion, zona);
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(zona).build();
-	}
+	
 	
     /**
      * Metodo que expone servicio REST usando DELETE que elimina la zona que recibe en Json
@@ -185,11 +192,12 @@ public class CondicionZonaServices {
      */
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("porZona")
 	public Response deleteCondicionesZonaPorZona(@HeaderParam("zona")String zona, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -209,11 +217,12 @@ public class CondicionZonaServices {
      */
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("porCondicion")
 	public Response deleteCondicionesZonaPorCondicion(@HeaderParam("condicion")String condicion, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -238,7 +247,7 @@ public class CondicionZonaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}

@@ -82,7 +82,7 @@ public class TiposProductoServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombre [A-Z]+}" )
+	@Path( "{nombre:[A-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getTiposDePlatoName( @PathParam("nombre") String name) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
@@ -94,6 +94,8 @@ public class TiposProductoServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(tipos==null)return Response.status( 404 ).entity( tipos ).build( );			
+
 		return Response.status(200).entity(tipos).build();
 	}
 
@@ -108,7 +110,7 @@ public class TiposProductoServices {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{nombre: [A-Z]+}")
+	@Path("{nombre:[A-Z]+}")
 	public Response addTiposDePlato(@PathParam("nombre")String tipo, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
@@ -121,6 +123,7 @@ public class TiposProductoServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		
 		return Response.status(200).entity(tipo).build();
 	}
 	
@@ -138,7 +141,7 @@ public class TiposProductoServices {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{nombre: [A-Z]+}")
+	@Path("{nombre:[A-Z]+}")
 	public Response deleteTiposDePlato(@PathParam("nombre") String tipo, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {

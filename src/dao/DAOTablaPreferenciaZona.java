@@ -117,6 +117,7 @@ public class DAOTablaPreferenciaZona {
 	 */
 	public void insertarPreferenciasZona(Long idUsuario, List<ZonaMinimum> list) throws SQLException, Exception {
 		String sql ="";
+		if(list!=null)
 		for(ZonaMinimum c: list)
 		{
 			sql = "INSERT INTO PREFERENCIAZONA VALUES (";

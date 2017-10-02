@@ -23,8 +23,8 @@ import java.util.List;
 import vos.*;
 
 /**
- * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaciÃ³n
- * @author Monitores 2017-20
+ * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
+ * @author s.guzmanm
  */
 public class DAOTablaCuenta {
 
@@ -237,7 +237,7 @@ public class DAOTablaCuenta {
 	 * @throws SQLException Si algo sale mal respecto a la base de datos.
 	 */
 	public void borrarHistorialCliente(Long id) throws SQLException, Exception {
-		String sql ="DELETE FROM CUENTA WHERE USUARIOID ="+id;
+		String sql ="DELETE FROM CUENTA WHERE IDUSUARIO ="+id;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -335,9 +335,23 @@ public class DAOTablaCuenta {
 		return rs.getInt("LAST_NUMBER");
 	}
 
-	public ArrayList<CuentaMinimum> buscarCuentaMinimumsPorId(Long id) {
+	public ArrayList<CuentaMinimum> buscarCuentaMinimumsPorId(Long id) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return buscarCuentasPorId(id);
+	}
+	
+	public void prueba() throws SQLException, Exception {
+
+		String sql = "SELECT * FROM CUENTA";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+			String fecha = rs.getString("FECHA");
+			System.out.println(fecha);
+		}
 	}
 	
 

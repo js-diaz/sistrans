@@ -117,6 +117,7 @@ public class DAOTablaPreferenciaCategoria {
 	 */
 	public void insertarPreferenciasCategoria(Long idUsuario, List<Categoria> categorias) throws SQLException, Exception {
 		String sql ="";
+		if(categorias!=null)
 		for(Categoria c: categorias)
 		{
 			sql = "INSERT INTO PREFERENCIACATEGORIA VALUES (";

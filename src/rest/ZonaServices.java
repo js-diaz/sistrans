@@ -4,6 +4,7 @@ package rest;
 
 import java.util.List;
 
+
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,9 +20,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.*;
 
 import tm.RotondAndesTM;
+import vos.ContenedoraCriterios;
+import vos.ContenedoraInformacion;
+import vos.Criterio;
+import vos.CriterioVerdad;
 import vos.Usuario;
 import vos.Zona;
 import vos.UsuarioMinimum.Rol;
@@ -92,6 +97,8 @@ public class ZonaServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(zonas==null)return Response.status( 404 ).entity( zonas ).build( );			
+
 		return Response.status(200).entity(zonas).build();
 	}
 
@@ -110,7 +117,7 @@ public class ZonaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -135,7 +142,7 @@ public class ZonaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR) ||u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -160,7 +167,7 @@ public class ZonaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
-			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
+			if(!(u.getRol().equals(Rol.OPERADOR)|| u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
@@ -169,6 +176,23 @@ public class ZonaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(zona).build();
+	}
+	
+	@POST
+	@Path("completo/{nombre: [a-zA-Z]+}")
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pruebaFiltros( @PathParam("nombre") String name, ContenedoraCriterios c) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<ContenedoraInformacion> zonas;
+		try {
+			if (name == null || name.length() == 0)
+				throw new Exception("Nombre de la zona no valido");
+			zonas = tm.criteriosOrganizarPorZonaUniversal(name,c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zonas).build();
 	}
 
 

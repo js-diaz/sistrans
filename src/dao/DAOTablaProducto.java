@@ -123,6 +123,7 @@ public class DAOTablaProducto {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		DAOTablaTiposProducto tipos = new DAOTablaTiposProducto();
+		tipos.setConn(conn);
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
@@ -160,6 +161,7 @@ public class DAOTablaProducto {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		DAOTablaTiposProducto tipos = new DAOTablaTiposProducto();
+		tipos.setConn(conn);
 		if(rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			Long id2 = rs.getLong("ID");
@@ -288,6 +290,7 @@ public class DAOTablaProducto {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		DAOTablaTiposProducto tipos = new DAOTablaTiposProducto();
+		tipos.setConn(conn);
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");

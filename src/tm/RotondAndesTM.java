@@ -18,12 +18,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
 import dao.*;
 import vos.CondicionTecnica;
+import vos.ContenedoraCriterios;
+import vos.ContenedoraInformacion;
+import vos.Criterio;
+import vos.Criterio.Agregaciones;
+import vos.CriterioAgregacion;
+import vos.CriterioOrden;
+import vos.CriterioVerdad;
+import vos.CriterioVerdadHaving;
 import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.Ingrediente;
@@ -32,6 +41,7 @@ import vos.Producto;
 import vos.Producto.TiposDePlato;
 import vos.Restaurante;
 import vos.Usuario;
+import vos.UsuarioCompleto;
 import vos.UsuarioMinimum.Rol;
 import vos.Video;
 import vos.Zona;
@@ -1408,11 +1418,13 @@ public class RotondAndesTM {
 	public void preferenciaAddPreferencia(Long idUsuario, Preferencia p) throws Exception
 	{
 		DAOTablaPreferencia dao = new DAOTablaPreferencia();
+		if(p.getCategorias()!=null)
 		for(Categoria c: p.getCategorias())
 		{
 			if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
 				throw new Exception("La categoría del usuario no existe "+c.getNombre());
 		}
+		if(p.getZonaMinimums()!=null)
 		for(ZonaMinimum z: p.getZonaMinimums())
 		{
 			if(zonaBuscarZonasPorName(z.getNombre())==null)
@@ -2844,6 +2856,48 @@ public class RotondAndesTM {
 		return u;
 	}
 	/**
+	 * Busca al usuario por id.<br>
+	 * @param id Id del usuario.<br>
+	 * @return Usuario buscado.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public UsuarioCompleto usuarioCompletoBuscarUsuarioPorId(Long id) throws Exception
+	{
+		UsuarioCompleto u =null;
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			u=dao.darTodaLaInfoDeUnCliente(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return u;
+	}
+	/**
 	 * Agrega un usuario al sistema.<br>
 	 * @param usuario Usuario a agregar.<br>
 	 * @throws Exception Si existe algún tipo de error
@@ -3220,8 +3274,48 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
-	
+	//CRITERIOS
+	/**
+	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
+	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+	 */
+	public List<ContenedoraInformacion> criteriosOrganizarPorZonaUniversal(String nombreZona,
+			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having) throws Exception {
+		List<ContenedoraInformacion> videos=null;
+		DAOTablaCriterio daoVideos=null;
+		try 
+		{
+			//////transaccion
+			daoVideos=new DAOTablaCriterio();
+			daoVideos.setConn(darConexion());
+			videos = daoVideos.generarListaFiltradaZonas(nombreZona,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoVideos.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return videos;
+	}
+		
+
+
 	//VIDEOANDES-EJEMPLO
 	/**
 	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
@@ -3490,8 +3584,6 @@ public class RotondAndesTM {
 	}
 	
 	public static void main(String[] args) throws SQLException,Exception {
-		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData");
-		System.out.println(tm.rolBuscarRolsPorName("PROVEEDOR"));
 		
 	}
 

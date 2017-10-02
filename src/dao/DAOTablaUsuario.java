@@ -202,7 +202,7 @@ public class DAOTablaUsuario {
 		hist.setConn(this.conn);
 		rest.setConn(this.conn);
 		
-		String sql = "SELECT * FROM USUARIO WHERE ROL LIKE ='" + nombreRol+"'";
+		String sql = "SELECT * FROM USUARIO WHERE ROL LIKE '" + nombreRol+"'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -236,7 +236,7 @@ public class DAOTablaUsuario {
 	public void addUsuario(Usuario usuario) throws SQLException, Exception {
 
 		String sql = "INSERT INTO USUARIO VALUES (";
-		sql += usuario.getId() + ",'";
+		sql += "IDUSUARIO.NEXTVAL,'";
 		sql += usuario.getCorreo() + "','";
 		sql += usuario.getNombre()+"','";
 		sql+=convertirRol(usuario.getRol())+ "')";
@@ -245,16 +245,11 @@ public class DAOTablaUsuario {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
-		DAOTablaRestaurante rest = new DAOTablaRestaurante();
 		DAOTablaPreferencia pref = new DAOTablaPreferencia();
-		DAOTablaCuenta cuenta = new DAOTablaCuenta();
-		rest.setConn(this.conn);
 		pref.setConn(this.conn);
-		cuenta.setConn(this.conn);
+		if(usuario.getPreferencia()!=null)
 		pref.addPreferencia(usuario.getId(), usuario.getPreferencia());
 		pref.cerrarRecursos();
-		rest.cerrarRecursos();
-		cuenta.cerrarRecursos();
 	}
 	/**
 	 * Convierte un rol en un String.<br>
@@ -415,6 +410,70 @@ public class DAOTablaUsuario {
 			usuario=(new UsuarioMinimum(name,id2,correo, r));
 		}
 		return usuario;
+	}
+	/**
+	 * Da toda la información de un usuario. Método necesario para el requerimiento de consulta 3.<br>
+	 * @param id Id del usuario.<br>
+	 * @return UsuarioCompleto con toda la información solicitada.<br>
+	 * @throws Exception Si sucede cualquier error.<br>
+	 * @throws SQLException Si hay un error de BD.
+	 */
+	public UsuarioCompleto darTodaLaInfoDeUnCliente(Long id) throws SQLException, Exception
+	{
+		
+		DAOTablaPreferencia pref = new DAOTablaPreferencia();
+		DAOTablaCuenta hist = new DAOTablaCuenta();
+		DAOTablaRestaurante rest = new DAOTablaRestaurante();
+		pref.setConn(this.conn);
+		hist.setConn(this.conn);
+		rest.setConn(this.conn);
+		String sql = "SELECT * FROM USUARIO WHERE ID =" + id;
+
+		UsuarioCompleto usuario=null;
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		if (rs.next()) {
+			String name = rs.getString("NOMBRE");
+			Long id2 = rs.getLong("ID");
+			String correo = rs.getString("CORREO");
+			Rol r = convertirARol(rs.getString("ROL"));
+			Preferencia p = pref.buscarPreferenciaPorId(id);
+			ArrayList<CuentaMinimum> historial=hist.buscarCuentasPorId(id);
+			RestauranteMinimum restaurante = rest.darRestauranteDeUsuario(id);
+			int[] frecuencias=darFrecuencias(id2);
+			usuario=(new UsuarioCompleto(name,id2,correo,r,p,historial,restaurante, frecuencias));
+		}
+		rest.cerrarRecursos();
+		hist.cerrarRecursos();
+		pref.cerrarRecursos();
+		return usuario;
+	}
+	/**
+	 * Retorna un arreglo con las frecuencias del usuario para los siete días de la semana.<br>
+	 * @param id Id del usuario.<br>
+	 * @return Frecuencias del usuario.<br>
+	 * @throws SQLException Si hay algún error de la BD.<br>
+	 * @throws Exception Si sucede cualquier otra excepción.
+	 */
+	private int[]darFrecuencias(Long id) throws SQLException, Exception {
+		String sql="SELECT idusuario, to_char(fecha,'D') AS DIA, COUNT(*) AS FRECUENCIA "
+				+ "FROM CUENTA  "
+				+ "WHERE idusuario="+id
+				+ "GROUP BY idusuario, to_char(fecha,'D') "
+				+ "ORDER BY idusuario, to_char(fecha,'D') ";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		int[] frecuencias=new int[7];
+		int i=1;
+		while(rs.next())
+		{
+			int conteo=rs.getInt("FRECUENCIA");
+			int dia=rs.getInt("DIA");
+			frecuencias[dia-1]=conteo;
+		}
+		return frecuencias;
 	}
 
 }

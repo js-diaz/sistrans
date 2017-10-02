@@ -63,7 +63,7 @@ public class PreferenciaZonaServices {
      * el error que se produjo
 	 */
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
+	@Produces(MediaType.APPLICATION_JSON )
 	public Response getPreferenciaZonaPorZona(@HeaderParam("zona")String cat) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Preferencia> preferencias;
@@ -74,6 +74,8 @@ public class PreferenciaZonaServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(preferencias.isEmpty())return Response.status( 404 ).entity( preferencias ).build( );			
+
 		return Response.status(200).entity(preferencias).build();
 	}
 
@@ -85,7 +87,7 @@ public class PreferenciaZonaServices {
      * el error que se produjo
      */
 	@GET
-	@Produces( { MediaType.APPLICATION_JSON } )
+	@Produces(  MediaType.APPLICATION_JSON  )
 	public Response getPreferenciasZonaPorId( @HeaderParam("preferencia") Long preferencia) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<ZonaMinimum> zonas;
@@ -96,6 +98,8 @@ public class PreferenciaZonaServices {
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		if(zonas.isEmpty())return Response.status( 404 ).entity( zonas ).build( );			
+
 		return Response.status(200).entity(zonas).build();
 	}
     /**

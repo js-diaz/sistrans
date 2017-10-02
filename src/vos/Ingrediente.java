@@ -35,7 +35,8 @@ public class Ingrediente {
 	 * @param traduccion Traducción de la descripción.<br>
 	 * @param id Identificación que posee.
 	 */
-	public Ingrediente(String nombre, String descripcion, String traduccion, Long id) {
+	public Ingrediente(@JsonProperty(value="nombre")String nombre, @JsonProperty(value="descripcion")String descripcion, 
+			@JsonProperty(value="traduccion")String traduccion, @JsonProperty(value="id")Long id) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
