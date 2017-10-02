@@ -11,7 +11,7 @@ insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantida
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('7650243526', 57, 'Trupe', 5);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('3640211273', 33, 'Fanoodle', 1);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('5040004566', 13, 'Agivu', 2);
-insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values (4604174961, 63, 'Roodel', 1);
+insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('4604174961', 63, 'Roodel', 1);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('8212594026', 4, 'Skilith', 3);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('4748645931', 84, 'LiveZ', 4);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('0794061278', 31, 'Voonyx', 3);
@@ -40,15 +40,15 @@ insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantida
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('5097883301', 61, 'Wikibox', 2);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('7541621034', 71, 'Pixonyx', 1);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('5413164818', 87, 'Wikido', 5);
-insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values (4604174961, 83, 'Mycat', 4);
-insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values (6819202295, 9, 'Dabtype', 1);
+insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('4604174961', 83, 'Mycat', 4);
+insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('6819202295', 9, 'Dabtype', 1);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('7624806273', 42, 'Kanoodle', 2);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('7869593646', 79, 'Quamba', 1);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('2746440514', 43, 'Edgeclub', 4);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('7650243526', 100, 'Babbleset', 1);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('7228277067', 23, 'Roodel', 3);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('9213889964', 14, 'Innotype', 5);
-insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values (4604174961, 8, 'Skinte', 2);
+insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('4604174961', 8, 'Skinte', 2);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('7650243526', 77, 'Mymm', 5);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('9943649126', 54, 'Voonyx', 4);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('8485328696', 53, 'Abatz', 1);

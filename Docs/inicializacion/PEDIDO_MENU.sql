@@ -35,7 +35,7 @@ insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantida
 insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('5536256246', 'Voyatouch', 'Riffpath', 3);
 insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('3922111108', 'Zoolab', 'Linkbuzz', 1);
 insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('0709903777', 'Toughjoyfax', 'Eayo', 1);
-insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values (4604174961, 'Tampflex', 'LiveZ', 5);
+insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('4604174961', 'Tampflex', 'LiveZ', 5);
 insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('0198003167', 'Y-find', 'Meeveo', 4);
 insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('2759516351', 'Otcom', 'Cogilith', 3);
 insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('4248430171', 'Duobam', 'Dabtype', 2);
