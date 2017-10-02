@@ -204,24 +204,28 @@ public class DAOTablaCriterio {
 		String orderBy="";
 		String where="WHERE NOMBRE LIKE '"+nombreZona+"'";
 		String having="";
+		String temp="";
 		//Verifica agrupaciones
 		if(existentesAgrup.size()>0)
 		{
-			if(buscarCriteriosZona(simplificarAgrupacion(existentesAgrup.get(0).getNombre()))==null) 
-				throw new Exception("Uno de los criterios no existe");
+			temp=simplificarAgrupacion(existentesAgrup.get(0).getNombre());
+			if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+				throw new Exception("Uno de los criterios no existe "+temp+".");
 			select+=existentesAgrup.get(0).getNombre();
 			groupBy+="GROUP BY "+existentesAgrup.get(0).getNombre();
 			existentesAgrup.remove(0);
 			for(Criterio c: existentesAgrup)
 			{
-				if(buscarCriteriosZona(simplificarAgrupacion(c.getNombre()))==null) 
-					throw new Exception("Uno de los criterios no existe");
+				temp=simplificarAgrupacion(c.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+					throw new Exception("Uno de los criterios no existe "+temp+".");
 				groupBy+=", "+c.getNombre();
 				select+=", "+c.getNombre();
 			}
 			for(CriterioAgregacion a:agreSelec) 
 			{
-				if(buscarCriteriosZona(simplificarAgrupacion(a.getNombre()))==null) 
+				temp=simplificarAgrupacion(a.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
 					throw new Exception("Uno de los criterios no existe");
 				select+=","+a.getNombre();
 			}
@@ -230,13 +234,15 @@ public class DAOTablaCriterio {
 		//Verifica órdenes
 		if(existentesOrd.size()>0)
 		{
-			if(buscarCriteriosZona(simplificarOrden(existentesOrd.get(0).getNombre()))==null) 
+			temp=simplificarOrden(existentesOrd.get(0).getNombre());
+			if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
 				throw new Exception("Uno de los criterios no existe");
 			orderBy+="ORDER BY "+existentesOrd.get(0).getNombre();
 			existentesOrd.remove(0);
 			for(CriterioOrden c: existentesOrd)
 			{
-				if(buscarCriteriosZona(simplificarOrden(c.getNombre()))==null) 
+				temp=simplificarOrden(c.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(simplificarOrden(c.getNombre()))==null) 
 					throw new Exception("Uno de los criterios no existe");
 				orderBy+=", "+c.getNombre();
 			}
@@ -390,6 +396,7 @@ public class DAOTablaCriterio {
 			}
 		}
 		temp=temp.replaceAll("\\*","");
+		temp=temp.replaceAll(Criterio.PalabrasEspeciales.DISTINCT+"", "");
 		return temp.trim();
 	}
 	

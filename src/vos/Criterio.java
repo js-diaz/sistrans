@@ -60,14 +60,4 @@ public class Criterio {
 		String n2=c.nombre.replaceAll(""+PalabrasEspeciales.ASC, "").replaceAll(""+PalabrasEspeciales.DESC, "").trim();
 		return n1.equals(n2);
 	}
-	
-	public static void main(String[] args) {
-		String s="SELECT (*)";
-		System.out.println(s);
-		System.out.println(s.replaceAll("\\(\\*\\)", "HOLA"));
-		System.out.println(s.contains("*"));
-		System.out.println(s.contains("(*)"));
-		System.out.println(s.contains("\\*"));
-		System.out.println(s.contains("\\(\\*\\)"));
-	}
 }

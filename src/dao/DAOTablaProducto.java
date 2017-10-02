@@ -356,6 +356,7 @@ public class DAOTablaProducto {
 		cat.setConn(this.conn);
 		for(Categoria c : producto.getCategorias())
 			cat.asociarCategoriaYProducto(c, producto);
+		cat.cerrarRecursos();
 	}
 	/**
 	 * Agrega los ingredientes a la tabla usando el producto dado por parÃ¡metro.<br>
@@ -366,6 +367,7 @@ public class DAOTablaProducto {
 		ing.setConn(conn);
 		for(Ingrediente i : producto.getIngredientes())
 			ing.asociarIngredienteYProducto(i, producto);
+		ing.cerrarRecursos();
 	}
 	/**
 	 * Convierte el tipo recibido como parÃ¡metro en un String.<br>
