@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//src/dao/DAOTablaCuenta.java=UTF-8
+encoding//src/dao/DAOTablaIngrediente.java=UTF-8
+encoding//src/dao/DAOTablaProducto.java=UTF-8
+encoding//src/dao/DAOTablaUsuario.java=UTF-8

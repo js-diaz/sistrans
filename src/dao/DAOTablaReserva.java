@@ -1,30 +1,18 @@
-/**-------------------------------------------------------------------
- * $Id$
- * Universidad de los Andes (Bogot谩 - Colombia)
- * Departamento de Ingenier铆a de Sistemas y Computaci贸n
- *
- * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
- * Autor: Juan Felipe Garc铆a - jf.garcia268@uniandes.edu.co
- * -------------------------------------------------------------------
- */
 package dao;
 
-
-import java.sql.Connection; 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
-import vos.*;
+import vos.MenuMinimum;
+import vos.UsuarioMinimum;
+import vos.ZonaMinimum;
+import vos.Reserva;
 
-/**
- * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaci贸n
- * @author Monitores 2017-20
- */
 public class DAOTablaReserva {
-
 
 	/**
 	 * Arraylits de recursos que se usan para la ejecuci贸n de sentencias SQL
@@ -37,7 +25,7 @@ public class DAOTablaReserva {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAOReserva
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaReserva() {
@@ -63,153 +51,166 @@ public class DAOTablaReserva {
 	 * Metodo que inicializa la connection del DAO a la base de datos con la conexi贸n que entra como parametro.
 	 * @param con  - connection a la base de datos
 	 */
-	public void setConn(Connection con){
-		this.conn = con;
+	public void setConn(Connection conn){
+		this.conn = conn;
 	}
 
 
 	/**
-	 * Metodo que, usando la conexi贸n a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexi贸n a la base de datos, saca todos los reservas de la base de datos
+	 * <b>SQL Statement:</b> SELECT * FROM RESERVAS;
+	 * @return Arraylist con los reservas de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public ArrayList<Reserva> darReservas() throws SQLException, Exception {
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM RESERVA";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
-		while (rs.next()) {
-			String name = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
-		}
-		return videos;
+		return convertirEntidadReserva(rs);
 	}
 
 
-	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
-
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		while (rs.next()) {
-			String name2 = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
-		}
-
-		return videos;
-	}
 	
+
 	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
+	 * Metodo que busca el/los reservas con el nombre que entra como parametro.
+	 * @param name - Nombre de el reserva a buscar
+	 * @param reservador - Nombre del reservador al que pertenece
+	 * @return ArrayList con los reservas encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
-	{
-		Video video = null;
+	public Reserva buscarReservasPorNombreYUsuario(Date fecha, Long reservador) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
+		String sql = "SELECT * FROM RESERVA WHERE FECHA = " + fecha + " AND ID_RESERVADOR = " + reservador;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		if(rs.next()) {
-			String name = rs.getString("NAME");
-			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
-		}
-
-		return video;
+		ArrayList<Reserva> reservas = convertirEntidadReserva(rs);
+		return reservas.get(0);
 	}
 
 	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
+	 * Metodo que agrega la reserva que entra como parametro a la base de datos.
+	 * @param reserva - la reserva a agregar. reserva !=  null
+	 * <b> post: </b> se ha agregado la reserva a la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que la reserva baje  a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar la reserva a la base de datos
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void addVideo(Video video) throws SQLException, Exception {
+	public void addReserva(Reserva reserva) throws SQLException, Exception {
 
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
-	}
-	
-	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
-
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
-
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-
-	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
-
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-
-	public void borrarPorZona(String nombreZona) {
-		// TODO Auto-generated method stub
+		String sql = "INSERT INTO RESERVA VALUES (";
+		sql += "TO_DATE(" + reserva.getFecha() + "), ";
+		sql += reserva.getReservador().getId() + ", ";
+		sql += "" + reserva.getPersonas() + ", ";
+		sql += "'" + reserva.getZona().getNombre() + "', ";
+		sql += reserva.getMenu() == null? "NULL, " : "'" + reserva.getMenu().getNombre() + "'";
+		sql += reserva.getMenu() == null? "NULL, " : "'" + reserva.getMenu().getRestaurante().getNombre() + "'";
 		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+	
+	
+
+	/**
+	 * Metodo que actualiza la reserva que entra como par谩metro en la base de datos.
+	 * @param reserva - la reserva a actualizar. reserva !=  null
+	 * <b> post: </b> se ha actualizado la reserva en la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la reserva.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void updateReserva(Reserva reserva) throws SQLException, Exception {
+
+		String sql = "UPDATE RESERVA SET ";
+		sql += "NUM_PERSONAS = " + reserva.getPersonas() + ", ";
+		sql += "NOMBRE_ZONA = '" + reserva.getZona().getNombre() + "', ";
+		sql += "NOMBRE_MENU = " + reserva.getMenu() == null? "NULL, " : "'" + reserva.getMenu().getNombre() + "'";
+		sql += "NOMBRE_RESTAURANTE = " + reserva.getMenu() == null? "NULL, " : "'" + reserva.getMenu().getRestaurante().getNombre() + "'";
+		sql += " WHERE FECHA = TO_DATE(" + reserva.getFecha() + ") AND ID_RESERVADOR = " + reserva.getReservador().getId();
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+
+	/**
+	 * Metodo que elimina la reserva que entra como parametro en la base de datos.
+	 * @param reserva - la reserva a borrar. reserva !=  null
+	 * <b> post: </b> se ha borrado la reserva en la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la reserva.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void deleteReserva(Reserva reserva) throws SQLException, Exception {
+
+		String sql = "DELETE FROM RESERVA";
+		sql += " WHERE FECHA = TO_DATE(" + reserva.getFecha() + ") AND ID_RESERVADOR = " + reserva.getReservador().getId();
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+	
+	/**
+	 * Crea un arreglo de reservas con el set de resultados pasado por par醡etro.<br>
+	 * @param rs Set de resultados.<br>
+	 * @return reservas Lista de reservas convertidas.<br>
+	 * @throws SQLException Alg煤n problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepci贸n.
+	 */
+	private ArrayList<Reserva> convertirEntidadReserva(ResultSet rs) throws SQLException, Exception
+	{
+		DAOTablaUsuario daoUsuario = new DAOTablaUsuario();
+		DAOTablaZona daoZona = new DAOTablaZona();
+		DAOTablaMenu daoMenu = new DAOTablaMenu();
+		daoUsuario.setConn(conn);
+		daoZona.setConn(conn);
+		daoMenu.setConn(conn);
+		ArrayList<Reserva> reservas = new ArrayList<>();
+		while (rs.next()) {
+			Date fecha = rs.getDate("FECHA");
+			int personas = rs.getInt("NUM_PERSONAS");
+			UsuarioMinimum reservador = daoUsuario.buscarUsuarioMinimumPorId(rs.getLong("ID_RESERVADOR"));
+			ZonaMinimum zona = daoZona.buscarZonasMinimumPorName(rs.getString("NOMBRE_ZONA"));
+			MenuMinimum menu = daoMenu.buscarMenusPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
+			reservas.add(new Reserva(fecha, personas, reservador, zona, menu));
+		}
+		daoUsuario.cerrarRecursos();
+		daoZona.cerrarRecursos();
+		daoMenu.cerrarRecursos();
+		return reservas;
+	}
+	
+	/**
+	 * Elimina todos los reservas pertenecientes al reservador dado.
+	 * @param reservador Usuario al cual eliminarle los reservas.
+	 * @throws SQLException Alg鷑 problema de la base de datos.<br>
+	 */
+	public void eliminarReservasPorUsuario(UsuarioMinimum reservador) throws SQLException {
+		String sql = "DELETE FROM RESERVA WHERE ID_RESERVADOR = " + reservador.getId();
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.executeQuery();
+	}
+
+	/**
+	 * Elimina todas las reservas en la zona dada.
+	 * @param nombreZona nombre de la zona al cual eliminarle las reservas.
+	 * @throws SQLException Alg鷑 problema de la base de datos.<br>
+	 */
+	public void borrarPorZona(String nombreZona) throws SQLException {
+		String sql = "DELETE FROM RESERVA WHERE NOMBRE_ZONA LIKE '" + nombreZona + "'";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.executeQuery();
 	}
 
 }

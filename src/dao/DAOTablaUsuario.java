@@ -15,19 +15,19 @@ import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
 
 /**
- * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
+ * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaciÃ³n
  * @author s.guzmanm
  */
 public class DAOTablaUsuario {
 
 
 	/**
-	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
+	 * Arraylits de recursos que se usan para la ejecuciÃ³n de sentencias SQL
 	 */
 	private ArrayList<Object> recursos;
 
 	/**
-	 * Atributo que genera la conexión a la base de datos
+	 * Atributo que genera la conexiÃ³n a la base de datos
 	 */
 	private Connection conn;
 
@@ -55,16 +55,16 @@ public class DAOTablaUsuario {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parámetro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexiÃ³n que entra como parÃ¡metro.
 	 * @param con  - connection a la base de datos
 	 */
-	public void setConn(Connection con){
-		this.conn = con;
+	public void setConn(Connection conn){
+		this.conn = conn;
 	}
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los usuarios de la base de datos
+	 * Metodo que, usando la conexiÃ³n a la base de datos, saca todos los usuarios de la base de datos
 	 * <b>SQL Statement:</b> SELECT * FROM USUARIOS;
 	 * @return Arraylist con los usuarios de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -93,7 +93,7 @@ public class DAOTablaUsuario {
 			Rol r = convertirARol(rs.getString("ROL"));
 			Preferencia p = pref.buscarPreferenciaPorId(id);
 			ArrayList<CuentaMinimum> historial=hist.buscarCuentasPorId(id);
-			RestauranteMinimum restaurante = rest.darRestauranteMinimumDeUsuario(id);
+			RestauranteMinimum restaurante = rest.darRestauranteDeUsuario(id);
 			usuarios.add(new Usuario(name,id,correo,r,p,historial,restaurante));
 		}
 		rest.cerrarRecursos();
@@ -105,7 +105,7 @@ public class DAOTablaUsuario {
 	
 
 	/**
-	 * Metodo que busca el/los usuarios con el nombre que entra como parámetro.
+	 * Metodo que busca el/los usuarios con el nombre que entra como parÃ¡metro.
 	 * @param name - Nombre de el/los usuarios a buscar
 	 * @return ArrayList con los usuarios encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -145,7 +145,7 @@ public class DAOTablaUsuario {
 	}
 	
 	/**
-	 * Metodo que busca el usuario con el id que entra como parámetro.
+	 * Metodo que busca el usuario con el id que entra como parÃ¡metro.
 	 * @param name - Id de el usuario a buscar
 	 * @return Usuario encontrado
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -186,7 +186,7 @@ public class DAOTablaUsuario {
 	}
 	
 	/**
-	 * Retorna una lista de usuarios que tienen el rol dado por parámetro.<br>
+	 * Retorna una lista de usuarios que tienen el rol dado por parÃ¡metro.<br>
 	 * @param nombreRol Nombre del rol.<br>
 	 * @return Lista de usuarios.<br>
 	 * @throws SQLException Si algo sale mal en la BD.<br>
@@ -226,7 +226,7 @@ public class DAOTablaUsuario {
 	}
 
 	/**
-	 * Metodo que agrega el usuario que entra como parámetro a la base de datos.
+	 * Metodo que agrega el usuario que entra como parÃ¡metro a la base de datos.
 	 * @param usuario - el usuario a agregar. usuario !=  null
 	 * <b> post: </b> se ha agregado el usuario a la base de datos en la transaction actual. pendiente que el usuario master
 	 * haga commit para que el usuario baje  a la base de datos.
@@ -279,7 +279,7 @@ public class DAOTablaUsuario {
 	}
 
 	/**
-	 * Metodo que actualiza el usuario que entra como parámetro en la base de datos.
+	 * Metodo que actualiza el usuario que entra como parÃ¡metro en la base de datos.
 	 * @param usuario - el usuario a actualizar. usuario !=  null
 	 * <b> post: </b> se ha actualizado el usuario en la base de datos en la transaction actual. pendiente que el usuario master
 	 * haga commit para que los cambios bajen a la base de datos.
@@ -306,14 +306,14 @@ public class DAOTablaUsuario {
 		rest.setConn(this.conn);
 		pref.setConn(this.conn);
 		cuenta.setConn(this.conn);
-		rest.actualizarRestaurantesDeUsuario(usuario.getId(),usuario.getRestaurante());
+		rest.actualizarRestauranteDeUsuario(usuario.getId(),usuario.getRestaurante());
 		rest.cerrarRecursos();
 		pref.cerrarRecursos();
 		cuenta.cerrarRecursos();
 	}
 
 	/**
-	 * Metodo que elimina el usuario que entra como parámetro en la base de datos.
+	 * Metodo que elimina el usuario que entra como parÃ¡metro en la base de datos.
 	 * @param usuario - el usuario a borrar. usuario !=  null
 	 * <b> post: </b> se ha borrado el usuario en la base de datos en la transaction actual. pendiente que el usuario master
 	 * haga commit para que los cambios bajen a la base de datos.
@@ -329,7 +329,7 @@ public class DAOTablaUsuario {
 		pref.setConn(this.conn);
 		cuenta.setConn(this.conn);
 		
-		rest.borrarRestaurantePorId(usuario.getId());
+		rest.borrarRestaurantePorIdRepresentante(usuario.getId());
 		pref.deletePreferencia(usuario.getId(), usuario.getPreferencia());
 		cuenta.borrarHistorialCliente(usuario.getId());
 		
@@ -346,7 +346,7 @@ public class DAOTablaUsuario {
 	/**
 	 * Borrar usuario por rol.<br>
 	 * @param nombreRol Borra todos los usuarios con el rol dado.<br>
-	 * @throws SQLException Excepción de la BD.<br>
+	 * @throws SQLException ExcepciÃ³n de la BD.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
 	public void borrarPorRol(String nombreRol) throws SQLException, Exception {
@@ -358,7 +358,7 @@ public class DAOTablaUsuario {
 	}
 	
 	/**
-	 * Convierte el rol pasado como parámetro a un String.<br>
+	 * Convierte el rol pasado como parÃ¡metro a un String.<br>
 	 * @param nombreRol Nombre del rol.<br>
 	 * @return Equivalencia en String
 	 */
@@ -375,8 +375,8 @@ public class DAOTablaUsuario {
 	}
 	
 	/**
-	 * Obtiene el índice actual del ingrediente.<br>
-	 * @param Índice actual.<br>
+	 * Obtiene el Ã­ndice actual del ingrediente.<br>
+	 * @param Ã�ndice actual.<br>
 	 */
 	public int getCurrentIndex() throws SQLException, Exception
 	{
@@ -389,7 +389,7 @@ public class DAOTablaUsuario {
 
 	
 	/**
-	 * Metodo que busca el usuario con el id que entra como parámetro.
+	 * Metodo que busca el usuario con el id que entra como parÃ¡metro.
 	 * @param name - Id de el usuario a buscar
 	 * @return Usuario encontrado
 	 * @throws SQLException - Cualquier error que la base de datos arroje.

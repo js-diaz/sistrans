@@ -1,13 +1,3 @@
-/**-------------------------------------------------------------------
- * $Id$
- * Universidad de los Andes (Bogot谩 - Colombia)
- * Departamento de Ingenier铆a de Sistemas y Computaci贸n
- *
- * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
- * Autor: Juan Felipe Garc铆a - jf.garcia268@uniandes.edu.co
- * -------------------------------------------------------------------
- */
 package dao;
 
 
@@ -22,15 +12,14 @@ import vos.*;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaci贸n
- * @author Monitores 2017-20
+ * @author JuanSebastian
  */
 public class DAOTablaCategoriaProducto {
-
 
 	/**
 	 * Arraylits de recursos que se usan para la ejecuci贸n de sentencias SQL
 	 */
-	private ArrayList<Object> recursos;
+	private List<Object> recursos;
 
 	/**
 	 * Atributo que genera la conexi贸n a la base de datos
@@ -38,7 +27,7 @@ public class DAOTablaCategoriaProducto {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAOTablaCategoriaProducto
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaCategoriaProducto() {
@@ -46,7 +35,7 @@ public class DAOTablaCategoriaProducto {
 	}
 
 	/**
-	 * Metodo que cierra todos los recursos que estan enel arreglo de recursos
+	 * Metodo que cierra todos los recursos que estan en el arreglo de recursos
 	 * <b>post: </b> Todos los recurso del arreglo de recursos han sido cerrados
 	 */
 	public void cerrarRecursos() {
@@ -61,7 +50,7 @@ public class DAOTablaCategoriaProducto {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexi贸n que entra como parametro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexi髇 que entra como par醡etro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -70,167 +59,111 @@ public class DAOTablaCategoriaProducto {
 
 
 	/**
-	 * Metodo que, usando la conexi贸n a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexi髇 a la base de datos, saca todas las categorias de la base de datos para un producto determinado
+	 * @return lista con las categorias de la base de datos para un producto.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public List<Categoria> consultarPorProducto(Producto producto) throws SQLException, Exception {
+		DAOTablaCategoria daoCategoria = new DAOTablaCategoria();
+		daoCategoria.setConn(conn);
+		List<Categoria> categorias = new ArrayList<>();
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM CATEGORIA_PRODUCTO WHERE ID_PRODUCTO = " + producto.getId();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
 		while (rs.next()) {
-			String name = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
+			String name = rs.getString("NOMBRE_CATEGORIA");
+			categorias.add(daoCategoria.buscarCategoriasPorName(name));
+
 		}
-		return videos;
+		daoCategoria.cerrarRecursos();
+		return categorias;
 	}
 
-
 	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
+	 * Metodo que, usando la conexi髇 a la base de datos, saca todos los productos de la base de datos para una categoria determinada
+	 * @return lista con las categorias de la base de datos para un producto.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public List<Producto> consultarPorCategoria(Categoria categoria) throws SQLException, Exception {
+		List<Producto> productos = new ArrayList<>();
 
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
+		String sql = "SELECT * FROM CATEGORIA_PRODUCTO WHERE NOMBRE_CATEGORIA LIKE '" + categoria.getNombre() + "'";
 
+		DAOTablaProducto daoProducto= new DAOTablaProducto();
+		daoProducto.setConn(conn);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
 		while (rs.next()) {
-			String name2 = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
+			Long id = rs.getLong("ID_PRODUCTO");
+			productos.add(daoProducto.buscarProductoPorId(id));
 		}
-
-		return videos;
-	}
-	
-	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
-	{
-		Video video = null;
-
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		if(rs.next()) {
-			String name = rs.getString("NAME");
-			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
-		}
-
-		return video;
+		daoProducto.cerrarRecursos();
+		return productos;
 	}
 
 	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * M閠odo que asocia una categoria y un producto en la BD.
+	 * @param categoria Categoria a asociar.
+	 * @param producto Producto a asociar.
+	 * @throws SQLException Excepci髇 generada por problemas de base de datos.<br>
+	 * @throws Exception Todo otro problema.
 	 */
-	public void addVideo(Video video) throws SQLException, Exception {
-
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
-	}
-	
-	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
-
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
-
-
+	public void asociarCategoriaYProducto(Categoria categoria, Producto producto) throws SQLException, Exception {
+		String sql = "INSERT INTO CATEGORIA_PRODUCTO VALUES (";
+		sql += "'" + categoria.getNombre() + "', ";
+		sql += producto.getId() + ")";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
 
 	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * M茅todo que elimina una relaci髇 entre una categoria y productos espec韋icas.<br>
+	 * @throws SQLException En caso de que se presente alg鷑 otro error.<br>
+	 * @throws Exception Cualquier otro error de la base de datos.
 	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
+	public void desasociarCategoriaYProducto(Producto producto, Categoria categoria) throws SQLException, Exception {
 
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
+		String sql = "DELETE FROM CATEGORIA_PRODUCTO WHERE NOMBRE_CATEGORIA LIKE '" + categoria.getNombre();
+		sql += "' AND ID_PRODUCTO = "+ producto.getId();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
 
-	public void borrarCategoriasPorNombreCategoria(String nombre) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public ArrayList<Categoria> buscarCategoriasPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/**
+	 * Elimina las categorias que tenga producto dado por par醡etro.<br>
+	 * @param producto al cual eliminar las categorias.<br>
+	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
+	 * @throws Exception Cualquier otro error.
+	 */
+	public void eliminarPorProducto(Producto producto) throws SQLException, Exception {
+		String sql = "DELETE FROM CATEGORIA_PRODUCTO WHERE ID_PRODUCTO = " + producto.getId();
 
-	public void agregarCategoriasPorId(Long id, List<Categoria> categorias) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
 	}
+	/**
+	 * Elimina los productos de la categoria dada en par醡etro.<br>
+	 * @param categoria categoria a la cual eliminar los productos<br>
+	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
+	 * @throws Exception Cualquier otro error.
+	 */
+	public void eliminarPorCategoria (Categoria categoria) throws SQLException, Exception{
+		String sql = "DELETE FROM CATEGORIA_PRODUCTO WHERE NOMBRE_CATEGORIA LIKE '" + categoria.getNombre() + "'";
 
-	public void borrarCategoriasPorId(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void actualizarCategoria(Long id, List<Categoria> categorias) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
 	}
 
 }

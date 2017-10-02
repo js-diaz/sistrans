@@ -12,24 +12,24 @@ import java.util.List;
 import vos.*;
 
 /**
- * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaci贸n
- * @author s.guzmanm
+ * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaci髇
+ * @author JuanSebastian
  */
 public class DAOTablaRestaurante {
 
 
 	/**
-	 * Arraylits de recursos que se usan para la ejecuci贸n de sentencias SQL
+	 * Arraylits de recursos que se usan para la ejecuci髇 de sentencias SQL
 	 */
 	private ArrayList<Object> recursos;
 
 	/**
-	 * Atributo que genera la conexi贸n a la base de datos
+	 * Atributo que genera la conexi髇 a la base de datos
 	 */
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOCondicionTecnica
+	 * Metodo constructor que crea DAORestaurante
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaRestaurante() {
@@ -52,7 +52,7 @@ public class DAOTablaRestaurante {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexi贸n que entra como par谩metro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexi贸n que entra como parametro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -61,134 +61,299 @@ public class DAOTablaRestaurante {
 
 
 	/**
-	 * Metodo que, usando la conexi贸n a la base de datos, saca todos los condicions de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM CONDICIONTECNICAS;
-	 * @return Arraylist con los condicions de la base de datos.
+	 * Metodo que, usando la conexi贸n a la base de datos, saca todos los restaurantes de la base de datos
+	 * <b>SQL Statement:</b> SELECT * FROM RESTAURANTE;
+	 * @return Arraylist con los restaurantes de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<CondicionTecnica> darCondicionTecnicas() throws SQLException, Exception {
-		ArrayList<CondicionTecnica> condicions = new ArrayList<CondicionTecnica>();
+	public List<Restaurante> darRestaurantes() throws SQLException, Exception {
 
-		String sql = "SELECT * FROM CONDICIONTECNICA";
+		String sql = "SELECT * FROM RESTAURANTE";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		return convertirEntidadRestaurante(rs);
+	}
+
+
+	/**
+	 * Metodo que busca el restaurante con el nombre que entra como parametro.
+	 * @param name - Nombre de el restaurante a buscar
+	 * @return ArrayList con los restaurantes encontrados
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public Restaurante darRestaurantePorNombre(String name) throws SQLException, Exception {
+
+		String sql = "SELECT * FROM RESTAURANTE WHERE NOMBRE LIKE '" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		while (rs.next()) {
-			String name = rs.getString("NOMBRE");
-			condicions.add(new CondicionTecnica( name));
-		}
-		return condicions;
+		return convertirEntidadRestaurante(rs).get(0);
 	}
-
+	
 
 	/**
-	 * Metodo que busca el/los condicions con el nombre que entra como par谩metro.
-	 * @param name - Nombre de el/los condicions a buscar
-	 * @return ArrayList con los condicions encontrados
+	 * Metodo que busca el/los restaurantes con el nombre que entra como parametro.
+	 * @param name - Nombre de el/los restaurantes a buscar
+	 * @return ArrayList con los restaurantes encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public CondicionTecnica buscarCondicionTecnicasPorName(String name) throws SQLException, Exception {
+/*	public RestauranteMinimum buscarRestaurantesMinimumPorName(String name) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM CONDICIONTECNICA WHERE NAME LIKE'" + name + "'";
+		String sql = "SELECT * FROM RESTAURANTE WHERE NOMBRE LIKE '" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-		CondicionTecnica c= null;
-		if (rs.next()) {
-			String name2 = rs.getString("NAME");
-			
-			c= new CondicionTecnica(name2);
-		}
 
-		return c;
+		return convertirEntidadRestauranteMinimum(rs).get(0);
 	}
-
+*/
 	/**
-	 * Metodo que agrega la condici贸n que entra como par谩metro a la base de datos.
-	 * @param condicion - la condici贸n a agregar. condicion !=  null
-	 * <b> post: </b> se ha agregado la condici贸n a la base de datos en la transaction actual. pendiente que la condici贸n master
-	 * haga commit para que la condici贸n baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar la condici贸n a la base de datos
+	 * Metodo que agrega la restaurante que entra como parametro a la base de datos.
+	 * @param restaurante - la restaurante a agregar. restaurante !=  null
+	 * <b> post: </b> se ha agregado la restaurante a la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que la restaurante baje  a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar la restaurante a la base de datos
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void addCondicionTecnica(CondicionTecnica condicion) throws SQLException, Exception {
+	public void addRestaurante(Restaurante restaurante) throws SQLException, Exception {
 
-		String sql = "INSERT INTO CONDICIONTECNICA VALUES (";
-		sql += condicion.getNombre() + ")";
-
+		String sql = "INSERT INTO RESTAURANTE VALUES (";
+		sql += "'" + restaurante.getNombre() + "', ";
+		sql += "'" + restaurante.getPagWeb() + "', ";
+		sql += restaurante.getRepresentante().getId() + ", ";
+		sql += "'" + restaurante.getZona().getNombre() + ")";
+		
+		
+		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
-
 	}
 	
 	
+
 	/**
-	 * Metodo que elimina la condici贸n que entra como par谩metro en la base de datos.
-	 * @param condicion - la condici贸n a borrar. condicion !=  null
-	 * <b> post: </b> se ha borrado la condici贸n en la base de datos en la transaction actual. pendiente que la condici贸n master
+	 * Metodo que actualiza la restaurante que entra como par谩metro en la base de datos.
+	 * @param restaurante - la restaurante a actualizar. restaurante !=  null
+	 * <b> post: </b> se ha actualizado la restaurante en la base de datos en la transaction actual. pendiente que la master
 	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la condici贸n.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la restaurante.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void deleteCondicionTecnica(CondicionTecnica condicion) throws SQLException, Exception {
-
-		String sql = "DELETE FROM CONDICIONTECNICA";
-		sql += " WHERE NOMBRE LIKE '" + condicion.getNombre()+"'";
+	public void updateRestaurante(RestauranteMinimum restaurante) throws SQLException, Exception {
+		
+		String sql = "UPDATE RESTAURANTE SET ";
+		sql += "PAG_WEB = '" + restaurante.getPagWeb() + "'";
+		if(restaurante instanceof Restaurante) {
+			Restaurante restauranteDetail = (Restaurante) restaurante;
+			sql += ", ID_REPRESENTANTE = " + restauranteDetail.getRepresentante().getId();
+			sql += ", NOMBRE_ZONA = '" + restauranteDetail.getZona().getNombre() + "'";
+		}
+		sql += " WHERE NOMBRE LIKE '" + restaurante.getNombre() + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
 
-	public ArrayList<RestauranteMinimum> consultarPorZona(String nombreZona) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/**
+	 * Metodo que elimina la restaurante que entra como parametro en la base de datos.
+	 * @param restaurante - la restaurante a borrar. restaurante !=  null
+	 * <b> post: </b> se ha borrado la restaurante en la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que los cambios bajen a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la restaurante.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void deleteRestaurante(RestauranteMinimum restaurante) throws SQLException, Exception {
 
-	public void insertarPorZona(List<Restaurante> restaurantes) {
-		// TODO Auto-generated method stub
+		borrarCategorias(restaurante);
+		borrarMenus(restaurante);
+		borrarIngredientesRelacionados(restaurante);
+		borrarProductosRelacionados(restaurante);
 		
+		String sql = "DELETE FROM RESTAURANTE";
+		sql += " WHERE NOMBRE LIKE " + restaurante.getNombre();
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+	}
+	
+	/**
+	 * Crea un arreglo de restaurantes con el set de resultados pasado por par谩metro.<br>
+	 * @param rs Set de resultados.<br>
+	 * @return restaurantes Lista de restaurantes convertidas.<br>
+	 * @throws SQLException Alg煤n problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepci贸n.
+	 */
+	private List<Restaurante> convertirEntidadRestaurante(ResultSet rs) throws SQLException, Exception
+	{
+		DAOTablaUsuario daoUsuario = new DAOTablaUsuario();
+		DAOTablaZona daoZona = new DAOTablaZona();
+		daoUsuario.setConn(conn);
+		daoZona.setConn(conn);
+		List<Restaurante> restaurantes = new ArrayList<>();
+		while (rs.next()) {
+			String nombre = rs.getString("NOMBRE");
+			String pagWeb = rs.getString("PAG_WEB");
+			UsuarioMinimum representante = daoUsuario.buscarUsuarioMinimumPorId(rs.getLong("ID_REPRESENTANTE"));
+			ZonaMinimum zona = daoZona.buscarZonasMinimumPorName(rs.getString("NOMBRE_ZONA"));
+			restaurantes.add(new Restaurante(nombre, pagWeb, zona, new ArrayList<Categoria>(), representante,
+					new ArrayList<InfoProdRest>(), new ArrayList<InfoIngRest>(), new ArrayList<MenuMinimum>()));
+		}
+		daoUsuario.cerrarRecursos();
+		daoZona.cerrarRecursos();
+		return restaurantes;
+	}
+	
+	/**
+	 * Crea un arreglo de restaurantes con el set de resultados pasado por par谩metro.<br>
+	 * @param rs Set de resultados.<br>
+	 * @return restaurantes Lista de restaurantes convertidas.<br>
+	 * @throws SQLException Alg煤n problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepci贸n.
+	 */
+	private ArrayList<RestauranteMinimum> convertirEntidadRestauranteMinimum(ResultSet rs) throws SQLException, Exception
+	{
+		ArrayList<RestauranteMinimum> restaurantes = new ArrayList<>();
+		while (rs.next()) {
+			String nombre = rs.getString("NOMBRE");
+			String pagWeb = rs.getString("PAG_WEB");
+			restaurantes.add(new RestauranteMinimum(nombre, pagWeb));
+		}
+		return restaurantes;
+	}
+	
+	/**
+	 * Borra los menus que pertenecen a un restaurante que se va a borrar.<br>
+	 * @param restaurante Restaurante de donde se borran
+	 */
+	private void borrarMenus(RestauranteMinimum restaurante) throws SQLException, Exception
+	{
+		DAOTablaMenu daoMenu = new DAOTablaMenu();
+		daoMenu.setConn(conn);
+		daoMenu.eliminarMenusPorRestaurante(restaurante);
+		daoMenu.cerrarRecursos();
+	}
+	
+	/**
+	 * Borra la asociacion a las categorias a las cuales pertenece el restaurante.<br>
+	 * @param restaurante Restaurante de donde se borran.
+	 */
+	private void borrarCategorias(RestauranteMinimum restaurante) throws SQLException, Exception
+	{
+		DAOTablaCategoriaRestaurante daoCatRest = new DAOTablaCategoriaRestaurante();
+		daoCatRest.setConn(conn);
+		daoCatRest.eliminarPorRestaurante(restaurante);
+		daoCatRest.cerrarRecursos();
+	}
+	
+	/**
+	 * Borra la informaci髇 del los productos que son servidos por un restaurante que se va a borrar.<br>
+	 * @param restaurante Restaurante de donde se borran
+	 */
+	private void borrarProductosRelacionados (RestauranteMinimum restaurante) throws SQLException, Exception
+	{
+		DAOTablaInfoProdRest daoProducto = new DAOTablaInfoProdRest();
+		daoProducto.setConn(conn);
+		daoProducto.eliminarInfoProdRestsPorRestaurante(restaurante);
+		daoProducto.cerrarRecursos();
+	}
+	
+	/**
+	 * Borra la informacion de los ingrediantes que son usados por el restaurante que se va a borrar.<br>
+	 * @param restaurante Restaurante de donde se borran
+	 */
+	private void borrarIngredientesRelacionados (RestauranteMinimum restaurante) throws SQLException, Exception
+	{
+		DAOTablaInfoIngRest daoIngrediente = new DAOTablaInfoIngRest();
+		daoIngrediente.setConn(conn);
+		daoIngrediente.eliminarInfoIngRestsPorRestaurante(restaurante);
+		daoIngrediente.cerrarRecursos();
+	}
+	
+	/**
+	 * Consulta los restaurantes de una zona particular.
+	 * @param nombreZona nombre de la zona a buscar.
+	 * @return lista con los restaurantes buscados.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. 
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
+	 */
+	public List<RestauranteMinimum> consultarPorZona(String nombreZona) throws SQLException, Exception {
+		String sql = "SELECT * FROM Restaurante WHERE NOMBRE_ZONA LIKE '" + nombreZona + "'";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		return convertirEntidadRestauranteMinimum(ps.executeQuery());
 	}
 
-	public void eliminarRestaurantes(List<RestauranteMinimum> list) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Elimina todos los restaurantes en la lista dada.
+	 * @param list Restaurantes a eliminar.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la restaurante.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void eliminarRestaurantes(List<RestauranteMinimum> restaurantes) throws SQLException, Exception {
+		for(RestauranteMinimum restauranteMinimum: restaurantes) {
+			deleteRestaurante(restauranteMinimum);
+		}
 	}
 
-	public RestauranteMinimum darRestauranteDeUsuario(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Busca un restaurante dado el id de su representante.
+	 * @param id Id del representante.
+	 * @return restaurante en representaci髇 minimum.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la restaurante.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public RestauranteMinimum darRestauranteDeUsuario(Long id) throws SQLException, Exception {
+		String sql = "SELECT * FROM Restaurante WHERE ID_REPRESENTANTE = " + id;
+		PreparedStatement ps = conn.prepareStatement(sql);
+		recursos.add(ps);
+		return convertirEntidadRestaurante(ps.executeQuery()).get(0);
 	}
 
-	public void insertarPorIdDuenho(Long id, Restaurante restaurante) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Asocia un restaurante a un usuario para que este lo represente.
+	 * @param id
+	 * @param restaurante
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la restaurante.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void insertarPorIdRepresentante(Long id, RestauranteMinimum restaurante) throws SQLException, Exception {
+		String sql = "UPDATE Restaurante SET ID_REPRESENTANTE = " + id; 
+		sql += " WHERE NOMBRE LIKE '" + restaurante.getNombre() + "'";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.executeQuery();
 	}
 
-	public void actualizarRestaurantesDeUsuario(Long id, RestauranteMinimum restauranteMinimum) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Actualiza el restaurante del usuario dado con la informacion dada.
+	 * @param id Id del representante del restaurante a modificar.
+	 * @param restaurante Modificaciones a efectuar.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la restaurante.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void actualizarRestauranteDeUsuario(Long id, RestauranteMinimum restaurante) throws SQLException, Exception {
+		restaurante.setNombre(darRestauranteDeUsuario(id).getNombre());
+		updateRestaurante(restaurante);
 	}
 
-	public void borrarRestaurantePorId(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public RestauranteMinimum darRestauranteMinimumDeUsuario(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void eliminarRestauranteMinimums(List<RestauranteMinimum> restauranteMinimums) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Borra un restaurante dado el id de su representante.
+	 * @param id Id del representante del restaurante a borrar.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 */
+	public void borrarRestaurantePorIdRepresentante(Long id) throws SQLException {
+		String sql = "DELETE FROM Restaurante WHERE ID_REPRESENTANTE = " + id;
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.executeQuery();
 	}
 
 }

@@ -135,9 +135,9 @@ public class DAOTablaCategoria {
 	 */
 	public void deleteCategoria(Categoria c) throws SQLException, Exception {
 
-		borrarCategoriasDePlato(c.getNombre());
-		borrarCategoriasDeRestaurante(c.getNombre());
-		borrarCategoriasDeMenu(c.getNombre());
+		borrarCategoriasDePlato(c);
+		borrarCategoriasDeRestaurante(c);
+		borrarCategoriasDeMenu(c);
 		String sql = "DELETE FROM CATEGORIA";
 		sql += " WHERE NOMBRE LIKE '" + c.getNombre()+"'";
 
@@ -149,30 +149,30 @@ public class DAOTablaCategoria {
 	 * Borra todas las categorías con el nombre dado de la tabla DAOCategoriaMenu.<br>
 	 * @param nombre Nombre de la categoría a eliminar.
 	 */
-	private void borrarCategoriasDeMenu(String nombre) throws SQLException, Exception {
+	private void borrarCategoriasDeMenu(Categoria c) throws SQLException, Exception {
 		DAOTablaCategoriaMenu menu = new DAOTablaCategoriaMenu();
 		menu.setConn(this.conn);
-		menu.borrarCategoriasPorNombreCategoria(nombre);
+		menu.eliminarPorCategoria(c);
 		menu.cerrarRecursos();
 	}
 	/**
 	 * Borra todas las categorías con el nombre dado de la tabla DAOCategoriaMenu.<br>
 	 * @param nombre Nombre de la categoría a eliminar.
 	 */
-	private void borrarCategoriasDeRestaurante(String nombre) throws SQLException, Exception {
+	private void borrarCategoriasDeRestaurante(Categoria c) throws SQLException, Exception {
 		DAOTablaCategoriaRestaurante restaurante = new DAOTablaCategoriaRestaurante();
 		restaurante.setConn(this.conn);
-		restaurante.borrarCategoriasPorNombreCategoria(nombre);
+		restaurante.eliminarPorCategoria(c);
 		restaurante.cerrarRecursos();
 	}
 	/**
 	 * Borra todas las categorías con el nombre dado de la tabla DAOCategoriaMenu.<br>
 	 * @param nombre Nombre de la categoría a eliminar.
 	 */
-	private void borrarCategoriasDePlato(String nombre) throws SQLException, Exception {
+	private void borrarCategoriasDePlato(Categoria c) throws SQLException, Exception {
 		DAOTablaCategoriaProducto producto = new DAOTablaCategoriaProducto();
 		producto.setConn(this.conn);
-		producto.borrarCategoriasPorNombreCategoria(nombre);
+		producto.eliminarPorCategoria(c);
 		producto.cerrarRecursos();
 	}
 

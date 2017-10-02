@@ -1,13 +1,3 @@
-/**-------------------------------------------------------------------
- * $Id$
- * Universidad de los Andes (Bogot谩 - Colombia)
- * Departamento de Ingenier铆a de Sistemas y Computaci贸n
- *
- * Materia: Sistemas Transaccionales
- * Ejercicio: VideoAndes
- * Autor: Juan Felipe Garc铆a - jf.garcia268@uniandes.edu.co
- * -------------------------------------------------------------------
- */
 package dao;
 
 
@@ -22,15 +12,14 @@ import vos.*;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaci贸n
- * @author Monitores 2017-20
+ * @author JuanSebastian
  */
 public class DAOTablaPerteneceAProducto {
-
 
 	/**
 	 * Arraylits de recursos que se usan para la ejecuci贸n de sentencias SQL
 	 */
-	private ArrayList<Object> recursos;
+	private List<Object> recursos;
 
 	/**
 	 * Atributo que genera la conexi贸n a la base de datos
@@ -38,7 +27,7 @@ public class DAOTablaPerteneceAProducto {
 	private Connection conn;
 
 	/**
-	 * Metodo constructor que crea DAOVideo
+	 * Metodo constructor que crea DAOTablaIngredienteProducto
 	 * <b>post: </b> Crea la instancia del DAO e inicializa el Arraylist de recursos
 	 */
 	public DAOTablaPerteneceAProducto() {
@@ -46,7 +35,7 @@ public class DAOTablaPerteneceAProducto {
 	}
 
 	/**
-	 * Metodo que cierra todos los recursos que estan enel arreglo de recursos
+	 * Metodo que cierra todos los recursos que estan en el arreglo de recursos
 	 * <b>post: </b> Todos los recurso del arreglo de recursos han sido cerrados
 	 */
 	public void cerrarRecursos() {
@@ -61,7 +50,7 @@ public class DAOTablaPerteneceAProducto {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexi贸n que entra como parametro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexi髇 que entra como par醡etro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -70,178 +59,111 @@ public class DAOTablaPerteneceAProducto {
 
 
 	/**
-	 * Metodo que, usando la conexi贸n a la base de datos, saca todos los videos de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM VIDEOS;
-	 * @return Arraylist con los videos de la base de datos.
+	 * Metodo que, usando la conexi髇 a la base de datos, saca todos los ingredientes de la base de datos para un producto determinado
+	 * @return lista con las ingredientes de la base de datos para un producto.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public ArrayList<Video> darVideos() throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public List<Ingrediente> consultarPorProducto(Producto producto) throws SQLException, Exception {
+		DAOTablaIngrediente daoIngrediente = new DAOTablaIngrediente();
+		daoIngrediente.setConn(conn);
+		List<Ingrediente> ingredientes = new ArrayList<>();
 
-		String sql = "SELECT * FROM VIDEO";
+		String sql = "SELECT * FROM PERTENECE_A_PLATO WHERE ID_PRODUCTO = " + producto.getId();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
 		while (rs.next()) {
-			String name = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name, duration));
+			Long id = rs.getLong("ID_INGREDIENTE");
+			ingredientes.add(daoIngrediente.buscarIngredientePorId(id));
+
 		}
-		return videos;
+		daoIngrediente.cerrarRecursos();
+		return ingredientes;
 	}
 
-
 	/**
-	 * Metodo que busca el/los videos con el nombre que entra como parametro.
-	 * @param name - Nombre de el/los videos a buscar
-	 * @return ArrayList con los videos encontrados
+	 * Metodo que, usando la conexi髇 a la base de datos, saca todos los productos de la base de datos para un ingrediente determinado
+	 * @return lista con las ingredientes de la base de datos para un producto.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public ArrayList<Video> buscarVideosPorName(String name) throws SQLException, Exception {
-		ArrayList<Video> videos = new ArrayList<Video>();
+	public List<Producto> consultarPorIngrediente(Ingrediente ingrediente) throws SQLException, Exception {
+		List<Producto> productos = new ArrayList<>();
 
-		String sql = "SELECT * FROM VIDEO WHERE NAME ='" + name + "'";
+		String sql = "SELECT * FROM PERTENECE_A_PLATO WHERE ID_INGREDIENTE = " + ingrediente.getId();
 
+		DAOTablaProducto daoProducto= new DAOTablaProducto();
+		daoProducto.setConn(conn);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
 		while (rs.next()) {
-			String name2 = rs.getString("NAME");
-			Long id = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			videos.add(new Video(id, name2, duration));
+			Long id = rs.getLong("ID_PRODUCTO");
+			productos.add(daoProducto.buscarProductoPorId(id));
 		}
-
-		return videos;
-	}
-	
-	/**
-	 * Metodo que busca el video con el id que entra como parametro.
-	 * @param name - Id de el video a buscar
-	 * @return Video encontrado
-	 * @throws SQLException - Cualquier error que la base de datos arroje.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public Video buscarVideoPorId(Long id) throws SQLException, Exception 
-	{
-		Video video = null;
-
-		String sql = "SELECT * FROM VIDEO WHERE ID =" + id;
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
-
-		if(rs.next()) {
-			String name = rs.getString("NAME");
-			Long id2 = rs.getLong("ID");
-			Integer duration = rs.getInt("DURATION");
-			video = new Video(id2, name, duration);
-		}
-
-		return video;
+		daoProducto.cerrarRecursos();
+		return productos;
 	}
 
 	/**
-	 * Metodo que agrega el video que entra como parametro a la base de datos.
-	 * @param video - el video a agregar. video !=  null
-	 * <b> post: </b> se ha agregado el video a la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que el video baje  a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar el video a la base de datos
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * M閠odo que asocia un ingrediente y un producto en la BD.
+	 * @param ingrediente Ingrediente a asociar.
+	 * @param producto Producto a asociar.
+	 * @throws SQLException Excepci髇 generada por problemas de base de datos.<br>
+	 * @throws Exception Todo otro problema.
 	 */
-	public void addVideo(Video video) throws SQLException, Exception {
-
-		String sql = "INSERT INTO VIDEO VALUES (";
-		sql += video.getId() + ",'";
-		sql += video.getName() + "',";
-		sql += video.getDuration() + ")";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-
-	}
-	
-	/**
-	 * Metodo que actualiza el video que entra como parametro en la base de datos.
-	 * @param video - el video a actualizar. video !=  null
-	 * <b> post: </b> se ha actualizado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
-	 */
-	public void updateVideo(Video video) throws SQLException, Exception {
-
-		String sql = "UPDATE VIDEO SET ";
-		sql += "NAME='" + video.getName() + "',";
-		sql += "DURATION=" + video.getDuration();
-		sql += " WHERE ID = " + video.getId();
-
-
+	public void asociarIngredienteYProducto(Ingrediente ingrediente, Producto producto) throws SQLException, Exception {
+		String sql = "INSERT INTO PERTENECE_A_PLATO VALUES (";
+		sql += "'" + producto.getId() + "', ";
+		sql += ingrediente.getId() + ")";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
 
 	/**
-	 * Metodo que elimina el video que entra como parametro en la base de datos.
-	 * @param video - el video a borrar. video !=  null
-	 * <b> post: </b> se ha borrado el video en la base de datos en la transaction actual. pendiente que el video master
-	 * haga commit para que los cambios bajen a la base de datos.
-	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar el video.
-	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 * M茅todo que elimina una relaci髇 entre un ingrediente y producto espec韋icos.<br>
+	 * @throws SQLException En caso de que se presente alg鷑 otro error.<br>
+	 * @throws Exception Cualquier otro error de la base de datos.
 	 */
-	public void deleteVideo(Video video) throws SQLException, Exception {
+	public void desasociarIngredienteYProducto(Producto producto, Ingrediente ingrediente) throws SQLException, Exception {
 
-		String sql = "DELETE FROM VIDEO";
-		sql += " WHERE ID = " + video.getId();
+		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_INGREDIENTE = " + ingrediente.getId();
+		sql += " AND ID_PRODUCTO = "+ producto.getId();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
 
-	public void borrarPorRol(String nombreRol) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public Usuario buscarUsuarioPorId(Long idUsuario) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/**
+	 * Elimina los ingredientes que tenga producto dado por par醡etro.<br>
+	 * @param producto al cual eliminar los ingredientes.<br>
+	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
+	 * @throws Exception Cualquier otro error.
+	 */
+	public void eliminarPorProducto(Producto producto) throws SQLException, Exception {
+		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_PRODUCTO = " + producto.getId();
 
-	public void borrarIngredienteDeLista(Long id) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
 	}
+	/**
+	 * Elimina los productos del ingrediente dada en par醡etro.<br>
+	 * @param ingrediente ingrediente al cual eliminar los productos<br>
+	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
+	 * @throws Exception Cualquier otro error.
+	 */
+	public void eliminarPorIngrediente (Ingrediente ingrediente) throws SQLException, Exception{
+		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_INGREDIENTE = " + ingrediente.getId();
 
-	public ArrayList<Ingrediente> buscarIngredientesPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-		
-	}
-
-	public void agregarIngredientesPorId(Long id, List<Ingrediente> ingredientes) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void borrarIngredientesPorIdPlato(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void actualizarIngredientes(Long id, List<Categoria> categorias) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
 	}
 
 }

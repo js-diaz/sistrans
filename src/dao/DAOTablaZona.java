@@ -1,4 +1,3 @@
-
 package dao;
 
 
@@ -7,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.*;
 
@@ -208,8 +208,8 @@ public class DAOTablaZona {
 			if(rs.getString("ABIERTAACTUALMENTE").equals("1")) abiertaActualmente=true;
 			int capacidadOcupada=rs.getInt("CAPACIDADOCUPADA");
 			String nombre=rs.getString("NOMBRE");
-			ArrayList<CondicionTecnica> condiciones= accederACondicionesZona(nombre);
-			ArrayList<RestauranteMinimum> restaurantes= accederARestauranteMinimums(nombre);
+			List<CondicionTecnica> condiciones= accederACondicionesZona(nombre);
+			List<RestauranteMinimum> restaurantes= accederARestauranteMinimums(nombre);
 			zonas.add(new Zona(capacidad, ingresoEspecial, abiertaActualmente, capacidadOcupada, nombre, condiciones, restaurantes));
 		}
 		return zonas;
@@ -252,7 +252,7 @@ public class DAOTablaZona {
 	 * @param nombreZona Nombre de la zona a buscar.<br>
 	 * @return Lista de los restaurantes presentes en la zona.
 	 */
-	private ArrayList<RestauranteMinimum> accederARestauranteMinimums(String nombreZona) throws SQLException, Exception{
+	private List<RestauranteMinimum> accederARestauranteMinimums(String nombreZona) throws SQLException, Exception{
 		DAOTablaRestaurante restaurante = new DAOTablaRestaurante();
 		restaurante.setConn(this.conn);
 		return restaurante.consultarPorZona(nombreZona);
@@ -316,8 +316,9 @@ public class DAOTablaZona {
 	/**
 	 * Elimina reservas hechas a esta zona.<br>
 	 * @param nombreZona Nombre de la zona para analizar reservas.
+	 * @throws SQLException Algún problema de la base de datos.<br>
 	 */
-	private void borrarReservas(String nombreZona)
+	private void borrarReservas(String nombreZona) throws SQLException
 	{
 		DAOTablaReserva reserva= new DAOTablaReserva();
 		reserva.setConn(this.conn);
