@@ -97,3 +97,5 @@ insert into CATEGORIA_MENU (nombre_categoria, nombre_menu, nombre_restaurante) v
 insert into CATEGORIA_MENU (nombre_categoria, nombre_menu, nombre_restaurante) values ('Venezuelan', 'Konklab', 'Jaxworks');
 insert into CATEGORIA_MENU (nombre_categoria, nombre_menu, nombre_restaurante) values ('Venezuelan', 'Konklux', 'Innotype');
 insert into CATEGORIA_MENU (nombre_categoria, nombre_menu, nombre_restaurante) values ('Venezuelan', 'Stringtough', 'Skyba');
+
+COMMIT;

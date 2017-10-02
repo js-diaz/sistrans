@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
-import vos.Usuario;
+import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
 
 /**
@@ -86,7 +86,7 @@ public class RolServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Rol rols;
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -116,7 +116,7 @@ public class RolServices {
 	public Response addRol(@PathParam("nombre")String rol, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -144,7 +144,7 @@ public class RolServices {
 	public Response deleteRol(@PathParam("nombre")String rol, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");

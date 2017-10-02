@@ -32,12 +32,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
 import vos.Producto;
-import vos.Usuario;
+import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase que expone servicios REST con ruta base: http://"ip o nombre de host":8080/ProductoAndes/rest/productos/...
- * @author Monitores 2017-20
+ * @author s.guzmanm
  */
 @Path("productos")
 public class ProductoServices {
@@ -165,7 +165,7 @@ public class ProductoServices {
 	public Response addProducto(Producto producto, @HeaderParam("usuarioId")Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -190,7 +190,7 @@ public class ProductoServices {
 	public Response updateProducto(Producto producto, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -215,7 +215,7 @@ public class ProductoServices {
 	public Response deleteProducto(Producto producto, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");

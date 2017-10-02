@@ -98,3 +98,5 @@ insert into MENU (nombre, nombre_restaurante, precio, costo) values ('Otcom', 'C
 insert into MENU (nombre, nombre_restaurante, precio, costo) values ('Ronstring', 'Topicstorm', 19.22, 2.28);
 insert into MENU (nombre, nombre_restaurante, precio, costo) values ('Konklux', 'Innotype', 16.57, 10.77);
 insert into MENU (nombre, nombre_restaurante, precio, costo) values ('Toughjoyfax', 'Meeveo', 11.4, 7.15);
+
+COMMIT;

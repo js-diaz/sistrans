@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
-import vos.Usuario;
+import vos.UsuarioMinimum;
 import vos.Producto.TiposDePlato;
 import vos.UsuarioMinimum.Rol;
 
@@ -114,7 +114,7 @@ public class TiposProductoServices {
 	public Response addTiposDePlato(@PathParam("nombre")String tipo, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -145,7 +145,7 @@ public class TiposProductoServices {
 	public Response deleteTiposDePlato(@PathParam("nombre") String tipo, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");

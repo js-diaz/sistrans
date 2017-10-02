@@ -13,6 +13,7 @@ package tm;
 import java.io.File;
 
 
+
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Properties;
 
 import dao.*;
+import vos.UsuarioMinimum;
 import vos.CondicionTecnica;
 import vos.ContenedoraCriterios;
 import vos.ContenedoraInformacion;
@@ -2856,6 +2858,47 @@ public class RotondAndesTM {
 		return u;
 	}
 	/**
+	 * Busca al usuario minimum por id.<br>
+	 * @param id Id del usuario.<br>
+	 * @return Usuario buscado.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public UsuarioMinimum usuarioBuscarUsuarioMinimumPorId(Long usuarioId) throws SQLException, Exception{
+		UsuarioMinimum u =null;
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			u=dao.buscarUsuarioMinimumPorId(usuarioId);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return u;
+	}
+	/**
 	 * Busca al usuario por id.<br>
 	 * @param id Id del usuario.<br>
 	 * @return Usuario buscado.<br>
@@ -3586,5 +3629,7 @@ public class RotondAndesTM {
 	public static void main(String[] args) throws SQLException,Exception {
 		
 	}
+
+	
 
 }

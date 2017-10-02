@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
-import vos.Usuario;
+import vos.UsuarioMinimum;
 import vos.Categoria;
 import vos.Preferencia;
 import vos.UsuarioMinimum.Rol;
@@ -62,6 +62,7 @@ public class PreferenciaCategoriaServices {
      * el error que se produjo
 	 */
 	@GET
+	@Path("porCategoria")
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getPreferenciaCategoriaPorCategoria(@HeaderParam("categoria")String cat) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
@@ -86,6 +87,7 @@ public class PreferenciaCategoriaServices {
      * el error que se produjo
      */
 	@GET
+	@Path("porPreferencia")
 	@Produces( MediaType.APPLICATION_JSON  )
 	public Response getCondicionesZonaPorCategoria( @HeaderParam("preferencia") Long preferencia) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
@@ -114,7 +116,7 @@ public class PreferenciaCategoriaServices {
 	public Response addPreferenciasCategoriaPorPreferencia( List<Categoria> categorias, @HeaderParam("preferencia") Long preferencia,@HeaderParam("usuarioId")Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -133,11 +135,12 @@ public class PreferenciaCategoriaServices {
      * @return Json con la zona que elimino o Json con el error que se produjo
      */
 	@DELETE
+	@Path("porCategoria")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletePreferenciaCategoriaPorCategoria(@HeaderParam("categoria")String categoria, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(categoria==null || categoria.length()==0)
 			{
 				throw new Exception("Nombre de la categoría es inválido");
@@ -162,10 +165,11 @@ public class PreferenciaCategoriaServices {
      */
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("porPreferencia")
 	public Response deletePreferenciasCategoriaPorPreferencia(@HeaderParam("preferencia")Long preferencia, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -190,7 +194,7 @@ public class PreferenciaCategoriaServices {
 	public Response deletePreferenciaCategoria(@HeaderParam("preferencia")Long preferencia, @HeaderParam("categoria") String cat,@HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");

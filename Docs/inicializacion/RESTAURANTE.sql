@@ -83,3 +83,5 @@ insert into RESTAURANTE (nombre, pag_web, id_representante, nombre_zona) values 
 insert into RESTAURANTE (nombre, pag_web, id_representante, nombre_zona) values ('Voolith', 'https://adobe.com', 98, 'Sports');
 insert into RESTAURANTE (nombre, pag_web, id_representante, nombre_zona) values ('Linkbuzz', 'http://printfriendly.com', 99, 'Home');
 insert into RESTAURANTE (nombre, pag_web, id_representante, nombre_zona) values ('Tagchat', 'http://engadget.com', 100, 'Baby');
+
+COMMIT;

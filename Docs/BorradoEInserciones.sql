@@ -24,7 +24,7 @@ DROP SEQUENCE IDINGREDIENTE;
 create sequence IDINGREDIENTE
 minvalue 1
 maxvalue 999999999999999999999
-start with 1
+start with 101
 increment by 1;
 
 DROP SEQUENCE IDPRODUCTO;
@@ -32,7 +32,7 @@ DROP SEQUENCE IDPRODUCTO;
 create sequence IDPRODUCTO
 minvalue 1
 maxvalue 999999999999999999999
-start with 1
+start with 101
 increment by 1;
 
 DROP SEQUENCE IDUSUARIO;
@@ -40,19 +40,10 @@ DROP SEQUENCE IDUSUARIO;
 create sequence IDUSUARIO
 minvalue 1
 maxvalue 999999999999999999999
-start with 1
+start with 221
 increment by 1;
 
---NÚMERO DE CUENTA
-DROP SEQUENCE NUMCUENTA;
-
-create sequence NUMCUENTA
-minvalue 1
-maxvalue 999999999999999999999
-start with 1
-increment by 1;
-
-
+commit;
 
 --DEFAULT
 

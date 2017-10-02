@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
-import vos.Usuario;
+import vos.UsuarioMinimum;
 import vos.Zona;
 import vos.ZonaMinimum;
 import vos.Preferencia;
@@ -63,6 +63,7 @@ public class PreferenciaZonaServices {
      * el error que se produjo
 	 */
 	@GET
+	@Path("porZona")
 	@Produces(MediaType.APPLICATION_JSON )
 	public Response getPreferenciaZonaPorZona(@HeaderParam("zona")String cat) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
@@ -87,6 +88,7 @@ public class PreferenciaZonaServices {
      * el error que se produjo
      */
 	@GET
+	@Path("porPreferencia")
 	@Produces(  MediaType.APPLICATION_JSON  )
 	public Response getPreferenciasZonaPorId( @HeaderParam("preferencia") Long preferencia) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
@@ -116,7 +118,7 @@ public class PreferenciaZonaServices {
 	public Response addPreferenciasZonaPorPreferencia( List<ZonaMinimum> zonas, @HeaderParam("preferencia") Long preferencia,@HeaderParam("usuarioId")Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -136,10 +138,11 @@ public class PreferenciaZonaServices {
      */
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("porZona")
 	public Response deletePreferenciaZonaPorZona(@HeaderParam("zona")String zona, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(zona==null || zona.length()==0)
 			{
 				throw new Exception("Nombre de la zona es inválido");
@@ -164,10 +167,12 @@ public class PreferenciaZonaServices {
      */
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("porPreferencia")
+
 	public Response deletePreferenciasZonaPorPreferencia(@HeaderParam("preferencia")Long preferencia, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -178,7 +183,6 @@ public class PreferenciaZonaServices {
 		}
 		return Response.status(200).build();
 	}
-	
 	 /**
      * Metodo que expone servicio REST usando DELETE que elimina la preferencia zona
      * <b>URL: </b> http://"ip o nombre de host":8080/CondicionesZonaAndes/rest/zonas
@@ -192,7 +196,7 @@ public class PreferenciaZonaServices {
 	public Response deletePreferenciaZona(@HeaderParam("preferencia")Long preferencia, @HeaderParam("zona") String cat,@HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!(u.getRol().equals(Rol.OPERADOR)) || !(u.getRol().equals(Rol.ORGANIZADORES)))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");

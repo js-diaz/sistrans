@@ -92,3 +92,5 @@ insert into CATEGORIA_RESTAURANTE (nombre_categoria, nombre_restaurante) values 
 insert into CATEGORIA_RESTAURANTE (nombre_categoria, nombre_restaurante) values ('Venezuelan', 'Jetpulse');
 insert into CATEGORIA_RESTAURANTE (nombre_categoria, nombre_restaurante) values ('Venezuelan', 'Realcube');
 insert into CATEGORIA_RESTAURANTE (nombre_categoria, nombre_restaurante) values ('Venezuelan', 'Skipstorm');
+
+commit;

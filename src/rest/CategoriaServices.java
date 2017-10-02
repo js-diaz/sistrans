@@ -24,6 +24,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import tm.RotondAndesTM;
 import vos.Categoria;
 import vos.Usuario;
+import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
 import vos.Categoria;
 
@@ -113,9 +114,9 @@ public class CategoriaServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCategoria(Categoria video, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
-		Usuario u =null;
+		UsuarioMinimum u =null;
 		try {
-			u=tm.usuarioBuscarUsuarioPorId(id);
+			u=tm.usuarioBuscarUsuarioMinimumPorId(id);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -139,9 +140,9 @@ public class CategoriaServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCategoria(Categoria c, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
-		Usuario u =null;
+		UsuarioMinimum u =null;
 		try {
-			u=tm.usuarioBuscarUsuarioPorId(id);
+			u=tm.usuarioBuscarUsuarioMinimumPorId(id);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

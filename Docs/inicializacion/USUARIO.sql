@@ -18,3 +18,6 @@ insert into USUARIO (id, correo, nombre, rol) values (217, 'zscapensg@rambler.ru
 insert into USUARIO (id, correo, nombre, rol) values (218, 'ctarbatth@netlog.com', 'Celisse Tarbatt', 'PROVEEDOR');
 insert into USUARIO (id, correo, nombre, rol) values (219, 'bprinnetti@vk.com', 'Bobette Prinnett', 'PROVEEDOR');
 insert into USUARIO (id, correo, nombre, rol) values (220, 'ppeterj@home.pl', 'Pebrook Peter', 'OPERADOR');
+
+insert into USUARIO (id, correo, nombre, rol) values (0, 'ppeterj@home.pl', 'Admin', 'OPERADOR');
+commit;

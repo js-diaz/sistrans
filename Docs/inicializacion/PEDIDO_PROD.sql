@@ -98,3 +98,5 @@ insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantida
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('4275120252', 10, 'Wikibox', 5);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('3809092189', 8, 'Skinte', 1);
 insert into PEDIDO_PROD (numero_cuenta, id_producto, nombre_restaurante, cantidad) values ('1559422703', 68, 'Vinder', 1);
+
+commit;
