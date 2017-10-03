@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.Categoria;
 import vos.InfoProdRest;
@@ -71,9 +72,23 @@ public class DAOTablaMenu {
 		ResultSet rs = prepStmt.executeQuery();
 		return convertirEntidadMenu(rs);
 	}
-
-
 	
+	/**
+	 * Metodo que, usando la conexión a la base de datos, saca todos los menus de la base de datos para un restaurante particular.
+	 * @param restaurante nombre del Restaurante.
+	 * @return Arraylist con los menus de la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public ArrayList<Menu> darMenusPorRestaurante(String restaurante) throws SQLException, Exception {
+
+		String sql = "SELECT * FROM MENU WHERE NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		return convertirEntidadMenu(rs);
+	}
 
 	/**
 	 * Metodo que busca el/los menus con el nombre que entra como parametro.
@@ -168,16 +183,24 @@ public class DAOTablaMenu {
 	private ArrayList<Menu> convertirEntidadMenu(ResultSet rs) throws SQLException, Exception
 	{
 		DAOTablaRestaurante daoRest = new DAOTablaRestaurante();
+		DAOTablaCategoriaMenu daoCat = new DAOTablaCategoriaMenu();
+		DAOTablaPerteneceAMenu daoProd = new DAOTablaPerteneceAMenu();
 		daoRest.setConn(conn);
+		daoCat.setConn(conn);
+		daoProd.setConn(conn);
 		ArrayList<Menu> menus = new ArrayList<>();
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			double precio = rs.getDouble("PRECIO");
 			double costo = rs.getDouble("COSTO");
 			RestauranteMinimum restaurante = daoRest.darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE"));
-			menus.add(new Menu(nombre, precio, costo, restaurante, new ArrayList<InfoProdRest>(), new ArrayList<Categoria>()));
+			List<InfoProdRest> productos = daoProd.consultarPorMenu(nombre, restaurante.getNombre());
+			List<Categoria> categorias = daoCat.consultarPorMenu(nombre, restaurante.getNombre());
+			menus.add(new Menu(nombre, precio, costo, restaurante, productos, categorias));
 		}
 		daoRest.cerrarRecursos();
+		daoCat.cerrarRecursos();
+		daoProd.cerrarRecursos();
 		return menus;
 	}
 	
