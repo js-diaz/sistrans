@@ -3574,7 +3574,7 @@ public class RotondAndesTM {
 	 * @return La menu.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public Menu menuBuscarMenusPorName(String name, String restaurante) throws Exception
+	public Menu menuBuscarMenusPorNombreYRestaurante(String name, String restaurante) throws Exception
 	{
 		Menu z =null;
 		DAOTablaMenu dao = new DAOTablaMenu();

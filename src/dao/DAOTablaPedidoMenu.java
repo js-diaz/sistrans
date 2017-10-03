@@ -10,6 +10,7 @@ import java.util.List;
 import vos.CuentaMinimum;
 import vos.PedidoMenu;
 import vos.Menu;
+import vos.MenuMinimum;
 
 public class DAOTablaPedidoMenu {
 
@@ -175,7 +176,7 @@ public class DAOTablaPedidoMenu {
 		List<PedidoMenu> pedidoMenus = new ArrayList<>();
 		while (rs.next()) {
 			int cantidad = rs.getInt("CANTIDAD");
-			Menu menu = daoMenu.buscarMenusPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
+			MenuMinimum menu = daoMenu.buscarMenusPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
 			CuentaMinimum cuenta = daoCuenta.buscarCuentasPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
 			pedidoMenus.add(new PedidoMenu(cantidad, cuenta, menu));
 		}

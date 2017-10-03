@@ -10,16 +10,12 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
 import vos.Restaurante;
@@ -54,9 +50,9 @@ public class RestauranteServices {
 	
 
 	/**
-	 * Metodo que expone servicio REST usando GET que da todos los videos de la base de datos.
-	 * <b>URL: </b> http://"ip o nombre de host":8080/RestauranteAndes/rest/videos
-	 * @return Json con todos los videos de la base de datos o json con 
+	 * Metodo que expone servicio REST usando GET que da todos los restaurantes de la base de datos.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/RestauranteAndes/rest/restaurantes
+	 * @return Json con todos los restaurantes de la base de datos o json con 
      * el error que se produjo
 	 */
 	@GET
@@ -73,10 +69,10 @@ public class RestauranteServices {
 	}
 
 	 /**
-     * Metodo que expone servicio REST usando GET que busca el video con el id que entra como parametro
-     * <b>URL: </b> http://"ip o nombre de host":8080/RestauranteAndes/rest/videos/<<id>>" para la busqueda"
-     * @param name - Nombre del video a buscar que entra en la URL como parametro 
-     * @return Json con el/los videos encontrados con el nombre que entra como parametro o json con 
+     * Metodo que expone servicio REST usando GET que busca el restaurante con el id que entra como parametro
+     * <b>URL: </b> http://"ip o nombre de host":8080/RestauranteAndes/rest/restaurantes/<<id>>" para la busqueda"
+     * @param name - Nombre del restaurante a buscar que entra en la URL como parametro 
+     * @return Json con el/los restaurantes encontrados con el nombre que entra como parametro o json con 
      * el error que se produjo
      */
 	@GET
@@ -88,7 +84,7 @@ public class RestauranteServices {
 		try
 		{
 			if(name==null || name.length()==0)
-				throw new Exception("El nombre de la categoría es inválido");
+				throw new Exception("El nombre del restaurante es inv�lido");
 			Restaurante v = tm.restauranteBuscarRestaurantesPorName( name );
 			if(v==null) return Response.status( 404 ).entity( v ).build( );			
 			return Response.status( 200 ).entity( v ).build( );			
@@ -101,16 +97,16 @@ public class RestauranteServices {
 
 
     /**
-     * Metodo que expone servicio REST usando POST que agrega el video que recibe en Json
-     * <b>URL: </b> http://"ip o nombre de host":8080/RestauranteAndes/rest/videos/video
-     * @param video - video a agregar
+     * Metodo que expone servicio REST usando POST que agrega el restaurante que recibe en Json
+     * <b>URL: </b> http://"ip o nombre de host":8080/RestauranteAndes/rest/restaurantes/restaurante
+     * @param restaurante - restaurante a agregar
      * @param id_ Id del usuario que realiza la solicitud.
-     * @return Json con el video que agrego o Json con el error que se produjo
+     * @return Json con el restaurante que agrego o Json con el error que se produjo
      */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addRestaurante(Restaurante video, @HeaderParam("usuarioId") Long id) {
+	public Response addRestaurante(Restaurante restaurante, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -119,24 +115,24 @@ public class RestauranteServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!(u.getRol().equals(Rol.OPERADOR))) throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			tm.restauranteAddRestaurante(video);
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && id == restaurante.getRepresentante().getId()))) throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.restauranteAddRestaurante(restaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(video).build();
+		return Response.status(200).entity(restaurante).build();
 	}
 	
     /**
-     * Metodo que expone servicio REST usando DELETE que elimina el video que recibe en Json
-     * @param video - video a aliminar. 
+     * Metodo que expone servicio REST usando DELETE que elimina el restaurante que recibe en Json
+     * @param restaurante - restaurante a aliminar. 
      * @param id_ Id del usuario que realiza la solicitud.
-     * @return Json con el video que elimino o Json con el error que se produjo
+     * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteRestaurante(Restaurante c, @HeaderParam("usuarioId") Long id) {
+	public Response deleteRestaurante(Restaurante restaurante, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -145,12 +141,12 @@ public class RestauranteServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!(u.getRol().equals(Rol.OPERADOR))) throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			tm.restauranteDeleteRestaurante(c);
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && id == restaurante.getRepresentante().getId()))) throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.restauranteDeleteRestaurante(restaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(c).build();
+		return Response.status(200).entity(restaurante).build();
 	}
 
 
