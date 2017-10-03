@@ -113,9 +113,11 @@ public class DAOTablaMenu {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		ArrayList<Menu> menus = convertirEntidadMenu(rs);
+		ArrayList<MenuMinimum> menus = convertirEntidadMenuMinimum(rs);
 		return menus.get(0);
 	}
+	
+
 	/**
 	 * Metodo que agrega la menu que entra como parametro a la base de datos.
 	 * @param menu - la menu a agregar. menu !=  null
@@ -195,9 +197,30 @@ public class DAOTablaMenu {
 			String nombre = rs.getString("NOMBRE");
 			double precio = rs.getDouble("PRECIO");
 			double costo = rs.getDouble("COSTO");
-			RestauranteMinimum restaurante = daoRest.darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE"));
+			RestauranteMinimum restaurante = daoRest.buscarRestaurantesMinimumPorName(rs.getString("NOMBRE_RESTAURANTE"));
 			menus.add(new Menu(nombre, precio, costo, restaurante, new ArrayList<InfoProdRest>(), new ArrayList<Categoria>()));
 		}
+		daoRest.cerrarRecursos();
+		return menus;
+	}
+	/**
+	 * Crea un arreglo de menus minimum con el set de resultados pasado por par�metro.<br>
+	 * @param rs Set de resultados.<br>
+	 * @return menus Lista de menus convertidas.<br>
+	 * @throws SQLException Algún problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepción.
+	 */
+	private ArrayList<MenuMinimum> convertirEntidadMenuMinimum(ResultSet rs) throws SQLException, Exception {
+		DAOTablaRestaurante daoRest = new DAOTablaRestaurante();
+		daoRest.setConn(conn);
+		ArrayList<MenuMinimum> menus = new ArrayList<>();
+		while (rs.next()) {
+			String nombre = rs.getString("NOMBRE");
+			double precio = rs.getDouble("PRECIO");
+			double costo = rs.getDouble("COSTO");
+			RestauranteMinimum restaurante = daoRest.buscarRestaurantesMinimumPorName(rs.getString("NOMBRE_RESTAURANTE"));
+			menus.add(new MenuMinimum(nombre, precio, costo, restaurante));
+			}
 		daoRest.cerrarRecursos();
 		return menus;
 	}

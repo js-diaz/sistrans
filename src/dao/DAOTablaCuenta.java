@@ -126,7 +126,6 @@ public class DAOTablaCuenta {
 			List<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
 			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
 			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
-			
 			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u));
 		}
 

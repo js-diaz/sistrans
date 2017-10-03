@@ -419,7 +419,7 @@ public class DAOTablaProducto {
 	 */
 	private void borrarIngredientesDePlato(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto p = new DAOTablaPerteneceAProducto();
-  	p.setConn(this.conn);
+		p.setConn(this.conn);
 		p.eliminarPorProducto(producto.getId());
 		p.cerrarRecursos();
 		

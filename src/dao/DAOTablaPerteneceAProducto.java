@@ -69,7 +69,7 @@ public class DAOTablaPerteneceAProducto {
 		daoIngrediente.setConn(conn);
 		List<Ingrediente> ingredientes = new ArrayList<>();
 
-		String sql = "SELECT * FROM PERTENECE_A_PLATO WHERE ID_PRODUCTO = " + producto;
+		String sql = "SELECT * FROM PERTENECE_A_PLATO WHERE ID_PLATO = " + producto;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -146,7 +146,7 @@ public class DAOTablaPerteneceAProducto {
 	 * @throws Exception Cualquier otro error.
 	 */
 	public void eliminarPorProducto(Long producto) throws SQLException, Exception {
-		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_PRODUCTO = " + producto;
+		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_PLATO = " + producto;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

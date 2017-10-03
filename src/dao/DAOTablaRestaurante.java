@@ -104,7 +104,7 @@ public class DAOTablaRestaurante {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-/*	public RestauranteMinimum buscarRestaurantesMinimumPorName(String name) throws SQLException, Exception {
+	public RestauranteMinimum buscarRestaurantesMinimumPorName(String name) throws SQLException, Exception {
 
 		String sql = "SELECT * FROM RESTAURANTE WHERE NOMBRE LIKE '" + name + "'";
 
@@ -114,7 +114,7 @@ public class DAOTablaRestaurante {
 
 		return convertirEntidadRestauranteMinimum(rs).get(0);
 	}
-*/
+
 	/**
 	 * Metodo que agrega la restaurante que entra como parametro a la base de datos.
 	 * @param restaurante - la restaurante a agregar. restaurante !=  null
@@ -358,5 +358,7 @@ public class DAOTablaRestaurante {
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.executeQuery();
 	}
+
+	
 
 }

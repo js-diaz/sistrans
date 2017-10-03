@@ -176,8 +176,8 @@ public class DAOTablaPedidoMenu {
 		List<PedidoMenu> pedidoMenus = new ArrayList<>();
 		while (rs.next()) {
 			int cantidad = rs.getInt("CANTIDAD");
-			MenuMinimum menu = daoMenu.buscarMenusPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
-			CuentaMinimum cuenta = daoCuenta.buscarCuentasPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
+			MenuMinimum menu = daoMenu.buscarMenusMinimumPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
+			CuentaMinimum cuenta = daoCuenta.buscarCuentasMinimumPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
 			pedidoMenus.add(new PedidoMenu(cantidad, cuenta, menu));
 		}
 		daoCuenta.cerrarRecursos();

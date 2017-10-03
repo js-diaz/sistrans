@@ -76,7 +76,7 @@ public class DAOTablaInfoProdRest {
 	
 
 	/**
-	 * Metodo que busca la informacion de un producto en un restaurnate dados por parámetro.
+	 * Metodo que busca la informacion de un producto en un restaurnate dados por parï¿½metro.
 	 * @param id - Id del producto a buscar
 	 * @param restaurante - Nombre del restaurante al que pertenece
 	 * @return ArrayList con los infoProdRests encontrados
@@ -165,7 +165,7 @@ public class DAOTablaInfoProdRest {
 	}
 	
 	/**
-	 * Crea un arreglo de infoProdRests con el set de resultados pasado por parámetro.<br>
+	 * Crea un arreglo de infoProdRests con el set de resultados pasado por parï¿½metro.<br>
 	 * @param rs Set de resultados.<br>
 	 * @return infoProdRests Lista de infoProdRests convertidas.<br>
 	 * @throws SQLException AlgÃºn problema de la base de datos.<br>
@@ -185,7 +185,7 @@ public class DAOTablaInfoProdRest {
 			Date fechaInicio = rs.getDate("FECHA_INICIO");
 			Date fechaFin = rs.getDate("FECHA_FIN");
 			Producto producto = daoProd.buscarProductoPorId(rs.getLong("ID_PRODUCTO"));
-			RestauranteMinimum restaurante = daoRest.darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE"));
+			RestauranteMinimum restaurante = daoRest.buscarRestaurantesMinimumPorName(rs.getString("NOMBRE_RESTAURANTE"));
 			infoProdRests.add(new InfoProdRest(costo, precio, disponibilidad, fechaInicio, fechaFin, producto, restaurante));
 		}
 		daoRest.cerrarRecursos();
@@ -196,7 +196,7 @@ public class DAOTablaInfoProdRest {
 	/**
 	 * Elimina todos los infoProdRests pertenecientes al restaurante dado.
 	 * @param restaurante Restaurante al cual eliminarle los infoProdRests.
-	 * @throws SQLException Algún problema de la base de datos.<br>
+	 * @throws SQLException Algï¿½n problema de la base de datos.<br>
 	 */
 	public void eliminarInfoProdRestsPorRestaurante(RestauranteMinimum restaurante) throws SQLException {
 		String sql = "DELETE FROM INFO_PROD_REST WHERE NOMBRE_RESTAURANTE LIKE '" + restaurante.getNombre() + "'";
