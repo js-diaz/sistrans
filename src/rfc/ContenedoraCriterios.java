@@ -1,4 +1,4 @@
-package vos;
+package rfc;
 
 import java.util.ArrayList;
 import java.util.List;

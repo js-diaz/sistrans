@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import rfc.UsuarioCompleto;
 import vos.*;
 import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;

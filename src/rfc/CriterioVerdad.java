@@ -1,41 +1,48 @@
-package vos;
+package rfc;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import vos.CriterioVerdad.PalabrasVerdad;
+/**
+ * Clase que representa una condición de verdad.<br>
+ * @author jc161
+ *
+ */
+public class CriterioVerdad {
 
-public class CriterioVerdadHaving{
-	
-	
+	/**
+	 * Palabras reservadas para operaciones de verdad.
+	 */
+	public enum PalabrasVerdad{
+		IN,NOT,LIKE,AND,OR
+	}
+	/**
+	 * Arreglo de operaciones básicas de SQL.
+	 */
+	public String[] operaciones=new String[]{"=","<=","<",">",">="};
 	/**
 	 * Nombre de la condición técnica.
 	 */
 	@JsonProperty (value="nombre")
 	private String nombre;
 	/**
-	 * Listado de criterios utilizados.
-	 */
-	private ArrayList<CriterioAgregacion> criterios;
-	/**
-	 * Arreglo de operaciones básicas de SQL.
-	 */
-	public String[] operaciones=new String[]{"=","<=","<",">",">="};
-	
-	/**
 	 * Primer criterio de la comparación.
 	 */
-	private CriterioAgregacion valorAnterior;
+	private Criterio valorAnterior;
 	/**
 	 * Valor de comparación
 	 */
 	private String comparacion;
 	/**
+	 * Operación de comparación
+	 */
+	private String operacion;
+	/**
 	 * Criterio de comparación.
 	 */
-	private CriterioAgregacion criterioComparacion;
+	private Criterio criterioComparacion;
 	/**
 	 * Listado de valores
 	 */
@@ -43,20 +50,20 @@ public class CriterioVerdadHaving{
 	/**
 	 * Criterio 1
 	 */
-	private CriterioVerdadHaving c1;
+	private CriterioVerdad c1;
 	/**
 	 * Criterio 2
 	 */
-	private CriterioVerdadHaving c2;
+	private CriterioVerdad c2;
 	/**
-	 * Operación guardad
+	 * Listado de criterios utilizados.
 	 */
-	private String operacion;
+	private ArrayList<Criterio> criterios;
 	/**
-	 * Crea un criterio vacío.
+	 * Crea un criterio de verdad vacío.
 	 */
-	public CriterioVerdadHaving(){
-		criterios= new ArrayList<>();
+	public CriterioVerdad(){
+		
 	}
 	/**
 	 * Construye un criterio de verdad generalizado para cualquier clase.<br>
@@ -71,9 +78,9 @@ public class CriterioVerdadHaving{
 	 * @param conjuncion Se usa una conjunción o no.<br>
 	 * @throws Exception Si hay algún error.
 	 */
-	public CriterioVerdadHaving(@JsonProperty(value="valorAnterior1")CriterioAgregacion valorAnterior, @JsonProperty(value="valorComparacion1")String valorComparacion, @JsonProperty("valorComparacion2")  CriterioAgregacion criterioComparacion,
+	public CriterioVerdad(@JsonProperty(value="valorAnterior1")Criterio valorAnterior, @JsonProperty(value="valorComparacion1")String valorComparacion, @JsonProperty("valorComparacion2")  Criterio criterioComparacion,
 			@JsonProperty("operacion1")String operacion,@JsonProperty(value="afirmativo1") Boolean afirmativo, @JsonProperty("valores") List<String> valores,
-			@JsonProperty(value="c1") CriterioVerdadHaving c1, @JsonProperty("c2") CriterioVerdadHaving c2, @JsonProperty("conjuncion") Boolean conjuncion) throws Exception
+			@JsonProperty(value="c1") CriterioVerdad c1, @JsonProperty("c2") CriterioVerdad c2, @JsonProperty("conjuncion") Boolean conjuncion) throws Exception
 	{
 		if(conjuncion==null) conjuncion=true;
 		if(afirmativo==null) afirmativo=true;
@@ -97,9 +104,10 @@ public class CriterioVerdadHaving{
 	 * @param i Índice de las operaciones. -1 si se va a usar un LIKE.<br>
 	 * @param afirmativo Si es negativo o no.
 	 */
-	private void tipo1(@JsonProperty(value="valorAnterior1")CriterioAgregacion valorAnterior, @JsonProperty(value="valorComparacion1")String valorComparacion,
+	private void tipo1(@JsonProperty(value="valorAnterior1")Criterio valorAnterior, @JsonProperty(value="valorComparacion1")String valorComparacion,
 			@JsonProperty("operacion1")String operacion,@JsonProperty(value="afirmativo1") boolean afirmativo)
 	{
+		//Configura la comparación
 		comparacion=valorComparacion;
 		
 		boolean agregado=false;
@@ -112,7 +120,11 @@ public class CriterioVerdadHaving{
 				nombre=valorAnterior.getNombre()+operacion+valorComparacion;
 				agregado=true;
 			}
-		if(!agregado) nombre=valorAnterior.getNombre()+" "+PalabrasVerdad.LIKE+" "+valorComparacion;
+		if(!agregado) 
+			{
+			this.operacion=null;
+			nombre=valorAnterior.getNombre()+" "+PalabrasVerdad.LIKE+" "+valorComparacion;
+			}
 		if(!afirmativo) nombre=PalabrasVerdad.NOT+" ("+nombre+")";
 	}
 	 
@@ -124,7 +136,7 @@ public class CriterioVerdadHaving{
 	 * @param i Índice de las operaciones. -1 si se va a usar un LIKE.<br>
 	 * @param afirmativo Si es negativo o no.
 	 */
-	private void tipo2(@JsonProperty(value="valorAnterior2")CriterioAgregacion valorAnterior, @JsonProperty(value="valorComparacion2")CriterioAgregacion valorComparacion,
+	private void tipo2(@JsonProperty(value="valorAnterior2")Criterio valorAnterior, @JsonProperty(value="valorComparacion2")Criterio valorComparacion,
 			@JsonProperty("operacion2")String operacion,@JsonProperty(value="afirmativo2") boolean afirmativo)
 	{
 		criterioComparacion=valorComparacion;
@@ -149,11 +161,10 @@ public class CriterioVerdadHaving{
 	 * @param valores Listado de valores.<br>
 	 * @param afirmativo Si está o no.
 	 */
-	private void tipo3(@JsonProperty(value="valor3")CriterioAgregacion valor, @JsonProperty(value="valores3")List<String>valores,
+	private void tipo3(@JsonProperty(value="valor3")Criterio valor, @JsonProperty(value="valores3")List<String>valores,
 			@JsonProperty(value="afirmativo3")boolean afirmativo)
 	{
 		this.valores=valores;
-		
 		criterios=new ArrayList<>();
 		criterios.add(valor);
 		nombre=valor.getNombre()+" "+PalabrasVerdad.IN+" ("+valores.get(0);
@@ -174,20 +185,18 @@ public class CriterioVerdadHaving{
 	 * @param conjuncion Es un operador de conjunción.<br>
 	 * @param afirmativo Es una negación o no.
 	 */
-	private void tipo4(@JsonProperty(value="c1")CriterioVerdadHaving c1, @JsonProperty(value="c2")CriterioVerdadHaving c2, 
+	private void tipo4(@JsonProperty(value="c1")CriterioVerdad c1, @JsonProperty(value="c2")CriterioVerdad c2, 
 			@JsonProperty(value="conjuncion4")boolean conjuncion, @JsonProperty(value="afirmativo4")boolean afirmativo)
 	{
+		this.c1=c1;
+		this.c2=c2;
 		if(c1!=null && c2!=null)
 		{
-			this.c1=c1;
-			this.c2=c2;
-			
 			criterios=new ArrayList<>();
 			criterios.addAll(c1.criterios);
 			criterios.addAll(c2.criterios);
 			if(conjuncion) nombre=c1.nombre+" "+PalabrasVerdad.AND+" "+c2.nombre;
 			else nombre=c1.nombre+" "+PalabrasVerdad.OR+" "+c2.nombre;
-			
 			if(!afirmativo)
 			{
 				nombre=PalabrasVerdad.NOT+"("+nombre+")";
@@ -215,7 +224,7 @@ public class CriterioVerdadHaving{
 	 * Obtiene el listado de criterios.<br>
 	 * @return criterios
 	 */
-	public ArrayList<CriterioAgregacion> getCriterios()
+	public ArrayList<Criterio> getCriterios()
 	{
 		return criterios;
 	}
@@ -223,7 +232,7 @@ public class CriterioVerdadHaving{
 	 * Modifica el valor de criterios al dado por parámetro.<br>
 	 * @param criterios
 	 */
-	public void setCriterios(ArrayList<CriterioAgregacion> criterios)
+	public void setCriterios(ArrayList<Criterio> criterios)
 	{
 		this.criterios=criterios;
 	}
@@ -232,7 +241,7 @@ public class CriterioVerdadHaving{
 	 * Obtiene el valor anterior.<br>
 	 * @return valorAnterior
 	 */
-	public CriterioAgregacion getValorAnterior() {
+	public Criterio getValorAnterior() {
 		return valorAnterior;
 	}
 	/**
@@ -246,7 +255,7 @@ public class CriterioVerdadHaving{
 	 * Obtiene el criterio de comparación.
 	 * @return criterioComparacion
 	 */
-	public CriterioAgregacion getCriterioComparacion() {
+	public Criterio getCriterioComparacion() {
 		return criterioComparacion;
 	}
 	/**
@@ -260,14 +269,14 @@ public class CriterioVerdadHaving{
 	 * Obtiene el criterio 1.<br>
 	 * @return c1
 	 */
-	public CriterioVerdadHaving getC1() {
+	public CriterioVerdad getC1() {
 		return c1;
 	}
 	/**
 	 * Obtiene el criterio 2.<br>
 	 * @return c2
 	 */
-	public CriterioVerdadHaving getC2() {
+	public CriterioVerdad getC2() {
 		return c2;
 	}
 	/**
@@ -278,4 +287,10 @@ public class CriterioVerdadHaving{
 	{
 		return operacion;
 	}
+	
+	
+	
+	
+	
+	
 }

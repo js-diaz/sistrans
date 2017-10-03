@@ -24,14 +24,16 @@ import java.util.List;
 import java.util.Properties;
 
 import dao.*;
+import rfc.ContenedoraInformacion;
+import rfc.ContenedoraZonaCategoriaProducto;
+import rfc.Criterio;
+import rfc.CriterioAgregacion;
+import rfc.CriterioOrden;
+import rfc.CriterioVerdad;
+import rfc.CriterioVerdadHaving;
+import rfc.UsuarioCompleto;
 import vos.UsuarioMinimum;
 import vos.CondicionTecnica;
-import vos.ContenedoraInformacion;
-import vos.Criterio;
-import vos.CriterioAgregacion;
-import vos.CriterioOrden;
-import vos.CriterioVerdad;
-import vos.CriterioVerdadHaving;
 import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.InfoIngRest;
@@ -47,7 +49,6 @@ import vos.Producto.TiposDePlato;
 import vos.Reserva;
 import vos.Restaurante;
 import vos.Usuario;
-import vos.UsuarioCompleto;
 import vos.UsuarioMinimum.Rol;
 import vos.Zona;
 import vos.ZonaMinimum;
@@ -3497,6 +3498,50 @@ public class RotondAndesTM {
 			}
 		}
 	}
+	/**
+	 * Obtiene una lista de contenedora de zona categoría y producto.<br>
+	 * @param fechaInicial Fecha inicial de consulta.<br>
+	 * @param fechaFinal Fecha final de consulta.<br>
+	 * @param nombreRestaurante Nombre del restaurante.<br>
+	 * @return Listado de contenedoras.<br>
+	 * @throws Exception Si se ocasiona alguna excepción
+	 */
+	public List<ContenedoraZonaCategoriaProducto>zonaDarProductosTotalesPorZonaYCategoria(Date fechaInicial, Date fechaFinal, String nombreRestaurante) throws Exception
+	{
+		List<ContenedoraZonaCategoriaProducto> list =null;
+		DAOTablaZona dao = new DAOTablaZona();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darProductosTotalesPorZonaYCategoria(fechaInicial, fechaFinal, nombreRestaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
 	//CRITERIOS
 	/**
 	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
@@ -3506,14 +3551,14 @@ public class RotondAndesTM {
 	public List<ContenedoraInformacion> criteriosOrganizarPorZonaUniversal(String nombreZona,
 			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having) throws Exception {
-		List<ContenedoraInformacion> videos=null;
-		DAOTablaCriterio daoVideos=null;
+		List<ContenedoraInformacion> informacion=null;
+		DAOTablaCriterio dao=null;
 		try 
 		{
 			//////transaccion
-			daoVideos=new DAOTablaCriterio();
-			daoVideos.setConn(darConexion());
-			videos = daoVideos.generarListaFiltradaZonaEspecifica(nombreZona,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
+			dao=new DAOTablaCriterio();
+			dao.setConn(darConexion());
+			informacion = dao.generarListaFiltradaZonaEspecifica(nombreZona,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -3525,7 +3570,7 @@ public class RotondAndesTM {
 			throw e;
 		} finally {
 			try {
-				daoVideos.cerrarRecursos();
+				dao.cerrarRecursos();
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {
@@ -3534,9 +3579,45 @@ public class RotondAndesTM {
 				throw exception;
 			}
 		}
-		return videos;
+		return informacion;
 	}
-	
+	/**
+	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
+	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+	 */
+	public List<ContenedoraInformacion> criteriosOrganizarPorZonasComoSeQuiera(
+			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having) throws Exception {
+		List<ContenedoraInformacion> informacion=null;
+		DAOTablaCriterio dao=null;
+		try 
+		{
+			dao=new DAOTablaCriterio();
+			dao.setConn(darConexion());
+			informacion = dao.generarListaFiltradaZonas(criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return informacion;
+	}
 	//Restaurante
 	/**
 	 * Retorna las restaurantes del sistema.<br>

@@ -1,4 +1,4 @@
-package vos;
+package rfc;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**

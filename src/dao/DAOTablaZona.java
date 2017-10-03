@@ -5,9 +5,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import rfc.CategoriaProducto;
+import rfc.ContenedoraZonaCategoriaProducto;
+import rfc.ProductoEnTotal;
 import vos.*;
 
 /**
@@ -191,6 +196,109 @@ public class DAOTablaZona {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
+	/**
+	 * Retorna los productos dados por zona y categoría en una fecha inicial y final.<br>
+	 * @param fechaInicial Fecha inicial.<br>
+	 * @param fechaFinal Fecha final.<br>
+	 * @param nombreRestaurante Nombre del restaurante.<br>
+	 * @return Listado de contenedoraZonaCategoriaProducto.<br>
+	 * @throws SQLException Si hay algún error en la BD.<br>
+	 * @throws Exception SI hay cualquier otro error.
+	 */
+	public List<ContenedoraZonaCategoriaProducto> darProductosTotalesPorZonaYCategoria(Date fechaInicial, Date fechaFinal, String nombreRestaurante) throws SQLException, Exception
+	{
+		if(nombreRestaurante==null) nombreRestaurante="";
+		else nombreRestaurante="AND RESTAURANTE.NOMBRE LIKE '"+nombreRestaurante+"'";
+		List<ContenedoraZonaCategoriaProducto> list= new ArrayList<>();
+		ContenedoraZonaCategoriaProducto c=null;
+		CategoriaProducto cp=null;
+		ProductoEnTotal p=null;
+		String zonaActual=null;
+		String categoriaActual=null;
+		String temp="";
+		//Tabla de información
+		String table="SELECT NOMBRE_ZONA, ID, SUM(CANTIDADTOTAL1+CANTIDADTOTAL2)AS CANTIDAD FROM"
+				+ "           ( SELECT NOMBRE_ZONA ,ID,NVL(CANTIDADTOTAL1,0) AS CANTIDADTOTAL1 "
+				+ "          FROM"
+				+ "				  (SELECT RESTAURANTE.NOMBRE_ZONA AS NOMBRE_ZONA, PRODUCTO.ID AS ID, SUM(PEDIDO_MENU.CANTIDAD) AS CANTIDADTOTAL1"
+				+ "					 FROM PRODUCTO, PEDIDO_MENU, PERTENECE_A_MENU, RESTAURANTE, CUENTA"
+				+ "					 WHERE PEDIDO_MENU.NOMBRE_MENU LIKE PERTENECE_A_MENU.NOMBRE_MENU "
+				+ "					 AND PEDIDO_MENU.NOMBRE_RESTAURANTE LIKE PERTENECE_A_MENU.NOMBRE_RESTAURANTE"
+				+ "					 AND RESTAURANTE.NOMBRE LIKE PEDIDO_MENU.NOMBRE_RESTAURANTE AND CUENTA.NUMEROCUENTA LIKE PEDIDO_MENU.NUMERO_CUENTA"
+				+ "					AND	CUENTA.FECHA >="+dateFormat(fechaInicial)+" AND CUENTA.FECHA<="+dateFormat(fechaFinal)
+				+ "					 AND PRODUCTO.ID = PERTENECE_A_MENU.ID_PLATO " + nombreRestaurante
+				+ "					 GROUP BY RESTAURANTE.NOMBRE_ZONA,PRODUCTO.ID) NATURAL FULL OUTER JOIN PRODUCTO  ) "
+				+ "NATURAL FULL OUTER JOIN  (SELECT RESTAURANTE.NOMBRE_ZONA AS NOMBRE_ZONA,PEDIDO_PROD.ID_PRODUCTO AS ID2,SUM(PEDIDO_PROD.CANTIDAD) AS CANTIDADTOTAL2 "
+				+ "	   FROM PEDIDO_PROD, RESTAURANTE, CUENTA "
+				+ "	 WHERE PEDIDO_PROD.NOMBRE_RESTAURANTE LIKE RESTAURANTE.NOMBRE "+ nombreRestaurante +"AND CUENTA.NUMEROCUENTA LIKE PEDIDO_PROD.NUMERO_CUENTA "
+						+ "					AND	CUENTA.FECHA >="+dateFormat(fechaInicial)+" AND CUENTA.FECHA<="+dateFormat(fechaFinal)
+				+ "  GROUP BY RESTAURANTE.NOMBRE_ZONA,PEDIDO_PROD.ID_PRODUCTO) "
+				+ " WHERE NOMBRE_ZONA IS NOT NULL AND ID IS NOT NULL"
+				+ " GROUP BY NOMBRE_ZONA,ID";
+		//Comando sql usando la tabla anterior
+		String sql="SELECT T.NOMBRE_ZONA, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA, T.ID,  T.CANTIDAD, (PRODUCTO.COSTOPRODUCCION*T.CANTIDAD) AS COSTOTOTAL, (PRODUCTO.PRECIO* T.CANTIDAD) AS VALORTOTAL "
+				+ "FROM CATEGORIA_PRODUCTO, PRODUCTO,(" + table+")T "+
+				"WHERE T.ID = CATEGORIA_PRODUCTO.ID_PRODUCTO AND PRODUCTO.ID=T.ID"
+				+" GROUP BY T.NOMBRE_ZONA, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA, T.ID, (PRODUCTO.PRECIO*T.CANTIDAD), T.CANTIDAD, (PRODUCTO.COSTOPRODUCCION*T.CANTIDAD)"
+				+ " ORDER BY NOMBRE_ZONA, NOMBRE_CATEGORIA, VALORTOTAL DESC ";
+		System.out.println(sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs= prepStmt.executeQuery();
+		c= new ContenedoraZonaCategoriaProducto();
+		while(rs.next())
+		{
+			System.out.println(rs.getString("NOMBRE_ZONA")+" "+rs.getString("NOMBRE_CATEGORIA")+" "+rs.getLong("ID")+" "+rs.getInt("CANTIDAD")+" "+rs.getDouble("COSTOTOTAL")+" "+rs.getDouble("VALORTOTAL"));
+			p= new ProductoEnTotal(rs.getLong("ID"),rs.getInt("CANTIDAD"), rs.getDouble("VALORTOTAL"),rs.getDouble("COSTOTOTAL"));
+			temp=rs.getString("NOMBRE_ZONA");
+			if(zonaActual==null ) 
+			{
+				c= new ContenedoraZonaCategoriaProducto();
+				zonaActual=temp;
+				c.setNombreZona(zonaActual);
+			}
+			if(!temp.equals(zonaActual))
+			{
+				c.getCategoriaProductos().add(cp);
+				list.add(c);
+				c= new ContenedoraZonaCategoriaProducto();
+				zonaActual=temp;
+				c.setNombreZona(zonaActual);
+				categoriaActual=null;
+			}
+			temp=rs.getString("NOMBRE_CATEGORIA");
+			if(categoriaActual==null)
+			{
+				cp=new CategoriaProducto();
+				categoriaActual=temp;
+				cp.setNombreCategoria(categoriaActual);
+			}
+			if(!temp.equals(categoriaActual))
+			{
+				c.getCategoriaProductos().add(cp);
+				cp=new CategoriaProducto();
+				categoriaActual=temp;
+				cp.setNombreCategoria(categoriaActual);
+			}
+			cp.getProductos().add(p);
+		}
+		if(list.size()>0)
+		{
+			c.getCategoriaProductos().add(cp);
+			list.add(c);
+		}
+		return list;
+	}
+	
+	/**
+	 * Formatea el valor de la cuenta al dado en la base de datos.<br>
+	 * @param fecha Fecha de la cuenta.<br>
+	 * @return Valor a insertar en la base de datos
+	 */
+	private String dateFormat(Date fecha) {
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return "TO_DATE('"+x.format(fecha)+"','yyyy-MM-dd hh24:mi:ss')";
+	}
 	
 	/**
 	 * Crea un arreglo de zonas con el set de resultados pasado por parámetro.<br>
@@ -318,7 +426,7 @@ public class DAOTablaZona {
 	/**
 	 * Elimina reservas hechas a esta zona.<br>
 	 * @param nombreZona Nombre de la zona para analizar reservas.
-	 * @throws SQLException Alg�n problema de la base de datos.<br>
+	 * @throws SQLException Alg�n problema de la base de datos.<br>
 	 */
 	private void borrarReservas(String nombreZona) throws SQLException
 	{
@@ -327,4 +435,6 @@ public class DAOTablaZona {
 		reserva.borrarPorZona(nombreZona);
 		reserva.cerrarRecursos();
 	}
+	
+	
 }

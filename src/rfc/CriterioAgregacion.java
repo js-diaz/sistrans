@@ -1,9 +1,6 @@
-package vos;
+package rfc;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-
-import vos.Criterio.Agregaciones;
-import vos.Criterio.PalabrasEspeciales;
 
 public class CriterioAgregacion extends Criterio {
 

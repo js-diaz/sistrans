@@ -14,9 +14,9 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import vos.Criterio;
-import vos.CriterioVerdad;
-import vos.CriterioVerdad.PalabrasVerdad;
+import rfc.Criterio;
+import rfc.CriterioVerdad;
+import rfc.CriterioVerdad.PalabrasVerdad;
 
 public class RandomData {
 	

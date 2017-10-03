@@ -1,10 +1,15 @@
-package vos;
+package rfc;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import vos.CuentaMinimum;
+import vos.Preferencia;
+import vos.RestauranteMinimum;
+import vos.Usuario;
+import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
 
 /**

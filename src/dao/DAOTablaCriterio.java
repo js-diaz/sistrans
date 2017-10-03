@@ -9,8 +9,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import rfc.ContenedoraInformacion;
+import rfc.Criterio;
+import rfc.CriterioAgregacion;
+import rfc.CriterioOrden;
+import rfc.CriterioVerdad;
+import rfc.CriterioVerdadHaving;
+import rfc.Criterio.Agregaciones;
 import vos.*;
-import vos.Criterio.Agregaciones;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación utilizando todos los criterios para requerimientos de búsqueda.
@@ -414,6 +420,13 @@ public class DAOTablaCriterio {
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
 	}
+	/**
+	 * 
+	 * @param where
+	 * @param tipos
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	private void evaluarWhere(CriterioVerdad where, ContenedoraInformacion tipos) throws SQLException, Exception{
 		String tipo=null;
 		if(where.getValorAnterior()!=null)

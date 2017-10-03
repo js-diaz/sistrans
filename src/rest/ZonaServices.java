@@ -22,11 +22,13 @@ import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.*;
 
+import rfc.ContenedoraCriterios;
+import rfc.ContenedoraInformacion;
+import rfc.ContenedoraZonaCategoriaProducto;
+import rfc.Criterio;
+import rfc.CriterioVerdad;
+import rfc.LimiteFechas;
 import tm.RotondAndesTM;
-import vos.ContenedoraCriterios;
-import vos.ContenedoraInformacion;
-import vos.Criterio;
-import vos.CriterioVerdad;
 import vos.Usuario;
 import vos.UsuarioMinimum;
 import vos.Zona;
@@ -178,7 +180,12 @@ public class ZonaServices {
 		}
 		return Response.status(200).entity(zona).build();
 	}
-	
+	/**
+	 * Genera un filtro por nombre de zona con las características que prefiere el usuario.<br>
+	 * @param name Nombre de la zona.<br>
+	 * @param c Criterios del usuario.<br>
+	 * @return Json con la información deseada.
+	 */
 	@POST
 	@Path("completo/{nombre: [a-zA-Z]+}")
 	@Consumes (MediaType.APPLICATION_JSON)
@@ -190,6 +197,58 @@ public class ZonaServices {
 			if (name == null || name.length() == 0)
 				throw new Exception("Nombre de la zona no valido");
 			zonas = tm.criteriosOrganizarPorZonaUniversal(name,c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zonas).build();
+	}
+	/**
+	 * Genera un filtro por todas las zonas con las características que prefiere el usuario.<br>
+	 * @param c Criterios del usuario.<br>
+	 * @return Json con la información deseada.
+	 */
+	@POST
+	@Path("completo")
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pruebaFiltrosMultiples( ContenedoraCriterios c) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<ContenedoraInformacion> zonas;
+		try {
+			zonas = tm.criteriosOrganizarPorZonasComoSeQuiera(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zonas).build();
+	}
+	/**
+	 * Genera una nueva rentabilidad de la zona. Si se tiene un local se respeta y se maneja la privacidad del mismo.<br>
+	 * @param limite Objeto de límite de fechas.<br>
+	 * @param usuarioId Id del usuario.<br>
+	 * @return Rentabilidad de la zona.
+	 */
+	@POST
+	@Path("rentabilidad")
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response rentabilidadDeZona( LimiteFechas limite,@HeaderParam("usuarioId") Long usuarioId) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<ContenedoraZonaCategoriaProducto> zonas;
+		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			boolean restaurante=false;
+			if( u.getRol().equals(Rol.LOCAL))
+			{
+				if(u.getRestaurante()==null) throw new Exception("EL local no tiene restaurante");
+				restaurante=true;
+			}
+			if(!(u.getRol().equals(Rol.OPERADOR) || restaurante))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
+			String nombre=null;
+			if(restaurante) nombre=u.getRestaurante().getNombre();
+			zonas = tm.zonaDarProductosTotalesPorZonaYCategoria(limite.getFechaInicial(), limite.getFechaFinal(), nombre);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
