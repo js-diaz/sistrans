@@ -175,7 +175,7 @@ public class DAOTablaPedidoProducto {
 		List<PedidoProd> pedidoProds = new ArrayList<>();
 		while (rs.next()) {
 			int cantidad = rs.getInt("CANTIDAD");
-			InfoProdRest plato = daoProd.buscarInfoProdRestsPorNombreYRestaurante(rs.getLong("ID_PRODUCTO"), rs.getString("NOMBRE_RESTAURANTE"));
+			InfoProdRest plato = daoProd.buscarInfoProdRestsPorIdYRestaurante(rs.getLong("ID_PRODUCTO"), rs.getString("NOMBRE_RESTAURANTE"));
 			CuentaMinimum cuenta = daoCuenta.buscarCuentasMinimumPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
 			pedidoProds.add(new PedidoProd(cantidad, cuenta, plato));
 		}
