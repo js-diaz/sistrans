@@ -10,6 +10,7 @@ import vos.Categoria;
 import vos.InfoProdRest;
 import vos.RestauranteMinimum;
 import vos.Menu;
+import vos.MenuMinimum;
 
 public class DAOTablaMenu {
 
@@ -95,6 +96,26 @@ public class DAOTablaMenu {
 		return menus.get(0);
 	}
 
+
+	/**
+	 * Metodo que busca el/los menus con el nombre que entra como parametro.
+	 * @param name - Nombre de el menu a buscar
+	 * @param restaurante - Nombre del restaurante al que pertenece
+	 * @return ArrayList con los menus encontrados
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public MenuMinimum buscarMenusMinimumPorNombreYRestaurante(String name, String restaurante) throws SQLException, Exception {
+
+		String sql = "SELECT * FROM MENU WHERE NOMBRE LIKE '" + name + "' AND NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		ArrayList<Menu> menus = convertirEntidadMenu(rs);
+		return menus.get(0);
+	}
 	/**
 	 * Metodo que agrega la menu que entra como parametro a la base de datos.
 	 * @param menu - la menu a agregar. menu !=  null
@@ -159,7 +180,7 @@ public class DAOTablaMenu {
 	}
 	
 	/**
-	 * Crea un arreglo de menus con el set de resultados pasado por parámetro.<br>
+	 * Crea un arreglo de menus con el set de resultados pasado por parï¿½metro.<br>
 	 * @param rs Set de resultados.<br>
 	 * @return menus Lista de menus convertidas.<br>
 	 * @throws SQLException AlgÃºn problema de la base de datos.<br>
@@ -184,8 +205,8 @@ public class DAOTablaMenu {
 	/**
 	 * Borra la asociacion a las categorias a las cuales pertenece el menu.<br>
 	 * @param menu Menu de donde se borran.
-	 * @throws SQLException Algún problema de la base de datos.<br>
-	 * @throws Exception Cualquier otra excepción.
+	 * @throws SQLException Algï¿½n problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepciï¿½n.
 	 */
 	private void borrarCategorias(Menu menu) throws SQLException, Exception
 	{
@@ -198,7 +219,7 @@ public class DAOTablaMenu {
 	/**
 	 * Elimina todos los menus pertenecientes al restaurante dado.
 	 * @param restaurante Restaurante al cual eliminarle los menus.
-	 * @throws SQLException Algún problema de la base de datos.<br>
+	 * @throws SQLException Algï¿½n problema de la base de datos.<br>
 	 */
 	public void eliminarMenusPorRestaurante(RestauranteMinimum restaurante) throws SQLException {
 		String sql = "DELETE FROM MENU WHERE NOMBRE_RESTAURANTE LIKE '" + restaurante.getNombre() + "'";
