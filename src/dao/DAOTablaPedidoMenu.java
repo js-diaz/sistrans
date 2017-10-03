@@ -74,7 +74,7 @@ public class DAOTablaPedidoMenu {
 
 
 	/**
-	 * Metodo que busca la informacion de un menu en una cienta dados por parámetro.
+	 * Metodo que busca la informacion de un menu en una cienta dados por parï¿½metro.
 	 * @param id - Id del menu a buscar
 	 * @param cuenta - Nombre del cuenta al que pertenece
 	 * @return ArrayList con los pedidoMenus encontrados
@@ -160,7 +160,7 @@ public class DAOTablaPedidoMenu {
 	}
 	
 	/**
-	 * Crea un arreglo de pedidoMenus con el set de resultados pasado por parámetro.<br>
+	 * Crea un arreglo de pedidoMenus con el set de resultados pasado por parï¿½metro.<br>
 	 * @param rs Set de resultados.<br>
 	 * @return pedidoMenus Lista de pedidoMenus convertidas.<br>
 	 * @throws SQLException AlgÃºn problema de la base de datos.<br>
@@ -176,7 +176,7 @@ public class DAOTablaPedidoMenu {
 		while (rs.next()) {
 			int cantidad = rs.getInt("CANTIDAD");
 			Menu menu = daoMenu.buscarMenusPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
-			CuentaMinimum cuenta = daoCuenta.buscarCuentasPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
+			CuentaMinimum cuenta = daoCuenta.buscarCuentasMinimumPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
 			pedidoMenus.add(new PedidoMenu(cantidad, cuenta, menu));
 		}
 		daoCuenta.cerrarRecursos();
@@ -187,7 +187,7 @@ public class DAOTablaPedidoMenu {
 	/**
 	 * Elimina todos los pedidoMenus pertenecientes al cuenta dado.
 	 * @param cuenta Cuenta al cual eliminarle los pedidoMenus.
-	 * @throws SQLException Algún problema de la base de datos.<br>
+	 * @throws SQLException Algï¿½n problema de la base de datos.<br>
 	 */
 	public void eliminarPedidoMenusPorCuenta(CuentaMinimum cuenta) throws SQLException {
 		String sql = "DELETE FROM PEDIDO_MENU WHERE NUMERO_CUENTA LIKE '" + cuenta.getNumeroCuenta() + "'";

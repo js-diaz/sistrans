@@ -134,6 +134,31 @@ public class DAOTablaCuenta {
 	}
 	
 	/**
+	 * Metodo que busca la cuenta con el nÃºmero de cuenta que entra como parametro.
+	 * @param numeroCuenta - Nombre de el/los cuentas a buscar
+	 * @return Cuenta encontrada
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public CuentaMinimum buscarCuentasMinimumPorNumeroDeCuenta(String numeroCuenta) throws SQLException, Exception {
+
+		String sql = "SELECT * FROM CUENTA WHERE NUMEROCUENTA LIKE'" + numeroCuenta + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		CuentaMinimum c=null;
+
+		if (rs.next()) {
+			String numCuenta = rs.getString("NUMEROCUENTA");
+			Double valor = rs.getDouble("VALOR");
+			Date fecha = rs.getDate("FECHA");
+			c=(new CuentaMinimum(valor,numCuenta,fecha));
+		}
+		return c;
+	}
+	/**
 	 * Metodo que busca las cuentas con el id de usuario dado por parÃ¡metro que entra como parametro.
 	 * @param id - Id de usuario
 	 * @return Cuenta dada
