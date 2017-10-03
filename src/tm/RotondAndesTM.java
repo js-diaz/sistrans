@@ -3365,7 +3365,7 @@ public class RotondAndesTM {
 	 * @return La restaurante.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public Restaurante restauranteBuscarRestaurantesPorName(String name) throws Exception
+	public Restaurante restauranteBuscarRestaurantePorNombre(String name) throws Exception
 	{
 		Restaurante z =null;
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
@@ -3489,14 +3489,14 @@ public class RotondAndesTM {
 	 * @param restaurante Restaurante.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void restauranteDeleteRestaurante(Restaurante restaurante) throws Exception
+	public void restauranteDeleteRestaurante(String restaurante) throws Exception
 	{
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.deleteRestaurante(restaurante);
+			dao.deleteRestaurante(dao.darRestaurantePorNombre(restaurante));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -3531,7 +3531,7 @@ public class RotondAndesTM {
 	 * @return Menus.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<Menu> menuDarMenus() throws Exception
+	public List<Menu> menuDarMenusPorRestaurante(String restaurante) throws Exception
 	{
 		List<Menu> list =null;
 		DAOTablaMenu dao = new DAOTablaMenu();
@@ -3539,7 +3539,7 @@ public class RotondAndesTM {
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			list=dao.darMenus();
+			list=dao.darMenusPorRestaurante(restaurante);
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -3698,14 +3698,14 @@ public class RotondAndesTM {
 	 * @param menu Menu.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void menuDeleteMenu(Menu menu) throws Exception
+	public void menuDeleteMenu(String nombre, String nombreRestaurante) throws Exception
 	{
 		DAOTablaMenu dao = new DAOTablaMenu();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.deleteMenu(menu);
+			dao.deleteMenu(dao.buscarMenusPorNombreYRestaurante(nombre, nombreRestaurante));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
