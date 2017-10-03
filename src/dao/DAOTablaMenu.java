@@ -75,7 +75,7 @@ public class DAOTablaMenu {
 	}
 	
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los menus de la base de datos para un restaurante particular.
+	 * Metodo que, usando la conexiï¿½n a la base de datos, saca todos los menus de la base de datos para un restaurante particular.
 	 * @param restaurante nombre del Restaurante.
 	 * @return Arraylist con los menus de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -216,15 +216,10 @@ public class DAOTablaMenu {
 			String nombre = rs.getString("NOMBRE");
 			double precio = rs.getDouble("PRECIO");
 			double costo = rs.getDouble("COSTO");
-<<<<<<< HEAD
-			RestauranteMinimum restaurante = daoRest.buscarRestaurantesMinimumPorName(rs.getString("NOMBRE_RESTAURANTE"));
-			menus.add(new Menu(nombre, precio, costo, restaurante, new ArrayList<InfoProdRest>(), new ArrayList<Categoria>()));
-=======
 			RestauranteMinimum restaurante = daoRest.darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE"));
 			List<InfoProdRest> productos = daoProd.consultarPorMenu(nombre, restaurante.getNombre());
 			List<Categoria> categorias = daoCat.consultarPorMenu(nombre, restaurante.getNombre());
 			menus.add(new Menu(nombre, precio, costo, restaurante, productos, categorias));
->>>>>>> b296c9530fb9aa47fb08c0db4bd6537ad7cc0d3f
 		}
 		daoRest.cerrarRecursos();
 		daoCat.cerrarRecursos();
