@@ -19,33 +19,36 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import dao.*;
 import vos.UsuarioMinimum;
 import vos.CondicionTecnica;
-import vos.ContenedoraCriterios;
 import vos.ContenedoraInformacion;
 import vos.Criterio;
-import vos.Criterio.Agregaciones;
 import vos.CriterioAgregacion;
 import vos.CriterioOrden;
 import vos.CriterioVerdad;
 import vos.CriterioVerdadHaving;
 import vos.Cuenta;
 import vos.CuentaMinimum;
+import vos.InfoIngRest;
+import vos.InfoProdRest;
 import vos.Ingrediente;
+import vos.Menu;
+import vos.MenuMinimum;
+import vos.PedidoMenu;
+import vos.PedidoProd;
 import vos.Preferencia;
 import vos.Producto;
 import vos.Producto.TiposDePlato;
+import vos.Reserva;
 import vos.Restaurante;
 import vos.Usuario;
 import vos.UsuarioCompleto;
 import vos.UsuarioMinimum.Rol;
-import vos.Video;
 import vos.Zona;
 import vos.ZonaMinimum;
 import vos.Categoria;
@@ -3533,197 +3536,541 @@ public class RotondAndesTM {
 		}
 		return videos;
 	}
-		
-
-
-	//VIDEOANDES-EJEMPLO
-	/**
-	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
-	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
-	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
-	 */
-	public List<Video> darVideos() throws Exception {
-		List<Video> videos;
-		DAOTablaVideos daoVideos = new DAOTablaVideos();
-		try 
-		{
-			//////transaccion
-			this.conn = darConexion();
-			daoVideos.setConn(conn);
-			videos = daoVideos.darVideos();
-
-		} catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} finally {
-			try {
-				daoVideos.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return videos;
-	}
-
-	/**
-	 * Metodo que modela la transaccion que busca el/los videos en la base de datos con el nombre entra como parametro.
-	 * @param name - Nombre del video a buscar. name != null
-	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
-	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
-	 */
-	public List<Video> buscarVideosPorName(String name) throws Exception {
-		List<Video> videos;
-		DAOTablaVideos daoVideos = new DAOTablaVideos();
-		try 
-		{
-			//////transaccion
-			this.conn = darConexion();
-			daoVideos.setConn(conn);
-			videos = daoVideos.buscarVideosPorName(name);
-
-		} catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} finally {
-			try {
-				daoVideos.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return videos;
-	}
 	
+	//Restaurante
 	/**
-	 * Metodo que modela la transaccion que busca el video en la base de datos con el id que entra como parametro.
-	 * @param name - Id del video a buscar. name != null
-	 * @return Video - Resultado de la busqueda
-	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+	 * Retorna las restaurantes del sistema.<br>
+	 * @return Restaurantes.<br>
+	 * @throws Exception Si existe algún tipo de error
 	 */
-	public Video buscarVideoPorId(Long id) throws Exception {
-		Video video;
-		DAOTablaVideos daoVideos = new DAOTablaVideos();
-		try 
+	public List<Restaurante> restauranteDarRestaurantes() throws Exception
+	{
+		List<Restaurante> list =null;
+		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		try
 		{
-			//////transaccion
-			this.conn = darConexion();
-			daoVideos.setConn(conn);
-			video = daoVideos.buscarVideoPorId(id);
-
-		} catch (SQLException e) {
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darRestaurantes();
+		}
+		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
-		} finally {
-			try {
-				daoVideos.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
 		}
-		return video;
-	}
-	
-	/**
-	 * Metodo que modela la transaccion que agrega un solo video a la base de datos.
-	 * <b> post: </b> se ha agregado el video que entra como parametro
-	 * @param video - el video a agregar. video != null
-	 * @throws Exception Si existe algún tipo de error - cualquier error que se genere agregando el video
-	 */
-	public void addVideo(Video video) throws Exception {
-		DAOTablaVideos daoVideos = new DAOTablaVideos();
-		try 
+		finally
 		{
-			//////transaccion
-			this.conn = darConexion();
-			daoVideos.setConn(conn);
-			daoVideos.addVideo(video);
-			conn.commit();
-
-		} catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} finally {
-			try {
-				daoVideos.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-	
-	/**
-	 * Metodo que modela la transaccion que agrega los videos que entran como parametro a la base de datos.
-	 * <b> post: </b> se han agregado los videos que entran como parametro
-	 * @param videos - objeto que modela una lista de videos y se estos se pretenden agregar. videos != null
-	 * @throws Exception Si existe algún tipo de error - cualquier error que se genera agregando los videos
-	 */
-	public void addVideos(List<Video> videos) throws Exception {
-		DAOTablaVideos daoVideos = new DAOTablaVideos();
-		try 
-		{
-			//////transaccion - ACID Example
-			this.conn = darConexion();
-			conn.setAutoCommit(false);
-			daoVideos.setConn(conn);
-			Iterator<Video> it = videos.iterator();
-			while(it.hasNext())
+			try
 			{
-				daoVideos.addVideo(it.next());
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
 			}
-			
-			conn.commit();
-		} catch (SQLException e) {
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Busca una restaurante por nombre.<br>
+	 * @param name Nombre de restaurante.<br>
+	 * @return La restaurante.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public Restaurante restauranteBuscarRestaurantesPorName(String name) throws Exception
+	{
+		Restaurante z =null;
+		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			z=dao.darRestaurantePorNombre(name);
+		}
+		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
-			conn.rollback();
 			throw e;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
-			conn.rollback();
 			throw e;
-		} finally {
-			try {
-				daoVideos.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return z;
+	}
+	/**
+	 * Agrega una restaurante.<br>
+	 * @param restaurante Restaurante.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void restauranteAddRestaurante(Restaurante restaurante) throws Exception
+	{
+		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		for(Categoria c: restaurante.getCategorias())
+		{
+			if(categoriaBuscarCategoriasPorName(c.getNombre())==null) 
+				throw new Exception("Hay categorias del restaurante que no existen en el sistema con "+c.getNombre());
+		}
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addRestaurante(restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Actualiza una restaurante.<br>
+	 * @param restaurante Restaurante.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void restauranteUpdateRestaurante(Restaurante restaurante) throws Exception
+	{
+		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateRestaurante(restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra una restaurante.<br>
+	 * @param restaurante Restaurante.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void restauranteDeleteRestaurante(Restaurante restaurante) throws Exception
+	{
+		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteRestaurante(restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+
+	//Menu
+	/**
+	 * Retorna las menus del sistema.<br>
+	 * @return Menus.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Menu> menuDarMenus() throws Exception
+	{
+		List<Menu> list =null;
+		DAOTablaMenu dao = new DAOTablaMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darMenus();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Busca una menu por nombre.<br>
+	 * @param name Nombre de menu.<br>
+	 * @param restaurante nombre del restaurante al cual pertenece.
+	 * @return La menu.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public Menu menuBuscarMenusPorNombreYRestaurante(String name, String restaurante) throws Exception
+	{
+		Menu z =null;
+		DAOTablaMenu dao = new DAOTablaMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			z=dao.buscarMenusPorNombreYRestaurante(name, restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return z;
+	}
+	/**
+	 * Agrega una menu.<br>
+	 * @param menu Menu.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void menuAddMenu(Menu menu) throws Exception
+	{
+		DAOTablaMenu dao = new DAOTablaMenu();
+		for(Categoria c: menu.getCategorias())
+		{
+			if(categoriaBuscarCategoriasPorName(c.getNombre())==null) 
+				throw new Exception("Hay categorias del menu que no existen en el sistema con "+c.getNombre());
+		}
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addMenu(menu);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Actualiza una menu.<br>
+	 * @param menu Menu.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void menuUpdateMenu(Menu menu) throws Exception
+	{
+		DAOTablaMenu dao = new DAOTablaMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateMenu(menu);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra una menu.<br>
+	 * @param menu Menu.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void menuDeleteMenu(Menu menu) throws Exception
+	{
+		DAOTablaMenu dao = new DAOTablaMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteMenu(menu);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+	//InfoProdRest
+	/**
+	 * Retorna las infoProdRests del sistema.<br>
+	 * @return InfoProdRests.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<InfoProdRest> infoProdRestDarInfoProdRests() throws Exception
+	{
+		List<InfoProdRest> list =null;
+		DAOTablaInfoProdRest dao = new DAOTablaInfoProdRest();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darInfoProdRests();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Busca una infoProdRest por nombre.<br>
+	 * @param id id del producto.<br>
+	 * @param restaurante Nombre del restaurante.<br>
+	 * @return La infoProdRest.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public InfoProdRest infoProdRestBuscarInfoProdRestsPorIdYRestaurante(Long id, String restaurante) throws Exception
+	{
+		InfoProdRest z =null;
+		DAOTablaInfoProdRest dao = new DAOTablaInfoProdRest();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			z=dao.buscarInfoProdRestsPorIdYRestaurante(id, restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return z;
+	}
+	/**
+	 * Agrega una infoProdRest.<br>
+	 * @param infoProdRest InfoProdRest.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void infoProdRestAddInfoProdRest(InfoProdRest infoProdRest) throws Exception
+	{
+		DAOTablaInfoProdRest dao = new DAOTablaInfoProdRest();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addInfoProdRest(infoProdRest);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
@@ -3732,70 +4079,77 @@ public class RotondAndesTM {
 	}
 	
 	/**
-	 * Metodo que modela la transaccion que actualiza el video que entra como parametro a la base de datos.
-	 * <b> post: </b> se ha actualizado el video que entra como parametro
-	 * @param video - Video a actualizar. video != null
-	 * @throws Exception Si existe algún tipo de error - cualquier error que se genera actualizando los videos
+	 * Actualiza una infoProdRest.<br>
+	 * @param infoProdRest InfoProdRest.<br>
+	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void updateVideo(Video video) throws Exception {
-		DAOTablaVideos daoVideos = new DAOTablaVideos();
-		try 
+	public void infoProdRestUpdateInfoProdRest(InfoProdRest infoProdRest) throws Exception
+	{
+		DAOTablaInfoProdRest dao = new DAOTablaInfoProdRest();
+		try
 		{
-			//////transaccion
-			this.conn = darConexion();
-			daoVideos.setConn(conn);
-			daoVideos.updateVideo(video);
-
-		} catch (SQLException e) {
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateInfoProdRest(infoProdRest);
+		}
+		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
-		} finally {
-			try {
-				daoVideos.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
 			}
 		}
 	}
-
 	/**
-	 * Metodo que modela la transaccion que elimina el video que entra como parametro a la base de datos.
-	 * <b> post: </b> se ha eliminado el video que entra como parametro
-	 * @param video - Video a eliminar. video != null
-	 * @throws Exception Si existe algún tipo de error - cualquier error que se genera actualizando los videos
+	 * Borra una infoProdRest.<br>
+	 * @param infoProdRest InfoProdRest.<br>
+	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void deleteVideo(Video video) throws Exception {
-		DAOTablaVideos daoVideos = new DAOTablaVideos();
-		try 
+	public void infoProdRestDeleteInfoProdRest(InfoProdRest infoProdRest) throws Exception
+	{
+		DAOTablaInfoProdRest dao = new DAOTablaInfoProdRest();
+		try
 		{
-			//////transaccion
-			this.conn = darConexion();
-			daoVideos.setConn(conn);
-			daoVideos.deleteVideo(video);
-
-		} catch (SQLException e) {
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteInfoProdRest(infoProdRest);
+		}
+		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
-		} finally {
-			try {
-				daoVideos.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
@@ -3803,10 +4157,1857 @@ public class RotondAndesTM {
 		}
 	}
 	
-	public static void main(String[] args) throws SQLException,Exception {
-		
+	//InfoIngRest
+	/**
+	 * Retorna las infoIngRests del sistema.<br>
+	 * @return InfoIngRests.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<InfoIngRest> infoIngRestDarInfoIngRests() throws Exception
+	{
+		List<InfoIngRest> list =null;
+		DAOTablaInfoIngRest dao = new DAOTablaInfoIngRest();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darInfoIngRests();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Busca una infoIngRest por nombre.<br>
+	 * @param id Id del ingrediente.<br>
+	 * @param restaurante Nombre del restaurante.<br>
+	 * @return La infoIngRest.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public InfoIngRest infoIngRestBuscarInfoIngRestsPorIdYRestaurante(Long id, String restaurante) throws Exception
+	{
+		InfoIngRest z =null;
+		DAOTablaInfoIngRest dao = new DAOTablaInfoIngRest();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			z=dao.buscarInfoIngRestsPorIdYRestaurante(id, restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return z;
+	}
+	/**
+	 * Agrega una infoIngRest.<br>
+	 * @param infoIngRest InfoIngRest.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void infoIngRestAddInfoIngRest(InfoIngRest infoIngRest) throws Exception
+	{
+		DAOTablaInfoIngRest dao = new DAOTablaInfoIngRest();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addInfoIngRest(infoIngRest);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Actualiza una infoIngRest.<br>
+	 * @param infoIngRest InfoIngRest.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void infoIngRestUpdateInfoIngRest(InfoIngRest infoIngRest) throws Exception
+	{
+		DAOTablaInfoIngRest dao = new DAOTablaInfoIngRest();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateInfoIngRest(infoIngRest);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra una infoIngRest.<br>
+	 * @param infoIngRest InfoIngRest.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void infoIngRestDeleteInfoIngRest(InfoIngRest infoIngRest) throws Exception
+	{
+		DAOTablaInfoIngRest dao = new DAOTablaInfoIngRest();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteInfoIngRest(infoIngRest);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	///PerteneceAMenu
+	/**
+	 * Retorna un listado de menus para un producto de infoProdRest.<br>
+	 * @param producto Id del producto.<br>
+	 * @param restaurante Restaurante al cual pertenece.<br>
+	 * @return Lista de menus.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<MenuMinimum> perteneceAMenuBuscarMenusPorProducto(Long producto, String restaurante) throws Exception
+	{
+		DAOTablaPerteneceAMenu dao = new DAOTablaPerteneceAMenu();
+		List<MenuMinimum> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorProducto(producto, restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Retorna infoProdRests por una menu dada.<br>
+	 * @param menu Nombre del menu.<br>
+	 * @param restaurante Nombre del restaurante.<br>
+	 * @return Listado de infoProdRests.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<InfoProdRest> perteneceAMenuBuscarProductosPorMenu(String menu, String restaurante) throws Exception
+	{
+		DAOTablaPerteneceAMenu dao = new DAOTablaPerteneceAMenu();
+		List<InfoProdRest> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorMenu(menu, restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Borra infoProdRests de menu por id.<br>
+	 * @param producto id del producto.<br>
+	 * @param restaurante nombre del restaurante. <br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void perteneceAMenuBorrarPorProducto(Long producto, String restaurante) throws Exception
+	{
+		DAOTablaPerteneceAMenu dao = new DAOTablaPerteneceAMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorProducto(producto, restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Modifica las infoProdRests si se elimina una menu.<br>
+	 * @param nombreMenu nombre del menu.<br>
+	 * @param nombreRestaurante nombre del restaurante.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void perteneceAMenuBorrarPorMenu(String nombreMenu, String nombreRestaurante) throws Exception
+	{
+		DAOTablaPerteneceAMenu dao = new DAOTablaPerteneceAMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorMenu(nombreMenu, nombreRestaurante);;
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra usando los dos criterios de la tabla.<br>
+	 * @param idProducto id del producto.<br>
+	 * @param nombreMenu nombre del menu.<br>
+	 * @param nombreRestaurante nombre del restaurante.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void perteneceAMenuBorrarMulticriterio(Long idProducto, String nombreMenu, String nombreRestaurante) throws Exception
+	{
+		DAOTablaPerteneceAMenu dao = new DAOTablaPerteneceAMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.desasociarProductoYMenu(nombreMenu, nombreRestaurante, idProducto);;
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
 	}
 
+	///PerteneceAPlato
+	/**
+	 * Retorna un listado de ingredientes para un producto de producto.<br>
+	 * @param producto Id del producto.<br>
+	 * @return Lista de ingredientes.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Ingrediente> perteneceAPlatoBuscarIngredientesPorProducto(Long producto) throws Exception
+	{
+		DAOTablaPerteneceAProducto dao = new DAOTablaPerteneceAProducto();
+		List<Ingrediente> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorProducto(producto);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
 	
+	/**
+	 * Retorna productos por una ingrediente dada.<br>
+	 * @param ingrediente Id del ingrediente.<br>
+	 * @return Listado de productos.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Producto> perteneceAPlatoBuscarProductosPorIngrediente(Long ingrediente) throws Exception
+	{
+		DAOTablaPerteneceAProducto dao = new DAOTablaPerteneceAProducto();
+		List<Producto> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorIngrediente(ingrediente);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Borra productos de ingrediente por id.<br>
+	 * @param producto id del producto.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void perteneceAPlatoBorrarPorProducto(Long producto) throws Exception
+	{
+		DAOTablaPerteneceAProducto dao = new DAOTablaPerteneceAProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorProducto(producto);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Modifica las productos si se elimina una ingrediente.<br>
+	 * @param ingrediente id del ingrediente.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void perteneceAPlatoBorrarPorIngrediente(Long ingrediente) throws Exception
+	{
+		DAOTablaPerteneceAProducto dao = new DAOTablaPerteneceAProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorIngrediente(ingrediente);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra usando los dos criterios de la tabla.<br>
+	 * @param idProducto id del producto.<br>
+	 * @param idIngrediente id del ingrediente.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void perteneceAPlatoBorrarMulticriterio(Long idProducto, Long idIngrediente) throws Exception
+	{
+		DAOTablaPerteneceAProducto dao = new DAOTablaPerteneceAProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.desasociarIngredienteYProducto(idIngrediente, idProducto);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
 
+	///CategoriaProducto
+	/**
+	 * Retorna un listado de categorias para un producto de producto.<br>
+	 * @param producto Id del producto.<br>
+	 * @return Lista de categorias.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Categoria> categoriaProductoBuscarCategoriasPorProducto(Long producto) throws Exception
+	{
+		DAOTablaCategoriaProducto dao = new DAOTablaCategoriaProducto();
+		List<Categoria> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorProducto(producto);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Retorna productos por una categoria dada.<br>
+	 * @param categoria Nombre de la categoria.<br>
+	 * @return Listado de productos.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Producto> categoriaProductoBuscarProductosPorCategoria(String categoria) throws Exception
+	{
+		DAOTablaCategoriaProducto dao = new DAOTablaCategoriaProducto();
+		List<Producto> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorCategoria(categoria);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Borra productos de categoria por id.<br>
+	 * @param producto id del producto.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void categoriaProductoBorrarPorProducto(Long producto) throws Exception
+	{
+		DAOTablaCategoriaProducto dao = new DAOTablaCategoriaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorProducto(producto);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	/**
+	 * Modifica las productos si se elimina una categoria.<br>
+	 * @param categoria nombre del categoria.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void categoriaProductoBorrarPorCategoria(String categoria) throws Exception
+	{
+		DAOTablaCategoriaProducto dao = new DAOTablaCategoriaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorCategoria(categoria);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra usando los dos criterios de la tabla.<br>
+	 * @param producto id del producto.<br>
+	 * @param categoria nombre de la categoria.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void categoriaProductoBorrarMulticriterio(Long producto, String categoria) throws Exception
+	{
+		DAOTablaCategoriaProducto dao = new DAOTablaCategoriaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.desasociarCategoriaYProducto(producto, categoria);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	///CategoriaRestaurante
+	/**
+	 * Retorna un listado de categorias para un restaurante de restaurante.<br>
+	 * @param restaurante nombre del restaurante.<br>
+	 * @return Lista de categorias.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Categoria> categoriaRestauranteBuscarCategoriasPorRestaurante(String restaurante) throws Exception
+	{
+		DAOTablaCategoriaRestaurante dao = new DAOTablaCategoriaRestaurante();
+		List<Categoria> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorRestaurante(restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Retorna restaurantes por una categoria dada.<br>
+	 * @param categoria nombre de la categoria.<br>
+	 * @return Listado de restaurantes.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Restaurante> categoriaRestauranteBuscarRestaurantesPorCategoria(String categoria) throws Exception
+	{
+		DAOTablaCategoriaRestaurante dao = new DAOTablaCategoriaRestaurante();
+		List<Restaurante> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorCategoria(categoria);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Borra restaurantes de categoria por id.<br>
+	 * @param restaurante nombre del restaurante.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void categoriaRestauranteBorrarPorRestaurante(String restaurante) throws Exception
+	{
+		DAOTablaCategoriaRestaurante dao = new DAOTablaCategoriaRestaurante();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorRestaurante(restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	/**
+	 * Modifica las restaurantes si se elimina una categoria.<br>
+	 * @param categoria nombre de la categoria.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void categoriaRestauranteBorrarPorCategoria(String categoria) throws Exception
+	{
+		DAOTablaCategoriaRestaurante dao = new DAOTablaCategoriaRestaurante();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorCategoria(categoria);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra usando los dos criterios de la tabla.<br>
+	 * @param restaurante nombre del restaurante.<br>
+	 * @param categoria nombre del categoria.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void categoriaRestauranteBorrarMulticriterio(String restaurante, String categoria) throws Exception
+	{
+		DAOTablaCategoriaRestaurante dao = new DAOTablaCategoriaRestaurante();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.desasociarCategoriaYRestaurante(categoria, restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+	///CategoriaMenu
+	/**
+	 * Retorna un listado de menus para un categoria de categoria.<br>
+	 * @param categoria nombre del categoria.<br>
+	 * @return Lista de menus.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<MenuMinimum> categoriaMenuBuscarMenusPorCategoria(String categoria) throws Exception
+	{
+		DAOTablaCategoriaMenu dao = new DAOTablaCategoriaMenu();
+		List<MenuMinimum> list=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorCategoria(categoria);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Retorna categorias por una menu dada.<br>
+	 * @param menu Nombre del menu.<br>
+	 * @param restaurante Nombre del restaurante.<br>
+	 * @return Listado de categorias.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Categoria> categoriaMenuBuscarCategoriasPorMenu(String menu, String restaurante) throws Exception
+	{
+		DAOTablaCategoriaMenu dao = new DAOTablaCategoriaMenu();
+		List<Categoria> list =null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list = dao.consultarPorMenu(menu, restaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Borra categorias de menu por id.<br>
+	 * @param categoria nombre del categoria.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void categoriaMenuBorrarPorCategoria(String categoria) throws Exception
+	{
+		DAOTablaCategoriaMenu dao = new DAOTablaCategoriaMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorCategoria(categoria);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Modifica las categorias si se elimina una menu.<br>
+	 * @param nombreMenu nombre del menu.<br>
+	 * @param nombreRestaurante nombre del restaurante.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void categoriaMenuBorrarPorMenu(String nombreMenu, String nombreRestaurante) throws Exception
+	{
+		DAOTablaCategoriaMenu dao = new DAOTablaCategoriaMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.eliminarPorMenu(nombreMenu, nombreRestaurante);;
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra usando los dos criterios de la tabla.<br>
+	 * @param idCategoria id del categoria.<br>
+	 * @param nombreMenu nombre del menu.<br>
+	 * @param nombreRestaurante nombre del restaurante.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void categoriaMenuBorrarMulticriterio(String categoria, String nombreMenu, String nombreRestaurante) throws Exception
+	{
+		DAOTablaCategoriaMenu dao = new DAOTablaCategoriaMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.desasociarCategoriaYMenu(categoria, nombreMenu, nombreRestaurante);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	//Reserva
+	/**
+	 * Retorna las reservas del sistema.<br>
+	 * @return Reservas.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Reserva> reservaDarReservas() throws Exception
+	{
+		List<Reserva> list =null;
+		DAOTablaReserva dao = new DAOTablaReserva();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darReservas();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Busca una reserva por usuario y fecha.<br>
+	 * @param fecha fecha de la reserva.<br>
+	 * @param reservador Id del usuario que hace la reserva.<br>
+	 * @return La reserva.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public Reserva reservaBuscarReservasPorFechaYUsuario(Date fecha, Long reservador) throws Exception
+	{
+		Reserva z =null;
+		DAOTablaReserva dao = new DAOTablaReserva();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			z = dao.buscarReservasPorFechaYUsuario(fecha, reservador);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return z;
+	}
+	/**
+	 * Agrega una reserva.<br>
+	 * @param reserva Reserva.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void reservaAddReserva(Reserva reserva) throws Exception
+	{
+		DAOTablaReserva dao = new DAOTablaReserva();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addReserva(reserva);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Actualiza una reserva.<br>
+	 * @param reserva Reserva.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void reservaUpdateReserva(Reserva reserva) throws Exception
+	{
+		DAOTablaReserva dao = new DAOTablaReserva();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateReserva(reserva);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra una reserva.<br>
+	 * @param reserva Reserva.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void reservaDeleteReserva(Reserva reserva) throws Exception
+	{
+		DAOTablaReserva dao = new DAOTablaReserva();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deleteReserva(reserva);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+	//PedidoProd
+	/**
+	 * Retorna las pedidoProds del sistema.<br>
+	 * @return PedidoProds.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<PedidoProd> pedidoProdDarPedidoProds() throws Exception
+	{
+		List<PedidoProd> list =null;
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darPedidoProds();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Busca una pedidoProd por nombre.<br>
+	 * @param id id del infoProdRest.<br>
+	 * @param cuenta Nombre del cuenta.<br>
+	 * @param restaurante Nombre del restaurante.<br>
+	 * @return La pedidoProd.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public PedidoProd pedidoProdBuscarPedidoProdsPorIdYCuenta(Long id, String cuenta, String restaurante) throws Exception
+	{
+		PedidoProd z =null;
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			z=dao.buscarPedidoProdsPorIdYCuenta(id, restaurante, cuenta);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return z;
+	}
+	/**
+	 * Agrega una pedidoProd.<br>
+	 * @param pedidoProd PedidoProd.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void pedidoProdAddPedidoProd(PedidoProd pedidoProd) throws Exception
+	{
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addPedidoProd(pedidoProd);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	/**
+	 * Actualiza una pedidoProd.<br>
+	 * @param pedidoProd PedidoProd.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void pedidoProdUpdatePedidoProd(PedidoProd pedidoProd) throws Exception
+	{
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updatePedidoProd(pedidoProd);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra una pedidoProd.<br>
+	 * @param pedidoProd PedidoProd.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void pedidoProdDeletePedidoProd(PedidoProd pedidoProd) throws Exception
+	{
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deletePedidoProd(pedidoProd);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+	//PedidoMenu
+	/**
+	 * Retorna las pedidoMenus del sistema.<br>
+	 * @return PedidoMenus.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<PedidoMenu> pedidoMenuDarPedidoMenus() throws Exception
+	{
+		List<PedidoMenu> list =null;
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darPedidoMenus();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Busca una pedidoMenu por nombre.<br>
+	 * @param menu Nombre del menu.<br>
+	 * @param cuenta Nombre del cuenta.<br>
+	 * @param restaurante Nombre del restaurante.<br>
+	 * @return La pedidoMenu.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public PedidoMenu pedidoMenuBuscarPedidoMenusPorIdYCuenta(String menu, String cuenta, String restaurante) throws Exception
+	{
+		PedidoMenu z =null;
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			z=dao.buscarPedidoMenusPorNombreYCuenta(menu, restaurante, cuenta);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return z;
+	}
+	/**
+	 * Agrega una pedidoMenu.<br>
+	 * @param pedidoMenu PedidoMenu.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void pedidoMenuAddPedidoMenu(PedidoMenu pedidoMenu) throws Exception
+	{
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addPedidoMenu(pedidoMenu);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	/**
+	 * Actualiza una pedidoMenu.<br>
+	 * @param pedidoMenu PedidoMenu.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void pedidoMenuUpdatePedidoMenu(PedidoMenu pedidoMenu) throws Exception
+	{
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updatePedidoMenu(pedidoMenu);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra una pedidoMenu.<br>
+	 * @param pedidoMenu PedidoMenu.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void pedidoMenuDeletePedidoMenu(PedidoMenu pedidoMenu) throws Exception
+	{
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.deletePedidoMenu(pedidoMenu);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
 }

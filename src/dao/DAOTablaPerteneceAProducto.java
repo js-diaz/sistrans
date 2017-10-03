@@ -64,12 +64,12 @@ public class DAOTablaPerteneceAProducto {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public List<Ingrediente> consultarPorProducto(Producto producto) throws SQLException, Exception {
+	public List<Ingrediente> consultarPorProducto(Long producto) throws SQLException, Exception {
 		DAOTablaIngrediente daoIngrediente = new DAOTablaIngrediente();
 		daoIngrediente.setConn(conn);
 		List<Ingrediente> ingredientes = new ArrayList<>();
 
-		String sql = "SELECT * FROM PERTENECE_A_PLATO WHERE ID_PLATO = " + producto.getId();
+		String sql = "SELECT * FROM PERTENECE_A_PLATO WHERE ID_PRODUCTO = " + producto;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -89,10 +89,10 @@ public class DAOTablaPerteneceAProducto {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public List<Producto> consultarPorIngrediente(Ingrediente ingrediente) throws SQLException, Exception {
+	public List<Producto> consultarPorIngrediente(Long ingrediente) throws SQLException, Exception {
 		List<Producto> productos = new ArrayList<>();
 
-		String sql = "SELECT * FROM PERTENECE_A_PLATO WHERE ID_INGREDIENTE = " + ingrediente.getId();
+		String sql = "SELECT * FROM PERTENECE_A_PLATO WHERE ID_INGREDIENTE = " + ingrediente;
 
 		DAOTablaProducto daoProducto= new DAOTablaProducto();
 		daoProducto.setConn(conn);
@@ -114,10 +114,10 @@ public class DAOTablaPerteneceAProducto {
 	 * @throws SQLException Excepci�n generada por problemas de base de datos.<br>
 	 * @throws Exception Todo otro problema.
 	 */
-	public void asociarIngredienteYProducto(Ingrediente ingrediente, Producto producto) throws SQLException, Exception {
+	public void asociarIngredienteYProducto(Long ingrediente, Long producto) throws SQLException, Exception {
 		String sql = "INSERT INTO PERTENECE_A_PLATO VALUES (";
-		sql +=  producto.getId() + ", ";
-		sql += ingrediente.getId() + ")";
+		sql += "'" + producto + "', ";
+		sql += ingrediente + ")";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -128,10 +128,10 @@ public class DAOTablaPerteneceAProducto {
 	 * @throws SQLException En caso de que se presente alg�n otro error.<br>
 	 * @throws Exception Cualquier otro error de la base de datos.
 	 */
-	public void desasociarIngredienteYProducto(Producto producto, Ingrediente ingrediente) throws SQLException, Exception {
+	public void desasociarIngredienteYProducto(Long producto, Long ingrediente) throws SQLException, Exception {
 
-		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_INGREDIENTE = " + ingrediente.getId();
-		sql += " AND ID_PRODUCTO = "+ producto.getId();
+		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_INGREDIENTE = " + ingrediente;
+		sql += " AND ID_PRODUCTO = "+ producto;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -145,8 +145,8 @@ public class DAOTablaPerteneceAProducto {
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
-	public void eliminarPorProducto(Producto producto) throws SQLException, Exception {
-		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_PLATO = " + producto.getId();
+	public void eliminarPorProducto(Long producto) throws SQLException, Exception {
+		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_PRODUCTO = " + producto;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -158,8 +158,8 @@ public class DAOTablaPerteneceAProducto {
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
-	public void eliminarPorIngrediente (Ingrediente ingrediente) throws SQLException, Exception{
-		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_INGREDIENTE = " + ingrediente.getId();
+	public void eliminarPorIngrediente (Long ingrediente) throws SQLException, Exception{
+		String sql = "DELETE FROM PERTENECE_A_PLATO WHERE ID_INGREDIENTE = " + ingrediente;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

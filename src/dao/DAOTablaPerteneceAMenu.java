@@ -64,21 +64,20 @@ public class DAOTablaPerteneceAMenu {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public List<Producto> consultarPorMenu(MenuMinimum menu) throws SQLException, Exception {
-		DAOTablaProducto daoProducto = new DAOTablaProducto();
+	public List<InfoProdRest> consultarPorMenu(String nombreMenu, String nombreRestaurante) throws SQLException, Exception {
+		DAOTablaInfoProdRest daoProducto = new DAOTablaInfoProdRest();
 		daoProducto.setConn(conn);
-		List<Producto> platos = new ArrayList<>();
+		List<InfoProdRest> platos = new ArrayList<>();
 
-		String sql = "SELECT * FROM PERTENECE_A_MENU WHERE NOMBRE_MENU LIKE '" + menu.getNombre();
-		sql += "' AND NOMBRE_RESTAURANTE LIKE '" + menu.getRestaurante().getNombre() + "'";
+		String sql = "SELECT * FROM PERTENECE_A_MENU WHERE NOMBRE_MENU LIKE '" + nombreMenu;
+		sql += "' AND NOMBRE_RESTAURANTE LIKE '" + nombreRestaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		while (rs.next()) {
 			long id = rs.getLong("ID_PRODUCTO");
-			platos.add(daoProducto.buscarProductoPorId(id));
-
+			platos.add(daoProducto.buscarInfoProdRestsPorIdYRestaurante(id, nombreRestaurante));
 		}
 		daoProducto.cerrarRecursos();
 		return platos;
@@ -90,10 +89,11 @@ public class DAOTablaPerteneceAMenu {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public List<Menu> consultarPorProducto(Producto plato) throws SQLException, Exception {
-		List<Menu> menus = new ArrayList<>();
+	public List<MenuMinimum> consultarPorProducto(Long idProducto, String nombreRestaurante) throws SQLException, Exception {
+		List<MenuMinimum> menus = new ArrayList<>();
 
-		String sql = "SELECT * FROM PERTENECE_A_MENU WHERE ID_PRODUCTO = " + plato.getId();
+		String sql = "SELECT * FROM PERTENECE_A_MENU WHERE ID_PRODUCTO = " + idProducto;
+		sql += " AND NOMBRE_RESTAURANTE LIKE '" + nombreRestaurante + "'";
 
 		DAOTablaMenu daoMenu= new DAOTablaMenu();
 		daoMenu.setConn(conn);
@@ -116,11 +116,11 @@ public class DAOTablaPerteneceAMenu {
 	 * @throws SQLException Excepción generada por problemas de base de datos.<br>
 	 * @throws Exception Todo otro problema.
 	 */
-	public void asociarProductoYMenu(Producto plato, MenuMinimum menu) throws SQLException, Exception {
+	public void asociarProductoYMenu(Long idProducto, String nombreMenu, String nombreRestaurante) throws SQLException, Exception {
 		String sql = "INSERT INTO PERTENECE_A_MENU VALUES (";
-		sql += "'" + menu.getNombre() + "', ";
-		sql += plato.getId() + ", ";
-		sql += "'" + menu.getRestaurante().getNombre() + "')";
+		sql += "'" + nombreMenu + "', ";
+		sql += "" + idProducto + ", ";
+		sql += "'" + nombreRestaurante + "')";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -131,11 +131,11 @@ public class DAOTablaPerteneceAMenu {
 	 * @throws SQLException En caso de que se presente algún otro error.<br>
 	 * @throws Exception Cualquier otro error de la base de datos.
 	 */
-	public void desasociarProductoYMenu(MenuMinimum menu, Producto plato) throws SQLException, Exception {
+	public void desasociarProductoYMenu(String nombreMenu, String nombreRestaurante, Long idProducto) throws SQLException, Exception {
 
-		String sql = "DELETE FROM PERTENECE_A_MENU WHERE ID_PRODUCTO = " + plato.getNombre();
-		sql += " AND NOMBRE_MENU LIKE '"+ menu.getNombre();
-		sql += "' AND NOMBRE_RESTAURANTE LIKE '" + menu.getRestaurante().getNombre() + "'";
+		String sql = "DELETE FROM PERTENECE_A_MENU WHERE ID_PRODUCTO = " + idProducto;
+		sql += " AND NOMBRE_MENU LIKE '"+ nombreMenu;
+		sql += "' AND NOMBRE_RESTAURANTE LIKE '" + nombreRestaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -149,9 +149,9 @@ public class DAOTablaPerteneceAMenu {
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
-	public void eliminarPorMenu(MenuMinimum menu) throws SQLException, Exception {
-		String sql = "DELETE FROM PERTENECE_A_MENU WHERE NOMBRE_MENU LIKE '" + menu.getNombre();
-		sql += "' AND NOMBRE_RESTAURNANTE LIKE '" + menu.getRestaurante().getNombre() + "'";
+	public void eliminarPorMenu(String nombreMenu, String nombreRestaurante) throws SQLException, Exception {
+		String sql = "DELETE FROM PERTENECE_A_MENU WHERE NOMBRE_MENU LIKE '" + nombreMenu;
+		sql += "' AND NOMBRE_RESTAURNANTE LIKE '" + nombreRestaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -163,8 +163,9 @@ public class DAOTablaPerteneceAMenu {
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
-	public void eliminarPorProducto (Producto plato) throws SQLException, Exception{
-		String sql = "DELETE FROM PERTENECE_A_MENU WHERE ID_PRODUCTO = " + plato.getId();
+	public void eliminarPorProducto (Long idProducto, String nombreRestaurante) throws SQLException, Exception{
+		String sql = "DELETE FROM PERTENECE_A_MENU WHERE ID_PRODUCTO = " + idProducto;
+		sql += " AND NOMBRE_RESTAURANTE LIKE '" + nombreRestaurante +"'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

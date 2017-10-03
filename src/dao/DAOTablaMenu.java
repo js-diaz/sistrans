@@ -191,7 +191,7 @@ public class DAOTablaMenu {
 	{
 		DAOTablaCategoriaMenu daoCatMenu = new DAOTablaCategoriaMenu();
 		daoCatMenu.setConn(conn);
-		daoCatMenu.eliminarPorMenu(menu);
+		daoCatMenu.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
 		daoCatMenu.cerrarRecursos();
 	}
 

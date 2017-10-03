@@ -64,12 +64,12 @@ public class DAOTablaCategoriaProducto {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public List<Categoria> consultarPorProducto(Producto producto) throws SQLException, Exception {
+	public List<Categoria> consultarPorProducto(Long producto) throws SQLException, Exception {
 		DAOTablaCategoria daoCategoria = new DAOTablaCategoria();
 		daoCategoria.setConn(conn);
 		List<Categoria> categorias = new ArrayList<>();
 
-		String sql = "SELECT * FROM CATEGORIA_PRODUCTO WHERE ID_PRODUCTO = " + producto.getId();
+		String sql = "SELECT * FROM CATEGORIA_PRODUCTO WHERE ID_PRODUCTO = " + producto;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -89,10 +89,10 @@ public class DAOTablaCategoriaProducto {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public List<Producto> consultarPorCategoria(Categoria categoria) throws SQLException, Exception {
+	public List<Producto> consultarPorCategoria(String categoria) throws SQLException, Exception {
 		List<Producto> productos = new ArrayList<>();
 
-		String sql = "SELECT * FROM CATEGORIA_PRODUCTO WHERE NOMBRE_CATEGORIA LIKE '" + categoria.getNombre() + "'";
+		String sql = "SELECT * FROM CATEGORIA_PRODUCTO WHERE NOMBRE_CATEGORIA LIKE '" + categoria + "'";
 
 		DAOTablaProducto daoProducto= new DAOTablaProducto();
 		daoProducto.setConn(conn);
@@ -114,10 +114,10 @@ public class DAOTablaCategoriaProducto {
 	 * @throws SQLException Excepción generada por problemas de base de datos.<br>
 	 * @throws Exception Todo otro problema.
 	 */
-	public void asociarCategoriaYProducto(Categoria categoria, Producto producto) throws SQLException, Exception {
+	public void asociarCategoriaYProducto(String categoria, Long producto) throws SQLException, Exception {
 		String sql = "INSERT INTO CATEGORIA_PRODUCTO VALUES (";
-		sql += "'" + categoria.getNombre() + "', ";
-		sql += producto.getId() + ")";
+		sql += "'" + categoria + "', ";
+		sql += producto + ")";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -128,10 +128,10 @@ public class DAOTablaCategoriaProducto {
 	 * @throws SQLException En caso de que se presente algún otro error.<br>
 	 * @throws Exception Cualquier otro error de la base de datos.
 	 */
-	public void desasociarCategoriaYProducto(Producto producto, Categoria categoria) throws SQLException, Exception {
+	public void desasociarCategoriaYProducto(Long producto, String categoria) throws SQLException, Exception {
 
-		String sql = "DELETE FROM CATEGORIA_PRODUCTO WHERE NOMBRE_CATEGORIA LIKE '" + categoria.getNombre();
-		sql += "' AND ID_PRODUCTO = "+ producto.getId();
+		String sql = "DELETE FROM CATEGORIA_PRODUCTO WHERE NOMBRE_CATEGORIA LIKE '" + categoria;
+		sql += "' AND ID_PRODUCTO = "+ producto;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -145,8 +145,8 @@ public class DAOTablaCategoriaProducto {
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
-	public void eliminarPorProducto(Producto producto) throws SQLException, Exception {
-		String sql = "DELETE FROM CATEGORIA_PRODUCTO WHERE ID_PRODUCTO = " + producto.getId();
+	public void eliminarPorProducto(Long producto) throws SQLException, Exception {
+		String sql = "DELETE FROM CATEGORIA_PRODUCTO WHERE ID_PRODUCTO = " + producto;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -158,8 +158,8 @@ public class DAOTablaCategoriaProducto {
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
-	public void eliminarPorCategoria (Categoria categoria) throws SQLException, Exception{
-		String sql = "DELETE FROM CATEGORIA_PRODUCTO WHERE NOMBRE_CATEGORIA LIKE '" + categoria.getNombre() + "'";
+	public void eliminarPorCategoria (String categoria) throws SQLException, Exception{
+		String sql = "DELETE FROM CATEGORIA_PRODUCTO WHERE NOMBRE_CATEGORIA LIKE '" + categoria + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

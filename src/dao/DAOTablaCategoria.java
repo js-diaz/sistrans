@@ -152,7 +152,7 @@ public class DAOTablaCategoria {
 	private void borrarCategoriasDeMenu(Categoria c) throws SQLException, Exception {
 		DAOTablaCategoriaMenu menu = new DAOTablaCategoriaMenu();
 		menu.setConn(this.conn);
-		menu.eliminarPorCategoria(c);
+		menu.eliminarPorCategoria(c.getNombre());
 		menu.cerrarRecursos();
 	}
 	/**
@@ -162,7 +162,7 @@ public class DAOTablaCategoria {
 	private void borrarCategoriasDeRestaurante(Categoria c) throws SQLException, Exception {
 		DAOTablaCategoriaRestaurante restaurante = new DAOTablaCategoriaRestaurante();
 		restaurante.setConn(this.conn);
-		restaurante.eliminarPorCategoria(c);
+		restaurante.eliminarPorCategoria(c.getNombre());
 		restaurante.cerrarRecursos();
 	}
 	/**
@@ -172,7 +172,7 @@ public class DAOTablaCategoria {
 	private void borrarCategoriasDePlato(Categoria c) throws SQLException, Exception {
 		DAOTablaCategoriaProducto producto = new DAOTablaCategoriaProducto();
 		producto.setConn(this.conn);
-		producto.eliminarPorCategoria(c);
+		producto.eliminarPorCategoria(c.getNombre());
 		producto.cerrarRecursos();
 	}
 
