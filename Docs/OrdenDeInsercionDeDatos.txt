@@ -1,6 +1,6 @@
 Creación de recursos: Después de un análisis gigante, determiné que para hacer las pruebas podemos hacer inserciones en el siguiente orden sin comprometer la base de datos correspondiente utilizando un sistema de niveles:
 1. Ingrediente, Categoría, Rol, CondiciónTécnica, Tipos_De_Plato
-2. Producto, Usuario, Zona,
+2. Producto, Usuario, Zona,Restaurante
 3. Preferencia, InfoProdRest (TAL VEZ InfoIngRest)
 4. EsAdicionDe, Menu, AdicionPorRestaurante,
 5. Cuenta (La verdad el 5 lleva al 6 directamente, en teoría).

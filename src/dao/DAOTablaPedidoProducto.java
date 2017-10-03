@@ -74,7 +74,7 @@ public class DAOTablaPedidoProducto {
 
 
 	/**
-	 * Metodo que busca la informacion de un producto en una cienta dados por parámetro.
+	 * Metodo que busca la informacion de un producto en una cienta dados por parï¿½metro.
 	 * @param id - Id del producto a buscar
 	 * @param cuenta - Nombre del cuenta al que pertenece
 	 * @return ArrayList con los pedidoProds encontrados
@@ -160,7 +160,7 @@ public class DAOTablaPedidoProducto {
 	}
 	
 	/**
-	 * Crea un arreglo de pedidoProds con el set de resultados pasado por parámetro.<br>
+	 * Crea un arreglo de pedidoProds con el set de resultados pasado por parï¿½metro.<br>
 	 * @param rs Set de resultados.<br>
 	 * @return pedidoProds Lista de pedidoProds convertidas.<br>
 	 * @throws SQLException AlgÃºn problema de la base de datos.<br>
@@ -175,8 +175,8 @@ public class DAOTablaPedidoProducto {
 		List<PedidoProd> pedidoProds = new ArrayList<>();
 		while (rs.next()) {
 			int cantidad = rs.getInt("CANTIDAD");
-			InfoProdRest plato = daoProd.buscarInfoProdRestsPorIdYRestaurante(rs.getLong("ID_PRODUCTO"), rs.getString("NOMBRE_RESTAURANTE"));
-			CuentaMinimum cuenta = daoCuenta.buscarCuentasPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
+			InfoProdRest plato = daoProd.buscarInfoProdRestsPorNombreYRestaurante(rs.getLong("ID_PRODUCTO"), rs.getString("NOMBRE_RESTAURANTE"));
+			CuentaMinimum cuenta = daoCuenta.buscarCuentasMinimumPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
 			pedidoProds.add(new PedidoProd(cantidad, cuenta, plato));
 		}
 		daoCuenta.cerrarRecursos();
@@ -187,7 +187,7 @@ public class DAOTablaPedidoProducto {
 	/**
 	 * Elimina todos los pedidoProds pertenecientes al cuenta dado.
 	 * @param cuenta Cuenta al cual eliminarle los pedidoProds.
-	 * @throws SQLException Algún problema de la base de datos.<br>
+	 * @throws SQLException Algï¿½n problema de la base de datos.<br>
 	 */
 	public void eliminarPedidoProdsPorCuenta(CuentaMinimum cuenta) throws SQLException {
 		String sql = "DELETE FROM PEDIDO_PROD WHERE NUMERO_CUENTA LIKE '" + cuenta.getNumeroCuenta() + "'";

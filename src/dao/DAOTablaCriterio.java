@@ -17,8 +17,13 @@ import vos.Criterio.Agregaciones;
  * @author s.guzmanm
  */
 public class DAOTablaCriterio {
-
-
+	/**
+	 * Enum de tipos de dato.
+	 */
+	public enum tiposDatos{
+		VARCHAR2,DATE
+	}
+	
 	/**
 	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
 	 */
@@ -182,7 +187,7 @@ public class DAOTablaCriterio {
 		for(CriterioOrden c: criteriosOrganizacion)
 		{
 			if(existentesOrd.indexOf(c)>=0) continue;
-			if(existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+			if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
 			existentesOrd.add(c);
 		}
 		if(agregacionesSeleccion!=null)
@@ -199,24 +204,28 @@ public class DAOTablaCriterio {
 		String orderBy="";
 		String where="WHERE NOMBRE LIKE '"+nombreZona+"'";
 		String having="";
+		String temp="";
 		//Verifica agrupaciones
 		if(existentesAgrup.size()>0)
 		{
-			if(buscarCriteriosZona(simplificarAgrupacion(existentesAgrup.get(0).getNombre()))==null) 
-				throw new Exception("Uno de los criterios no existe");
+			temp=simplificarAgrupacion(existentesAgrup.get(0).getNombre());
+			if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+				throw new Exception("Uno de los criterios no existe "+temp+".");
 			select+=existentesAgrup.get(0).getNombre();
 			groupBy+="GROUP BY "+existentesAgrup.get(0).getNombre();
 			existentesAgrup.remove(0);
 			for(Criterio c: existentesAgrup)
 			{
-				if(buscarCriteriosZona(simplificarAgrupacion(c.getNombre()))==null) 
-					throw new Exception("Uno de los criterios no existe");
+				temp=simplificarAgrupacion(c.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+					throw new Exception("Uno de los criterios no existe "+temp+".");
 				groupBy+=", "+c.getNombre();
 				select+=", "+c.getNombre();
 			}
 			for(CriterioAgregacion a:agreSelec) 
 			{
-				if(buscarCriteriosZona(simplificarAgrupacion(a.getNombre()))==null) 
+				temp=simplificarAgrupacion(a.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
 					throw new Exception("Uno de los criterios no existe");
 				select+=","+a.getNombre();
 			}
@@ -225,13 +234,15 @@ public class DAOTablaCriterio {
 		//Verifica órdenes
 		if(existentesOrd.size()>0)
 		{
-			if(buscarCriteriosZona(simplificarOrden(existentesOrd.get(0).getNombre()))==null) 
+			temp=simplificarOrden(existentesOrd.get(0).getNombre());
+			if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
 				throw new Exception("Uno de los criterios no existe");
 			orderBy+="ORDER BY "+existentesOrd.get(0).getNombre();
 			existentesOrd.remove(0);
 			for(CriterioOrden c: existentesOrd)
 			{
-				if(buscarCriteriosZona(simplificarOrden(c.getNombre()))==null) 
+				temp=simplificarOrden(c.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(simplificarOrden(c.getNombre()))==null) 
 					throw new Exception("Uno de los criterios no existe");
 				orderBy+=", "+c.getNombre();
 			}
@@ -247,6 +258,7 @@ public class DAOTablaCriterio {
 					if(buscarCriteriosZona(operaciones)==null)
 						throw new Exception("El criterio no existe en la base");
 				}
+				evaluarWhere(operacionesWhere,tiposDeDatoZona());
 				where+=" "+CriterioVerdad.PalabrasVerdad.AND+" "+operacionesWhere.getNombre();
 			}
 		//Verifica having
@@ -259,6 +271,7 @@ public class DAOTablaCriterio {
 					if(buscarCriteriosZona(operaciones)==null)
 						throw new Exception("El criterio no existe en la base");
 				}
+				evaluarHaving(operacionesHaving,tiposDeDatoZona());
 				having="HAVING "+operacionesHaving.getNombre();
 			}
 		String sql=select+" "+from+" "+where+" "+groupBy+" "+having+" "+orderBy;
@@ -270,39 +283,94 @@ public class DAOTablaCriterio {
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
 	}
-
-	private void evaluarHavingZona(String nombre) throws SQLException, Exception {
-		String temp=nombre.replaceAll("\\(","").replaceAll("\\)","").trim();
-		for(CriterioVerdad.PalabrasVerdad p:CriterioVerdad.PalabrasVerdad.values())
+	private void evaluarWhere(CriterioVerdad where, ContenedoraInformacion tipos) throws SQLException, Exception{
+		String tipo=null;
+		if(where.getValorAnterior()!=null)
 		{
-			temp=temp.replaceAll(p+"","");
+			for(int i=0;i<tipos.getInformacion().size() && tipo==null;i++)
+			{
+				if(where.getValorAnterior().getNombre().equals(tipos.darNombre(i)))
+					tipo=tipos.darValor(i);
+			}
+			if(where.getCriterioComparacion()!=null)
+			{
+				String tipo2=null;
+				for(int i=0;i<tipos.getInformacion().size() && tipo2==null;i++)
+				{
+					if(where.getValorAnterior().getNombre().equals(tipos.darNombre(i)))
+						tipo2=tipos.darValor(i);
+				}
+				if(!tipo.equals(tipo2) && (tipo.equals(tiposDatos.VARCHAR2+"") ||
+						tipo2.equals(tiposDatos.VARCHAR2+"") || tipo.equals(tiposDatos.DATE+"")
+						|| tipo2.equals(tiposDatos.DATE+""))) throw new Exception("Está intentando comparar dos criterios diferentes");
+			}
+			else if (where.getComparacion()!=null)
+			{
+				if(tipo.equals(tiposDatos.VARCHAR2+""))
+					{
+						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "'"+where.getComparacion()+"'"));
+					}
+				else if (tipo.equals(tiposDatos.DATE+"")) 
+					{
+						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "TO_DATE\\('"+where.getComparacion()+"', 'yyyy/mm/dd'\\)"));
+					}
+				else
+				{
+					if(where.getOperacion()==null) throw new Exception("No se puede usar este operador para objetos diferentes a cadenas de caracteres"); 
+				}
+			}
 		}
-		for(Criterio.Agregaciones a: Criterio.Agregaciones.values())
+		else
 		{
-			temp=temp.replaceAll(a+"", "");
-		}
-		String[] criterios=temp.split(" ");
-		for(String s:criterios)
-		{
-			if(s.trim().equals("")) continue;
-			if(buscarCriteriosZona(s.trim())==null) throw new Exception("Hay un criterio del having que no existe "+s);
+			evaluarWhere(where.getC1(),tipos);
+			evaluarWhere(where.getC2(),tipos);
 		}
 	}
-
-	private ArrayList<String> evaluarVerdad(String nombre) throws SQLException, Exception{
-		String temp=nombre.replaceAll("\\(","").replaceAll("\\)","").trim();
-		for(CriterioVerdad.PalabrasVerdad p:CriterioVerdad.PalabrasVerdad.values())
+	
+	private void evaluarHaving(CriterioVerdadHaving having, ContenedoraInformacion tipos) throws SQLException, Exception{
+		String tipo=null;
+		if(having.getValorAnterior()!=null)
 		{
-			temp=temp.replaceAll(p+"","");
+			for(int i=0;i<tipos.getInformacion().size() && tipo==null;i++)
+			{
+				if(having.getValorAnterior().getInterno().equals(tipos.darNombre(i)))
+					tipo=tipos.darValor(i);
+			}
+			if(having.getCriterioComparacion()!=null)
+			{
+				String tipo2=null;
+				for(int i=0;i<tipos.getInformacion().size() && tipo2==null;i++)
+				{
+					if(having.getValorAnterior().getInterno().equals(tipos.darNombre(i)))
+						tipo2=tipos.darValor(i);
+				}
+				if(!tipo.equals(tipo2) && (tipo.equals(tiposDatos.VARCHAR2+"") ||
+						tipo2.equals(tiposDatos.VARCHAR2+"") || tipo.equals(tiposDatos.DATE+"")
+						|| tipo2.equals(tiposDatos.DATE+""))) throw new Exception("Está intentando comparar dos criterios diferentes");
+			}
+			else if (having.getComparacion()!=null)
+			{
+				if(tipo.equals(tiposDatos.VARCHAR2+"") && (having.getValorAnterior().getAgregacion().equals(Agregaciones.MIN))
+						|| having.getValorAnterior().getAgregacion().equals(Agregaciones.MAX))
+					{
+						having.setNombre(having.getNombre().replaceAll(having.getComparacion(), "'"+having.getComparacion()+"'"));
+					}
+				else if (tipo.equals(tiposDatos.DATE+"") && (having.getValorAnterior().getAgregacion().equals(Agregaciones.MIN))
+						|| having.getValorAnterior().getAgregacion().equals(Agregaciones.MAX)) 
+					{
+						having.setNombre(having.getNombre().replaceAll(having.getComparacion(), "TO_DATE\\('"+having.getComparacion()+"', 'yyyy/mm/dd'\\)"));
+					}
+				else
+				{
+					if(having.getOperacion()==null) throw new Exception("No se puede usar este operador para objetos diferentes a cadenas de caracteres"); 
+				}
+			}
 		}
-		String[] criterios=temp.split(" ");
-		ArrayList<String> lista=new ArrayList<>();
-		for(String s:criterios)
+		else
 		{
-			if(s.trim().equals("")) continue;
-			lista.add(s);
+			evaluarHaving(having.getC1(),tipos);
+			evaluarHaving(having.getC2(),tipos);
 		}
-		return lista;
 	}
 
 	private String simplificarOrden(String nombre) {
@@ -328,6 +396,7 @@ public class DAOTablaCriterio {
 			}
 		}
 		temp=temp.replaceAll("\\*","");
+		temp=temp.replaceAll(Criterio.PalabrasEspeciales.DISTINCT+"", "");
 		return temp.trim();
 	}
 	

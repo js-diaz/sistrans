@@ -1,5 +1,6 @@
 package vos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -42,14 +43,21 @@ public class ContenedoraCriterios {
 	 * @param agregacion Criterios de agregación.<br>
 	 * @param where Criterios del where.<br>
 	 * @param having Criterios del having.
+	 * @throws Exception Si hay algún error del constructor
 	 */
 	public ContenedoraCriterios(@JsonProperty(value="orden")List<CriterioOrden> orden, 
 			@JsonProperty(value="agrupacion")List<Criterio> agrupacion, @JsonProperty(value="agregacion")List<CriterioAgregacion> agregacion,
-			@JsonProperty(value="where")CriterioVerdad where, @JsonProperty(value="having")CriterioVerdadHaving having) {
+			@JsonProperty(value="where")CriterioVerdad where, @JsonProperty(value="having")CriterioVerdadHaving having) throws Exception {
 		super();
 		this.orden = orden;
 		this.agrupacion = agrupacion;
+		if(agregacion!=null && agregacion.size()>0)
 		this.agregacion = agregacion;
+		else
+		{
+			this.agregacion=new ArrayList<CriterioAgregacion>();
+			this.agregacion.add(new CriterioAgregacion(null,null,false));
+		}
 		this.where = where;
 		this.having = having;
 	}

@@ -50,7 +50,7 @@ public class DAOTablaPerteneceAProducto {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parámetro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexiï¿½n que entra como parï¿½metro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -59,7 +59,7 @@ public class DAOTablaPerteneceAProducto {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los ingredientes de la base de datos para un producto determinado
+	 * Metodo que, usando la conexiï¿½n a la base de datos, saca todos los ingredientes de la base de datos para un producto determinado
 	 * @return lista con las ingredientes de la base de datos para un producto.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
@@ -84,7 +84,7 @@ public class DAOTablaPerteneceAProducto {
 	}
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los productos de la base de datos para un ingrediente determinado
+	 * Metodo que, usando la conexiï¿½n a la base de datos, saca todos los productos de la base de datos para un ingrediente determinado
 	 * @return lista con las ingredientes de la base de datos para un producto.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
@@ -108,10 +108,10 @@ public class DAOTablaPerteneceAProducto {
 	}
 
 	/**
-	 * Método que asocia un ingrediente y un producto en la BD.
+	 * Mï¿½todo que asocia un ingrediente y un producto en la BD.
 	 * @param ingrediente Ingrediente a asociar.
 	 * @param producto Producto a asociar.
-	 * @throws SQLException Excepción generada por problemas de base de datos.<br>
+	 * @throws SQLException Excepciï¿½n generada por problemas de base de datos.<br>
 	 * @throws Exception Todo otro problema.
 	 */
 	public void asociarIngredienteYProducto(Long ingrediente, Long producto) throws SQLException, Exception {
@@ -124,8 +124,8 @@ public class DAOTablaPerteneceAProducto {
 	}
 
 	/**
-	 * MÃ©todo que elimina una relación entre un ingrediente y producto específicos.<br>
-	 * @throws SQLException En caso de que se presente algún otro error.<br>
+	 * MÃ©todo que elimina una relaciï¿½n entre un ingrediente y producto especï¿½ficos.<br>
+	 * @throws SQLException En caso de que se presente algï¿½n otro error.<br>
 	 * @throws Exception Cualquier otro error de la base de datos.
 	 */
 	public void desasociarIngredienteYProducto(Long producto, Long ingrediente) throws SQLException, Exception {
@@ -140,7 +140,7 @@ public class DAOTablaPerteneceAProducto {
 
 
 	/**
-	 * Elimina los ingredientes que tenga producto dado por parámetro.<br>
+	 * Elimina los ingredientes que tenga producto dado por parï¿½metro.<br>
 	 * @param producto al cual eliminar los ingredientes.<br>
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
@@ -153,7 +153,7 @@ public class DAOTablaPerteneceAProducto {
 		prepStmt.executeQuery();
 	}
 	/**
-	 * Elimina los productos del ingrediente dada en parámetro.<br>
+	 * Elimina los productos del ingrediente dada en parï¿½metro.<br>
 	 * @param ingrediente ingrediente al cual eliminar los productos<br>
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.

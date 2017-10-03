@@ -125,13 +125,22 @@ public class DAOTablaIngrediente {
 	 */
 	public void addIngrediente(Ingrediente ingrediente) throws SQLException, Exception {
 
+		String valor="select IDINGREDIENTE.NEXTVAL as VALOR from dual";
+		PreparedStatement prepStmt = conn.prepareStatement(valor);
+		recursos.add(prepStmt);
+		ResultSet rs=prepStmt.executeQuery();
+		if(rs.next())
+		{
+			ingrediente.setId(rs.getLong("VALOR"));
+		}
+		
 		String sql = "INSERT INTO INGREDIENTE VALUES (";
-		sql +=   "IDINGREDIENTE.NEXTVAL,'";
+		sql +=  ingrediente.getId()+ ",'";
 		sql += ingrediente.getNombre() + "','";
 		sql+=ingrediente.getDescripcion()+"','";
 		sql += ingrediente.getTraduccion() + "')";
 
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 

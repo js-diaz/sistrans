@@ -3,6 +3,7 @@ package rest;
 
 
 import java.util.List;
+import vos.UsuarioMinimum;
 
 
 import javax.servlet.ServletContext;
@@ -110,7 +111,7 @@ public class CondicionServices {
 	public Response addCondicionTecnica(CondicionTecnica zona, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!u.getRol().equals(Rol.OPERADOR))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -137,7 +138,7 @@ public class CondicionServices {
 	public Response deleteCondicionTecnica(CondicionTecnica zona, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!u.getRol().equals(Rol.OPERADOR))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");

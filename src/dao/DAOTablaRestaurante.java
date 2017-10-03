@@ -12,19 +12,19 @@ import java.util.List;
 import vos.*;
 
 /**
- * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
+ * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaciï¿½n
  * @author JuanSebastian
  */
 public class DAOTablaRestaurante {
 
 
 	/**
-	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
+	 * Arraylits de recursos que se usan para la ejecuciï¿½n de sentencias SQL
 	 */
 	private ArrayList<Object> recursos;
 
 	/**
-	 * Atributo que genera la conexión a la base de datos
+	 * Atributo que genera la conexiï¿½n a la base de datos
 	 */
 	private Connection conn;
 
@@ -257,7 +257,7 @@ public class DAOTablaRestaurante {
 	}
 	
 	/**
-	 * Borra la información del los productos que son servidos por un restaurante que se va a borrar.<br>
+	 * Borra la informaciï¿½n del los productos que son servidos por un restaurante que se va a borrar.<br>
 	 * @param restaurante Restaurante de donde se borran
 	 */
 	private void borrarProductosRelacionados (RestauranteMinimum restaurante) throws SQLException, Exception
@@ -300,6 +300,7 @@ public class DAOTablaRestaurante {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void eliminarRestaurantes(List<RestauranteMinimum> restaurantes) throws SQLException, Exception {
+		if(restaurantes==null) return;
 		for(RestauranteMinimum restauranteMinimum: restaurantes) {
 			deleteRestaurante(restauranteMinimum);
 		}
@@ -308,7 +309,7 @@ public class DAOTablaRestaurante {
 	/**
 	 * Busca un restaurante dado el id de su representante.
 	 * @param id Id del representante.
-	 * @return restaurante en representación minimum.
+	 * @return restaurante en representaciï¿½n minimum.
 	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la restaurante.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
@@ -316,7 +317,9 @@ public class DAOTablaRestaurante {
 		String sql = "SELECT * FROM Restaurante WHERE ID_REPRESENTANTE = " + id;
 		PreparedStatement ps = conn.prepareStatement(sql);
 		recursos.add(ps);
-		return convertirEntidadRestaurante(ps.executeQuery()).get(0);
+		List<Restaurante> rest=convertirEntidadRestaurante(ps.executeQuery());
+		if(rest.isEmpty()) return null;
+		return rest.get(0);
 	}
 
 	/**

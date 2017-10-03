@@ -24,7 +24,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import tm.RotondAndesTM;
 import vos.Cuenta;
 import vos.CuentaMinimum;
-import vos.Usuario;
+import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
 
 /**
@@ -67,7 +67,7 @@ public class CuentaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Cuenta> cuentas;
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!u.getRol().equals(Rol.OPERADOR))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -95,7 +95,7 @@ public class CuentaServices {
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=id))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -124,7 +124,7 @@ public class CuentaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try
 		{
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!u.getRol().equals(Rol.OPERADOR))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -159,7 +159,7 @@ public class CuentaServices {
 	public Response addCuenta(Cuenta cuenta, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=cuenta.getCliente().getId()))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -184,7 +184,7 @@ public class CuentaServices {
 	public Response updateCuenta(Cuenta cuenta, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=cuenta.getCliente().getId()))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -209,7 +209,7 @@ public class CuentaServices {
 	public Response deleteCuenta(Cuenta cuenta, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=cuenta.getCliente().getId()))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -236,7 +236,7 @@ public class CuentaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try
 		{
-			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
 			if(!u.getRol().equals(Rol.OPERADOR))
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");

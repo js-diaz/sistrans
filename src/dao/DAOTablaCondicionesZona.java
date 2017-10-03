@@ -215,7 +215,7 @@ public class DAOTablaCondicionesZona {
 	 * haga commit para que los cambios bajen a la base de datos.
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
-	 */
+	 *///NUEVO COMENTARIO
 	public void eliminarCondicionesPorCondicion (String condicionTecnica) throws SQLException, Exception{
 		String sql ="DELETE FROM CONDICIONZONA";
 		sql+=" WHERE CONDICIONTECNICANOMBRE LIKE '"+condicionTecnica+"'";
