@@ -84,7 +84,7 @@ public class DAOTablaReserva {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public Reserva buscarReservasPorNombreYUsuario(Date fecha, Long reservador) throws SQLException, Exception {
+	public Reserva buscarReservasPorFechaYUsuario(Date fecha, Long reservador) throws SQLException, Exception {
 
 		String sql = "SELECT * FROM RESERVA WHERE FECHA = " + fecha + " AND ID_RESERVADOR = " + reservador;
 

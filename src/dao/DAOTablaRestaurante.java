@@ -252,7 +252,7 @@ public class DAOTablaRestaurante {
 	{
 		DAOTablaCategoriaRestaurante daoCatRest = new DAOTablaCategoriaRestaurante();
 		daoCatRest.setConn(conn);
-		daoCatRest.eliminarPorRestaurante(restaurante);
+		daoCatRest.eliminarPorRestaurante(restaurante.getNombre());
 		daoCatRest.cerrarRecursos();
 	}
 	

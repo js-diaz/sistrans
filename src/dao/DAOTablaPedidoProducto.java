@@ -81,7 +81,7 @@ public class DAOTablaPedidoProducto {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public PedidoProd buscarPedidoProdsPorNombreYCuenta(Long id, String restaurante, String cuenta) throws SQLException, Exception {
+	public PedidoProd buscarPedidoProdsPorIdYCuenta(Long id, String restaurante, String cuenta) throws SQLException, Exception {
 
 		String sql = "SELECT * FROM PEDIDO_PROD WHERE ID_PRODUCTO = " + id + " AND NUMERO_CUENTA LIKE '" + cuenta + "'";
 		sql += " AND NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
