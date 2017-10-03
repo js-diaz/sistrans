@@ -3513,7 +3513,7 @@ public class RotondAndesTM {
 			//////transaccion
 			daoVideos=new DAOTablaCriterio();
 			daoVideos.setConn(darConexion());
-			videos = daoVideos.generarListaFiltradaZonas(nombreZona,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
+			videos = daoVideos.generarListaFiltradaZonaEspecifica(nombreZona,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());

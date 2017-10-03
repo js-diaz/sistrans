@@ -96,7 +96,7 @@ public class DAOTablaCriterio {
 	 */
 	public Criterio buscarCriteriosZona(String name) throws SQLException, Exception {
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'ZONA' OR TABLE_NAME "
-				+ "LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'CUENTA'))";
+				+ "LIKE 'PEDIDO_PROD' OR 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA'))";
 		String sql = "SELECT * FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -157,7 +157,6 @@ public class DAOTablaCriterio {
 
 		return c;
 	}
-	
 	/**
 	 * Método para generar lista filtrada de la información total de las zonas.<br>
 	 * @param criteriosOrganizacion Listado de criterios de organización.<br>
@@ -169,7 +168,7 @@ public class DAOTablaCriterio {
 	 * @throws SQLException Si hay un error con la base de datos.<br>
 	 * @throws Exception Si hay cualquier otro error.
 	 */
-	public List<ContenedoraInformacion> generarListaFiltradaZonas(String nombreZona,
+	public List<ContenedoraInformacion> generarListaFiltradaZonas(
 			List<CriterioOrden> criteriosOrganizacion,List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregacionesSeleccion, CriterioVerdad operacionesWhere, 
 			CriterioVerdadHaving operacionesHaving) throws SQLException, Exception {
@@ -198,7 +197,139 @@ public class DAOTablaCriterio {
 		}
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
-		String from ="FROM ZONA";
+		String from ="FROM SELECT ZONA.*, RESTAURANTE.PAG_WEB, RESTAURANTE.ID_REPRESENTANTE, P.*,CUENTA.FECHA,CUENTA.IDUSUARIO "
+				+ "FROM ZONA, RESTAURANTE,  CUENTA,  (SELECT * FROM PEDIDO_PROD NATURAL FULL OUTER JOIN PEDIDO_MENU) P "
+				+ "WHERE ZONA.NOMBRE LIKE RESTAURANTE.NOMBRE_ZONA AND P.NOMBRE_RESTAURANTE LIKE RESTAURANTE.NOMBRE "
+				+ " AND CUENTA.NUMEROCUENTA LIKE P.NUMERO_CUENTA;";
+		String select="SELECT ";
+		String groupBy="";
+		String orderBy="";
+		String where=""; 
+		String having="";
+		String temp="";
+		//Verifica agrupaciones
+		if(existentesAgrup.size()>0)
+		{
+			temp=simplificarAgrupacion(existentesAgrup.get(0).getNombre());
+			if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+				throw new Exception("Uno de los criterios no existe "+temp+".");
+			select+=existentesAgrup.get(0).getNombre();
+			groupBy+="GROUP BY "+existentesAgrup.get(0).getNombre();
+			existentesAgrup.remove(0);
+			for(Criterio c: existentesAgrup)
+			{
+				temp=simplificarAgrupacion(c.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+					throw new Exception("Uno de los criterios no existe "+temp+".");
+				groupBy+=", "+c.getNombre();
+				select+=", "+c.getNombre();
+			}
+			for(CriterioAgregacion a:agreSelec) 
+			{
+				temp=simplificarAgrupacion(a.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+					throw new Exception("Uno de los criterios no existe");
+				select+=","+a.getNombre();
+			}
+		}
+		else select+="*";
+		//Verifica órdenes
+		if(existentesOrd.size()>0)
+		{
+			temp=simplificarOrden(existentesOrd.get(0).getNombre());
+			if(!temp.equals("") && buscarCriteriosZona(temp)==null) 
+				throw new Exception("Uno de los criterios no existe");
+			orderBy+="ORDER BY "+existentesOrd.get(0).getNombre();
+			existentesOrd.remove(0);
+			for(CriterioOrden c: existentesOrd)
+			{
+				temp=simplificarOrden(c.getNombre());
+				if(!temp.equals("") && buscarCriteriosZona(simplificarOrden(c.getNombre()))==null) 
+					throw new Exception("Uno de los criterios no existe");
+				orderBy+=", "+c.getNombre();
+			}
+		}
+		String operaciones="";
+		//Verifica where
+		if(operacionesWhere!=null)
+			{
+				for(Criterio c:operacionesWhere.getCriterios())
+				{
+					operaciones=simplificar(c.getNombre());
+					if(operaciones.trim().equals("")) continue;
+					if(buscarCriteriosZona(operaciones)==null)
+						throw new Exception("El criterio no existe en la base");
+				}
+				evaluarWhere(operacionesWhere,tiposDeDatoZona());
+				where+="WHERE "+operacionesWhere.getNombre();
+			}
+		//Verifica having
+		if(operacionesHaving!=null)
+			{
+				for(CriterioAgregacion c:operacionesHaving.getCriterios())
+				{
+					operaciones=simplificar(c.getNombre());
+					if(operaciones.trim().equals("")) continue;
+					if(buscarCriteriosZona(operaciones)==null)
+						throw new Exception("El criterio no existe en la base");
+				}
+				evaluarHaving(operacionesHaving,tiposDeDatoZona());
+				having="HAVING "+operacionesHaving.getNombre();
+			}
+		String sql=select+" "+from+" "+where+" "+groupBy+" "+having+" "+orderBy;
+		PreparedStatement prep =conn.prepareStatement(sql);
+		recursos.add(prep);
+		System.out.println(sql);
+		ResultSet r =prep.executeQuery();
+		
+		List<ContenedoraInformacion> cont=crearContenedora(r,select);
+		return cont;
+	}
+	
+	/**
+	 * Método para generar lista filtrada de la información total de las zonas.<br>
+	 * @param criteriosOrganizacion Listado de criterios de organización.<br>
+	 * @param criteriosAgrupamiento Listado de criterios de agrupamiento.<br>
+	 * @param agregacionesSeleccion Listado de selección de agregaciones.<br>
+	 * @param operacionesWhere Operaciones con where.<br>
+	 * @param operacionesHaving Operaciones con having.<br>
+	 * @return Listado de contenedora de información con los datos dados.<br>
+	 * @throws SQLException Si hay un error con la base de datos.<br>
+	 * @throws Exception Si hay cualquier otro error.
+	 */
+	public List<ContenedoraInformacion> generarListaFiltradaZonaEspecifica(String nombreZona,
+			List<CriterioOrden> criteriosOrganizacion,List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregacionesSeleccion, CriterioVerdad operacionesWhere, 
+			CriterioVerdadHaving operacionesHaving) throws SQLException, Exception {
+		//Verifica que no haya repeticiones de criterios
+		List<CriterioOrden> existentesOrd=new ArrayList<>();
+		List<Criterio> existentesAgrup= new ArrayList<>();
+		List<CriterioAgregacion> agreSelec=new ArrayList<>();
+		if(criteriosAgrupamiento!=null)
+		for(Criterio c: criteriosAgrupamiento)
+		{
+			if(existentesAgrup.indexOf(c)>=0) continue;
+			existentesAgrup.add(c);
+		}
+		if(criteriosOrganizacion!=null)
+		for(CriterioOrden c: criteriosOrganizacion)
+		{
+			if(existentesOrd.indexOf(c)>=0) continue;
+			if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+			existentesOrd.add(c);
+		}
+		if(agregacionesSeleccion!=null)
+		for(CriterioAgregacion a: agregacionesSeleccion)
+		{
+			if(agreSelec.indexOf(a)>=0) continue;
+			agreSelec.add(a);
+		}
+		//Empieza la creación de los datos del query
+		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
+		String from ="FROM SELECT ZONA.*, RESTAURANTE.PAG_WEB, RESTAURANTE.ID_REPRESENTANTE, P.*,CUENTA.FECHA,CUENTA.IDUSUARIO "
+				+ "FROM ZONA, RESTAURANTE,  CUENTA,  (SELECT * FROM PEDIDO_PROD NATURAL FULL OUTER JOIN PEDIDO_MENU) P "
+				+ "WHERE ZONA.NOMBRE LIKE RESTAURANTE.NOMBRE_ZONA AND P.NOMBRE_RESTAURANTE LIKE RESTAURANTE.NOMBRE "
+				+ " AND CUENTA.NUMEROCUENTA LIKE P.NUMERO_CUENTA;";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";

@@ -193,8 +193,9 @@ public class DAOTablaCuenta {
 	 */
 	public void addCuenta(Cuenta c) throws SQLException, Exception {
 
+		
 		String sql = "INSERT INTO CUENTA VALUES (";
-		sql += c.getValor() + ",'";
+		sql += "0,'";
 		sql += c.getNumeroCuenta() + "',";
 		sql += dateFormat(c.getFecha())+",";
 		sql+= c.getCliente().getId()+")";
@@ -202,12 +203,14 @@ public class DAOTablaCuenta {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
-		insertarProducto(c);
-		insertarMenu(c);
+		//insertarProducto(c);
+		//insertarMenu(c);
 	}
-	
-	
-
+	/**
+	 * Formatea el valor de la cuenta al dado en la base de datos.<br>
+	 * @param fecha Fecha de la cuenta.<br>
+	 * @return Valor a insertar en la base de datos
+	 */
 	private String dateFormat(Date fecha) {
 		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		return "TO_DATE('"+x.format(fecha)+"','yyyy-MM-dd hh24:mi:ss')";
@@ -233,7 +236,6 @@ public class DAOTablaCuenta {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
-
 	/**
 	 * Metodo que elimina la cuenta que entra como parametro en la base de datos.
 	 * @param c - la cuenta a borrar. c !=  null

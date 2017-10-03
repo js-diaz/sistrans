@@ -164,6 +164,8 @@ public class CuentaServices {
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
+			if(cuenta.getCliente()!=null && !cuenta.getCliente().getRol().equals(Rol.CLIENTE))
+				throw new Exception("Una cuenta solo puede pertenecer a un cliente");
 			tm.cuentaAddCuenta(cuenta);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
