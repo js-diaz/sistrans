@@ -18,7 +18,7 @@ public class DAOTablaMenu {
 	/**
 	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
 	 */
-	private ArrayList<Object> recursos;
+	private List<Object> recursos;
 
 	/**
 	 * Atributo que genera la conexión a la base de datos
@@ -64,7 +64,7 @@ public class DAOTablaMenu {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Menu> darMenus() throws SQLException, Exception {
+	public List<Menu> darMenus() throws SQLException, Exception {
 
 		String sql = "SELECT * FROM MENU";
 
@@ -81,7 +81,7 @@ public class DAOTablaMenu {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Menu> darMenusPorRestaurante(String restaurante) throws SQLException, Exception {
+	public List<Menu> darMenusPorRestaurante(String restaurante) throws SQLException, Exception {
 
 		String sql = "SELECT * FROM MENU WHERE NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
 
@@ -90,12 +90,27 @@ public class DAOTablaMenu {
 		ResultSet rs = prepStmt.executeQuery();
 		return convertirEntidadMenu(rs);
 	}
+	
+	/**
+	 * Metodo que, usando la conexi�n a la base de datos, saca todos los menus de la base de datos para un restaurante particular.
+	 * @param nombre nombre del Restaurante.
+	 * @return Arraylist con los menus de la base de datos en representacion minimum.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public List<MenuMinimum> darMenusMinimumPorRestaurante(String nombre) throws Exception, SQLException {
+		String sql = "SELECT * FROM MENU WHERE NOMBRE_RESTAURANTE LIKE '" + nombre + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		return convertirEntidadMenuMinimum(rs);
+	}
 
 	/**
 	 * Metodo que busca el/los menus con el nombre que entra como parametro.
 	 * @param name - Nombre de el menu a buscar
 	 * @param restaurante - Nombre del restaurante al que pertenece
-	 * @return ArrayList con los menus encontrados
+	 * @return List con los menus encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
@@ -107,7 +122,7 @@ public class DAOTablaMenu {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		ArrayList<Menu> menus = convertirEntidadMenu(rs);
+		List<Menu> menus = convertirEntidadMenu(rs);
 		return menus.get(0);
 	}
 
@@ -116,19 +131,20 @@ public class DAOTablaMenu {
 	 * Metodo que busca el/los menus con el nombre que entra como parametro.
 	 * @param name - Nombre de el menu a buscar
 	 * @param restaurante - Nombre del restaurante al que pertenece
-	 * @return ArrayList con los menus encontrados
+	 * @return List con los menus encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public MenuMinimum buscarMenusMinimumPorNombreYRestaurante(String name, String restaurante) throws SQLException, Exception {
-
+		
 		String sql = "SELECT * FROM MENU WHERE NOMBRE LIKE '" + name + "' AND NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		ArrayList<MenuMinimum> menus = convertirEntidadMenuMinimum(rs);
+		List<MenuMinimum> menus = convertirEntidadMenuMinimum(rs);
+		
 		return menus.get(0);
 	}
 	
@@ -143,11 +159,23 @@ public class DAOTablaMenu {
 	 */
 	public void addMenu(Menu menu) throws SQLException, Exception {
 
+		DAOTablaCategoriaMenu daoCategoria = new DAOTablaCategoriaMenu();
+		DAOTablaPerteneceAMenu daoProducto = new DAOTablaPerteneceAMenu();
+		daoCategoria.setConn(conn);
+		daoProducto.setConn(conn);
+		
 		String sql = "INSERT INTO MENU VALUES (";
 		sql += "'" + menu.getNombre() + "',";
 		sql += "'" + menu.getRestaurante().getNombre() + "', ";
 		sql += menu.getPrecio() +", ";
 		sql += menu.getCosto() + ")";
+		
+		for(Categoria c : menu.getCategorias())
+			daoCategoria.asociarCategoriaYMenu(c.getNombre(), menu.getNombre(), menu.getRestaurante().getNombre());
+		for(InfoProdRest p : menu.getPlatos())
+			daoProducto.asociarProductoYMenu(p.getProducto().getId(), menu.getNombre(), menu.getRestaurante().getNombre());
+		daoCategoria.cerrarRecursos();
+		daoProducto.cerrarRecursos();
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -166,10 +194,25 @@ public class DAOTablaMenu {
 	 */
 	public void updateMenu(Menu menu) throws SQLException, Exception {
 
+		DAOTablaCategoriaMenu daoCategoria = new DAOTablaCategoriaMenu();
+		DAOTablaPerteneceAMenu daoProducto = new DAOTablaPerteneceAMenu();
+		daoCategoria.setConn(conn);
+		daoProducto.setConn(conn);
+		
 		String sql = "UPDATE MENU SET ";
 		sql += "PRECIO = " + menu.getPrecio();
 		sql += ", COSTO = "+ menu.getCosto();
 		sql += " WHERE NOMBRE LIKE '" + menu.getNombre() + "' AND NOMBRE_RESTAURANTE LIKE '" + menu.getRestaurante().getNombre();
+		
+		daoCategoria.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
+		for(Categoria c : menu.getCategorias())
+			daoCategoria.asociarCategoriaYMenu(c.getNombre(), menu.getNombre(), menu.getRestaurante().getNombre());
+		daoProducto.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
+		for(InfoProdRest p : menu.getPlatos())
+			daoProducto.asociarProductoYMenu(p.getProducto().getId(), menu.getNombre(), menu.getRestaurante().getNombre());
+		daoCategoria.cerrarRecursos();
+		daoProducto.cerrarRecursos();
+
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -187,6 +230,7 @@ public class DAOTablaMenu {
 	public void deleteMenu(Menu menu) throws SQLException, Exception {
 
 		borrarCategorias(menu);
+		borrarProductos(menu);
 		
 		String sql = "DELETE FROM MENU";
 		sql += " WHERE NOMBRE LIKE '" + menu.getNombre() + "' AND NOMBRE_RESTAURANTE LIKE '" + menu.getRestaurante().getNombre() + "'";
@@ -203,7 +247,7 @@ public class DAOTablaMenu {
 	 * @throws SQLException Algún problema de la base de datos.<br>
 	 * @throws Exception Cualquier otra excepción.
 	 */
-	private ArrayList<Menu> convertirEntidadMenu(ResultSet rs) throws SQLException, Exception
+	private List<Menu> convertirEntidadMenu(ResultSet rs) throws SQLException, Exception
 	{
 		DAOTablaRestaurante daoRest = new DAOTablaRestaurante();
 		DAOTablaCategoriaMenu daoCat = new DAOTablaCategoriaMenu();
@@ -211,7 +255,7 @@ public class DAOTablaMenu {
 		daoRest.setConn(conn);
 		daoCat.setConn(conn);
 		daoProd.setConn(conn);
-		ArrayList<Menu> menus = new ArrayList<>();
+		List<Menu> menus = new ArrayList<>();
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			double precio = rs.getDouble("PRECIO");
@@ -233,10 +277,10 @@ public class DAOTablaMenu {
 	 * @throws SQLException Algún problema de la base de datos.<br>
 	 * @throws Exception Cualquier otra excepción.
 	 */
-	private ArrayList<MenuMinimum> convertirEntidadMenuMinimum(ResultSet rs) throws SQLException, Exception {
+	private List<MenuMinimum> convertirEntidadMenuMinimum(ResultSet rs) throws SQLException, Exception {
 		DAOTablaRestaurante daoRest = new DAOTablaRestaurante();
 		daoRest.setConn(conn);
-		ArrayList<MenuMinimum> menus = new ArrayList<>();
+		List<MenuMinimum> menus = new ArrayList<>();
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			double precio = rs.getDouble("PRECIO");
@@ -261,6 +305,20 @@ public class DAOTablaMenu {
 		daoCatMenu.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
 		daoCatMenu.cerrarRecursos();
 	}
+	
+	/**
+	 * Borra la asociacion a los productos que contiene el menu.<br>
+	 * @param menu Menu de donde se borran.
+	 * @throws SQLException Alg�n problema de la base de datos.<br>
+	 * @throws Exception Cualquier otra excepci�n.
+	 */
+	private void borrarProductos(Menu menu) throws SQLException, Exception
+	{
+		DAOTablaPerteneceAMenu daoProdMenu = new DAOTablaPerteneceAMenu();
+		daoProdMenu.setConn(conn);
+		daoProdMenu.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
+		daoProdMenu.cerrarRecursos();
+	}
 
 	/**
 	 * Elimina todos los menus pertenecientes al restaurante dado.
@@ -272,5 +330,7 @@ public class DAOTablaMenu {
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.executeQuery();
 	}
+
+
 
 }

@@ -884,7 +884,7 @@ public class RotondAndesTM {
 	 * @return Cuenta con el número.<br>
 	 * @throws Exception Si existe algún tipo de error Si hay algún error
 	 */
-	public Cuenta cuentaBuscarCuentasPorNumeroDeCuenta(String numeroCuenta) throws Exception
+	public Cuenta cuentaBuscarCuentaPorNumeroDeCuenta(String numeroCuenta) throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
 		Cuenta c =null;
@@ -3959,7 +3959,7 @@ public class RotondAndesTM {
 	 * @return InfoProdRests.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<InfoProdRest> infoProdRestDarInfoProdRests() throws Exception
+	public List<InfoProdRest> infoProdRestDarInfoProdRestsPorRestaurante(String restaurante) throws Exception
 	{
 		List<InfoProdRest> list =null;
 		DAOTablaInfoProdRest dao = new DAOTablaInfoProdRest();
@@ -3967,7 +3967,7 @@ public class RotondAndesTM {
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			list=dao.darInfoProdRests();
+			list=dao.darInfoProdRestsPorRestaurante(restaurante);
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -3995,6 +3995,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
+
 	/**
 	 * Busca una infoProdRest por nombre.<br>
 	 * @param id id del producto.<br>
@@ -4122,14 +4123,14 @@ public class RotondAndesTM {
 	 * @param infoProdRest InfoProdRest.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void infoProdRestDeleteInfoProdRest(InfoProdRest infoProdRest) throws Exception
+	public void infoProdRestDeleteInfoProdRest(Long idProducto, String nombreRestaurante) throws Exception
 	{
 		DAOTablaInfoProdRest dao = new DAOTablaInfoProdRest();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.deleteInfoProdRest(infoProdRest);
+			dao.deleteInfoProdRest(dao.buscarInfoProdRestsPorIdYRestaurante(idProducto, nombreRestaurante));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -4157,13 +4158,13 @@ public class RotondAndesTM {
 		}
 	}
 	
-	//InfoIngRest
+	//InfoIngRest	
 	/**
 	 * Retorna las infoIngRests del sistema.<br>
 	 * @return InfoIngRests.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<InfoIngRest> infoIngRestDarInfoIngRests() throws Exception
+	public List<InfoIngRest> infoIngRestDarInfoIngRestsPorRestaurante(String restaurante) throws Exception
 	{
 		List<InfoIngRest> list =null;
 		DAOTablaInfoIngRest dao = new DAOTablaInfoIngRest();
@@ -4171,7 +4172,7 @@ public class RotondAndesTM {
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			list=dao.darInfoIngRests();
+			list=dao.darInfoIngRestsPorRestaurante(restaurante);
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -4199,6 +4200,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
+
 	/**
 	 * Busca una infoIngRest por nombre.<br>
 	 * @param id Id del ingrediente.<br>
@@ -4325,14 +4327,14 @@ public class RotondAndesTM {
 	 * @param infoIngRest InfoIngRest.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void infoIngRestDeleteInfoIngRest(InfoIngRest infoIngRest) throws Exception
+	public void infoIngRestDeleteInfoIngRest(Long idIngucto, String nombreRestaurante) throws Exception
 	{
 		DAOTablaInfoIngRest dao = new DAOTablaInfoIngRest();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.deleteInfoIngRest(infoIngRest);
+			dao.deleteInfoIngRest(dao.buscarInfoIngRestsPorIdYRestaurante(idIngucto, nombreRestaurante));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -5404,7 +5406,7 @@ public class RotondAndesTM {
 	 * @return Reservas.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<Reserva> reservaDarReservas() throws Exception
+	public List<Reserva> reservaDarReservasPorUsuario(Long usuario) throws Exception
 	{
 		List<Reserva> list =null;
 		DAOTablaReserva dao = new DAOTablaReserva();
@@ -5412,7 +5414,7 @@ public class RotondAndesTM {
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			list=dao.darReservas();
+			list=dao.darReservasPorUsuario(usuario);
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -5440,6 +5442,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
+
 	/**
 	 * Busca una reserva por usuario y fecha.<br>
 	 * @param fecha fecha de la reserva.<br>
@@ -5566,14 +5569,14 @@ public class RotondAndesTM {
 	 * @param reserva Reserva.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void reservaDeleteReserva(Reserva reserva) throws Exception
+	public void reservaDeleteReserva(Date fecha, Long idUsuario) throws Exception
 	{
 		DAOTablaReserva dao = new DAOTablaReserva();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.deleteReserva(reserva);
+			dao.deleteReserva(dao.buscarReservasPorFechaYUsuario(fecha, idUsuario));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -5607,7 +5610,7 @@ public class RotondAndesTM {
 	 * @return PedidoProds.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<PedidoProd> pedidoProdDarPedidoProds() throws Exception
+	public List<PedidoProd> pedidoProdDarPedidoProdsPorCuenta(String cuenta) throws Exception
 	{
 		List<PedidoProd> list =null;
 		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
@@ -5615,7 +5618,7 @@ public class RotondAndesTM {
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			list=dao.darPedidoProds();
+			list=dao.darPedidoProdsPorCuenta(cuenta);
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -5643,6 +5646,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
+
 	/**
 	 * Busca una pedidoProd por nombre.<br>
 	 * @param id id del infoProdRest.<br>
@@ -5771,14 +5775,14 @@ public class RotondAndesTM {
 	 * @param pedidoProd PedidoProd.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void pedidoProdDeletePedidoProd(PedidoProd pedidoProd) throws Exception
+	public void pedidoProdDeletePedidoProd(String numeroCuenta, Long id, String restaurante) throws Exception
 	{
 		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.deletePedidoProd(pedidoProd);
+			dao.deletePedidoProd(dao.buscarPedidoProdsPorIdYCuenta(id, restaurante, numeroCuenta));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -5812,7 +5816,7 @@ public class RotondAndesTM {
 	 * @return PedidoMenus.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<PedidoMenu> pedidoMenuDarPedidoMenus() throws Exception
+	public List<PedidoMenu> pedidoMenuDarPedidoMenusPorCuenta(String cuenta) throws Exception
 	{
 		List<PedidoMenu> list =null;
 		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
@@ -5820,7 +5824,7 @@ public class RotondAndesTM {
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			list=dao.darPedidoMenus();
+			list=dao.darPedidoMenusPorCuenta(cuenta);
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -5976,14 +5980,14 @@ public class RotondAndesTM {
 	 * @param pedidoMenu PedidoMenu.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void pedidoMenuDeletePedidoMenu(PedidoMenu pedidoMenu) throws Exception
+	public void pedidoMenuDeletePedidoMenu(String numeroCuenta, String nombre, String restaurante) throws Exception
 	{
 		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			dao.deletePedidoMenu(pedidoMenu);
+			dao.deletePedidoMenu(dao.buscarPedidoMenusPorNombreYCuenta(nombre, restaurante, numeroCuenta));
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());

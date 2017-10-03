@@ -11,6 +11,7 @@
 package rest;
 
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,6 +33,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
+import vos.Reserva;
 import vos.Usuario;
 import vos.UsuarioCompleto;
 import vos.UsuarioMinimum;
@@ -278,6 +280,145 @@ public class UsuarioServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).build();
+	}
+	
+	//Subrecurso reserva
+	/** Metodo que expone servicio REST usando GET que da todos los reservas de la base de datos para un usuario particular.
+	 * @param idUsuario nombre del usuario.
+	 * @return Json con todos los reservas de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path( "{idUsuario: \\d+}/reservas" )
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getReservas(@PathParam("idUsuario") Long idUsuario) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<Reserva> reservas;
+		try {
+			reservas = tm.reservaDarReservasPorUsuario(idUsuario);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(reservas).build();
+	}
+
+	 /**
+     * Metodo que expone servicio REST usando GET que busca el reserva con el id que entra como parametro.
+     * @param idUsuario id del usuario al cual pertenece el reserva.
+     * @param fecha fecha de la reserva a buscar que entra en la URL como parametro.
+     * @return Json con el/los reservas encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@GET
+	@Path( "{idUsuario: \\d+}/reservas/{fecha}" )
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response getReserva( @PathParam( "fecha" ) Date fecha, @PathParam("idUsuario") Long idUsuario )
+	{
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
+		try
+		{
+			Reserva v = tm.reservaBuscarReservasPorFechaYUsuario(fecha, idUsuario);
+			if(v == null) 
+				return Response.status( 404 ).entity( v ).build( );
+			return Response.status( 200 ).entity( v ).build( );
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
+	}
+
+
+    /**
+     * Metodo que expone servicio REST usando POST que agrega el reserva que recibe en Json
+     * @param idUsuario nombre del usuario al cual agregarlo.
+     * @param reserva - reserva a agregar.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el reserva que agrego o Json con el error que se produjo
+     */
+	@POST
+	@Path( "{idUsuario: \\d+}/reservas" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addReserva(@PathParam("idUsuario") Long idUsuario, Reserva reserva, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == idUsuario)) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			reserva.setReservador(tm.usuarioBuscarUsuarioPorId(idUsuario));
+			tm.reservaAddReserva(reserva);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(reserva).build();
+	}
+	
+    /**
+     * Metodo que expone servicio REST usando PUT que modifica un usuario.
+     * @param fecha nombre del reserva a modificar.
+     * @param idUsuario nombre del usuario que lo contiene.
+     * @param reserva información del reserva modificado.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el usuario que elimino o Json con el error que se produjo
+     */
+	@PUT
+	@Path( "{idUsuario: \\d+}/reservas/{fecha}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateReserva(Reserva reserva, @HeaderParam("usuarioId") Long id, @PathParam("fecha") Date fecha, @PathParam("idUsuario") Long idUsuario) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == idUsuario))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			reserva.setFecha(fecha);
+			reserva.setReservador(tm.usuarioBuscarUsuarioPorId(idUsuario));
+			tm.reservaUpdateReserva(reserva);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(reserva).build();
+	}
+
+	
+    /**
+     * Metodo que expone servicio REST usando DELETE que elimina un reserva de un usuario dado.
+     * @param fecha nombre del reserva a eliminar.
+     * @param idUsuario nombre del usuario que lo contiene.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el reserva que elimino o Json con el error que se produjo
+     */
+	@DELETE
+	@Path( "{idUsuario: \\d+}/reservas/{fecha}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteReserva(@HeaderParam("usuarioId") Long id, @PathParam("idUsuario") Long idUsuario, @PathParam("fecha") Date fecha) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == idUsuario))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.reservaDeleteReserva(fecha, idUsuario);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity("reserva eliminado correctamente").build();
 	}
 
 

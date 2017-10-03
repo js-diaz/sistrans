@@ -73,8 +73,22 @@ public class DAOTablaReserva {
 		return convertirEntidadReserva(rs);
 	}
 
+	/**
+	 * Metodo que, usando la conexi�n a la base de datos, saca todos los reservas de la base de datos para un usuario particular.
+	 * @param usuario nombre del Usuario.
+	 * @return Arraylist con los reservas de la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public ArrayList<Reserva> darReservasPorUsuario(Long usuario) throws SQLException, Exception {
 
-	
+		String sql = "SELECT * FROM RESERVA WHERE ID_USUARIO = " + usuario;
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		return convertirEntidadReserva(rs);
+	}
 
 	/**
 	 * Metodo que busca el/los reservas con el nombre que entra como parametro.

@@ -72,7 +72,23 @@ public class DAOTablaPedidoMenu {
 		ResultSet rs = prepStmt.executeQuery();
 		return convertirEntidadPedidoMenu(rs);
 	}
+	
+	/**
+	 * Metodo que, usando la conexi�n a la base de datos, saca todos los pedidoMenus de la base de datos para un cuenta particular.
+	 * @param cuenta nombre del Cuenta.
+	 * @return Arraylist con los pedidoMenus de la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public List<PedidoMenu> darPedidoMenusPorCuenta(String cuenta) throws SQLException, Exception {
 
+		String sql = "SELECT * FROM PEDIDO_MENU WHERE NUMERO_CUENTA LIKE '" + cuenta + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		return convertirEntidadPedidoMenu(rs);
+	}
 
 	/**
 	 * Metodo que busca la informacion de un menu en una cienta dados por par�metro.

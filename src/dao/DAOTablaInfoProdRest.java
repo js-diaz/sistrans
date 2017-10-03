@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,7 +17,7 @@ public class DAOTablaInfoProdRest {
 	/**
 	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
 	 */
-	private ArrayList<Object> recursos;
+	private List<Object> recursos;
 
 	/**
 	 * Atributo que genera la conexión a la base de datos
@@ -62,7 +63,7 @@ public class DAOTablaInfoProdRest {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<InfoProdRest> darInfoProdRests() throws SQLException, Exception {
+	public List<InfoProdRest> darInfoProdRests() throws SQLException, Exception {
 
 		String sql = "SELECT * FROM INFO_PROD_REST";
 
@@ -73,13 +74,28 @@ public class DAOTablaInfoProdRest {
 	}
 
 
-	
+	/**
+	 * Metodo que, usando la conexi�n a la base de datos, saca todos los infoProdRests de la base de datos para un restaurante particular.
+	 * @param restaurante nombre del Restaurante.
+	 * @return Arraylist con los infoProdRests de la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public List<InfoProdRest> darInfoProdRestsPorRestaurante(String restaurante) throws SQLException, Exception {
 
+		String sql = "SELECT * FROM INFO_PROD_REST WHERE NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		return convertirEntidadInfoProdRest(rs);
+	}
+	
 	/**
 	 * Metodo que busca la informacion de un producto en un restaurnate dados por par�metro.
 	 * @param id - Id del producto a buscar
 	 * @param restaurante - Nombre del restaurante al que pertenece
-	 * @return ArrayList con los infoProdRests encontrados
+	 * @return List con los infoProdRests encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
@@ -91,7 +107,7 @@ public class DAOTablaInfoProdRest {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		ArrayList<InfoProdRest> infoProdRests = convertirEntidadInfoProdRest(rs);
+		List<InfoProdRest> infoProdRests = convertirEntidadInfoProdRest(rs);
 		return infoProdRests.get(0);
 	}
 
@@ -171,13 +187,13 @@ public class DAOTablaInfoProdRest {
 	 * @throws SQLException Algún problema de la base de datos.<br>
 	 * @throws Exception Cualquier otra excepción.
 	 */
-	private ArrayList<InfoProdRest> convertirEntidadInfoProdRest(ResultSet rs) throws SQLException, Exception
+	private List<InfoProdRest> convertirEntidadInfoProdRest(ResultSet rs) throws SQLException, Exception
 	{
 		DAOTablaRestaurante daoRest = new DAOTablaRestaurante();
 		DAOTablaProducto daoProd = new DAOTablaProducto();
 		daoRest.setConn(conn);
 		daoProd.setConn(conn);
-		ArrayList<InfoProdRest> infoProdRests = new ArrayList<>();
+		List<InfoProdRest> infoProdRests = new ArrayList<>();
 		while (rs.next()) {
 			double precio = rs.getDouble("PRECIO");
 			double costo = rs.getDouble("COSTO");

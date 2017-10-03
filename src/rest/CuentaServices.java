@@ -19,11 +19,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import tm.RotondAndesTM;
 import vos.Cuenta;
-import vos.CuentaMinimum;
+import vos.PedidoMenu;
+import vos.PedidoProd;
+import vos.Usuario;
 import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
 
@@ -131,7 +131,7 @@ public class CuentaServices {
 			}
 			if(numCuenta==null || numCuenta.length()==0)
 				throw new Exception("El nÃºmero de cuenta es invÃ¡lido");
-			Cuenta c = tm.cuentaBuscarCuentasPorNumeroDeCuenta(numCuenta);
+			Cuenta c = tm.cuentaBuscarCuentaPorNumeroDeCuenta(numCuenta);
 			if(u.getRol().equals(Rol.CLIENTE) && u.getId()!=c.getCliente().getId())
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
@@ -249,6 +249,282 @@ public class CuentaServices {
 		}
 		return Response.status(200).build();
 	}
+	
+	//Subrecurso pedidoProd
+	/** Metodo que expone servicio REST usando GET que da todos los pedidoProds de la base de datos para un cuenta particular.
+	 * @param numeroCuenta nombre del cuenta.
+	 * @return Json con todos los pedidoProds de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path( "{numeroCuenta: \\d+}/productos" )
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getPedidoProds(@PathParam("numeroCuenta") String numeroCuenta) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<PedidoProd> pedidoProds;
+		try {
+			pedidoProds = tm.pedidoProdDarPedidoProdsPorCuenta(numeroCuenta);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidoProds).build();
+	}
+
+	 /**
+     * Metodo que expone servicio REST usando GET que busca el pedidoProd con el id que entra como parametro.
+     * @param numeroCuenta nombre del cuenta al cual pertenece el pedidoProd.
+     * @param name Nombre del pedidoProd a buscar que entra en la URL como parametro.
+     * @return Json con el/los pedidoProds encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@GET
+	@Path( "{numeroCuenta: \\d+}/productos/{restaurante: [a-zA-Z]+}/{id: \\d+}" )
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response getPedidoProd( @PathParam( "id" ) Long id, @PathParam("restaurante") String restaurante, @PathParam("numeroCuenta") String numeroCuenta)
+	{
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
+		try
+		{
+			PedidoProd v = tm.pedidoProdBuscarPedidoProdsPorIdYCuenta(id, numeroCuenta, restaurante);
+			if(v == null) 
+				return Response.status( 404 ).entity( v ).build( );
+			return Response.status( 200 ).entity( v ).build( );
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
+	}
 
 
+    /**
+     * Metodo que expone servicio REST usando POST que agrega el pedidoProd que recibe en Json
+     * @param numeroCuenta nombre del cuenta al cual agregarlo.
+     * @param pedidoProd - pedidoProd a agregar.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el pedidoProd que agrego o Json con el error que se produjo
+     */
+	@POST
+	@Path( "{numeroCuenta: \\d+}/productos" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addPedidoProd(@PathParam("numeroCuenta") String numeroCuenta, PedidoProd pedidoProd, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			pedidoProd.setCuenta(tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta));
+			tm.pedidoProdAddPedidoProd(pedidoProd);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidoProd).build();
+	}
+	
+    /**
+     * Metodo que expone servicio REST usando PUT que modifica un cuenta.
+     * @param idProducto nombre del pedidoProd a modificar.
+     * @param numeroCuenta nombre del cuenta que lo contiene.
+     * @param pedidoProd información del pedidoProd modificado.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el cuenta que elimino o Json con el error que se produjo
+     */
+	@PUT
+	@Path( "{numeroCuenta: \\d+}/productos/{restaurante: [a-zA-Z]+}/{id: \\d+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updatePedidoProd(PedidoProd pedidoProd, @HeaderParam("usuarioId") Long id, @PathParam("id") Long idProducto, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("restaurante") String restaurante) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			pedidoProd.setPlato(tm.infoProdRestBuscarInfoProdRestsPorIdYRestaurante(idProducto, restaurante));
+			pedidoProd.setCuenta(tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta));
+			tm.pedidoProdUpdatePedidoProd(pedidoProd);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidoProd).build();
+	}
+
+	
+    /**
+     * Metodo que expone servicio REST usando DELETE que elimina un pedidoProd de un cuenta dado.
+     * @param idProducto nombre del pedidoProd a eliminar.
+     * @param numeroCuenta nombre del cuenta que lo contiene.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el pedidoProd que elimino o Json con el error que se produjo
+     */
+	@DELETE
+	@Path( "{numeroCuenta: \\d+}/productos/{restaurante: [a-zA-Z]+}/{id: \\d+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deletePedidoProd(@HeaderParam("usuarioId") Long id, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("id") Long idProducto, @PathParam("restaurante") String restaurante) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.pedidoProdDeletePedidoProd(numeroCuenta, idProducto, restaurante);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity("pedidoProd eliminado correctamente").build();
+	}
+	
+	//Subrecurso pedidoMenu
+	/** Metodo que expone servicio REST usando GET que da todos los pedidoMenus de la base de datos para un cuenta particular.
+	 * @param numeroCuenta nombre del cuenta.
+	 * @return Json con todos los pedidoMenus de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path( "{numeroCuenta: \\d+}/menus" )
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getPedidoMenus(@PathParam("numeroCuenta") String numeroCuenta) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<PedidoMenu> pedidoMenus;
+		try {
+			pedidoMenus = tm.pedidoMenuDarPedidoMenusPorCuenta(numeroCuenta);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidoMenus).build();
+	}
+
+	 /**
+     * Metodo que expone servicio REST usando GET que busca el pedidoMenu con el id que entra como parametro.
+     * @param numeroCuenta nombre del cuenta al cual pertenece el pedidoMenu.
+     * @param name Nombre del pedidoMenu a buscar que entra en la URL como parametro.
+     * @return Json con el/los pedidoMenus encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@GET
+	@Path( "{numeroCuenta: \\d+}/menus/{restaurante: [a-zA-Z]+}/{nombre: [a-zA-Z]+}" )
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response getPedidoMenu( @PathParam( "nombre" ) String nombre, @PathParam("restaurante") String restaurante, @PathParam("numeroCuenta") String numeroCuenta)
+	{
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
+		try
+		{
+			PedidoMenu v = tm.pedidoMenuBuscarPedidoMenusPorIdYCuenta(nombre, numeroCuenta, restaurante);
+			if(v == null) 
+				return Response.status( 404 ).entity( v ).build( );
+			return Response.status( 200 ).entity( v ).build( );
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
+	}
+
+
+    /**
+     * Metodo que expone servicio REST usando POST que agrega el pedidoMenu que recibe en Json
+     * @param numeroCuenta nombre del cuenta al cual agregarlo.
+     * @param pedidoMenu - pedidoMenu a agregar.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el pedidoMenu que agrego o Json con el error que se produjo
+     */
+	@POST
+	@Path( "{numeroCuenta: \\d+}/menus" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addPedidoMenu(@PathParam("numeroCuenta") String numeroCuenta, PedidoMenu pedidoMenu, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			pedidoMenu.setCuenta(tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta));
+			tm.pedidoMenuAddPedidoMenu(pedidoMenu);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidoMenu).build();
+	}
+	
+    /**
+     * Metodo que expone servicio REST usando PUT que modifica un cuenta.
+     * @param nombre nombre del pedidoMenu a modificar.
+     * @param numeroCuenta nombre del cuenta que lo contiene.
+     * @param pedidoMenu información del pedidoMenu modificado.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el cuenta que elimino o Json con el error que se produjo
+     */
+	@PUT
+	@Path( "{numeroCuenta: \\d+}/menus/{restaurante: [a-zA-Z]+}/{nombre: [a-zA-Z]+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updatePedidoMenu(PedidoMenu pedidoMenu, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("restaurante") String restaurante) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			pedidoMenu.setMenu(tm.menuBuscarMenusPorNombreYRestaurante(nombre, restaurante));
+			pedidoMenu.setCuenta(tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta));
+			tm.pedidoMenuUpdatePedidoMenu(pedidoMenu);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidoMenu).build();
+	}
+
+	
+    /**
+     * Metodo que expone servicio REST usando DELETE que elimina un pedidoMenu de un cuenta dado.
+     * @param nombre nombre del pedidoMenu a eliminar.
+     * @param numeroCuenta nombre del cuenta que lo contiene.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el pedidoMenu que elimino o Json con el error que se produjo
+     */
+	@DELETE
+	@Path( "{numeroCuenta: \\d+}/menus/{restaurante: [a-zA-Z]+}/{nombre: [a-zA-Z]+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deletePedidoMenu(@HeaderParam("usuarioId") Long id, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("nombre") String nombre, @PathParam("restaurante") String restaurante) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentaPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.pedidoMenuDeletePedidoMenu(numeroCuenta, nombre, restaurante);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity("pedidoMenu eliminado correctamente").build();
+	}
 }
