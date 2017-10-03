@@ -321,7 +321,7 @@ public class DAOTablaProducto {
 	private List<Categoria> buscarCategorias(Producto producto) throws SQLException, Exception {
 		DAOTablaCategoriaProducto prod= new DAOTablaCategoriaProducto();
 		prod.setConn(conn);
-		List<Categoria> c =prod.consultarPorProducto(producto);
+		List<Categoria> c =prod.consultarPorProducto(producto.getId());
 		prod.cerrarRecursos();
 		return c;
 	}
@@ -342,7 +342,7 @@ public class DAOTablaProducto {
 	private List<Ingrediente> buscarIngredientes(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto ing = new DAOTablaPerteneceAProducto();
 		ing.setConn(this.conn);
-		List<Ingrediente> i=ing.consultarPorProducto(producto);
+		List<Ingrediente> i=ing.consultarPorProducto(producto.getId());
 		ing.cerrarRecursos();
 		return i;
 	}
@@ -355,7 +355,7 @@ public class DAOTablaProducto {
 		DAOTablaCategoriaProducto cat = new DAOTablaCategoriaProducto();
 		cat.setConn(this.conn);
 		for(Categoria c : producto.getCategorias())
-			cat.asociarCategoriaYProducto(c, producto);
+			cat.asociarCategoriaYProducto(c.getNombre(), producto.getId());
 	}
 	/**
 	 * Agrega los ingredientes a la tabla usando el producto dado por parÃ¡metro.<br>
@@ -365,7 +365,7 @@ public class DAOTablaProducto {
 		DAOTablaPerteneceAProducto ing = new DAOTablaPerteneceAProducto();
 		ing.setConn(conn);
 		for(Ingrediente i : producto.getIngredientes())
-			ing.asociarIngredienteYProducto(i, producto);
+			ing.asociarIngredienteYProducto(i.getId(), producto.getId());
 	}
 	/**
 	 * Convierte el tipo recibido como parÃ¡metro en un String.<br>
@@ -398,7 +398,7 @@ public class DAOTablaProducto {
 	 */
 	private void borrarCategoriasDePlato(Producto producto) throws SQLException, Exception {
 		DAOTablaCategoriaProducto cat = new DAOTablaCategoriaProducto();
-		cat.eliminarPorProducto(producto);
+		cat.eliminarPorProducto(producto.getId());
 		cat.cerrarRecursos();
 	}
 	/**
@@ -407,7 +407,7 @@ public class DAOTablaProducto {
 	 */
 	private void borrarIngredientesDePlato(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto p = new DAOTablaPerteneceAProducto();
-		p.eliminarPorProducto(producto);
+		p.eliminarPorProducto(producto.getId());
 		p.cerrarRecursos();
 		
 	}
@@ -417,9 +417,9 @@ public class DAOTablaProducto {
 	 */
 	private void actualizarCategorias(Producto producto) throws SQLException, Exception {
 		DAOTablaCategoriaProducto tab = new DAOTablaCategoriaProducto();
-		tab.eliminarPorProducto(producto);
+		tab.eliminarPorProducto(producto.getId());
 		for(Categoria c : producto.getCategorias())
-			tab.asociarCategoriaYProducto(c, producto);
+			tab.asociarCategoriaYProducto(c.getNombre(), producto.getId());
 		tab.cerrarRecursos();
 	}
 	/**
@@ -428,9 +428,9 @@ public class DAOTablaProducto {
 	 */
 	private void actualizarIngredientes(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto tab = new DAOTablaPerteneceAProducto();
-		tab.eliminarPorProducto(producto);
+		tab.eliminarPorProducto(producto.getId());
 		for(Ingrediente i : producto.getIngredientes())
-			tab.asociarIngredienteYProducto(i, producto);
+			tab.asociarIngredienteYProducto(i.getId(), producto.getId());
 		tab.cerrarRecursos();
 	}
 	

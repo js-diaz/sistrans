@@ -81,7 +81,7 @@ public class DAOTablaPedidoProducto {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public PedidoProd buscarPedidoProdsPorNombreYCuenta(Long id, String restaurante, String cuenta) throws SQLException, Exception {
+	public PedidoProd buscarPedidoProdsPorIdYCuenta(Long id, String restaurante, String cuenta) throws SQLException, Exception {
 
 		String sql = "SELECT * FROM PEDIDO_PROD WHERE ID_PRODUCTO = " + id + " AND NUMERO_CUENTA LIKE '" + cuenta + "'";
 		sql += " AND NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
@@ -175,7 +175,7 @@ public class DAOTablaPedidoProducto {
 		List<PedidoProd> pedidoProds = new ArrayList<>();
 		while (rs.next()) {
 			int cantidad = rs.getInt("CANTIDAD");
-			InfoProdRest plato = daoProd.buscarInfoProdRestsPorNombreYRestaurante(rs.getLong("ID_PRODUCTO"), rs.getString("NOMBRE_RESTAURANTE"));
+			InfoProdRest plato = daoProd.buscarInfoProdRestsPorIdYRestaurante(rs.getLong("ID_PRODUCTO"), rs.getString("NOMBRE_RESTAURANTE"));
 			CuentaMinimum cuenta = daoCuenta.buscarCuentasPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
 			pedidoProds.add(new PedidoProd(cantidad, cuenta, plato));
 		}

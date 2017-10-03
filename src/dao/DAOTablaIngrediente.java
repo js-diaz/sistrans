@@ -187,7 +187,7 @@ public class DAOTablaIngrediente {
 	private void borrarIngredienteDeProducto(Ingrediente ingrediente) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto prod= new DAOTablaPerteneceAProducto();
 		prod.setConn(this.conn);
-		prod.eliminarPorIngrediente(ingrediente);
+		prod.eliminarPorIngrediente(ingrediente.getId());
 		prod.cerrarRecursos();
 	}
 	/**

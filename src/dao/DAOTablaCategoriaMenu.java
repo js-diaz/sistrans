@@ -64,13 +64,13 @@ public class DAOTablaCategoriaMenu {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public List<Categoria> consultarPorMenu(MenuMinimum menu) throws SQLException, Exception {
+	public List<Categoria> consultarPorMenu(String nombreMenu, String nombreRestaurante) throws SQLException, Exception {
 		DAOTablaCategoria daoCategoria = new DAOTablaCategoria();
 		daoCategoria.setConn(conn);
 		List<Categoria> categorias = new ArrayList<>();
 
-		String sql = "SELECT * FROM CATEGORIA_MENU WHERE NOMBRE_MENU LIKE '" + menu.getNombre();
-		sql += "' AND NOMBRE_RESTAURANTE LIKE '" + menu.getRestaurante().getNombre() + "'";
+		String sql = "SELECT * FROM CATEGORIA_MENU WHERE NOMBRE_MENU LIKE '" + nombreMenu;
+		sql += "' AND NOMBRE_RESTAURANTE LIKE '" + nombreRestaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -90,10 +90,10 @@ public class DAOTablaCategoriaMenu {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
 	 */
-	public List<Menu> consultarPorCategoria(Categoria categoria) throws SQLException, Exception {
-		List<Menu> menus = new ArrayList<>();
+	public List<MenuMinimum> consultarPorCategoria(String nombreCategoria) throws SQLException, Exception {
+		List<MenuMinimum> menus = new ArrayList<>();
 
-		String sql = "SELECT * FROM CATEGORIA_MENU WHERE NOMBRE_CATEGORIA LIKE '" + categoria.getNombre() + "'";
+		String sql = "SELECT * FROM CATEGORIA_MENU WHERE NOMBRE_CATEGORIA LIKE '" + nombreCategoria + "'";
 
 		DAOTablaMenu daoMenu= new DAOTablaMenu();
 		daoMenu.setConn(conn);
@@ -116,11 +116,11 @@ public class DAOTablaCategoriaMenu {
 	 * @throws SQLException Excepción generada por problemas de base de datos.<br>
 	 * @throws Exception Todo otro problema.
 	 */
-	public void asociarCategoriaYMenu(Categoria categoria, MenuMinimum menu) throws SQLException, Exception {
+	public void asociarCategoriaYMenu(String nombreCategoria, String nombreMenu, String nombreRestaurante) throws SQLException, Exception {
 		String sql = "INSERT INTO CATEGORIA_MENU VALUES (";
-		sql += "'" + categoria.getNombre() + "', ";
-		sql += "'" + menu.getNombre() + "', ";
-		sql += "'" + menu.getRestaurante().getNombre() + "')";
+		sql += "'" + nombreCategoria + "', ";
+		sql += "'" + nombreMenu + "', ";
+		sql += "'" + nombreRestaurante + "')";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -131,11 +131,11 @@ public class DAOTablaCategoriaMenu {
 	 * @throws SQLException En caso de que se presente algún otro error.<br>
 	 * @throws Exception Cualquier otro error de la base de datos.
 	 */
-	public void desasociarCategoriaYMenu(MenuMinimum menu, Categoria categoria) throws SQLException, Exception {
+	public void desasociarCategoriaYMenu(String nombreCategoria, String nombreMenu, String nombreRestaurante) throws SQLException, Exception {
 
-		String sql = "DELETE FROM CATEGORIA_MENU WHERE NOMBRE_CATEGORIA LIKE '" + categoria.getNombre();
-		sql += "' AND NOMBRE_MENU LIKE '"+ menu.getNombre();
-		sql += "' AND NOMBRE_RESTAURANTE LIKE '" + menu.getRestaurante().getNombre() + "'";
+		String sql = "DELETE FROM CATEGORIA_MENU WHERE NOMBRE_CATEGORIA LIKE '" + nombreCategoria;
+		sql += "' AND NOMBRE_MENU LIKE '"+ nombreMenu;
+		sql += "' AND NOMBRE_RESTAURANTE LIKE '" + nombreRestaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -149,9 +149,9 @@ public class DAOTablaCategoriaMenu {
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
-	public void eliminarPorMenu(MenuMinimum menu) throws SQLException, Exception {
-		String sql = "DELETE FROM CATEGORIA_MENU WHERE NOMBRE_MENU LIKE '" + menu.getNombre();
-		sql += "' AND NOMBRE_RESTAURNANTE LIKE '" + menu.getRestaurante().getNombre() + "'";
+	public void eliminarPorMenu(String nombreMenu, String nombreRestaurante) throws SQLException, Exception {
+		String sql = "DELETE FROM CATEGORIA_MENU WHERE NOMBRE_MENU LIKE '" + nombreMenu;
+		sql += "' AND NOMBRE_RESTAURNANTE LIKE '" + nombreRestaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -163,8 +163,8 @@ public class DAOTablaCategoriaMenu {
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
 	 */
-	public void eliminarPorCategoria (Categoria categoria) throws SQLException, Exception{
-		String sql = "DELETE FROM CATEGORIA_MENU WHERE NOMBRE_CATEGORIA LIKE '" + categoria.getNombre() + "'";
+	public void eliminarPorCategoria (String nombreCategoria) throws SQLException, Exception{
+		String sql = "DELETE FROM CATEGORIA_MENU WHERE NOMBRE_CATEGORIA LIKE '" + nombreCategoria + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
