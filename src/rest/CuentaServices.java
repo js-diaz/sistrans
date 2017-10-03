@@ -87,8 +87,8 @@ public class CuentaServices {
      * @return Json con el/los cuentas encontrados con el nombre que entra como parametro o json con 
      * el error que se produjo
      */
-	@GET
-	@Path( "{id: \\d+}" )
+	/*@GET
+	@Path("id")
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getHistorialCliente( @QueryParam( "id" ) Long id, @HeaderParam("usuarioId") Long usuarioId )
 	{
@@ -107,7 +107,7 @@ public class CuentaServices {
 		{
 			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
 		}
-	}
+	}*/
 	 /**
      * Metodo que expone servicio REST usando GET que busca el cuenta con el número de cuenta que entra como parametro
      * <b>URL: </b> http://"ip o nombre de host":8080/CuentaAndes/rest/cuentas/<<id>>" para la busqueda"

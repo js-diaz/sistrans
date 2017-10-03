@@ -204,14 +204,13 @@ public class DAOTablaCuenta {
 		
 		insertarProducto(c);
 		insertarMenu(c);
-
 	}
 	
 	
 
 	private String dateFormat(Date fecha) {
-		SimpleDateFormat x = new SimpleDateFormat("dd/mm/yyyy hh24:mi:ss");
-		return "TODATE('"+x.format(fecha)+"','dd/mm/yyyy hh24:mi:ss')";
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return "TO_DATE('"+x.format(fecha)+"','yyyy-MM-dd hh24:mi:ss')";
 	}
 
 	/**
