@@ -192,8 +192,16 @@ public class DAOTablaProducto {
 	 */
 	public void addProducto(Producto producto) throws SQLException, Exception {
 
+		String valor="select IDPRODUCTO.NEXTVAL as VALOR from dual";
+		PreparedStatement prepStmt = conn.prepareStatement(valor);
+		recursos.add(prepStmt);
+		ResultSet rs=prepStmt.executeQuery();
+		if(rs.next())
+		{
+			producto.setId(rs.getLong("VALOR"));
+		}
 		String sql = "INSERT INTO PRODUCTO VALUES (";
-		sql += "IDPRODUCTO.NEXTVAL" + ",'";
+		sql += producto.getId()+ ",'";
 		sql += producto.getNombre() + "','";
 		sql += convertirTipo(producto.getTipo())+"','";
 		sql+= convertirBooleano(producto.isPersonalizable())+"',";
@@ -203,9 +211,10 @@ public class DAOTablaProducto {
 		sql+=producto.getCostoProduccion()+",";
 		sql+=producto.getTiempo()+ ")";
 
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		 prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
 		
 		agregarIngredientes(producto);
 		agregarCategorias(producto);
@@ -400,6 +409,7 @@ public class DAOTablaProducto {
 	 */
 	private void borrarCategoriasDePlato(Producto producto) throws SQLException, Exception {
 		DAOTablaCategoriaProducto cat = new DAOTablaCategoriaProducto();
+		cat.setConn(conn);
 		cat.eliminarPorProducto(producto);
 		cat.cerrarRecursos();
 	}
@@ -409,6 +419,7 @@ public class DAOTablaProducto {
 	 */
 	private void borrarIngredientesDePlato(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto p = new DAOTablaPerteneceAProducto();
+		p.setConn(this.conn);
 		p.eliminarPorProducto(producto);
 		p.cerrarRecursos();
 		
@@ -419,6 +430,7 @@ public class DAOTablaProducto {
 	 */
 	private void actualizarCategorias(Producto producto) throws SQLException, Exception {
 		DAOTablaCategoriaProducto tab = new DAOTablaCategoriaProducto();
+		tab.setConn(conn);
 		tab.eliminarPorProducto(producto);
 		for(Categoria c : producto.getCategorias())
 			tab.asociarCategoriaYProducto(c, producto);
@@ -430,23 +442,11 @@ public class DAOTablaProducto {
 	 */
 	private void actualizarIngredientes(Producto producto) throws SQLException, Exception {
 		DAOTablaPerteneceAProducto tab = new DAOTablaPerteneceAProducto();
+		tab.setConn(conn);
 		tab.eliminarPorProducto(producto);
 		for(Ingrediente i : producto.getIngredientes())
 			tab.asociarIngredienteYProducto(i, producto);
 		tab.cerrarRecursos();
-	}
-	
-	/**
-	 * Obtiene el Ã­ndice actual del producto.<br>
-	 * @param Ã�ndice actual.<br>
-	 */
-	public int getCurrentIndex() throws SQLException, Exception
-	{
-		String sql = "SELECT last_number FROM user_sequences WHERE sequence_name = 'IDPRODUCTO'";
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		ResultSet rs=prepStmt.executeQuery();
-		return rs.getInt("LAST_NUMBER");
 	}
 	
 

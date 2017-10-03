@@ -98,5 +98,3 @@ insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantida
 insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('9140484738', 'Fintone', 'Katz', 5);
 insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('4397658600', 'Namfix', 'Realpoint', 5);
 insert into PEDIDO_MENU (numero_cuenta, nombre_menu, nombre_restaurante, cantidad) values ('9968592448', 'Temp', 'Skyble', 4);
-
-COMMIT;

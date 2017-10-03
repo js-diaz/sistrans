@@ -18,5 +18,3 @@ insert into CATEGORIA (nombre) values ('Chippewa');
 insert into CATEGORIA (nombre) values ('Sri Lankan');
 insert into CATEGORIA (nombre) values ('Melanesian');
 insert into CATEGORIA (nombre) values ('Bangladeshi');
-
-commit;

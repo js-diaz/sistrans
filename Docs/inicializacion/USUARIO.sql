@@ -20,4 +20,3 @@ insert into USUARIO (id, correo, nombre, rol) values (219, 'bprinnetti@vk.com', 
 insert into USUARIO (id, correo, nombre, rol) values (220, 'ppeterj@home.pl', 'Pebrook Peter', 'OPERADOR');
 
 insert into USUARIO (id, correo, nombre, rol) values (0, 'ppeterj@home.pl', 'Admin', 'OPERADOR');
-commit;

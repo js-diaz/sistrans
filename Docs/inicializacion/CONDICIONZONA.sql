@@ -28,3 +28,4 @@ insert into CONDICIONZONA (condiciontecnicanombre, zonanombre) values ('Total', 
 insert into CONDICIONZONA (condiciontecnicanombre, zonanombre) values ('Networked', 'Home');
 insert into CONDICIONZONA (condiciontecnicanombre, zonanombre) values ('Organized', 'Games');
 insert into CONDICIONZONA (condiciontecnicanombre, zonanombre) values ('architecture', 'Sports');
+

@@ -97,5 +97,3 @@ insert into CATEGORIA_PRODUCTO (nombre_categoria, id_producto) values ('Venezuel
 insert into CATEGORIA_PRODUCTO (nombre_categoria, id_producto) values ('Venezuelan', 26);
 insert into CATEGORIA_PRODUCTO (nombre_categoria, id_producto) values ('Venezuelan', 31);
 insert into CATEGORIA_PRODUCTO (nombre_categoria, id_producto) values ('Venezuelan', 64);
-
-commit;

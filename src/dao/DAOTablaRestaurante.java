@@ -300,6 +300,7 @@ public class DAOTablaRestaurante {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void eliminarRestaurantes(List<RestauranteMinimum> restaurantes) throws SQLException, Exception {
+		if(restaurantes==null) return;
 		for(RestauranteMinimum restauranteMinimum: restaurantes) {
 			deleteRestaurante(restauranteMinimum);
 		}

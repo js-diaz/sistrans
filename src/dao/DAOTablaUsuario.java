@@ -235,13 +235,21 @@ public class DAOTablaUsuario {
 	 */
 	public void addUsuario(Usuario usuario) throws SQLException, Exception {
 
+		String valor="select IDUSUARIO.NEXTVAL as VALOR from dual";
+		PreparedStatement prepStmt = conn.prepareStatement(valor);
+		recursos.add(prepStmt);
+		ResultSet rs=prepStmt.executeQuery();
+		if(rs.next())
+		{
+			usuario.setId(rs.getLong("VALOR"));
+		}
 		String sql = "INSERT INTO USUARIO VALUES (";
-		sql += "IDUSUARIO.NEXTVAL,'";
+		sql += usuario.getId()+",'";
 		sql += usuario.getCorreo() + "','";
 		sql += usuario.getNombre()+"','";
 		sql+=convertirRol(usuario.getRol())+ "')";
 
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
