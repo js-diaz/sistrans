@@ -25,12 +25,20 @@ public class PedidoProd {
 	 */
 	@JsonProperty(value="plato")
 	private InfoProdRest plato;
+	
+	/**
+	 * Determina si el pedido ya fue entregado.
+	 */
+	@JsonProperty(value="entregado")
+	private Boolean entregado;
+
 
 	public PedidoProd(@JsonProperty(value="cantidad") Integer cantidad, @JsonProperty(value="cuenta") CuentaMinimum cuenta,
-			@JsonProperty(value="plato") InfoProdRest plato) {
+			@JsonProperty(value="plato") InfoProdRest plato, @JsonProperty(value="entregado") Boolean entregado) {
 		this.cantidad = cantidad;
 		this.cuenta = cuenta;
 		this.plato = plato;
+		this.entregado = entregado;
 	}
 	
 	public Integer getCantidad() {
@@ -55,6 +63,14 @@ public class PedidoProd {
 
 	public void setPlato(InfoProdRest plato) {
 		this.plato = plato;
+	}
+
+	public Boolean getEntregado() {
+		return entregado;
+	}
+
+	public void setEntregado(Boolean entregado) {
+		this.entregado = entregado;
 	}
 	
 	
