@@ -1,0 +1,6710 @@
+{
+	"variables": [],
+	"info": {
+		"name": "PruebasIteracion2",
+		"_postman_id": "1fe666cf-2540-8af1-cd4d-5ec54e66af93",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PruebasZona",
+			"description": "",
+			"item": [
+				{
+					"name": "PK",
+					"description": "",
+					"item": [
+						{
+							"name": "Agrega nueva zona",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene zona creada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra zona creada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene zona borrada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CK",
+					"description": "",
+					"item": [
+						{
+							"name": "Capacidad ocupada inferior a 0",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": -1,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene zona creada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Capacidad inferior a 0 copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"capacidad\": -1,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 10,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene zona creada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Capacidad ocupada inferior a 0 copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 50,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene zona creada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PruebasIngrediente",
+			"description": "",
+			"item": [
+				{
+					"name": "PK",
+					"description": "",
+					"item": [
+						{
+							"name": "Insertar un ingrediente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"nombre\":\"Nuevo\",\n        \"descripcion\":\"Un ingrediente\",\n        \"traduccion\":\"An ingredient\"\n}"
+								},
+								"description": "COMO SOLO HAY 25 ingredientes, EL ID SERÁ 26"
+							},
+							"response": []
+						},
+						{
+							"name": "Retorna ek ingrediente creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/101",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra un ingrediente con el id dado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes",
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"nombre\":\"Nuevo\",\n        \"descripcion\":\"Un ingrediente\",\n        \"traduccion\":\"An ingredient\",\n        \"id\":101\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Retorna ek ingrediente borrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/101",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CK",
+					"description": "",
+					"item": [
+						{
+							"name": "Insertar un ingrediente sin descripción",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"nombre\":\"Nuevo\",\n        \"traduccion\":\"An ingredient\"\n}"
+								},
+								"description": "COMO SOLO HAY 25 ingredientes, EL ID SERÁ 26"
+							},
+							"response": []
+						},
+						{
+							"name": "Retorna ek ingrediente creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/102",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Insertar un ingrediente sin descripción",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"nombre\":\"Nuevo\",\n        \"descripcion\":\"\",\n        \"traduccion\":\"An ingredient\"\n}"
+								},
+								"description": "COMO SOLO HAY 25 ingredientes, EL ID SERÁ 26"
+							},
+							"response": []
+						},
+						{
+							"name": "Retorna ek ingrediente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/103",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Insertar un ingrediente sin traducción",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"nombre\":\"Nuevo\",\n        \"descripcion\":\"Un ingrediente\"\n}"
+								},
+								"description": "COMO SOLO HAY 25 ingredientes, EL ID SERÁ 26"
+							},
+							"response": []
+						},
+						{
+							"name": "Retorna ek ingrediente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/104",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Insertar un ingrediente sin traducción",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"nombre\":\"Nuevo\",\n        \"descripcion\":\"Un ingrediente\",\n        \"traduccion\":\"\"\n}"
+								},
+								"description": "COMO SOLO HAY 25 ingredientes, EL ID SERÁ 26"
+							},
+							"response": []
+						},
+						{
+							"name": "Retorna ek ingrediente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/105",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Insertar un ingrediente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"nombre\":\"Nuevo\",\n        \"descripcion\":\"Un ingrediente\",\n        \"traduccion\":\"An ingredient\"\n}"
+								},
+								"description": "COMO SOLO HAY 25 ingredientes, EL ID SERÁ 26"
+							},
+							"response": []
+						},
+						{
+							"name": "Retorna el ingrediente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/106",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borrar el ingrediente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"nombre\":\"Nuevo\",\n        \"descripcion\":\"Un ingrediente\",\n        \"traduccion\":\"An ingredient\",\n        \"id\":106\n}"
+								},
+								"description": "COMO SOLO HAY 25 ingredientes, EL ID SERÁ 26"
+							},
+							"response": []
+						},
+						{
+							"name": "Retorna el ingrediente borrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/107",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PruebasCategoria",
+			"description": "",
+			"item": [
+				{
+					"name": "PK",
+					"description": "",
+					"item": [
+						{
+							"name": "Crea nueva categoría",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/categorias",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener categoría creada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/categorias/Nueva",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Insertar una PK que ya existe.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/categorias",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borrado de la categoría que existe.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/categorias",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener categoría eliminada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/categorias/Nueva",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PruebasUsuario",
+			"description": "",
+			"item": [
+				{
+					"name": "PK",
+					"description": "",
+					"item": [
+						{
+							"name": "Crea un nuevo usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene usuario creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios/221",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "BORRA EL USUARIO CREAD",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios",
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":221,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "BUSCA AL USUARIO NO CREADO",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios/221",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":51,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "FK",
+					"description": "",
+					"item": [
+						{
+							"name": "Crea un nuevo usuario con rol inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": null,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "BUSCA AL USUARIO NO CREADO",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios/222",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":51,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Crea un nuevo usuario con rol existente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene usuario creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios/223",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "BORRA EL USUARIO CREADO",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios",
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":223,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "BUSCA AL USUARIO BORRADO",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios/223",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":51,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PruebasPreferencia",
+			"description": "",
+			"item": [
+				{
+					"name": "PK",
+					"description": "",
+					"item": [
+						{
+							"name": "Crea un nuevo usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios",
+								"method": "POST",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Agrega preferencvia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/224",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene preferencias de un usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/224",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra pref creada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/224",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene pref borrada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/224",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "FK",
+					"description": "",
+					"item": [
+						{
+							"name": "Agrega preferencvia copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/1000",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene pref borrada copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/1000",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Agrega preferencvia copy",
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/224",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene preferencias de un usuario copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/224",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra pref creada copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/224",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene pref borrada copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/224",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "BORRA EL USUARIO CREADO",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":224,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PruebasProducto",
+			"description": "",
+			"item": [
+				{
+					"name": "PK",
+					"description": "",
+					"item": [
+						{
+							"name": "Nuevo producto",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/101",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borrar producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n        \"id\":101,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto borrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/101",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "FK",
+					"description": "",
+					"item": [
+						{
+							"name": "Nuevo producto con tipo inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/102",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Nuevo producto con tipo existente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"ENTRADA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/103",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borrar producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"ENTRADA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n        \"id\":\"103\",\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/103",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener tipo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/tipos/ENTRADA",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CK",
+					"description": "",
+					"item": [
+						{
+							"name": "Violación números",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": -1,\n        \"tipo\": \"BEBIDA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/104",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Violación números",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"BEBIDA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": -1,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/105",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Violación números",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"BEBIDA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": -1,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/106",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Agregar un producto que no viola números",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"ENTRADA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/107",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sin descripción",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"BEBIDA\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/108",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sin descripción",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"BEBIDA\",\n        \"descripcion\": \"\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/109",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sin traducción",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"BEBIDA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/110",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sin traducción",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"BEBIDA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/111",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Producto correcto",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"ENTRADA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto creado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/112",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borrado producto",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"ENTRADA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n        \"id\":112,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene producto borrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/productos/112",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PruebasRol",
+			"description": "",
+			"item": [
+				{
+					"name": "Insertar nueva PK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener rol creado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"OPERADOR\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar PK conocida.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar PK insertada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
+						"method": "DELETE",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener rol creado borrado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"OPERADOR\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar algo fuera del CK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/rols/HOLA",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener rol fuera del CK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/rols/HOLA",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"OPERADOR\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PruebasTipos",
+			"description": "",
+			"item": [
+				{
+					"name": "Insertar nueva PK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipo creado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar PK conocida.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "",
+								"value": ""
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar PK insertada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
+						"method": "DELETE",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipo borrado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar algo fuera del CK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/tipos/HOLA",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipo fuera del ck",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/tipos/HOLA",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PruebasCondicion",
+			"description": "",
+			"item": [
+				{
+					"name": "Crea condición",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener condición creada.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/Nueva",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"description": "",
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar una PK que ya existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Borrado de condiciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener condición borrada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/Nueva",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\":\"Nueva\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PruebasCuenta",
+			"description": "",
+			"item": [
+				{
+					"name": "PK",
+					"description": "",
+					"item": [
+						{
+							"name": "Agrega una nueva cuenta",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 10.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene la cuenta agregada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									},
+									{
+										"description": "",
+										"key": "preferencia",
+										"value": "200"
+									},
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Agrega cuenta existente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra la cuenta agregada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene cuenta borrada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									},
+									{
+										"description": "",
+										"key": "preferencia",
+										"value": "200"
+									},
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "CK",
+					"description": "",
+					"item": [
+						{
+							"name": "Agrega una nueva cuenta con número inválido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"ABC\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene cuenta no existente copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas/ABC",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Agrega una nueva cuenta copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene la cuenta agregada copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra la cuenta agregada copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									},
+									{
+										"description": "",
+										"key": "preferencia",
+										"value": "200"
+									},
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "FK",
+					"description": "",
+					"item": [
+						{
+							"name": "Agrega una nueva cuenta con usuario inválido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 300,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene cuenta no existente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Agrega una nueva cuenta copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene la cuenta agregada copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra la cuenta agregada copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PruebasCONDICIONZONA",
+			"description": "",
+			"item": [
+				{
+					"name": "Agrega nueva zona",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/zonas",
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"description": "",
+								"key": "",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n        ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Crea condición",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar sin fks válidos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Hola"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Hola"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por zona",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Hola"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por condición",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Hola"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Hola",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar sin un fk",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Nueva"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Hola"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por zona",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Nueva"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por condicióncopy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Hola"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Nueva",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar sin el otro fk",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Nueva"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Hola"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por zona",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Nueva",
+								"disabled": true
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Hola"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por condición",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Nueva"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Hola",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar con dos fks existentes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
+						"method": "POST",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Nueva"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Nueva"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por zona copy copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Nueva",
+								"disabled": true
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Nueva"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por condición",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Nueva"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Nueva",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar relación",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
+						"method": "DELETE",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Nueva"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Nueva"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por zona",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Nueva",
+								"disabled": true
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Nueva"
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener las condiciones de la zona creada por condición copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
+						"method": "GET",
+						"header": [
+							{
+								"description": "",
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"description": "",
+								"key": "condicion",
+								"value": "Nueva"
+							},
+							{
+								"description": "",
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": "",
+								"key": "zona",
+								"value": "Nueva",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtiene zona creada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener condición creada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/condiciones/Nueva",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"description": "",
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Borrado de condiciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Borra zona creada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/zonas",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"description": "",
+								"key": "",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"SIN CONDICIÓN\"\n            }\n        ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PruebasPreferenciaCategoria",
+			"description": "",
+			"item": [
+				{
+					"name": "PK",
+					"description": "",
+					"item": [
+						{
+							"name": "Crear nuevas preferencias para categorías",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado creado de preferencias",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Crea preferencia categoría existente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra las preferencias creadas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado borrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios/200",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene categoría",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/categorias/Filipino",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene categoría copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/categorias/Cuban",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene categoría",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/categorias/Ute",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "FK",
+					"description": "",
+					"item": [
+						{
+							"name": "Crear nuevas preferencias para categorías copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "300",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado creado de preferencias copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "300",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene usuario copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios/300",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Crear nuevas preferencias para categorías copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"HOLA\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado creado de preferencias copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene categoría copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/categorias/HOLA",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Crear nuevas preferencias para categorías copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado creado de preferencias copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra las preferencias creadas copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PruebasPreferenciaZona",
+			"description": "",
+			"item": [
+				{
+					"name": "PK",
+					"description": "",
+					"item": [
+						{
+							"name": "Crear nuevas preferencias para zonas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n\t},\n\t{\n\t\t\"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"Computers\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado creado de preferencias",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Crea preferencia zona existente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n\t},\n\t{\n\t\t\"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"Computers\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra las preferencias creadas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									},
+									{
+										"description": "",
+										"key": "preferencia",
+										"value": "200"
+									},
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado borrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios/200",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene zona",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas/Sports",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene zona",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas/Computers",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "FK",
+					"description": "",
+					"item": [
+						{
+							"name": "Crear nuevas preferencias para categorías copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "300",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n\t},\n\t{\n\t\t\"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"Computers\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado creado de preferencias copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "300",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene usuario copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/usuarios/300",
+								"method": "GET",
+								"header": [
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Crear nuevas preferencias para categorías copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 500\"]= responseCode.code===500"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n\t},\n\t{\n\t\t\"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"HOLA\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado creado de preferencias copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene categoría copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 404\"]= responseCode.code===404"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/zonas/HOLA",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"description": "",
+										"key": "",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"nombre\":\"Nueva\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Crear nuevas preferencias para categorías copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n\t},\n\t{\n\t\t\"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"Computers\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Obtiene listado creado de preferencias copy copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
+								"method": "GET",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0",
+										"description": ""
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"description": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"nombre\":\"Filipino\"\n\t},\n\t{\n\t\t\"nombre\":\"Ute\"\n\t},\n\t{\n\t\t\"nombre\":\"Cuban\"\n\t}\n]"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Borra las preferencias creadas copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "",
+										"key": "usuarioId",
+										"value": "0"
+									},
+									{
+										"description": "",
+										"key": "preferencia",
+										"value": "200"
+									},
+									{
+										"description": "",
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "PruebasPreferenciaZona",
+			"description": "",
+			"item": []
+		}
+	]
+}

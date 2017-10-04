@@ -1,0 +1,22 @@
+insert into USUARIO (id, correo, nombre, rol) values (201, 'akiddey0@mail.ru', 'Anetta Kiddey', 'OPERADOR');
+insert into USUARIO (id, correo, nombre, rol) values (202, 'sharkin1@nature.com', 'Sky Harkin', 'OPERADOR');
+insert into USUARIO (id, correo, nombre, rol) values (203, 'ao2@jimdo.com', 'Aurore O'' Neligan', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (204, 'hwinton3@nifty.com', 'Happy Winton', 'OPERADOR');
+insert into USUARIO (id, correo, nombre, rol) values (205, 'eneles4@hostgator.com', 'Everard Neles', 'OPERADOR');
+insert into USUARIO (id, correo, nombre, rol) values (206, 'mclapshaw5@cbslocal.com', 'Mareah Clapshaw', 'OPERADOR');
+insert into USUARIO (id, correo, nombre, rol) values (207, 'jrodriguez6@behance.net', 'Jermaine Rodriguez', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (208, 'mlowerson7@behance.net', 'Margarette Lowerson', 'OPERADOR');
+insert into USUARIO (id, correo, nombre, rol) values (209, 'tsuddick8@exblog.jp', 'Tyrone Suddick', 'OPERADOR');
+insert into USUARIO (id, correo, nombre, rol) values (210, 'krevans9@nhs.uk', 'Kath Revans', 'OPERADOR');
+insert into USUARIO (id, correo, nombre, rol) values (211, 'amcelweea@army.mil', 'Ase McElwee', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (212, 'lmolandb@tripod.com', 'Linnell Moland', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (213, 'sfearnyhoughc@ca.gov', 'Sherwin Fearnyhough', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (214, 'aworsalld@alexa.com', 'Aymer Worsall', 'OPERADOR');
+insert into USUARIO (id, correo, nombre, rol) values (215, 'kmantone@dion.ne.jp', 'Katy Manton', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (216, 'khappertf@globo.com', 'Katleen Happert', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (217, 'zscapensg@rambler.ru', 'Zilvia Scapens', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (218, 'ctarbatth@netlog.com', 'Celisse Tarbatt', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (219, 'bprinnetti@vk.com', 'Bobette Prinnett', 'PROVEEDOR');
+insert into USUARIO (id, correo, nombre, rol) values (220, 'ppeterj@home.pl', 'Pebrook Peter', 'OPERADOR');
+
+insert into USUARIO (id, correo, nombre, rol) values (0, 'ppeterj@home.pl', 'Admin', 'OPERADOR');
