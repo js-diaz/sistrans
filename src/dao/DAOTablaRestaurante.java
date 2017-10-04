@@ -317,7 +317,7 @@ public class DAOTablaRestaurante {
 		String sql = "SELECT * FROM Restaurante WHERE ID_REPRESENTANTE = " + id;
 		PreparedStatement ps = conn.prepareStatement(sql);
 		recursos.add(ps);
-		List<Restaurante> rest=convertirEntidadRestaurante(ps.executeQuery());
+		List<RestauranteMinimum> rest=convertirEntidadRestauranteMinimum(ps.executeQuery());
 		if(rest.isEmpty()) return null;
 		return rest.get(0);
 	}

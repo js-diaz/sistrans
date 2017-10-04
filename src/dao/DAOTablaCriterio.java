@@ -79,8 +79,8 @@ public class DAOTablaCriterio {
 	public List<Criterio> darCriteriosBasicosZona() throws SQLException, Exception
 	{
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'ZONA' OR TABLE_NAME "
-				+ "LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'CUENTA'))";
-		String sql = "SELECT * FROM "+table;
+				+ "LIKE 'RESTAURANTE' OR  TABLE_NAME LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'PEDIDO_MENU'))";
+		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
@@ -88,6 +88,7 @@ public class DAOTablaCriterio {
 		List<Criterio> c=new ArrayList<>();
 		while (rs.next()) {
 			String name2 = rs.getString("COLUMN_NAME");
+			if(name2.equals("NOMBRE_ZONA") || name2.equals("NUMEROCUENTA") || name2.equals("VALOR")) continue;
 			c.add(new Criterio(name2));
 		}
 
@@ -102,8 +103,8 @@ public class DAOTablaCriterio {
 	 */
 	public Criterio buscarCriteriosZona(String name) throws SQLException, Exception {
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'ZONA' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_PROD' OR 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA'))";
-		String sql = "SELECT * FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
+				+ "LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'RESTAURANTE'))";
+		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -127,7 +128,7 @@ public class DAOTablaCriterio {
 	{
 		ContenedoraInformacion lista= new ContenedoraInformacion();
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'ZONA' OR TABLE_NAME "
-				+ "LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'CUENTA'))";
+				+ "LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'PEDIDO_PROD' OR TABLE_NAME LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' ))";
 		String sql = "SELECT COLUMN_NAME, DATA_TYPE FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -203,10 +204,10 @@ public class DAOTablaCriterio {
 		}
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
-		String from ="FROM SELECT ZONA.*, RESTAURANTE.PAG_WEB, RESTAURANTE.ID_REPRESENTANTE, P.*,CUENTA.FECHA,CUENTA.IDUSUARIO "
+		String from ="FROM (SELECT ZONA.*, RESTAURANTE.PAG_WEB, RESTAURANTE.ID_REPRESENTANTE, P.*,CUENTA.FECHA,CUENTA.IDUSUARIO "
 				+ "FROM ZONA, RESTAURANTE,  CUENTA,  (SELECT * FROM PEDIDO_PROD NATURAL FULL OUTER JOIN PEDIDO_MENU) P "
 				+ "WHERE ZONA.NOMBRE LIKE RESTAURANTE.NOMBRE_ZONA AND P.NOMBRE_RESTAURANTE LIKE RESTAURANTE.NOMBRE "
-				+ " AND CUENTA.NUMEROCUENTA LIKE P.NUMERO_CUENTA;";
+				+ " AND CUENTA.NUMEROCUENTA LIKE P.NUMERO_CUENTA)";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
@@ -238,7 +239,16 @@ public class DAOTablaCriterio {
 				select+=","+a.getNombre();
 			}
 		}
-		else select+="*";
+		else
+		{
+			List<Criterio> criterios=darCriteriosBasicosZona();
+			select+=criterios.get(0).getNombre();
+			criterios.remove(0);
+			for(Criterio c: criterios)
+			{
+				select+=","+c.getNombre();
+			}
+		}
 		//Verifica órdenes
 		if(existentesOrd.size()>0)
 		{
@@ -287,7 +297,6 @@ public class DAOTablaCriterio {
 		recursos.add(prep);
 		System.out.println(sql);
 		ResultSet r =prep.executeQuery();
-		
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
 	}
@@ -306,10 +315,11 @@ public class DAOTablaCriterio {
 	public List<ContenedoraInformacion> generarListaFiltradaZonaEspecifica(String nombreZona,
 			List<CriterioOrden> criteriosOrganizacion,List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregacionesSeleccion, CriterioVerdad operacionesWhere, 
-			CriterioVerdadHaving operacionesHaving) throws SQLException, Exception {
+			CriterioVerdadHaving operacionesHaving, List<Criterio> seleccion) throws SQLException, Exception {
 		//Verifica que no haya repeticiones de criterios
 		List<CriterioOrden> existentesOrd=new ArrayList<>();
 		List<Criterio> existentesAgrup= new ArrayList<>();
+		List<Criterio> existentesSelec= new ArrayList<>();
 		List<CriterioAgregacion> agreSelec=new ArrayList<>();
 		if(criteriosAgrupamiento!=null)
 		for(Criterio c: criteriosAgrupamiento)
@@ -330,6 +340,12 @@ public class DAOTablaCriterio {
 			if(agreSelec.indexOf(a)>=0) continue;
 			agreSelec.add(a);
 		}
+		if(seleccion!=null)
+			for(Criterio c: seleccion)
+			{
+				if(existentesSelec.indexOf(c)>=0) continue;
+				existentesSelec.add(c);
+			}	
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
 		String from ="FROM SELECT ZONA.*, RESTAURANTE.PAG_WEB, RESTAURANTE.ID_REPRESENTANTE, P.*,CUENTA.FECHA,CUENTA.IDUSUARIO "
@@ -367,7 +383,16 @@ public class DAOTablaCriterio {
 				select+=","+a.getNombre();
 			}
 		}
-		else select+="*";
+		else
+		{
+			List<Criterio> criterios=darCriteriosBasicosZona();
+			select+=criterios.get(0).getNombre();
+			criterios.remove(0);
+			for(Criterio c: criterios)
+			{
+				select+=","+c.getNombre();
+			}
+		}
 		//Verifica órdenes
 		if(existentesOrd.size()>0)
 		{
@@ -550,11 +575,12 @@ public class DAOTablaCriterio {
 	}
 
 	private List<ContenedoraInformacion> crearContenedora(ResultSet r, String select) throws SQLException, Exception {
-		select=select.replace("SELECT ", "");
+		select=select.replace("SELECT ", "");		
+		if(select.trim().length()==0) return new ArrayList<>();
 		String[] datos=select.split(",");
 		ContenedoraInformacion c=null;
 		List<ContenedoraInformacion> lista= new ArrayList<>();
-		if(r.next())
+		while(r.next())
 		{
 			c=new ContenedoraInformacion(datos);
 			for(int i=0;i<datos.length;i++)

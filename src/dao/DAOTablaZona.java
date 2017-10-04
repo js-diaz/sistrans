@@ -282,7 +282,7 @@ public class DAOTablaZona {
 			}
 			cp.getProductos().add(p);
 		}
-		if(list.size()>0)
+		if(p!=null)
 		{
 			c.getCategoriaProductos().add(cp);
 			list.add(c);

@@ -141,6 +141,7 @@ public class UsuarioServices {
 			if (id == null || id<0)
 				throw new Exception("Id no válida");
 			usuario=tm.usuarioCompletoBuscarUsuarioPorId(id);
+			if(!usuario.getRol().equals(Rol.CLIENTE)) throw new Exception("Este historial solo está diseñado para clientes de RotondAndes");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500).entity(doErrorMessage(e)).build();

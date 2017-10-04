@@ -249,6 +249,7 @@ public class ZonaServices {
 			String nombre=null;
 			if(restaurante) nombre=u.getRestaurante().getNombre();
 			zonas = tm.zonaDarProductosTotalesPorZonaYCategoria(limite.getFechaInicial(), limite.getFechaFinal(), nombre);
+			if(zonas.isEmpty()) return Response.status(404).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
