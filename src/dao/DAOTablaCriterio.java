@@ -315,7 +315,7 @@ public class DAOTablaCriterio {
 	public List<ContenedoraInformacion> generarListaFiltradaZonaEspecifica(String nombreZona,
 			List<CriterioOrden> criteriosOrganizacion,List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregacionesSeleccion, CriterioVerdad operacionesWhere, 
-			CriterioVerdadHaving operacionesHaving, List<Criterio> seleccion) throws SQLException, Exception {
+			CriterioVerdadHaving operacionesHaving) throws SQLException, Exception {
 		//Verifica que no haya repeticiones de criterios
 		List<CriterioOrden> existentesOrd=new ArrayList<>();
 		List<Criterio> existentesAgrup= new ArrayList<>();
@@ -340,12 +340,6 @@ public class DAOTablaCriterio {
 			if(agreSelec.indexOf(a)>=0) continue;
 			agreSelec.add(a);
 		}
-		if(seleccion!=null)
-			for(Criterio c: seleccion)
-			{
-				if(existentesSelec.indexOf(c)>=0) continue;
-				existentesSelec.add(c);
-			}	
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
 		String from ="FROM SELECT ZONA.*, RESTAURANTE.PAG_WEB, RESTAURANTE.ID_REPRESENTANTE, P.*,CUENTA.FECHA,CUENTA.IDUSUARIO "
