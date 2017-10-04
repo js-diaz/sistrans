@@ -1,0 +1,406 @@
+{
+	"variables": [],
+	"info": {
+		"name": "PruebasReqConsultas.diaz",
+		"_postman_id": "3c1c18b5-fc76-5b46-dcd9-83c75d4cd919",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RFC1",
+			"description": "",
+			"item": [
+				{
+					"name": "Json ordenado solo ordenamiento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/completo",
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t]\n\t\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Json con agrupamiento y ordenamiento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/completo",
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"TIPO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Json con where",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/completo",
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t\"valorComparacion1\":\"1%\",\n\t\t\"afirmativo1\":true\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Json con having y agrupacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/completo",
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"TIPO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t\"valorComparacion1\":\"1%\",\n\t\t\"afirmativo1\":true\n\t},\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"NOMBRE_CATEGORIA\",\n\t\t\t\"agregacion\":\"COUNT\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t\"operacion1\":\">\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba de restricciones con conjuntos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/completo",
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"TIPO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"TIEMPO\"\n\t\t\t},\n\t\t\t\"valores\":[\"98\",\"96\"],\n\t\t\t\"afirmativo1\":true\n\t\t},\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valores\":[\"1\",\"2\"],\n\t\t\t\"afirmativo1\":false\n\t\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pruebas de restricciones con operaciones entre criterios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/completo",
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"PRECIO\"\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"COSTOPRODUCCION\"\n\t\t\t},\n\t\t\t\"operacion1\":\"=\",\n\t\t\t\"afirmativo1\":true\n\t\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pruebas de restricciones entre operacioens de criterios con having",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/completo",
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"TIPO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"operacion1\":\">\",\n\t\t\t\"afirmativo1\":true\n\t\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "En un rango de fecha",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/completo",
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"FECHA_FIN\",\n\t\t\t\"ascendente\":true\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA_INICIO\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion1\":\"2017-04-08\",\n\t\t\t\t\"operacion1\":\">=\",\n\t\t\t\t\"afirmativo1\":true\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA_INICIO\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"<=\",\n\t\t\t\t\"afirmativo1\":true,\n\t\t\t\t\"valorComparacion1\":\"2018-01-01\"\n\t\t\t\t\n\t\t\t\t\n\t\t\t},\n\t\t\t\"conjuncion\":true,\n\t\t\t\"afirmativo1\":true\n\t\t\t\n\t\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RFC4",
+			"description": "",
+			"item": [
+				{
+					"name": "Dar productos mas ofrecidos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/mas-ofrecidos",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RFC6",
+			"description": "",
+			"item": [
+				{
+					"name": "Dar productos mas vendidos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/mas-vendidos",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Dar productos mas vendidos por zona",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/mas-vendidos/Garden",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Dar productos mas vendidos por zona erronea",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 404\"]= responseCode.code===404"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "localhost:8080/VideoAndes/rest/productos/mas-vendidos/Gardenito",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

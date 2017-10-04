@@ -3782,6 +3782,82 @@ public class RotondAndesTM {
 		return informacion;
 	}
 	
+	/**
+	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+	 */
+	public List<ContenedoraInformacion> criteriosOrganizarPorProductoUniversal(String nombreProducto,
+			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having) throws Exception {
+		List<ContenedoraInformacion> informacion=null;
+		DAOTablaCriterio dao=null;
+		try 
+		{
+			//////transaccion
+			dao=new DAOTablaCriterio();
+			dao.setConn(darConexion());
+			informacion = dao.generarListaFiltradaProductoEspecifica(nombreProducto,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return informacion;
+	}
+	
+	/**
+	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+	 */
+	public List<ContenedoraInformacion> criteriosOrganizarPorProductosComoSeQuiera(
+			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having) throws Exception {
+		List<ContenedoraInformacion> informacion=null;
+		DAOTablaCriterio dao=null;
+		try 
+		{
+			dao=new DAOTablaCriterio();
+			dao.setConn(darConexion());
+			informacion = dao.generarListaFiltradaProductos(criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return informacion;
+	}
+
+	
 	//Restaurante
 	/**
 	 * Retorna las restaurantes del sistema.<br>

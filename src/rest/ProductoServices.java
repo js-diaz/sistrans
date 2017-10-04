@@ -30,6 +30,8 @@ import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import rfc.ContenedoraCriterios;
+import rfc.ContenedoraInformacion;
 import tm.RotondAndesTM;
 import vos.Producto;
 import vos.UsuarioMinimum;
@@ -230,6 +232,51 @@ public class ProductoServices {
 		return Response.status(200).entity(producto).build();
 	}
 
+	//RFC1
+	/**
+	 * Genera un filtro por nombre de zona con las características que prefiere el usuario.<br>
+	 * @param name Nombre de la zona.<br>
+	 * @param c Criterios del usuario.<br>
+	 * @return Json con la información deseada.
+	 */
+	@POST
+	@Path("completo/{nombre: [a-zA-Z]+}")
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pruebaFiltros( @PathParam("nombre") String name, ContenedoraCriterios c) {
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<ContenedoraInformacion> zonas;
+		try {
+			if (name == null || name.length() == 0)
+				throw new Exception("Nombre de la zona no valido");
+			zonas = tm.criteriosOrganizarPorZonaUniversal(name,c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zonas).build();
+	}
+	/**
+	 * Genera un filtro por todos los productos con las características que prefiere el usuario.<br>
+	 * @param c Criterios del usuario.<br>
+	 * @return Json con la información deseada.
+	 */
+	@POST
+	@Path("completo")
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pruebaFiltrosMultiples( ContenedoraCriterios c) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<ContenedoraInformacion> zonas;
+		try {
+			zonas = tm.criteriosOrganizarPorZonasComoSeQuiera(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zonas).build();
+	}
+	
+	//RFC4
 	/**
 	 * Metodo que expone servicio REST usando GET que da los productos m�s ofrecidos de la base de datos.
 	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-ofrecidos
@@ -250,6 +297,7 @@ public class ProductoServices {
 		return Response.status(200).entity(productos).build();
 	}
 	
+	//RFC6
 	/**
 	 * Metodo que expone servicio REST usando GET que da los productos m�s vendidos de la base de datos.
 	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-vendidos
