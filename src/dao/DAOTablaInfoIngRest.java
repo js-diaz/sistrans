@@ -81,7 +81,7 @@ public class DAOTablaInfoIngRest {
 	 */
 	public List<InfoIngRest> darInfoIngRestsPorRestaurante(String restaurante) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM INFO_PROD_REST WHERE NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
+		String sql = "SELECT * FROM INFO_ING_REST WHERE NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
