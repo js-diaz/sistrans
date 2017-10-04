@@ -1,0 +1,3562 @@
+{
+	"id": "20f1de99-93a3-44e3-b42d-ea694f80ee35",
+	"name": "Pruebas Integridad de Datos",
+	"allTests": [],
+	"timestamp": "2017-10-04T23:34:21.477Z",
+	"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "no-environment",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+		"name": "Pruebas Integridad de Datos",
+		"description": "",
+		"order": [],
+		"folders": [
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "ac733dbc-ab74-fd05-127a-59fb58e3ab4c",
+				"name": "CategoriaMenu",
+				"order": [
+					"c882d37d-e6cd-5a2a-0949-b8df378a8a74",
+					"e43fd8f4-7e06-c600-2819-a1c42a48164f",
+					"dacb7ada-8361-e65a-de70-8233ea0eda16",
+					"ff244119-3e99-e380-d755-51a8fe277f23"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "04b5376d-1d92-47c8-80be-e293acaa1852",
+				"name": "CategoriaProducto",
+				"order": [
+					"40978d88-5231-9e3c-11d2-9d47f2fd0cc6",
+					"7909ce92-ce55-af79-52f9-32629cbed412",
+					"ef8a18a0-a1cf-1c71-4c81-9e62288a86d9",
+					"fe7bb4ff-c3be-c5c8-395a-3078faff7ce8"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "23dc0397-e8cf-d465-d4d8-9789d21da5ae",
+				"name": "CategoriaRestaurante",
+				"order": [
+					"fd9e82e3-a755-1c0c-1d5a-8842ef2e1320",
+					"26848d6e-8b36-1bd2-cbb9-162d0e6f3522",
+					"4692cf5e-d5ed-4080-8979-94dfc65741e8",
+					"a510e38f-8269-4711-0407-467aa818f227"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "3bdb0638-fd31-e79b-2771-7357411213a6",
+				"name": "InfoIngRest",
+				"order": [
+					"883d1dba-57ed-650e-3963-37316dce8560",
+					"0a9381b5-d696-630e-6d6d-0fdbef3c6f1c",
+					"c6bb7b0f-2291-a357-51ee-20b1d63e824d",
+					"11e5325f-94c8-da91-7f4b-bb33d8762af0",
+					"f7d1abe3-d983-a027-f95e-a7d9811bc622",
+					"8541bdf6-d25f-30d9-f68e-86df21e130d6"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "431e150b-f6c9-892b-917f-7b4377acca7d",
+				"name": "InfoProdRest",
+				"order": [
+					"ef6fbfbf-c334-bbe3-49d7-2d15a9000dd3",
+					"6ce376da-5046-3d51-e8b0-0e99064f4746",
+					"2e959911-84e8-eca4-53ef-021d6f064215",
+					"d2694676-5eab-baec-b80a-d3eb84253084",
+					"f640f047-721b-7de5-c09e-53e0664b2303",
+					"7e259c67-9e6d-060f-5882-ac4c84844cb4"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "67325a33-cfd6-8a9a-98ce-0ceaca542254",
+				"name": "Menu",
+				"order": [
+					"dce29e0a-5dc2-b27a-3e70-5b314c39ef06",
+					"6488b73d-5a8f-eca1-512f-eb20674b7733",
+					"31bfd3ba-b7dc-ef82-88cb-c1ec1113ce0f",
+					"03fb5fcd-ad49-b775-1335-4c09d3e603c7",
+					"e12322e8-2708-3c91-5357-bb71da6a31c4"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "151188fd-c5f3-5ff0-b922-59c2e0195e86",
+				"name": "PedidoMenu",
+				"order": [
+					"c203cc76-8873-7855-7d12-df5558736cfe",
+					"76242530-d17a-86cf-2fe6-4ceee080870f",
+					"db869f94-c4db-7919-7cc3-f6288ce95a71",
+					"3c9524cc-d936-4d64-c119-df4daaf3254a",
+					"34bb0ae4-bfc7-3f65-e75f-f390bc7ea37c",
+					"676542e7-8a85-db49-f8e2-9fd247ab9f43"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "ec76f790-cdae-c387-b5ee-a299873a8eba",
+				"name": "PedidoProd",
+				"order": [
+					"e3340979-11af-6f76-afc1-c3403015b739",
+					"cf51d5b8-3437-c5dd-6bbe-fd691672e24e",
+					"33041129-e523-aa2c-d1f4-629ea3b61025",
+					"8c1f6efc-4027-163b-bced-38a601328466",
+					"eaf394a3-a669-9741-cc82-e60dcc0eb4d7",
+					"167cdd57-4784-f56a-c6e5-3838b5df7be4"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "f762754b-62f6-6f03-89d9-c239e7622b26",
+				"name": "PerteneceAMenu",
+				"order": [
+					"eb6f19a0-c59e-88af-028e-c2ff4922551b",
+					"a1cd5d45-f862-d07d-d44d-08c3b09acf61",
+					"8775d588-f565-09ce-0a9d-fcebae70c8e2",
+					"c76a1a71-7d44-a0b1-5a9b-d51f95357bd7"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "83af228b-ee93-2396-5afd-4143f0e7c004",
+				"name": "PerteneceAPlato",
+				"order": [
+					"c595551f-3c60-0839-b895-2572161ede55",
+					"371aec5f-35d7-7fe9-443b-e00c8176d515",
+					"70f0bd2c-6afd-5261-65e0-11aea51ed237",
+					"f01a6ef3-55c8-70d8-e5d2-18cc6825a92f"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "2a0e9532-c94f-28c9-a9ed-3aa3c0524b55",
+				"name": "Reserva",
+				"order": [
+					"58478d98-4649-3a23-6874-9797e46ee4ba",
+					"2c141890-7369-0686-685b-eac96f2d209c",
+					"2e85e674-4420-9d61-cadc-5763a80eb1dd",
+					"5acadf0f-fa39-a96f-6b85-c0cdf935be0c",
+					"ddbda16e-b98b-aaf0-f511-82ae2d69be0f",
+					"07fb63ca-05eb-499a-67c7-3fc2a4db0cad"
+				],
+				"owner": "2580472"
+			},
+			{
+				"collection": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collectionId": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"collection_id": "2db10ef2-e517-e6ea-5432-8bbf4a4c3421",
+				"description": "",
+				"folders_order": [],
+				"id": "c286da9a-70c6-0699-cb42-68346a71f3ae",
+				"name": "Restaurante",
+				"order": [
+					"5d3b2d65-c9e1-a798-ea60-e82ad232cbd5",
+					"672283ec-e1df-fd4d-30d8-1f678d4e89b9",
+					"b92d6b41-5978-8d3a-75c9-b2b92ed2edc1",
+					"cefd1d10-26d6-411d-e503-688dbd5a7cba",
+					"7b88a825-9273-aefe-2732-f5125c55fd63",
+					"c59aea83-fc7d-1e37-fe3f-e334dca90125"
+				],
+				"owner": "2580472"
+			}
+		],
+		"folders_order": [
+			"c286da9a-70c6-0699-cb42-68346a71f3ae",
+			"67325a33-cfd6-8a9a-98ce-0ceaca542254",
+			"431e150b-f6c9-892b-917f-7b4377acca7d",
+			"3bdb0638-fd31-e79b-2771-7357411213a6",
+			"ec76f790-cdae-c387-b5ee-a299873a8eba",
+			"151188fd-c5f3-5ff0-b922-59c2e0195e86",
+			"2a0e9532-c94f-28c9-a9ed-3aa3c0524b55",
+			"83af228b-ee93-2396-5afd-4143f0e7c004",
+			"f762754b-62f6-6f03-89d9-c239e7622b26",
+			"04b5376d-1d92-47c8-80be-e293acaa1852",
+			"ac733dbc-ab74-fd05-127a-59fb58e3ab4c",
+			"23dc0397-e8cf-d465-d4d8-9789d21da5ae"
+		],
+		"timestamp": 0,
+		"synced": true,
+		"remote_id": 0,
+		"owner": "2580472",
+		"sharedWithTeam": false,
+		"subscribed": false,
+		"remoteLink": "",
+		"remoteLinkUpdatedAt": null,
+		"public": false,
+		"createdAt": 1507160037455,
+		"updatedAt": 1507160037455,
+		"write": true,
+		"published": false,
+		"favorite": false,
+		"permissions": {},
+		"syncedPermissions": {}
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [],
+	"results": [
+		{
+			"name": "agregar restaurante",
+			"id": "5d3b2d65-c9e1-a798-ea60-e82ad232cbd5",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"882"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "882",
+			"totalRequestTime": "882",
+			"iterationResults": {}
+		},
+		{
+			"name": "PK repetida",
+			"id": "672283ec-e1df-fd4d-30d8-1f678d4e89b9",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"tests": {
+				"Status code is 500": false
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"14"
+			],
+			"allTests": [
+				{
+					"Status code is 500": false
+				}
+			],
+			"time": "14",
+			"totalRequestTime": "14",
+			"iterationResults": {}
+		},
+		{
+			"name": "ver restaurante obtenido",
+			"id": "b92d6b41-5978-8d3a-75c9-b2b92ed2edc1",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas el Corral",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"273"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "273",
+			"totalRequestTime": "273",
+			"iterationResults": {}
+		},
+		{
+			"name": "borrar restaurante",
+			"id": "cefd1d10-26d6-411d-e503-688dbd5a7cba",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas el Corral",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 204": false
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"190"
+			],
+			"allTests": [
+				{
+					"Status code is 204": false
+				}
+			],
+			"time": "190",
+			"totalRequestTime": "190",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK usuario no valida",
+			"id": "7b88a825-9273-aefe-2732-f5125c55fd63",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"tests": {
+				"Status code is 500": false
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"6"
+			],
+			"allTests": [
+				{
+					"Status code is 500": false
+				}
+			],
+			"time": "6",
+			"totalRequestTime": "6",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK zona no valida",
+			"id": "c59aea83-fc7d-1e37-fe3f-e334dca90125",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"tests": {
+				"Status code is 500": false
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"4"
+			],
+			"allTests": [
+				{
+					"Status code is 500": false
+				}
+			],
+			"time": "4",
+			"totalRequestTime": "4",
+			"iterationResults": {}
+		},
+		{
+			"name": "agregar menu",
+			"id": "dce29e0a-5dc2-b27a-3e70-5b314c39ef06",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"219"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "219",
+			"totalRequestTime": "219",
+			"iterationResults": {}
+		},
+		{
+			"name": "PK repetida",
+			"id": "6488b73d-5a8f-eca1-512f-eb20674b7733",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"195"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "195",
+			"totalRequestTime": "195",
+			"iterationResults": {}
+		},
+		{
+			"name": "ver menu obtenido",
+			"id": "31bfd3ba-b7dc-ef82-88cb-c1ec1113ce0f",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"196"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "196",
+			"totalRequestTime": "196",
+			"iterationResults": {}
+		},
+		{
+			"name": "borrar menu",
+			"id": "03fb5fcd-ad49-b775-1335-4c09d3e603c7",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 204": false
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"241"
+			],
+			"allTests": [
+				{
+					"Status code is 204": false
+				}
+			],
+			"time": "241",
+			"totalRequestTime": "241",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK restaurante no valida",
+			"id": "e12322e8-2708-3c91-5357-bb71da6a31c4",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"Status code is 500": false
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"9"
+			],
+			"allTests": [
+				{
+					"Status code is 500": false
+				}
+			],
+			"time": "9",
+			"totalRequestTime": "9",
+			"iterationResults": {}
+		},
+		{
+			"name": "agregar infoProdRest",
+			"id": "ef6fbfbf-c334-bbe3-49d7-2d15a9000dd3",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"202"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "202",
+			"totalRequestTime": "202",
+			"iterationResults": {}
+		},
+		{
+			"name": "PK repetida",
+			"id": "6ce376da-5046-3d51-e8b0-0e99064f4746",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"184"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "184",
+			"totalRequestTime": "184",
+			"iterationResults": {}
+		},
+		{
+			"name": "ver infoProdRest obtenido",
+			"id": "2e959911-84e8-eca4-53ef-021d6f064215",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"216"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "216",
+			"totalRequestTime": "216",
+			"iterationResults": {}
+		},
+		{
+			"name": "borrar infoProdRest",
+			"id": "d2694676-5eab-baec-b80a-d3eb84253084",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 204": false
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"211"
+			],
+			"allTests": [
+				{
+					"Status code is 204": false
+				}
+			],
+			"time": "211",
+			"totalRequestTime": "211",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK restaurante no valida",
+			"id": "f640f047-721b-7de5-c09e-53e0664b2303",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"210"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "210",
+			"totalRequestTime": "210",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK producto no valida",
+			"id": "7e259c67-9e6d-060f-5882-ac4c84844cb4",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"190"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "190",
+			"totalRequestTime": "190",
+			"iterationResults": {}
+		},
+		{
+			"name": "agregar infoIngRest",
+			"id": "883d1dba-57ed-650e-3963-37316dce8560",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"197"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "197",
+			"totalRequestTime": "197",
+			"iterationResults": {}
+		},
+		{
+			"name": "PK repetida",
+			"id": "0a9381b5-d696-630e-6d6d-0fdbef3c6f1c",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"223"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "223",
+			"totalRequestTime": "223",
+			"iterationResults": {}
+		},
+		{
+			"name": "ver infoIngRest obtenido",
+			"id": "c6bb7b0f-2291-a357-51ee-20b1d63e824d",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"241"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "241",
+			"totalRequestTime": "241",
+			"iterationResults": {}
+		},
+		{
+			"name": "borrar infoIngRest",
+			"id": "11e5325f-94c8-da91-7f4b-bb33d8762af0",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 204": false
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"206"
+			],
+			"allTests": [
+				{
+					"Status code is 204": false
+				}
+			],
+			"time": "206",
+			"totalRequestTime": "206",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK restaurante no valida",
+			"id": "f7d1abe3-d983-a027-f95e-a7d9811bc622",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"tests": {
+				"Status code is 500": false
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"17"
+			],
+			"allTests": [
+				{
+					"Status code is 500": false
+				}
+			],
+			"time": "17",
+			"totalRequestTime": "17",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK ingrediente no valida",
+			"id": "8541bdf6-d25f-30d9-f68e-86df21e130d6",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"tests": {
+				"Status code is 500": false
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"9"
+			],
+			"allTests": [
+				{
+					"Status code is 500": false
+				}
+			],
+			"time": "9",
+			"totalRequestTime": "9",
+			"iterationResults": {}
+		},
+		{
+			"name": "agregar pedidoProd",
+			"id": "e3340979-11af-6f76-afc1-c3403015b739",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"530"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "530",
+			"totalRequestTime": "530",
+			"iterationResults": {}
+		},
+		{
+			"name": "PK repetida",
+			"id": "cf51d5b8-3437-c5dd-6bbe-fd691672e24e",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"496"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "496",
+			"totalRequestTime": "496",
+			"iterationResults": {}
+		},
+		{
+			"name": "ver pedidoProd obtenido",
+			"id": "33041129-e523-aa2c-d1f4-629ea3b61025",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos/Pixonyx/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"222"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "222",
+			"totalRequestTime": "222",
+			"iterationResults": {}
+		},
+		{
+			"name": "borrar pedidoProd",
+			"id": "8c1f6efc-4027-163b-bced-38a601328466",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos/Pixonyx/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 204": false
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"221"
+			],
+			"allTests": [
+				{
+					"Status code is 204": false
+				}
+			],
+			"time": "221",
+			"totalRequestTime": "221",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK cuenta no valida",
+			"id": "eaf394a3-a669-9741-cc82-e60dcc0eb4d7",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"484"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "484",
+			"totalRequestTime": "484",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK infoProdRest no valida",
+			"id": "167cdd57-4784-f56a-c6e5-3838b5df7be4",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"501"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "501",
+			"totalRequestTime": "501",
+			"iterationResults": {}
+		},
+		{
+			"name": "agregar pedidoMenu",
+			"id": "c203cc76-8873-7855-7d12-df5558736cfe",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"470"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "470",
+			"totalRequestTime": "470",
+			"iterationResults": {}
+		},
+		{
+			"name": "PK repetida",
+			"id": "76242530-d17a-86cf-2fe6-4ceee080870f",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"516"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "516",
+			"totalRequestTime": "516",
+			"iterationResults": {}
+		},
+		{
+			"name": "ver pedidoMenu obtenido",
+			"id": "db869f94-c4db-7919-7cc3-f6288ce95a71",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus/Voonder/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"202"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "202",
+			"totalRequestTime": "202",
+			"iterationResults": {}
+		},
+		{
+			"name": "borrar pedidoMenu",
+			"id": "3c9524cc-d936-4d64-c119-df4daaf3254a",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus/Voonder/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 204": false
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"275"
+			],
+			"allTests": [
+				{
+					"Status code is 204": false
+				}
+			],
+			"time": "275",
+			"totalRequestTime": "275",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK cuenta no valida",
+			"id": "34bb0ae4-bfc7-3f65-e75f-f390bc7ea37c",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"783"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "783",
+			"totalRequestTime": "783",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK menu no valida",
+			"id": "676542e7-8a85-db49-f8e2-9fd247ab9f43",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"491"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "491",
+			"totalRequestTime": "491",
+			"iterationResults": {}
+		},
+		{
+			"name": "agregar reserva",
+			"id": "58478d98-4649-3a23-6874-9797e46ee4ba",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"5"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "5",
+			"totalRequestTime": "5",
+			"iterationResults": {}
+		},
+		{
+			"name": "PK repetida",
+			"id": "2c141890-7369-0686-685b-eac96f2d209c",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"260"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "260",
+			"totalRequestTime": "260",
+			"iterationResults": {}
+		},
+		{
+			"name": "ver reserva obtenido",
+			"id": "2e85e674-4420-9d61-cadc-5763a80eb1dd",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"4"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "4",
+			"totalRequestTime": "4",
+			"iterationResults": {}
+		},
+		{
+			"name": "borrar reserva",
+			"id": "5acadf0f-fa39-a96f-6b85-c0cdf935be0c",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"tests": {
+				"Status code is 204": false
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"4"
+			],
+			"allTests": [
+				{
+					"Status code is 204": false
+				}
+			],
+			"time": "4",
+			"totalRequestTime": "4",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK usuario no valida",
+			"id": "ddbda16e-b98b-aaf0-f511-82ae2d69be0f",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"194"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "194",
+			"totalRequestTime": "194",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK zona no valida",
+			"id": "07fb63ca-05eb-499a-67c7-3fc2a4db0cad",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"333"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "333",
+			"totalRequestTime": "333",
+			"iterationResults": {}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "c595551f-3c60-0839-b895-2572161ede55",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"6"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "6",
+			"totalRequestTime": "6",
+			"iterationResults": {}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "371aec5f-35d7-7fe9-443b-e00c8176d515",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"348"
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			],
+			"time": "348",
+			"totalRequestTime": "348",
+			"iterationResults": {}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "70f0bd2c-6afd-5261-65e0-11aea51ed237",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"5"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "5",
+			"totalRequestTime": "5",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK no valido",
+			"id": "f01a6ef3-55c8-70d8-e5d2-18cc6825a92f",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"Status code is 500": false
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"6"
+			],
+			"allTests": [
+				{
+					"Status code is 500": false
+				}
+			],
+			"time": "6",
+			"totalRequestTime": "6",
+			"iterationResults": {}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "eb6f19a0-c59e-88af-028e-c2ff4922551b",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"331"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "331",
+			"totalRequestTime": "331",
+			"iterationResults": {}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "a1cd5d45-f862-d07d-d44d-08c3b09acf61",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"251"
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			],
+			"time": "251",
+			"totalRequestTime": "251",
+			"iterationResults": {}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "8775d588-f565-09ce-0a9d-fcebae70c8e2",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"189"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "189",
+			"totalRequestTime": "189",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK no valido",
+			"id": "c76a1a71-7d44-a0b1-5a9b-d51f95357bd7",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"213"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "213",
+			"totalRequestTime": "213",
+			"iterationResults": {}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "40978d88-5231-9e3c-11d2-9d47f2fd0cc6",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"6"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "6",
+			"totalRequestTime": "6",
+			"iterationResults": {}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "7909ce92-ce55-af79-52f9-32629cbed412",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"324"
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			],
+			"time": "324",
+			"totalRequestTime": "324",
+			"iterationResults": {}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "ef8a18a0-a1cf-1c71-4c81-9e62288a86d9",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"4"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "4",
+			"totalRequestTime": "4",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK no valido",
+			"id": "fe7bb4ff-c3be-c5c8-395a-3078faff7ce8",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"Status code is 500": false
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"11"
+			],
+			"allTests": [
+				{
+					"Status code is 500": false
+				}
+			],
+			"time": "11",
+			"totalRequestTime": "11",
+			"iterationResults": {}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "c882d37d-e6cd-5a2a-0949-b8df378a8a74",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"269"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "269",
+			"totalRequestTime": "269",
+			"iterationResults": {}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "e43fd8f4-7e06-c600-2819-a1c42a48164f",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"226"
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			],
+			"time": "226",
+			"totalRequestTime": "226",
+			"iterationResults": {}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "dacb7ada-8361-e65a-de70-8233ea0eda16",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"194"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "194",
+			"totalRequestTime": "194",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK no valido",
+			"id": "ff244119-3e99-e380-d755-51a8fe277f23",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"222"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "222",
+			"totalRequestTime": "222",
+			"iterationResults": {}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "fd9e82e3-a755-1c0c-1d5a-8842ef2e1320",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"186"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "186",
+			"totalRequestTime": "186",
+			"iterationResults": {}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "26848d6e-8b36-1bd2-cbb9-162d0e6f3522",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"10466"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "10466",
+			"totalRequestTime": "10466",
+			"iterationResults": {}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "4692cf5e-d5ed-4080-8979-94dfc65741e8",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 200": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"250"
+			],
+			"allTests": [
+				{
+					"Status code is 200": false
+				}
+			],
+			"time": "250",
+			"totalRequestTime": "250",
+			"iterationResults": {}
+		},
+		{
+			"name": "FK no valido",
+			"id": "a510e38f-8269-4711-0407-467aa818f227",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"187"
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			],
+			"time": "187",
+			"totalRequestTime": "187",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 21,
+	"totalFail": 40,
+	"totalTime": 24020,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "agregar restaurante",
+			"id": "5d3b2d65-c9e1-a798-ea60-e82ad232cbd5",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "PK repetida",
+			"id": "672283ec-e1df-fd4d-30d8-1f678d4e89b9",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "ver restaurante obtenido",
+			"id": "b92d6b41-5978-8d3a-75c9-b2b92ed2edc1",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas el Corral",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "borrar restaurante",
+			"id": "cefd1d10-26d6-411d-e503-688dbd5a7cba",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas el Corral",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK usuario no valida",
+			"id": "7b88a825-9273-aefe-2732-f5125c55fd63",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK zona no valida",
+			"id": "c59aea83-fc7d-1e37-fe3f-e334dca90125",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "agregar menu",
+			"id": "dce29e0a-5dc2-b27a-3e70-5b314c39ef06",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "PK repetida",
+			"id": "6488b73d-5a8f-eca1-512f-eb20674b7733",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "ver menu obtenido",
+			"id": "31bfd3ba-b7dc-ef82-88cb-c1ec1113ce0f",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "borrar menu",
+			"id": "03fb5fcd-ad49-b775-1335-4c09d3e603c7",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK restaurante no valida",
+			"id": "e12322e8-2708-3c91-5357-bb71da6a31c4",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "agregar infoProdRest",
+			"id": "ef6fbfbf-c334-bbe3-49d7-2d15a9000dd3",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "PK repetida",
+			"id": "6ce376da-5046-3d51-e8b0-0e99064f4746",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "ver infoProdRest obtenido",
+			"id": "2e959911-84e8-eca4-53ef-021d6f064215",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "borrar infoProdRest",
+			"id": "d2694676-5eab-baec-b80a-d3eb84253084",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK restaurante no valida",
+			"id": "f640f047-721b-7de5-c09e-53e0664b2303",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "FK producto no valida",
+			"id": "7e259c67-9e6d-060f-5882-ac4c84844cb4",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "agregar infoIngRest",
+			"id": "883d1dba-57ed-650e-3963-37316dce8560",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "PK repetida",
+			"id": "0a9381b5-d696-630e-6d6d-0fdbef3c6f1c",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "ver infoIngRest obtenido",
+			"id": "c6bb7b0f-2291-a357-51ee-20b1d63e824d",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "borrar infoIngRest",
+			"id": "11e5325f-94c8-da91-7f4b-bb33d8762af0",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK restaurante no valida",
+			"id": "f7d1abe3-d983-a027-f95e-a7d9811bc622",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK ingrediente no valida",
+			"id": "8541bdf6-d25f-30d9-f68e-86df21e130d6",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "agregar pedidoProd",
+			"id": "e3340979-11af-6f76-afc1-c3403015b739",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "PK repetida",
+			"id": "cf51d5b8-3437-c5dd-6bbe-fd691672e24e",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "ver pedidoProd obtenido",
+			"id": "33041129-e523-aa2c-d1f4-629ea3b61025",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos/Pixonyx/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "borrar pedidoProd",
+			"id": "8c1f6efc-4027-163b-bced-38a601328466",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos/Pixonyx/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK cuenta no valida",
+			"id": "eaf394a3-a669-9741-cc82-e60dcc0eb4d7",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "FK infoProdRest no valida",
+			"id": "167cdd57-4784-f56a-c6e5-3838b5df7be4",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "agregar pedidoMenu",
+			"id": "c203cc76-8873-7855-7d12-df5558736cfe",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "PK repetida",
+			"id": "76242530-d17a-86cf-2fe6-4ceee080870f",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "ver pedidoMenu obtenido",
+			"id": "db869f94-c4db-7919-7cc3-f6288ce95a71",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus/Voonder/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "borrar pedidoMenu",
+			"id": "3c9524cc-d936-4d64-c119-df4daaf3254a",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus/Voonder/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK cuenta no valida",
+			"id": "34bb0ae4-bfc7-3f65-e75f-f390bc7ea37c",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "FK menu no valida",
+			"id": "676542e7-8a85-db49-f8e2-9fd247ab9f43",
+			"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "agregar reserva",
+			"id": "58478d98-4649-3a23-6874-9797e46ee4ba",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "PK repetida",
+			"id": "2c141890-7369-0686-685b-eac96f2d209c",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "ver reserva obtenido",
+			"id": "2e85e674-4420-9d61-cadc-5763a80eb1dd",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "borrar reserva",
+			"id": "5acadf0f-fa39-a96f-6b85-c0cdf935be0c",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK usuario no valida",
+			"id": "ddbda16e-b98b-aaf0-f511-82ae2d69be0f",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "FK zona no valida",
+			"id": "07fb63ca-05eb-499a-67c7-3fc2a4db0cad",
+			"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "c595551f-3c60-0839-b895-2572161ede55",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "371aec5f-35d7-7fe9-443b-e00c8176d515",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "70f0bd2c-6afd-5261-65e0-11aea51ed237",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK no valido",
+			"id": "f01a6ef3-55c8-70d8-e5d2-18cc6825a92f",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "eb6f19a0-c59e-88af-028e-c2ff4922551b",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "a1cd5d45-f862-d07d-d44d-08c3b09acf61",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "8775d588-f565-09ce-0a9d-fcebae70c8e2",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK no valido",
+			"id": "c76a1a71-7d44-a0b1-5a9b-d51f95357bd7",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "40978d88-5231-9e3c-11d2-9d47f2fd0cc6",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "7909ce92-ce55-af79-52f9-32629cbed412",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "ef8a18a0-a1cf-1c71-4c81-9e62288a86d9",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK no valido",
+			"id": "fe7bb4ff-c3be-c5c8-395a-3078faff7ce8",
+			"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "c882d37d-e6cd-5a2a-0949-b8df378a8a74",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "e43fd8f4-7e06-c600-2819-a1c42a48164f",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "dacb7ada-8361-e65a-de70-8233ea0eda16",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK no valido",
+			"id": "ff244119-3e99-e380-d755-51a8fe277f23",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Agregar asociacion",
+			"id": "fd9e82e3-a755-1c0c-1d5a-8842ef2e1320",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Ver asociaciones",
+			"id": "26848d6e-8b36-1bd2-cbb9-162d0e6f3522",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "eliminar asocacion",
+			"id": "4692cf5e-d5ed-4080-8979-94dfc65741e8",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "FK no valido",
+			"id": "a510e38f-8269-4711-0407-467aa818f227",
+			"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+			"time": "2017-10-04T23:34:21.477Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		}
+	],
+	"synced": false
+}

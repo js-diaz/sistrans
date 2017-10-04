@@ -185,16 +185,19 @@ public class DAOTablaPedidoMenu {
 	 * @throws Exception Si hay errores.
 	 */
 	private void modificarPrecioCuenta(boolean negativo,MenuMinimum m, Integer cantidad, CuentaMinimum cuenta) throws SQLException, Exception {
-		ArrayList<PedidoProd> productos=obtenerPedidosMenu(m,cantidad,cuenta);
-		DAOTablaPedidoProducto ped= new DAOTablaPedidoProducto();
-		ped.setConn(conn);
 		int valor=1;
 		if(negativo) valor=-1;
-		for(PedidoProd p:productos)
-		{
-			ped.modificarPrecioCuenta(cuenta, valor*p.getCantidad()+p.getPlato().getCosto());
-		}
-		ped.cerrarRecursos();
+		DAOTablaMenu menus= new DAOTablaMenu();
+		menus.setConn(conn);
+		Menu menu=null;
+		menu=menus.buscarMenusPorNombreYRestaurante(m.getNombre(), m.getRestaurante().getNombre());
+		menus.cerrarRecursos();
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		dao.setConn(conn);
+		Cuenta c= dao.buscarCuentasPorNumeroDeCuenta(cuenta.getNumeroCuenta());
+		c.setValor(c.getValor()+menu.getPrecio()*cantidad*valor);
+		dao.updateCuenta(c);
+		dao.cerrarRecursos();
 		
 	}
 	
