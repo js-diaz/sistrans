@@ -1,4 +1,4 @@
-ESPECIFICACIONES PARA CORRER EL PROYECTO
+﻿ESPECIFICACIONES PARA CORRER EL PROYECTO
 1. Realizar “clean” antes de correr la aplicación web.
 2. Seleccionar “Run As”-> “Run On Server”.
 3. Esperar al despliegue de la aplicación.
@@ -22,7 +22,29 @@ RF1:	Registra a un usuario, dependiendo del tipo se inicial izan sus demás atri
         "restaurante": null
     	}
 RF2:	Mismo que el requerimiento funcional 1.
-RF3:
+RF3:	Registra un restaurante en el sistema. Debe tener previamente un representante, es decir un usario de tipo 'LOCAL' registrado en el sistema, para que la insercion pueda hacerse correctamente.
+	-URL: [POST] localhost:8080/VideoAndes/rest/restaurantes
+	-JSON : {
+
+	"nombre" : "nuevo",
+	
+	"pagWeb" : "www.nuevo.com",
+
+	"representante" : {
+		"id" : 1,
+		 "correo" : "a@a.cpm",
+		 "nombre" : "A. a.",
+		 "rol" : "LOCAL"},
+	
+"zona" : {
+		"nombre" : "zona", 
+		"capacidadOcupada" : 0,
+		 "ingresoEspecial" : 1,
+		 "abiertaActualmente" : 0,
+		 "capacidad" : 2
+		}
+
+	}
 RF4:	Registra un producto en el sistema. De forma automática se registran sus 		ingredientes y se le asigna un id, debido a que es solo único que lo diferencia en 	el sistema.
 	-URL: [POST] localhost:8080/VideoAndes/rest/productos
 	-Json:{
@@ -47,7 +69,22 @@ RF5:	Registra un ingrediente en el sistema.
         "descripcion":"Un ingrediente",
         "traduccion":"An ingredient"
 	}
-RF6:	
+RF6:	Registra un menu a un restaurante previamente existente en el sistema. El nombre del menu debe ser unico para este restaurante, pero puede repetirse en la rotonda. Es un subrecurso del recurso restaurante, y por tanto es escencial que el nombre del restaurante en la URL y el Json concida.
+	-URL: [POST] localhost:8080/VideoAndes/rest/restaurantes/nombreRest/menus
+	-JSON: {
+	
+	"nombre" : "menu",
+
+	"precio" : 2,
+
+	"costo" : 1,
+
+	"restaurante" : { 
+		"nombre" : "nombreRest",
+		 "pagWeb" : "rest.com" 
+		}
+	
+}
 RF7:	Registra una zona en el sistema.
 	URL: [POST] localhost:8080/VideoAndes/rest/zonas
 	Json:
@@ -274,7 +311,10 @@ Por ejemplo:
             },
             "entregado": false
         }
-RFC1:
+RFC1: Este requerimiento se hace a partir del URL
+	-URL:[POST] localhost:8080/VideoAndes/rest/productos/completo
+Usando las especificaciones explicadas en el siguiente requerimiento.
+
 RFC2: Por si acaso, las anotaciones utilizadas para el Json se encuentran en las clases 	involucradas en el procedimiento (Revisar el archivo ITERACION2.pdf). A su vez, se 	imprime el mensaje SQL en la consola para revisar que interpreta el sistema. 
 	 Pide la contenedora que tiene la información dada por parámetro.
 	-URL:[POST] localhost:8080/VideoAndes/rest/zonas/completo
@@ -496,11 +536,18 @@ Si se quieren más ejemplos se recomienda que se revisen las pruebas al respecto
 RFC3: Pide la representación completa de un usuario.
 	-URL:[GET] localhost:8080/VideoAndes/rest/usuarios/completo/{idUsuario}
 	-Json: No aplica
-RFC4:
+RFC4: Esta es una unica consulta sin parámetros, y se encuentra en:
+	-URL:[GET] localhost:8080/VideoAndes/rest/productos/mas-ofrecidos
+	-Json: no aplica.
 RFC5: Con el usuarioId del HeaderParam se establece cómo se fragmenta la información, es decir, si obtengo la información de todos los restaurantes (administrador) o de si lo que me respecta a mí (un solo restaurante).
 	URL:[POST] localhost:8080/VideoAndes/rest/zonas/rentabilidad
 	Json:{
 	"fechaInicial":"2015-10-31",
 	"fechaFinal":"2019-10-31"
 	}
-RFC6:
+RFC6: Este requerimiento se tiene en dos modalidades, para toda la rotonda y para una zona particular. Estos se encuentran en:
+	-URL:[GET] localhost:8080/VideoAndes/rest/productos/mas-ofrecidos
+	-Json: no aplica.
+y en:
+	-URL:[GET] localhost:8080/VideoAndes/rest/productos/mas-ofrecidos/{zona}
+	-Json: no aplica.
