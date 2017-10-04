@@ -160,10 +160,12 @@ public class CuentaServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
-			if(!u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.CLIENTE) && u.getId()!=cuenta.getCliente().getId()))
+			if(!u.getRol().equals(Rol.OPERADOR) )
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
+			if(cuenta.getCliente()!=null && !cuenta.getCliente().getRol().equals(Rol.CLIENTE))
+				throw new Exception("Una cuenta solo puede pertenecer a un cliente");
 			tm.cuentaAddCuenta(cuenta);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
