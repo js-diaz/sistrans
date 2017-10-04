@@ -81,7 +81,7 @@ public class CondicionServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombre :[a-zA-Z]+}" )
+	@Path( "{nombre }" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getCondicionTecnicaName( @PathParam("nombre") String name) {
 		name=name.replaceAll(RotondAndesTM.SPACE, " ");

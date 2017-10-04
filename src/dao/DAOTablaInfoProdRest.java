@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
@@ -127,8 +128,8 @@ public class DAOTablaInfoProdRest {
 		sql += infoProdRest.getPrecio() +", ";
 		sql += infoProdRest.getCosto() + ", ";
 		sql += infoProdRest.getDisponibilidad() + ", ";
-		sql += "TO_DATE(" + infoProdRest.getFechaInicio() + "), ";
-		sql += "TO_DATE(" + infoProdRest.getFechaFin() + "))";
+		sql += dateFormat(infoProdRest.getFechaInicio());
+		sql += dateFormat(infoProdRest.getFechaFin())+")";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -151,14 +152,24 @@ public class DAOTablaInfoProdRest {
 		sql += "PRECIO = " + infoProdRest.getPrecio();
 		sql += ", COSTO = "+ infoProdRest.getCosto();
 		sql += ", DISPONIBILIDAD = " + infoProdRest.getDisponibilidad();
-		sql += ", FECHA_INICIO = TO_DATE(" + infoProdRest.getFechaInicio() + ")";
-		sql += ", FECHS_FIN = TO_DATE(" + infoProdRest.getFechaFin() + ")";
+		sql += ", FECHA_INICIO = "+ dateFormat(infoProdRest.getFechaInicio());
+		sql += ", FECHA_FIN =" + dateFormat(infoProdRest.getFechaFin());
 		
-		sql += " WHERE ID_PRODUCTO = " + infoProdRest.getProducto().getId() + " AND NOMBRE_RESTAURANTE LIKE '" + infoProdRest.getRestaurante().getNombre();
+		sql += " WHERE ID_PRODUCTO = " + infoProdRest.getProducto().getId() + " AND NOMBRE_RESTAURANTE LIKE '" + infoProdRest.getRestaurante().getNombre()+"'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+	}
+	
+	/**
+	 * Formatea el valor de la cuenta al dado en la base de datos.<br>
+	 * @param fecha Fecha de la cuenta.<br>
+	 * @return Valor a insertar en la base de datos
+	 */
+	private String dateFormat(Date fecha) {
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return "TO_DATE('"+x.format(fecha)+"','yyyy-MM-dd hh24:mi:ss')";
 	}
 
 	/**

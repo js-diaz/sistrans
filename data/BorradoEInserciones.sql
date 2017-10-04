@@ -2153,3 +2153,4 @@ insert into RESERVA (fecha, id_reservador, num_personas, nombre_zona, nombre_men
 insert into RESERVA (fecha, id_reservador, num_personas, nombre_zona, nombre_menu, nombre_restaurante) values (TO_DATE('2017-07-01 22:30:59','yyyy-MM-dd hh24:mi:ss'), 182, 44, 'Sports', 'Tres-Zap', 'Eayo');
 
 commit;
+

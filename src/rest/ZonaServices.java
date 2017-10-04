@@ -88,7 +88,7 @@ public class ZonaServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombre :[a-zA-Z]+}" )
+	@Path( "{nombre }" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getZonaName( @PathParam("nombre") String name) {
 		name=name.replaceAll(RotondAndesTM.SPACE, " ");
@@ -189,7 +189,7 @@ public class ZonaServices {
 	 * @return Json con la información deseada.
 	 */
 	@POST
-	@Path("completo/{nombre: [a-zA-Z]+}")
+	@Path("completo/{nombre}")
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response pruebaFiltros( @PathParam("nombre") String name, ContenedoraCriterios c) {

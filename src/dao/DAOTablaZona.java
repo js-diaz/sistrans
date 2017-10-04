@@ -396,7 +396,7 @@ public class DAOTablaZona {
 	{
 		DAOTablaRestaurante restaurante= new DAOTablaRestaurante();
 		restaurante.setConn(this.conn);
-		restaurante.eliminarRestaurantes(zona.getRestauranteMinimums());
+		restaurante.eliminarRestaurantes(zona.getRestaurantes());
 		restaurante.cerrarRecursos();
 	}
 	/**

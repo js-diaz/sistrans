@@ -117,7 +117,7 @@ public class ProductoServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombre: [a-zA-Z]+}" )
+	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getProductoName( @QueryParam("nombre") String name) {
 		name=name.replaceAll(RotondAndesTM.SPACE, " ");
@@ -141,7 +141,7 @@ public class ProductoServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{tipo: [A-Z]+}" )
+	@Path( "{tipo}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getProductoTipo( @QueryParam("tipo") String tipo) {
 		tipo=tipo.replaceAll(RotondAndesTM.SPACE, " ");
@@ -278,7 +278,7 @@ public class ProductoServices {
 	
 	//RFC4
 	/**
-	 * Metodo que expone servicio REST usando GET que da los productos más ofrecidos de la base de datos.
+	 * Metodo que expone servicio REST usando GET que da los productos mï¿½s ofrecidos de la base de datos.
 	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-ofrecidos
 	 * @return Json con todos los productos de la base de datos o json con 
      * el error que se produjo
@@ -299,7 +299,7 @@ public class ProductoServices {
 	
 	//RFC6
 	/**
-	 * Metodo que expone servicio REST usando GET que da los productos más vendidos de la base de datos.
+	 * Metodo que expone servicio REST usando GET que da los productos mï¿½s vendidos de la base de datos.
 	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-vendidos
 	 * @return Json con todos los productos de la base de datos o json con 
      * el error que se produjo
@@ -319,13 +319,13 @@ public class ProductoServices {
 	}
 	
 	/**
-	 * Metodo que expone servicio REST usando GET que da los productos más vendidos de una zona particular.
+	 * Metodo que expone servicio REST usando GET que da los productos mï¿½s vendidos de una zona particular.
 	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-vendidos/nombreZona
 	 * @return Json con todos los productos de la base de datos o json con 
      * el error que se produjo
 	 */
 	@GET
-	@Path("mas-vendidos/{nombreZona: [a-zA-Z]+}")
+	@Path("mas-vendidos/{nombreZona}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getProductosMasVendidosPorZona(@PathParam("nombreZona") String nombreZona) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());

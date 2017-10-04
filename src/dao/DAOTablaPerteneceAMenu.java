@@ -50,7 +50,7 @@ public class DAOTablaPerteneceAMenu {
 	}
 
 	/**
-	 * Metodo que inicializa la connection del DAO a la base de datos con la conexión que entra como parámetro.
+	 * Metodo que inicializa la connection del DAO a la base de datos con la conexiï¿½n que entra como parï¿½metro.
 	 * @param con  - connection a la base de datos
 	 */
 	public void setConn(Connection con){
@@ -59,7 +59,7 @@ public class DAOTablaPerteneceAMenu {
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los platos de la base de datos para un menu determinado
+	 * Metodo que, usando la conexiï¿½n a la base de datos, saca todos los platos de la base de datos para un menu determinado
 	 * @return lista con los platos de la base de datos para un menu.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
@@ -76,7 +76,7 @@ public class DAOTablaPerteneceAMenu {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		while (rs.next()) {
-			long id = rs.getLong("ID_PRODUCTO");
+			long id = rs.getLong("ID_PLATO");
 			platos.add(daoProducto.buscarInfoProdRestsPorIdYRestaurante(id, nombreRestaurante));
 		}
 		daoProducto.cerrarRecursos();
@@ -84,7 +84,7 @@ public class DAOTablaPerteneceAMenu {
 	}
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los menus de la base de datos para un plato determinada
+	 * Metodo que, usando la conexiï¿½n a la base de datos, saca todos los menus de la base de datos para un plato determinada
 	 * @return lista con los menus de la base de datos para un plato.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos.
@@ -110,10 +110,10 @@ public class DAOTablaPerteneceAMenu {
 	}
 
 	/**
-	 * Método que asocia un plato y un menu en la BD.
+	 * Mï¿½todo que asocia un plato y un menu en la BD.
 	 * @param plato Producto a asociar.
 	 * @param menu Menu a asociar.
-	 * @throws SQLException Excepción generada por problemas de base de datos.<br>
+	 * @throws SQLException Excepciï¿½n generada por problemas de base de datos.<br>
 	 * @throws Exception Todo otro problema.
 	 */
 	public void asociarProductoYMenu(Long idProducto, String nombreMenu, String nombreRestaurante) throws SQLException, Exception {
@@ -127,8 +127,8 @@ public class DAOTablaPerteneceAMenu {
 	}
 
 	/**
-	 * MÃ©todo que elimina una relación entre un plato y menus específicos.<br>
-	 * @throws SQLException En caso de que se presente algún otro error.<br>
+	 * MÃ©todo que elimina una relaciï¿½n entre un plato y menus especï¿½ficos.<br>
+	 * @throws SQLException En caso de que se presente algï¿½n otro error.<br>
 	 * @throws Exception Cualquier otro error de la base de datos.
 	 */
 	public void desasociarProductoYMenu(String nombreMenu, String nombreRestaurante, Long idProducto) throws SQLException, Exception {
@@ -144,7 +144,7 @@ public class DAOTablaPerteneceAMenu {
 
 
 	/**
-	 * Elimina los platos que tenga menu dado por parámetro.<br>
+	 * Elimina los platos que tenga menu dado por parï¿½metro.<br>
 	 * @param menu al cual eliminar los platos.<br>
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.
@@ -158,7 +158,7 @@ public class DAOTablaPerteneceAMenu {
 		prepStmt.executeQuery();
 	}
 	/**
-	 * Elimina los menus del plato dada en parámetro.<br>
+	 * Elimina los menus del plato dada en parï¿½metro.<br>
 	 * @param plato plato a la cual eliminar los menus<br>
 	 * @throws SQLException Si se lanza algo relacionado con la BD.<br>
 	 * @throws Exception Cualquier otro error.

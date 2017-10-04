@@ -80,7 +80,7 @@ public class RolServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombre:[A-Z]+}" )
+	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getRolName(@PathParam("nombre") String name, @HeaderParam("usuarioId") Long usuarioId) {
 		name=name.replaceAll(RotondAndesTM.SPACE, " ");
@@ -114,7 +114,7 @@ public class RolServices {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{nombre:[A-Z]+}")
+	@Path("{nombre}")
 	public Response addRol(@PathParam("nombre")String rol, @HeaderParam("usuarioId") Long usuarioId) {
 		rol=rol.replaceAll(RotondAndesTM.SPACE, " ");
 
@@ -144,7 +144,7 @@ public class RolServices {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{nombre:[A-Z]+}")
+	@Path("{nombre}")
 	public Response deleteRol(@PathParam("nombre")String rol, @HeaderParam("usuarioId") Long usuarioId) {
 		rol=rol.replaceAll(RotondAndesTM.SPACE, " ");
 

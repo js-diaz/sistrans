@@ -274,16 +274,14 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			throw new Exception ("se pagó la cuenta");
-			/*if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.CLIENTE) && id != tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			ped=tm.cuentaPagarCuenta(numeroCuenta);*/
+			ped=tm.cuentaPagarCuenta(numeroCuenta);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		//return Response.status(200).entity(ped).build();
+		return Response.status(200).entity(ped).build();
 	}
-	
 	//Subrecurso pedidoProd
 	/** Metodo que expone servicio REST usando GET que da todos los pedidoProds de la base de datos para un cuenta particular.
 	 * @param numeroCuenta nombre del cuenta.
@@ -353,9 +351,10 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
+			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
 			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			pedidoProd.setCuenta(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta));
+			pedidoProd.setCuenta(c);
 			tm.pedidoProdAddPedidoProd(pedidoProd);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -377,7 +376,6 @@ public class CuentaServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updatePedidoProd(PedidoProd pedidoProd, @HeaderParam("usuarioId") Long id, @PathParam("id") Long idProducto, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("restaurante") String restaurante) {
 		restaurante=restaurante.replaceAll(RotondAndesTM.SPACE, " ");
-
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -386,10 +384,19 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))
+			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.LOCAL) || (u.getRol().equals(Rol.CLIENTE) && c.getCliente()!=null && id != c.getCliente().getId())))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			if(u.getRol().equals(Rol.LOCAL)) 
+			{
+				if(u.getRestaurante()==null || !u.getRestaurante().getNombre().equals(restaurante)) throw new Exception("Esta cuenta no es de ese restaurante");
+				pedidoProd.setEntregado(true);
+			}
+			if(pedidoProd.getEntregado() && !u.getRol().equals(Rol.LOCAL)) throw new Exception("No se puede modificar un pedido que ya fue entregado");
+			PedidoProd p=tm.pedidoProdBuscarPedidoProdsPorIdYCuenta(idProducto, numeroCuenta, restaurante);
+			Cuenta cu=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
 			pedidoProd.setPlato(tm.infoProdRestBuscarInfoProdRestsPorIdYRestaurante(idProducto, restaurante));
-			pedidoProd.setCuenta(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta));
+			pedidoProd.setCuenta(cu);
 			tm.pedidoProdUpdatePedidoProd(pedidoProd);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -499,9 +506,10 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
+			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
 			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			pedidoMenu.setCuenta(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta));
+			pedidoMenu.setCuenta(c);
 			tm.pedidoMenuAddPedidoMenu(pedidoMenu);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -533,10 +541,20 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))
+			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.LOCAL) || (u.getRol().equals(Rol.CLIENTE) && c.getCliente()!=null && id != c.getCliente().getId())))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			if(u.getRol().equals(Rol.LOCAL)) 
+			{
+				if(u.getRestaurante()==null || !u.getRestaurante().getNombre().equals(restaurante)) throw new Exception("Esta cuenta no es de ese restaurante");
+				pedidoMenu.setEntregado(true);
+			}
+			if(pedidoMenu.getEntregado() && !u.getRol().equals(Rol.LOCAL)) throw new Exception("No se puede modificar un pedido que ya fue entregado");
+			PedidoMenu p=tm.pedidoMenuBuscarPedidoMenusPorIdYCuenta(nombre, numeroCuenta, restaurante);
+			Cuenta cu=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
+			
 			pedidoMenu.setMenu(tm.menuBuscarMenusPorNombreYRestaurante(nombre, restaurante));
-			pedidoMenu.setCuenta(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta));
+			pedidoMenu.setCuenta(cu);
 			tm.pedidoMenuUpdatePedidoMenu(pedidoMenu);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

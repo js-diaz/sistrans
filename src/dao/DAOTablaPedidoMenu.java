@@ -7,8 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import rfc.ContenedoraPedidosProd;
+import vos.Cuenta;
 import vos.CuentaMinimum;
+import vos.InfoProdRest;
 import vos.PedidoMenu;
+import vos.PedidoProd;
 import vos.Menu;
 import vos.MenuMinimum;
 
@@ -121,20 +125,79 @@ public class DAOTablaPedidoMenu {
 	 */
 	public void addPedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
 
+		verificarDisponibilidadMenu(pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
 		String sql = "INSERT INTO PEDIDO_MENU VALUES (";
 		sql += "'" + pedidoMenu.getCuenta().getNumeroCuenta() + "', ";
-		sql += pedidoMenu.getMenu().getNombre() + ", ";
+		sql += "'"+pedidoMenu.getMenu().getNombre() + "', ";
 		sql += "'" + pedidoMenu.getMenu().getRestaurante().getNombre() + "', ";
 		sql += pedidoMenu.getCantidad() + ", ";
-		sql += pedidoMenu.getEntregado()? "'0')" : "'1')";
+		sql += pedidoMenu.getEntregado()? "'1')" : "'0')";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		modificarPrecioCuenta(false, pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
+	}
+	/**
+	 * Verifica la disponibilidad de un menú antes de agregarlo a la BD.<br>
+	 * @param m Menú.<br>
+	 * @param cantidad Cantidad de producto.<br>
+	 * @param c CuentaMinimum.<br>
+	 * @throws SQLException Si hay errores en la base de datos.<br>
+	 * @throws Exception Si hay algún otro error.
+	 */
+	private void verificarDisponibilidadMenu(MenuMinimum m, Integer cantidad, CuentaMinimum c) throws SQLException, Exception {
+		ArrayList<PedidoProd> pedidos= obtenerPedidosMenu( m, cantidad,  c);
+		DAOTablaPedidoProducto prod= new DAOTablaPedidoProducto();
+		prod.setConn(conn);
+		for(PedidoProd p:pedidos)
+		{
+			prod.verificarDisponibilidad(p.getPlato(), p.getCantidad());
+		}
+		
+	}
+	/**
+	 * Obtiene los pedidos de producto de un menú.<br>
+	 * @param m Menu minimum.<br>
+	 * @param cantidad Cantidad.<br>
+	 * @param c Cuenta.<br>
+	 * @return Lista de pedidos de productos.<br>
+	 * @throws SQLException Excepción en la BD.<br>
+	 * @throws Exception Excepción por si hay algún error.
+	 */
+	private ArrayList<PedidoProd> obtenerPedidosMenu(MenuMinimum m, Integer cantidad, CuentaMinimum c) throws SQLException, Exception {
+		DAOTablaMenu menus= new DAOTablaMenu();
+		menus.setConn(conn);
+		Menu menu=null;
+		ArrayList<PedidoProd> pedidos= new ArrayList<>();
+			menu=menus.buscarMenusPorNombreYRestaurante(m.getNombre(), m.getRestaurante().getNombre());
+			for(InfoProdRest p:menu.getPlatos())
+			pedidos.add(new PedidoProd(cantidad,c,p,false));
+		menus.cerrarRecursos();
+		return pedidos;
+	}
+
+	/**
+	 * Modifica el precio de la cuenta.<br>
+	 * @param cuenta Cuenta Minimum.<br>
+	 * @param d Precio a agregar.<br>
+	 * @throws SQLException Si hay errores en la BD.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	private void modificarPrecioCuenta(boolean negativo,MenuMinimum m, Integer cantidad, CuentaMinimum cuenta) throws SQLException, Exception {
+		ArrayList<PedidoProd> productos=obtenerPedidosMenu(m,cantidad,cuenta);
+		DAOTablaPedidoProducto ped= new DAOTablaPedidoProducto();
+		ped.setConn(conn);
+		int valor=1;
+		if(negativo) valor=-1;
+		for(PedidoProd p:productos)
+		{
+			ped.modificarPrecioCuenta(cuenta, valor*p.getCantidad()+p.getPlato().getCosto());
+		}
+		ped.cerrarRecursos();
+		
 	}
 	
-	
-
 	/**
 	 * Metodo que actualiza la pedidoMenu que entra como parámetro en la base de datos.
 	 * @param pedidoMenu - la pedidoMenu a actualizar. pedidoMenu !=  null
@@ -145,11 +208,13 @@ public class DAOTablaPedidoMenu {
 	 */
 	public void updatePedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
 
+		if(pedidoMenu.getEntregado()==true) pagarMenu(pedidoMenu);
+		PedidoMenu pedido=buscarPedidoMenusPorNombreYCuenta(pedidoMenu.getMenu().getNombre(), pedidoMenu.getMenu().getRestaurante().getNombre(), pedidoMenu.getCuenta().getNumeroCuenta());
+		modificarPrecioCuenta(true, pedido.getMenu(),pedido.getCantidad(),pedido.getCuenta());
+
 		String sql = "UPDATE PEDIDO_MENU SET ";
 		sql += "CANTIDAD = " + pedidoMenu.getCantidad();
-		sql += "ENTREGADO = " + (pedidoMenu.getEntregado()? "'0' " : "'1' ");
-
-		
+		sql += ", ENTREGADO = " + (pedidoMenu.getEntregado()? "'0' " : "'1' ");
 		sql += " WHERE NOMBRE_MENU LIKE '" + pedidoMenu.getMenu().getNombre() + "'"; 
 		sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoMenu.getMenu().getRestaurante().getNombre() + "'";
 		sql += " AND NUMERO_CUENTA LIKE '" + pedidoMenu.getCuenta().getNumeroCuenta() + "'";
@@ -157,6 +222,32 @@ public class DAOTablaPedidoMenu {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		modificarPrecioCuenta(false, pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
+	}
+	/**
+	 * El restaurante registra el pago de todos los productos del menú.<br>
+	 * @param m Pedido de menú.<br>
+	 * @throws SQLException Si hay errores en la BD.<br>
+	 * @throws Exception SI hay errores.
+	 */
+	private void pagarMenu(PedidoMenu m) throws SQLException, Exception {
+		DAOTablaMenu menus= new DAOTablaMenu();
+		menus.setConn(conn);
+		Menu menu=null;
+		ArrayList<PedidoProd> pedidos= new ArrayList<>();
+		menu=menus.buscarMenusPorNombreYRestaurante(m.getMenu().getNombre(), m.getMenu().getRestaurante().getNombre());
+		for(InfoProdRest p:menu.getPlatos())
+		pedidos.add(new PedidoProd(m.getCantidad(),m.getCuenta(),p,false));
+		menus.cerrarRecursos();
+		
+		DAOTablaPedidoProducto ped= new DAOTablaPedidoProducto();
+		ped.setConn(this.conn);
+		for(PedidoProd p: pedidos)
+		{
+			p.setEntregado(true);
+			ped.updatePedidoProd(p);
+		}
+		ped.cerrarRecursos();
 	}
 
 	/**
@@ -177,6 +268,8 @@ public class DAOTablaPedidoMenu {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		modificarPrecioCuenta(true, pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
+
 	}
 	
 	/**
