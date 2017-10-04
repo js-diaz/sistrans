@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.InfoProdRest;
 import vos.PedidoProd;
@@ -120,6 +121,7 @@ public class DAOTablaPedidoProducto {
 	 */
 	public void addPedidoProd(PedidoProd pedidoProd) throws SQLException, Exception {
 
+		verificarDisponibilidad(pedidoProd.getPlato(),pedidoProd.getCantidad());
 		String sql = "INSERT INTO PEDIDO_PROD VALUES (";
 		sql += "'" + pedidoProd.getCuenta().getNumeroCuenta() + "', ";
 		sql += pedidoProd.getPlato().getProducto().getId() + ", ";
@@ -130,9 +132,37 @@ public class DAOTablaPedidoProducto {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		modificarPrecioCuenta(pedidoProd.getCuenta(),pedidoProd.getCantidad()*pedidoProd.getPlato().getCosto());
 	}
 	
-	
+	/**
+	 * Modifica el precio de la cuenta.<br>
+	 * @param cuenta Cuenta Minimum.<br>
+	 * @param d Precio a agregar.<br>
+	 * @throws SQLException Si hay errores en la BD.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	public void modificarPrecioCuenta(CuentaMinimum cuenta, double d) throws SQLException, Exception {
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		dao.setConn(conn);
+		Cuenta c= dao.buscarCuentasPorNumeroDeCuenta(cuenta.getNumeroCuenta());
+		c.setValor(c.getValor()+d);
+		dao.updateCuenta(c);
+		dao.cerrarRecursos();
+	}
+
+	/**
+	 * Verifica la disponibilidad del producto antes de agregarlo.<br>
+	 * @param plato Plato del restaurante.<br>
+	 * @param cantidad Cantidad.
+	 */
+	public void verificarDisponibilidad(InfoProdRest plato, Integer cantidad) throws SQLException, Exception {
+		DAOTablaInfoProdRest info = new DAOTablaInfoProdRest();
+		info.setConn(conn);
+		InfoProdRest informacion =info.buscarInfoProdRestsPorIdYRestaurante(plato.getProducto().getId(), plato.getRestaurante().getNombre());
+		if(informacion.getDisponibilidad()<cantidad) throw new Exception("No se puede agregar al no haber disponibilidad de productos");
+		info.cerrarRecursos();
+	}
 
 	/**
 	 * Metodo que actualiza la pedidoProd que entra como parámetro en la base de datos.
@@ -144,9 +174,12 @@ public class DAOTablaPedidoProducto {
 	 */
 	public void updatePedidoProd(PedidoProd pedidoProd) throws SQLException, Exception {
 
+		if(pedidoProd.getEntregado()==true) pagarProducto(pedidoProd);
+		PedidoProd p=buscarPedidoProdsPorIdYCuenta(pedidoProd.getPlato().getProducto().getId(), pedidoProd.getPlato().getRestaurante().getNombre(), pedidoProd.getCuenta().getNumeroCuenta());
+		modificarPrecioCuenta(p.getCuenta(),p.getCantidad()*p.getPlato().getPrecio()*-1);
 		String sql = "UPDATE PEDIDO_PROD SET ";
 		sql += "CANTIDAD = " + pedidoProd.getCantidad();
-		sql += "ENTREGADO = " + (pedidoProd.getEntregado()? "'0' " : "'1' ");
+		sql += ", ENTREGADO = " + (pedidoProd.getEntregado()? "'1' " : "'0' ");
 		
 		sql += " WHERE ID_PRODUCTO = " + pedidoProd.getPlato().getProducto().getId(); 
 		sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoProd.getPlato().getRestaurante().getNombre() + "'";
@@ -155,6 +188,23 @@ public class DAOTablaPedidoProducto {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		modificarPrecioCuenta(pedidoProd.getCuenta(),pedidoProd.getCantidad()*pedidoProd.getPlato().getPrecio()*-1);
+	}
+	/**
+	 * Paga el pedido de producto dado por parámetro.<br>
+	 * @param p PedidoProducto<br>
+	 * @throws SQLException Si hay errores en la BD.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	private void pagarProducto(PedidoProd p) throws SQLException, Exception{
+		DAOTablaInfoProdRest productos= new DAOTablaInfoProdRest();
+		productos.setConn(conn);
+		InfoProdRest info=null;
+		info=p.getPlato();
+		info.setDisponibilidad(info.getDisponibilidad()-p.getCantidad());
+		productos.updateInfoProdRest(info);
+		productos.cerrarRecursos();
 	}
 
 	/**
@@ -175,6 +225,7 @@ public class DAOTablaPedidoProducto {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		modificarPrecioCuenta(pedidoProd.getCuenta(),pedidoProd.getCantidad()*pedidoProd.getPlato().getCosto()*-1);
 	}
 	
 	/**

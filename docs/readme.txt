@@ -134,10 +134,146 @@ Por último, y si se desea, se pueden realizar acciones de actualización sobre 
 	}
 Si se quiere actualizar únicamente las preferencias de zona o de categoría, el usuario tiene la opción de agregar sus preferencias y quitar las que no le gustan directamente. No se permitió hacer una actualización completa.
 RF9:
+Para este requerimiento se debe agregar un pedido de producto o un pedido de menú a una cuenta. Se presentan dos ejemplos a continuación:
+-URL:[POST] localhost:8080/VideoAndes/rest/cuentas/1/productos
+-Json; {
+            "cantidad": 8,
+            "cuenta": {
+                "valor": 58.15,
+                "numeroCuenta": "1",
+                "fecha": "2017-01-18"
+            },
+            "plato": {
+                "costo": 1.64,
+                "precio": 1.79,
+                "disponibilidad": 6020,
+                "fechaInicio": "2017-07-15",
+                "fechaFin": "2018-01-27",
+                "producto": {
+                    "personalizable": true,
+                    "nombre": "Tomatoes Tear Drop Yellow",
+                    "precio": 28.25,
+                    "tipo": "ACOMPANAMIENTO",
+                    "descripcion": null,
+                    "traduccion": null,
+                    "tiempo": 0,
+                    "costoProduccion": 10.51,
+                    "id": 8,
+                    "ingredientes": [
+                        {
+                            "nombre": "Bread - 10 Grain",
+                            "descripcion": "In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
+                            "traduccion": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.",
+                            "id": 18
+                        }
+                    ],
+                    "categorias": [
+                        {
+                            "nombre": "Filipino"
+                        }
+                    ]
+                },
+                "restaurante": {
+                    "nombre": "Skinte",
+                    "pagWeb": "http://zdnet.com"
+                }
+            },
+            "entregado": false
+        }
+
+-URL:[POST] localhost:8080/VideoAndes/rest/cuentas/1/menus
+-Json:  {
+            "cantidad": 4,
+            "cuenta": {
+                "valor": 58.15,
+                "numeroCuenta": "1",
+                "fecha": "2017-01-18"
+            },
+            "menu": {
+                "nombre": "Matsoft",
+                "precio": 5.97,
+                "costo": 10.14,
+                "restaurante": {
+                    "nombre": "Voonyx",
+                    "pagWeb": "https://creativecommons.org"
+                }
+            },
+            "entregado": false
+        }
 RF10:
-Para este requerimiento se simuló el procedimiento de compra de usuario intentando actualizar la compra que tiene un número dado. El formato es el siguiente:
-	-URL:[PUT]localhost:8080/VideoAndes/rest/cuentas
-	-Json: 
+Para este requerimiento se permitió que se pudiera registrar el servicio de un producto o el de un menú, directamente desde la actualización de los pedidos de producto y de servicio. La única forma en la que se registra el pago es si la identificación del usuario pasada como HeaderParam es la del representante del restaurante al que hace referencia el producto. Los formatos seguidos son:
+	1.
+	-URL:[PUT]localhost:8080/VideoAndes/rest/cuentas/{numcuenta}/productos/	{nombreRestaurante}/{idProducto}
+	-Json: Pedido de producto a actualizar
+Por ejemplo:
+	-URL:[PUT] localhost:8080/VideoAndes/rest/cuentas/1/productos/Skinte/8
+	-Json: Ejemplo con el pedidoProd del id 8.
+{
+	 "cantidad": 4,
+            "cuenta": {
+                "valor": 58.15,
+                "numeroCuenta": "1",
+                "fecha": "2017-01-18"
+            },
+            "plato": {
+                "costo": 1.64,
+                "precio": 1.79,
+                "disponibilidad": 6020,
+                "fechaInicio": "2017-07-15",
+                "fechaFin": "2018-01-27",
+                "producto": {
+                    "personalizable": true,
+                    "nombre": "Tomatoes Tear Drop Yellow",
+                    "precio": 28.25,
+                    "tipo": "ACOMPANAMIENTO",
+                    "descripcion": null,
+                    "traduccion": null,
+                    "tiempo": 0,
+                    "costoProduccion": 10.51,
+                    "id": 8,
+                    "ingredientes": [
+                        {
+                            "nombre": "Bread - 10 Grain",
+                            "descripcion": "In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
+                            "traduccion": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.",
+                            "id": 18
+                        }
+                    ],
+                    "categorias": [
+                        {
+                            "nombre": "Filipino"
+                        }
+                    ]
+                },
+                "restaurante": {
+                    "nombre": "Skinte",
+                    "pagWeb": "http://zdnet.com"
+                }
+            },
+            "entregado": false}
+	2. Para un menú: Se sigue un formato muy similar.
+	[PUT] localhost:8080/VideoAndes/rest/cuentas/{numCuenta}/menus/			{NombreRestaurante}/{NombreMenu}
+	-JSON: Son de un pedidoMenu
+	EJEMPLO: 
+	[PUT]localhost:8080/VideoAndes/rest/cuentas/1/menus/Voonyx/Matsoft
+	-JSON:  {
+            "cantidad": 4,
+            "cuenta": {
+                "valor": 58.15,
+                "numeroCuenta": "1",
+                "fecha": "2017-01-18"
+            },
+            "menu": {
+                "nombre": "Matsoft",
+                "precio": 5.97,
+                "costo": 10.14,
+                "restaurante": {
+                    "nombre": "Voonyx",
+                    "pagWeb": "https://creativecommons.org"
+                }
+            },
+            "entregado": false
+        }
 RFC1:
 RFC2: Por si acaso, las anotaciones utilizadas para el Json se encuentran en las clases 	involucradas en el procedimiento (Revisar el archivo ITERACION2.pdf). A su vez, se 	imprime el mensaje SQL en la consola para revisar que interpreta el sistema. 
 	 Pide la contenedora que tiene la información dada por parámetro.
@@ -358,10 +494,10 @@ Si se quieren más ejemplos se recomienda que se revisen las pruebas al respecto
 
 
 RFC3: Pide la representación completa de un usuario.
-	-URL:[GET] localhost:8080/VideoAndes/rest/usuarios/completo/106
+	-URL:[GET] localhost:8080/VideoAndes/rest/usuarios/completo/{idUsuario}
 	-Json: No aplica
 RFC4:
-RFC5: Con el usuarioId del HeaderParam se establece cómo se fragmenta la información.
+RFC5: Con el usuarioId del HeaderParam se establece cómo se fragmenta la información, es decir, si obtengo la información de todos los restaurantes (administrador) o de si lo que me respecta a mí (un solo restaurante).
 	URL:[POST] localhost:8080/VideoAndes/rest/zonas/rentabilidad
 	Json:{
 	"fechaInicial":"2015-10-31",

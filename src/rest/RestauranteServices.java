@@ -78,7 +78,7 @@ public class RestauranteServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombre: [a-zA-Z]+}" )
+	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getRestaurante( @PathParam( "nombre" ) String nombre )
 	{
@@ -133,7 +133,7 @@ public class RestauranteServices {
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
 	@PUT
-	@Path( "{nombre: [a-zA-Z]+}" )
+	@Path( "{nombre}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateRestaurante(Restaurante restaurante, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre) {
@@ -165,7 +165,7 @@ public class RestauranteServices {
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
 	@DELETE
-	@Path( "{nombre: [a-zA-Z]+}" )
+	@Path( "{nombre}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteRestaurante(@HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre) {
@@ -196,7 +196,7 @@ public class RestauranteServices {
      * el error que se produjo
 	 */
 	@GET
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/menus" )
+	@Path( "{nombreRestaurante}/menus" )
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getMenus(@PathParam("nombreRestaurante") String nombreRestaurante) {
 		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
@@ -219,7 +219,7 @@ public class RestauranteServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/menus/{nombre: [a-zA-Z]+}" )
+	@Path( "{nombreRestaurante}/menus/{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getMenu( @PathParam( "nombre" ) String nombre, @PathParam("nombreRestaurante") String nombreRestaurante )
 	{
@@ -249,7 +249,7 @@ public class RestauranteServices {
      * @return Json con el menu que agrego o Json con el error que se produjo
      */
 	@POST
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/menus" )
+	@Path( "{nombreRestaurante}/menus" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addMenu(@PathParam("nombreRestaurante") String nombreRestaurante, Menu menu, @HeaderParam("usuarioId") Long id) {
@@ -282,7 +282,7 @@ public class RestauranteServices {
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
 	@PUT
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/menus/{nombre: [a-zA-Z]+}" )
+	@Path( "{nombreRestaurante}/menus/{nombre}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateMenu(Menu menu, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre, @PathParam("nombreRestaurante") String nombreRestaurante) {
@@ -317,7 +317,7 @@ public class RestauranteServices {
      * @return Json con el menu que elimino o Json con el error que se produjo
      */
 	@DELETE
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/menus/{nombre: [a-zA-Z]+}" )
+	@Path( "{nombreRestaurante}/menus/{nombre}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteMenu(@HeaderParam("usuarioId") Long id, @PathParam("nombreRestaurante") String nombreRestaurante, @PathParam("nombre") String nombre) {
@@ -348,7 +348,7 @@ public class RestauranteServices {
      * el error que se produjo
 	 */
 	@GET
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos" )
+	@Path( "{nombreRestaurante}/productos" )
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getInfoProdRests(@PathParam("nombreRestaurante") String nombreRestaurante) {
 		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
@@ -371,7 +371,7 @@ public class RestauranteServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos/{id: \\d+}" )
+	@Path( "{nombreRestaurante}/productos/{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getInfoProdRest( @PathParam( "id" ) Long id, @PathParam("nombreRestaurante") String nombreRestaurante )
 	{
@@ -400,7 +400,7 @@ public class RestauranteServices {
      * @return Json con el infoProdRest que agrego o Json con el error que se produjo
      */
 	@POST
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos" )
+	@Path( "{nombreRestaurante}/productos" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addInfoProdRest(@PathParam("nombreRestaurante") String nombreRestaurante, InfoProdRest infoProdRest, @HeaderParam("usuarioId") Long id) {
@@ -433,7 +433,7 @@ public class RestauranteServices {
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
 	@PUT
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos/{id: \\d+}" )
+	@Path( "{nombreRestaurante}/productos/{id: \\d+}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateInfoProdRest(InfoProdRest infoProdRest, @HeaderParam("usuarioId") Long idUsuario, @PathParam("id") Long id, @PathParam("nombreRestaurante") String nombreRestaurante) {
@@ -467,7 +467,7 @@ public class RestauranteServices {
      * @return Json con el infoProdRest que elimino o Json con el error que se produjo
      */
 	@DELETE
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos/{id: \\d+}" )
+	@Path( "{nombreRestaurante}/productos/{id: \\d+}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteInfoProdRest(@HeaderParam("usuarioId") Long idUsuario, @PathParam("nombreRestaurante") String nombreRestaurante, @PathParam("id") Long id) {
@@ -497,7 +497,7 @@ public class RestauranteServices {
      * el error que se produjo
 	 */
 	@GET
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes" )
+	@Path( "{nombreRestaurante}/ingredientes" )
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getInfoIngRests(@PathParam("nombreRestaurante") String nombreRestaurante) {
 		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
@@ -520,7 +520,7 @@ public class RestauranteServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes/{id: \\d+}" )
+	@Path( "{nombreRestaurante}/ingredientes/{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getInfoIngRest( @PathParam( "id" ) Long id, @PathParam("nombreRestaurante") String nombreRestaurante )
 	{
@@ -549,7 +549,7 @@ public class RestauranteServices {
      * @return Json con el infoIngRest que agrego o Json con el error que se produjo
      */
 	@POST
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes" )
+	@Path( "{nombreRestaurante}/ingredientes" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addInfoIngRest(@PathParam("nombreRestaurante") String nombreRestaurante, InfoIngRest infoIngRest, @HeaderParam("usuarioId") Long id) {
@@ -582,7 +582,7 @@ public class RestauranteServices {
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
 	@PUT
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes/{id: \\d+}" )
+	@Path( "{nombreRestaurante}/ingredientes/{id: \\d+}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateInfoIngRest(InfoIngRest infoIngRest, @HeaderParam("usuarioId") Long idUsuario, @PathParam("id") Long id, @PathParam("nombreRestaurante") String nombreRestaurante) {
@@ -616,7 +616,7 @@ public class RestauranteServices {
      * @return Json con el infoIngRest que elimino o Json con el error que se produjo
      */
 	@DELETE
-	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes/{id: \\d+}" )
+	@Path( "{nombreRestaurante}/ingredientes/{id: \\d+}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteInfoIngRest(@HeaderParam("usuarioId") Long idUsuario, @PathParam("nombreRestaurante") String nombreRestaurante, @PathParam("id") Long id) {

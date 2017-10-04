@@ -257,7 +257,7 @@ public class UsuarioServices {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{rol:[A-Z]+}")
+	@Path("{rol}")
 	public Response deleteUsuarioPorRol(@QueryParam("rol")String nombreRol, @HeaderParam("usuarioId") Long usuarioId) {
 		nombreRol=nombreRol.replaceAll(RotondAndesTM.SPACE, " ");
 
