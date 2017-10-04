@@ -19,6 +19,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import rfc.PendientesOrden;
 import tm.RotondAndesTM;
 import vos.Cuenta;
 import vos.PedidoMenu;
@@ -252,6 +253,37 @@ public class CuentaServices {
 		return Response.status(200).build();
 	}
 	
+	/**
+     * Metodo que expone servicio REST usando POST que agrega el pedidoProd que recibe en Json
+     * @param numeroCuenta nombre del cuenta al cual agregarlo.
+     * @param pedidoProd - pedidoProd a agregar.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el pedidoProd que agrego o Json con el error que se produjo
+     */
+	@PUT
+	@Path( "{numeroCuenta: \\d+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pagarCuenta(@PathParam("numeroCuenta") String numeroCuenta, @HeaderParam("usuarioId") Long id ) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		PendientesOrden ped=null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			throw new Exception ("se pagó la cuenta");
+			/*if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			ped=tm.cuentaPagarCuenta(numeroCuenta);*/
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		//return Response.status(200).entity(ped).build();
+	}
+	
 	//Subrecurso pedidoProd
 	/** Metodo que expone servicio REST usando GET que da todos los pedidoProds de la base de datos para un cuenta particular.
 	 * @param numeroCuenta nombre del cuenta.
@@ -284,6 +316,8 @@ public class CuentaServices {
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getPedidoProd( @PathParam( "id" ) Long id, @PathParam("restaurante") String restaurante, @PathParam("numeroCuenta") String numeroCuenta)
 	{
+		restaurante=restaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
@@ -342,6 +376,8 @@ public class CuentaServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updatePedidoProd(PedidoProd pedidoProd, @HeaderParam("usuarioId") Long id, @PathParam("id") Long idProducto, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("restaurante") String restaurante) {
+		restaurante=restaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -374,6 +410,8 @@ public class CuentaServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletePedidoProd(@HeaderParam("usuarioId") Long id, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("id") Long idProducto, @PathParam("restaurante") String restaurante) {
+		restaurante=restaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -423,6 +461,9 @@ public class CuentaServices {
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getPedidoMenu( @PathParam( "nombre" ) String nombre, @PathParam("restaurante") String restaurante, @PathParam("numeroCuenta") String numeroCuenta)
 	{
+		restaurante=restaurante.replaceAll(RotondAndesTM.SPACE, " ");
+		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
@@ -481,6 +522,9 @@ public class CuentaServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updatePedidoMenu(PedidoMenu pedidoMenu, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("restaurante") String restaurante) {
+		restaurante=restaurante.replaceAll(RotondAndesTM.SPACE, " ");
+		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -513,6 +557,9 @@ public class CuentaServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletePedidoMenu(@HeaderParam("usuarioId") Long id, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("nombre") String nombre, @PathParam("restaurante") String restaurante) {
+		restaurante=restaurante.replaceAll(RotondAndesTM.SPACE, " ");
+		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {

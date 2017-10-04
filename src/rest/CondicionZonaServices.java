@@ -66,6 +66,7 @@ public class CondicionZonaServices {
 	@Produces( MediaType.APPLICATION_JSON )
 	@Path("porZona")
 	public Response getCondicionesZonasPorZona(@HeaderParam("zona")String zona) {
+		zona=zona.replaceAll(RotondAndesTM.SPACE, " ");
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<CondicionTecnica> zonas;
 		try {
@@ -90,6 +91,8 @@ public class CondicionZonaServices {
 	@Produces(  MediaType.APPLICATION_JSON  )
 	@Path("porCondicion")
 	public Response getCondicionesZonaPorCategoria( @HeaderParam("condicion") String condicion) {
+		condicion=condicion.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Zona> zonas;
 		try {
@@ -114,6 +117,9 @@ public class CondicionZonaServices {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCondicionesZona(@HeaderParam("condicion") String condicion, @HeaderParam("zona") String zona,@HeaderParam("usuarioId")Long usuarioId) {
+		condicion=condicion.replaceAll(RotondAndesTM.SPACE, " ");
+		zona=zona.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -140,6 +146,8 @@ public class CondicionZonaServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("porZona")
 	public Response addCondicionesZonaPorZona( List<CondicionTecnica> condiciones, @HeaderParam("zona") String zona,@HeaderParam("usuarioId")Long usuarioId) {
+		zona=zona.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -167,6 +175,7 @@ public class CondicionZonaServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("porCondicion")
 	public Response addCondicionesZonaPorCondicion( List<Zona> zonas, @HeaderParam("condicion") String condicion,@HeaderParam("usuarioId")Long usuarioId) {
+		condicion=condicion.replaceAll(RotondAndesTM.SPACE, " ");
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -194,6 +203,8 @@ public class CondicionZonaServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("porZona")
 	public Response deleteCondicionesZonaPorZona(@HeaderParam("zona")String zona, @HeaderParam("usuarioId") Long usuarioId) {
+		zona=zona.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -219,6 +230,8 @@ public class CondicionZonaServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("porCondicion")
 	public Response deleteCondicionesZonaPorCondicion(@HeaderParam("condicion")String condicion, @HeaderParam("usuarioId") Long usuarioId) {
+		condicion=condicion.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -244,6 +257,8 @@ public class CondicionZonaServices {
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCondicionesZona(@HeaderParam("zona")String zona, @HeaderParam("condicion") String condicion,@HeaderParam("usuarioId") Long usuarioId) {
+		zona=zona.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );

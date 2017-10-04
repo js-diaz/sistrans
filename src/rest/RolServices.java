@@ -83,6 +83,8 @@ public class RolServices {
 	@Path( "{nombre:[A-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getRolName(@PathParam("nombre") String name, @HeaderParam("usuarioId") Long usuarioId) {
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Rol rols;
 		try {
@@ -114,6 +116,8 @@ public class RolServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{nombre:[A-Z]+}")
 	public Response addRol(@PathParam("nombre")String rol, @HeaderParam("usuarioId") Long usuarioId) {
+		rol=rol.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -142,6 +146,8 @@ public class RolServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{nombre:[A-Z]+}")
 	public Response deleteRol(@PathParam("nombre")String rol, @HeaderParam("usuarioId") Long usuarioId) {
+		rol=rol.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );

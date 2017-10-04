@@ -84,6 +84,7 @@ public class CondicionServices {
 	@Path( "{nombre :[a-zA-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getCondicionTecnicaName( @PathParam("nombre") String name) {
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		CondicionTecnica condiciones;
 		try {

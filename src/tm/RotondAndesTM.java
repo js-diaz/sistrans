@@ -22,6 +22,7 @@ import rfc.CriterioAgregacion;
 import rfc.CriterioOrden;
 import rfc.CriterioVerdad;
 import rfc.CriterioVerdadHaving;
+import rfc.PendientesOrden;
 import rfc.UsuarioCompleto;
 import vos.UsuarioMinimum;
 import vos.CondicionTecnica;
@@ -48,10 +49,13 @@ import vos.Categoria;
 /**
  * Transaction Manager de la aplicacion (TM)
  * Fachada en patron singleton de la aplicacion
- * @author Monitores 2017-20
+ * @author s.guzmanm-js.diaz
  */
 public class RotondAndesTM {
-
+	/**
+	 * Espaciado de los servicios rest
+	 */
+	public static final String SPACE="%20";
 	/**
 	 * Atributo estatico que contiene el path relativo del archivo que tiene los datos de la conexion
 	 */
@@ -1098,6 +1102,48 @@ public class RotondAndesTM {
 			dao.setConn(conn);
 			dao.borrarHistorialCliente(id);
 			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	//RF10
+	/**
+	 * Paga la cuenta con el número dado.<br>
+	 * @param numeroCuenta Número de la cuenta a pagar<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public PendientesOrden cuentaPagarCuenta(String numeroCuenta) throws Exception
+	{
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			return dao.pagarCuenta(numeroCuenta);
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());

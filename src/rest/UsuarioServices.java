@@ -151,6 +151,8 @@ public class UsuarioServices {
 	@Produces(  MediaType.APPLICATION_JSON  )
 	public Response getUsuarioPorRol( @QueryParam("rol") String nombreRol, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
+		nombreRol=nombreRol.replaceAll(RotondAndesTM.SPACE, " ");
+
 		List<Usuario> usuarios;
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -257,6 +259,8 @@ public class UsuarioServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{rol:[A-Z]+}")
 	public Response deleteUsuarioPorRol(@QueryParam("rol")String nombreRol, @HeaderParam("usuarioId") Long usuarioId) {
+		nombreRol=nombreRol.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );

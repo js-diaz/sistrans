@@ -1,0 +1,136 @@
+{
+	"variables": [],
+	"info": {
+		"name": "PruebasCOmbinacionesSQLIteracion2",
+		"_postman_id": "95263f79-c260-1d5b-65f3-15a4b7a72675",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Poner json que sirve para agrupaciones y órdenes",
+			"request": {
+				"url": "localhost:8080/VideoAndes/rest/zonas/completo/akAeuglKrg",
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"HOLA\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"NOMBRE\"\n\t\t},\n\t\t\"valorComparacion1\":\"ak%\",\n\t\t\"afirmativo1\":true\n\t},\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"NOMBRE\",\n\t\t\t\"agregacion\":\"COUNT\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t\"operacion1\":\"<\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "where sintaxis 1 con having en sintaxis 1",
+			"request": {
+				"url": "localhost:8080/VideoAndes/rest/zonas/completo/akAeuglKrg",
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"INGRESOESPECIAL\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"NOMBRE\"\n\t\t},\n\t\t\"valorComparacion1\":\"ak%\",\n\t\t\"afirmativo1\":true\n\t},\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"NOMBRE\",\n\t\t\t\"agregacion\":\"COUNT\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t\"operacion1\":\"<\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Sintaxis where y having 3",
+			"request": {
+				"url": "localhost:8080/VideoAndes/rest/zonas/completo/akAeuglKrg",
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"INGRESOESPECIAL\"\n\t\t}\n\t\t],\n\t\"agregacion\":[\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t\t},\n\t\t\t\"valores\":[\"1\",\"2\"],\n\t\t\t\"afirmativo1\":false\n\t\t},\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valores\":[\"1\",\"2\"],\n\t\t\t\"afirmativo1\":false\n\t\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "where y having sintaxis 2",
+			"request": {
+				"url": "localhost:8080/VideoAndes/rest/zonas/completo/akAeuglKrg",
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"INGRESOESPECIAL\"\n\t\t}\n\t\t],\n\t\"agregacion\":[\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"CAPACIDADOCUPADA\"\n\t\t\t},\n\t\t\t\"operacion1\":\"=\",\n\t\t\t\"afirmativo1\":false\n\t\t},\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"operacion1\":\"=\",\n\t\t\t\"afirmativo1\":false\n\t\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Sintaxis having y where número 4",
+			"request": {
+				"url": "localhost:8080/VideoAndes/rest/zonas/completo/akAeuglKrg",
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"INGRESOESPECIAL\"\n\t\t}\n\t\t],\n\t\"agregacion\":[\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion2\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDADOCUPADA\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"=\",\n\t\t\t\t\"afirmativo1\":false\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion2\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDADOCUPADA\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"=\",\n\t\t\t\t\"afirmativo1\":false\n\t\t\t},\n\t\t\t\"conjuncion\":true,\n\t\t\t\"afirmativo1\":true\n\t\t\t\n\t\t},\n\t\t\"having\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"valorComparacion2\":\n\t\t\t\t{\n\t\t\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"=\",\n\t\t\t\t\"afirmativo1\":true\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"valorComparacion2\":\n\t\t\t\t{\n\t\t\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"=\",\n\t\t\t\t\"afirmativo1\":false\n\t\t\t},\n\t\t\t\"conjuncion\":false,\n\t\t\t\"afirmativo1\":true\n\t\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

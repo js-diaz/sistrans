@@ -91,6 +91,8 @@ public class ZonaServices {
 	@Path( "{nombre :[a-zA-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getZonaName( @PathParam("nombre") String name) {
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Zona zonas;
 		try {
@@ -191,6 +193,7 @@ public class ZonaServices {
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response pruebaFiltros( @PathParam("nombre") String name, ContenedoraCriterios c) {
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<ContenedoraInformacion> zonas;
 		try {

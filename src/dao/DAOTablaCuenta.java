@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import rfc.ContenedoraPedidosProd;
+import rfc.PendientesOrden;
 import vos.*;
 
 /**
@@ -350,10 +352,112 @@ public class DAOTablaCuenta {
 		ResultSet rs=prepStmt.executeQuery();
 		return rs.getInt("LAST_NUMBER");
 	}
-
+	/**
+	 * Busca una cuenta en forma minimum con el id dado.<br>
+	 * @param id Id de la cuenta.<br>
+	 * @return Cuenta en formato minimum.<br>
+	 * @throws SQLException Si hay algún error en la BD.<br>
+	 * @throws Exception SI hay otro error en el sistema.
+	 */
 	public ArrayList<CuentaMinimum> buscarCuentaMinimumsPorId(Long id) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		return buscarCuentasPorId(id);
+	}
+	/**
+	 * Se paga la cuenta con el número dado.<br>
+	 * @param numeroCuenta Número de la cuenta.<br>
+	 * @return Lista de objetos con los que no se ha decidido qué hacer.<br>
+	 * @throws SQLException Si hay algún error en la BD.<br>
+	 * @throws Exception Si hay cualquier otro error.
+	 */
+	public PendientesOrden pagarCuenta(String numeroCuenta) throws SQLException, Exception
+	{
+		Cuenta c= buscarCuentasPorNumeroDeCuenta(numeroCuenta);
+		
+		DAOTablaMenu menus= new DAOTablaMenu();
+		menus.setConn(conn);
+		Menu menu=null;
+		ContenedoraPedidosProd cp=null;
+		List<ContenedoraPedidosProd> pedidos=new ArrayList<>();
+		for(PedidoMenu m: c.getPedidoMenuMinimum())
+		{
+			if(m.getEntregado()==true) continue;
+			menu=menus.buscarMenusPorNombreYRestaurante(m.getMenu().getNombre(), m.getMenu().getRestaurante().getNombre());
+			cp=new ContenedoraPedidosProd(menu.getNombre(),new ArrayList<PedidoProd>());
+			for(InfoProdRest p:menu.getPlatos())
+			cp.getPedidosProd().add(new PedidoProd(m.getCantidad(),m.getCuenta(),p,false));
+			pedidos.add(cp);
+		}
+		menus.cerrarRecursos();
+		
+		//Revisa pedidos de menús en general
+		DAOTablaInfoProdRest productos = new DAOTablaInfoProdRest();
+		DAOTablaPedidoProducto daoPedido= new DAOTablaPedidoProducto();
+		daoPedido.setConn(conn);
+		productos.setConn(this.conn);
+		InfoProdRest info=null;
+		ArrayList<ContenedoraPedidosProd> menusPendientes= new ArrayList<>();
+		for(ContenedoraPedidosProd cont:pedidos)
+		{
+			try
+			{
+				for(PedidoProd p: cont.getPedidosProd())
+				{
+					if(p.getPlato().getDisponibilidad()<p.getCantidad())
+					{
+						throw new Exception("No se puede agregar el menú");
+					}
+				}
+				for(PedidoProd p: cont.getPedidosProd())
+				{
+					if(p.getPlato().getDisponibilidad()<p.getCantidad())
+					{
+						info=p.getPlato();
+						info.setDisponibilidad(info.getDisponibilidad()-p.getCantidad());
+						productos.updateInfoProdRest(info);
+						p.setEntregado(true);
+						daoPedido.updatePedidoProd(p);
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				menusPendientes.add(cont);
+			}
+			
+		}
+		ArrayList<PedidoProd> restantesProductos= new ArrayList<PedidoProd>();
+		for(PedidoProd p:c.getPedidoProdMinimum())
+		{
+			try
+			{
+				if(p.getEntregado()) continue;
+				info=p.getPlato();
+				info.setDisponibilidad(info.getDisponibilidad()-p.getCantidad());
+				productos.updateInfoProdRest(info);
+				p.setEntregado(true);
+				daoPedido.updatePedidoProd(p);
+			}
+			catch(Exception e)
+			{
+				restantesProductos.add(p);
+			}
+		}
+		daoPedido.cerrarRecursos();
+		productos.cerrarRecursos();
+		//Analiza los productos y menús restantes
+		for(PedidoProd p:restantesProductos)
+		{
+			c.setValor(c.getValor()-(p.getCantidad()+p.getPlato().getCosto()));
+		}
+		for(ContenedoraPedidosProd cont: menusPendientes)
+		{
+			for(PedidoProd p:cont.getPedidosProd())
+			{
+				c.setValor(c.getValor()-(p.getCantidad()+p.getPlato().getCosto()));
+			}
+		}
+		return new PendientesOrden(restantesProductos, menusPendientes);
 	}
 	
 	public void prueba() throws SQLException, Exception {

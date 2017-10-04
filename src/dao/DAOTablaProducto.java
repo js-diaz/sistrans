@@ -390,7 +390,7 @@ public class DAOTablaProducto {
 		case PLATO_FUERTE: return "PLATO FUERTE";
 		case POSTRE: return "POSTRE";
 		case BEBIDA: return "BEBIDA";
-		case ACOMPANAMIENTO: return "ACOMPAÃ‘AMIENTO";
+		case ACOMPANAMIENTO: return "ACOMPANAMIENTO";
 		default: return null;
 		}
 	}
