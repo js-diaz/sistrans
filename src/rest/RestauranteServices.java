@@ -19,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.RotondAndesTM;
+import vos.InfoIngRest;
+import vos.InfoProdRest;
 import vos.Menu;
 import vos.Restaurante;
 import vos.Usuario;
@@ -179,7 +181,9 @@ public class RestauranteServices {
 		}
 		return Response.status(200).entity("Objeto borrado correctamente").build();
 	}
-
+	
+	
+	//Subrecurso menu
 	/** Metodo que expone servicio REST usando GET que da todos los menus de la base de datos para un restaurante particular.
 	 * @param nombreRestaurante nombre del restaurante.
 	 * @return Json con todos los menus de la base de datos o json con 
@@ -316,6 +320,284 @@ public class RestauranteServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity("menu eliminado correctamente").build();
+	}
+	
+	//Subrecurso infoProdRest
+	/** Metodo que expone servicio REST usando GET que da todos los productos de la base de datos para un restaurante particular.
+	 * @param nombreRestaurante nombre del restaurante.
+	 * @return Json con todos los productos de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos" )
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getInfoProdRests(@PathParam("nombreRestaurante") String nombreRestaurante) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<InfoProdRest> productos;
+		try {
+			productos = tm.infoProdRestDarInfoProdRestsPorRestaurante(nombreRestaurante);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(productos).build();
+	}
+
+	 /**
+     * Metodo que expone servicio REST usando GET que busca el infoProdRest con el id que entra como parametro.
+     * @param nombreRestaurante nombre del restaurante al cual pertenece el infoProdRest.
+     * @param id Id del producto a buscar que entra en la URL como parametro.
+     * @return Json con el/los productos encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@GET
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos/{id: \\d+}" )
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response getInfoProdRest( @PathParam( "nombre" ) Long id, @PathParam("nombreRestaurante") String nombreRestaurante )
+	{
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
+		try
+		{
+			InfoProdRest v = tm.infoProdRestBuscarInfoProdRestsPorIdYRestaurante(id, nombreRestaurante);
+			if(v == null) 
+				return Response.status( 404 ).entity( v ).build( );
+			return Response.status( 200 ).entity( v ).build( );
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
+	}
+
+
+    /**
+     * Metodo que expone servicio REST usando POST que agrega el infoProdRest que recibe en Json
+     * @param nombreRestaurante nombre del restaurante al cual agregarlo.
+     * @param infoProdRest - infoProdRest a agregar.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el infoProdRest que agrego o Json con el error que se produjo
+     */
+	@POST
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addInfoProdRest(@PathParam("nombreRestaurante") String nombreRestaurante, InfoProdRest infoProdRest, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && id == tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante).getRepresentante().getId()))) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			infoProdRest.setRestaurante(tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante));
+			tm.infoProdRestAddInfoProdRest(infoProdRest);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(infoProdRest).build();
+	}
+	
+    /**
+     * Metodo que expone servicio REST usando PUT que modifica un restaurante.
+     * @param id id del producto a modificar.
+     * @param nombreRestaurante nombre del restaurante que lo contiene.
+     * @param infoProdRest información del infoProdRest modificado.
+     * @param idUsuario Id del usuario que realiza la solicitud.
+     * @return Json con el restaurante que elimino o Json con el error que se produjo
+     */
+	@PUT
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos/{id: \\d+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateInfoProdRest(InfoProdRest infoProdRest, @HeaderParam("usuarioId") Long idUsuario, @PathParam("id") Long id, @PathParam("nombreRestaurante") String nombreRestaurante) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(idUsuario);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && idUsuario == tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante).getRepresentante().getId())))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			infoProdRest.setProducto(tm.productoBuscarProductoPorId(id));
+			infoProdRest.setRestaurante(tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante));
+			tm.infoProdRestUpdateInfoProdRest(infoProdRest);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(infoProdRest).build();
+	}
+
+	
+    /**
+     * Metodo que expone servicio REST usando DELETE que elimina un infoProdRest de un restaurante dado.
+     * @param id Id del producto a eliminar.
+     * @param nombreRestaurante nombre del restaurante que lo contiene.
+     * @param idUsuario Id del usuario que realiza la solicitud.
+     * @return Json con el infoProdRest que elimino o Json con el error que se produjo
+     */
+	@DELETE
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos/{id: \\d+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteInfoProdRest(@HeaderParam("usuarioId") Long idUsuario, @PathParam("nombreRestaurante") String nombreRestaurante, @PathParam("id") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(idUsuario);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && idUsuario == tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante).getRepresentante().getId())))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.infoProdRestDeleteInfoProdRest(id, nombreRestaurante);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity("infoProdRest eliminado correctamente").build();
+	}
+	
+	//Subrecurso infoIngRest
+	/** Metodo que expone servicio REST usando GET que da todos los ingredientes de la base de datos para un restaurante particular.
+	 * @param nombreRestaurante nombre del restaurante.
+	 * @return Json con todos los ingredientes de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes" )
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getInfoIngRests(@PathParam("nombreRestaurante") String nombreRestaurante) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<InfoIngRest> ingredientes;
+		try {
+			ingredientes = tm.infoIngRestDarInfoIngRestsPorRestaurante(nombreRestaurante);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(ingredientes).build();
+	}
+
+	 /**
+     * Metodo que expone servicio REST usando GET que busca el infoIngRest con el id que entra como parametro.
+     * @param nombreRestaurante nombre del restaurante al cual pertenece el infoIngRest.
+     * @param id Id del ingrediente a buscar que entra en la URL como parametro.
+     * @return Json con el/los ingredientes encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@GET
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes/{id: \\d+}" )
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response getInfoIngRest( @PathParam( "nombre" ) Long id, @PathParam("nombreRestaurante") String nombreRestaurante )
+	{
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
+		try
+		{
+			InfoIngRest v = tm.infoIngRestBuscarInfoIngRestsPorIdYRestaurante(id, nombreRestaurante);
+			if(v == null) 
+				return Response.status( 404 ).entity( v ).build( );
+			return Response.status( 200 ).entity( v ).build( );
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
+	}
+
+
+    /**
+     * Metodo que expone servicio REST usando POST que agrega el infoIngRest que recibe en Json
+     * @param nombreRestaurante nombre del restaurante al cual agregarlo.
+     * @param infoIngRest - infoIngRest a agregar.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el infoIngRest que agrego o Json con el error que se produjo
+     */
+	@POST
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addInfoIngRest(@PathParam("nombreRestaurante") String nombreRestaurante, InfoIngRest infoIngRest, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && id == tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante).getRepresentante().getId()))) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			infoIngRest.setRestaurante(tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante));
+			tm.infoIngRestAddInfoIngRest(infoIngRest);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(infoIngRest).build();
+	}
+	
+    /**
+     * Metodo que expone servicio REST usando PUT que modifica un restaurante.
+     * @param id id del ingrediente a modificar.
+     * @param nombreRestaurante nombre del restaurante que lo contiene.
+     * @param infoIngRest información del infoIngRest modificado.
+     * @param idUsuario Id del usuario que realiza la solicitud.
+     * @return Json con el restaurante que elimino o Json con el error que se produjo
+     */
+	@PUT
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes/{id: \\d+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateInfoIngRest(InfoIngRest infoIngRest, @HeaderParam("usuarioId") Long idUsuario, @PathParam("id") Long id, @PathParam("nombreRestaurante") String nombreRestaurante) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(idUsuario);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && idUsuario == tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante).getRepresentante().getId())))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			infoIngRest.setIngrediente(tm.ingredienteBuscarIngredientePorId(id));
+			infoIngRest.setRestaurante(tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante));
+			tm.infoIngRestUpdateInfoIngRest(infoIngRest);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(infoIngRest).build();
+	}
+
+	
+    /**
+     * Metodo que expone servicio REST usando DELETE que elimina un infoIngRest de un restaurante dado.
+     * @param id Id del ingrediente a eliminar.
+     * @param nombreRestaurante nombre del restaurante que lo contiene.
+     * @param idUsuario Id del usuario que realiza la solicitud.
+     * @return Json con el infoIngRest que elimino o Json con el error que se produjo
+     */
+	@DELETE
+	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes/{id: \\d+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteInfoIngRest(@HeaderParam("usuarioId") Long idUsuario, @PathParam("nombreRestaurante") String nombreRestaurante, @PathParam("id") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(idUsuario);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && idUsuario == tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante).getRepresentante().getId())))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.infoIngRestDeleteInfoIngRest(id, nombreRestaurante);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity("infoIngRest eliminado correctamente").build();
 	}
 
 }

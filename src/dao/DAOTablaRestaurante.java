@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import oracle.net.aso.r;
 import vos.*;
 
 /**
@@ -125,17 +126,41 @@ public class DAOTablaRestaurante {
 	 */
 	public void addRestaurante(Restaurante restaurante) throws SQLException, Exception {
 
+		DAOTablaCategoriaRestaurante daoCat = new DAOTablaCategoriaRestaurante();
+		DAOTablaInfoIngRest daoIng = new DAOTablaInfoIngRest();
+		DAOTablaMenu daoMenu = new DAOTablaMenu();
+		DAOTablaInfoProdRest daoProd = new DAOTablaInfoProdRest();
+		daoCat.setConn(conn);
+		daoIng.setConn(conn);
+		daoMenu.setConn(conn);
+		daoProd.setConn(conn);
+		
 		String sql = "INSERT INTO RESTAURANTE VALUES (";
 		sql += "'" + restaurante.getNombre() + "', ";
 		sql += "'" + restaurante.getPagWeb() + "', ";
 		sql += restaurante.getRepresentante().getId() + ", ";
 		sql += "'" + restaurante.getZona().getNombre() + ")";
-		
-		
-		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		daoCat.eliminarPorRestaurante(restaurante.getNombre());
+		for(Categoria c : restaurante.getCategorias())
+			daoCat.asociarCategoriaYRestaurante(c.getNombre(), restaurante.getNombre());
+		daoIng.eliminarInfoIngRestsPorRestaurante(restaurante);
+		for(InfoIngRest i : restaurante.getInfoIngredientes())
+			daoIng.addInfoIngRest(i);
+		daoMenu.eliminarMenusPorRestaurante(restaurante);
+		for(MenuMinimum m : restaurante.getMenus())
+			daoMenu.addMenu(daoMenu.buscarMenusPorNombreYRestaurante(m.getNombre(), m.getRestaurante().getNombre()));
+		daoProd.eliminarInfoProdRestsPorRestaurante(restaurante);
+		for(InfoProdRest p : restaurante.getInfoProductos())
+			daoProd.addInfoProdRest(p);
+		daoCat.cerrarRecursos();
+		daoIng.cerrarRecursos();
+		daoMenu.cerrarRecursos();
+		daoProd.cerrarRecursos();
+				
 	}
 	
 	
@@ -148,7 +173,16 @@ public class DAOTablaRestaurante {
 	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la restaurante.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void updateRestaurante(RestauranteMinimum restaurante) throws SQLException, Exception {
+	public void updateRestaurante(Restaurante restaurante) throws SQLException, Exception {
+		
+		DAOTablaCategoriaRestaurante daoCat = new DAOTablaCategoriaRestaurante();
+		DAOTablaInfoIngRest daoIng = new DAOTablaInfoIngRest();
+		DAOTablaMenu daoMenu = new DAOTablaMenu();
+		DAOTablaInfoProdRest daoProd = new DAOTablaInfoProdRest();
+		daoCat.setConn(conn);
+		daoIng.setConn(conn);
+		daoMenu.setConn(conn);
+		daoProd.setConn(conn);
 		
 		String sql = "UPDATE RESTAURANTE SET ";
 		sql += "PAG_WEB = '" + restaurante.getPagWeb() + "'";
@@ -158,10 +192,28 @@ public class DAOTablaRestaurante {
 			sql += ", NOMBRE_ZONA = '" + restauranteDetail.getZona().getNombre() + "'";
 		}
 		sql += " WHERE NOMBRE LIKE '" + restaurante.getNombre() + "'";
-
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+
+
+		daoCat.eliminarPorRestaurante(restaurante.getNombre());
+		for(Categoria c : restaurante.getCategorias())
+			daoCat.asociarCategoriaYRestaurante(c.getNombre(), restaurante.getNombre());
+		daoIng.eliminarInfoIngRestsPorRestaurante(restaurante);
+		for(InfoIngRest i : restaurante.getInfoIngredientes())
+			daoIng.addInfoIngRest(i);
+		daoMenu.eliminarMenusPorRestaurante(restaurante);
+		for(MenuMinimum m : restaurante.getMenus())
+			daoMenu.addMenu(daoMenu.buscarMenusPorNombreYRestaurante(m.getNombre(), m.getRestaurante().getNombre()));
+		daoProd.eliminarInfoProdRestsPorRestaurante(restaurante);
+		for(InfoProdRest p : restaurante.getInfoProductos())
+			daoProd.addInfoProdRest(p);
+		daoCat.cerrarRecursos();
+		daoIng.cerrarRecursos();
+		daoMenu.cerrarRecursos();
+		daoProd.cerrarRecursos();
+		
 	}
 
 	/**
@@ -196,6 +248,15 @@ public class DAOTablaRestaurante {
 	 */
 	private List<Restaurante> convertirEntidadRestaurante(ResultSet rs) throws SQLException, Exception
 	{
+		DAOTablaCategoriaRestaurante daoCat = new DAOTablaCategoriaRestaurante();
+		DAOTablaInfoIngRest daoIng = new DAOTablaInfoIngRest();
+		DAOTablaMenu daoMenu = new DAOTablaMenu();
+		DAOTablaInfoProdRest daoProd = new DAOTablaInfoProdRest();
+		daoCat.setConn(conn);
+		daoIng.setConn(conn);
+		daoMenu.setConn(conn);
+		daoProd.setConn(conn);
+		
 		DAOTablaUsuario daoUsuario = new DAOTablaUsuario();
 		DAOTablaZona daoZona = new DAOTablaZona();
 		daoUsuario.setConn(conn);
@@ -206,11 +267,15 @@ public class DAOTablaRestaurante {
 			String pagWeb = rs.getString("PAG_WEB");
 			UsuarioMinimum representante = daoUsuario.buscarUsuarioMinimumPorId(rs.getLong("ID_REPRESENTANTE"));
 			ZonaMinimum zona = daoZona.buscarZonasMinimumPorName(rs.getString("NOMBRE_ZONA"));
-			restaurantes.add(new Restaurante(nombre, pagWeb, zona, new ArrayList<Categoria>(), representante,
-					new ArrayList<InfoProdRest>(), new ArrayList<InfoIngRest>(), new ArrayList<MenuMinimum>()));
+			restaurantes.add(new Restaurante(nombre, pagWeb, zona, daoCat.consultarPorRestaurante(nombre), representante,
+					daoProd.darInfoProdRestsPorRestaurante(nombre), daoIng.darInfoIngRestsPorRestaurante(nombre), daoMenu.darMenusMinimumPorRestaurante(nombre)));
 		}
 		daoUsuario.cerrarRecursos();
 		daoZona.cerrarRecursos();
+		daoCat.cerrarRecursos();
+		daoIng.cerrarRecursos();
+		daoMenu.cerrarRecursos();
+		daoProd.cerrarRecursos();
 		return restaurantes;
 	}
 	
@@ -317,7 +382,7 @@ public class DAOTablaRestaurante {
 		String sql = "SELECT * FROM Restaurante WHERE ID_REPRESENTANTE = " + id;
 		PreparedStatement ps = conn.prepareStatement(sql);
 		recursos.add(ps);
-		List<RestauranteMinimum> rest=convertirEntidadRestauranteMinimum(ps.executeQuery());
+		List<Restaurante> rest=convertirEntidadRestaurante(ps.executeQuery());
 		if(rest.isEmpty()) return null;
 		return rest.get(0);
 	}
@@ -344,8 +409,19 @@ public class DAOTablaRestaurante {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void actualizarRestauranteDeUsuario(Long id, RestauranteMinimum restaurante) throws SQLException, Exception {
-		restaurante.setNombre(darRestauranteDeUsuario(id).getNombre());
-		updateRestaurante(restaurante);
+		String sql = "UPDATE RESTAURANTE SET ";
+		sql += "PAG_WEB = '" + restaurante.getPagWeb() + "'";
+		if(restaurante instanceof Restaurante) {
+			Restaurante restauranteDetail = (Restaurante) restaurante;
+			sql += ", ID_REPRESENTANTE = " + restauranteDetail.getRepresentante().getId();
+			sql += ", NOMBRE_ZONA = '" + restauranteDetail.getZona().getNombre() + "'";
+		}
+		sql += " WHERE NOMBRE LIKE '" + darRestauranteDeUsuario(id).getNombre() + "'";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+
 	}
 
 	/**

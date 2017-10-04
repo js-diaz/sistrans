@@ -71,7 +71,23 @@ public class DAOTablaPedidoProducto {
 		ResultSet rs = prepStmt.executeQuery();
 		return convertirEntidadPedidoProd(rs);
 	}
+	
+	/**
+	 * Metodo que, usando la conexi�n a la base de datos, saca todos los pedidoProds de la base de datos para un cuenta particular.
+	 * @param cuenta nombre del Cuenta.
+	 * @return Arraylist con los pedidoProds de la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public List<PedidoProd> darPedidoProdsPorCuenta(String cuenta) throws SQLException, Exception {
 
+		String sql = "SELECT * FROM PEDIDO_PROD WHERE NUMERO_CUENTA LIKE '" + cuenta + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		return convertirEntidadPedidoProd(rs);
+	}
 
 	/**
 	 * Metodo que busca la informacion de un producto en una cienta dados por par�metro.
@@ -207,5 +223,6 @@ public class DAOTablaPedidoProducto {
 		PreparedStatement ps = conn.prepareStatement(sql);
 		return convertirEntidadPedidoProd(ps.executeQuery());
 	}
+
 
 }

@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
 
 import vos.RestauranteMinimum;
 import vos.InfoIngRest;
@@ -16,7 +16,7 @@ public class DAOTablaInfoIngRest {
 	/**
 	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
 	 */
-	private ArrayList<Object> recursos;
+	private List<Object> recursos;
 
 	/**
 	 * Atributo que genera la conexión a la base de datos
@@ -62,7 +62,7 @@ public class DAOTablaInfoIngRest {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<InfoIngRest> darInfoIngRests() throws SQLException, Exception {
+	public List<InfoIngRest> darInfoIngRests() throws SQLException, Exception {
 
 		String sql = "SELECT * FROM INFO_ING_REST";
 
@@ -71,7 +71,23 @@ public class DAOTablaInfoIngRest {
 		ResultSet rs = prepStmt.executeQuery();
 		return convertirEntidadInfoIngRest(rs);
 	}
+	
+	/**
+	 * Metodo que, usando la conexi�n a la base de datos, saca todos los infoIngRests de la base de datos para un restaurante particular.
+	 * @param restaurante nombre del Restaurante.
+	 * @return Arraylist con los infoIngRests de la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public List<InfoIngRest> darInfoIngRestsPorRestaurante(String restaurante) throws SQLException, Exception {
 
+		String sql = "SELECT * FROM INFO_PROD_REST WHERE NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		return convertirEntidadInfoIngRest(rs);
+	}
 
 	
 
@@ -79,7 +95,7 @@ public class DAOTablaInfoIngRest {
 	 * Metodo que busca la informacion de un ingrediente en un restaurnate dados por par�metro.
 	 * @param id - Id del ingrediente a buscar
 	 * @param restaurante - Nombre del restaurante al que pertenece
-	 * @return ArrayList con los infoIngRests encontrados
+	 * @return List con los infoIngRests encontrados
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
@@ -92,7 +108,7 @@ public class DAOTablaInfoIngRest {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-		ArrayList<InfoIngRest> infoIngRests = convertirEntidadInfoIngRest(rs);
+		List<InfoIngRest> infoIngRests = convertirEntidadInfoIngRest(rs);
 		return infoIngRests.get(0);
 	}
 
@@ -166,13 +182,13 @@ public class DAOTablaInfoIngRest {
 	 * @throws SQLException Algún problema de la base de datos.<br>
 	 * @throws Exception Cualquier otra excepción.
 	 */
-	private ArrayList<InfoIngRest> convertirEntidadInfoIngRest(ResultSet rs) throws SQLException, Exception
+	private List<InfoIngRest> convertirEntidadInfoIngRest(ResultSet rs) throws SQLException, Exception
 	{
 		DAOTablaRestaurante daoRest = new DAOTablaRestaurante();
 		DAOTablaIngrediente daoProd = new DAOTablaIngrediente();
 		daoRest.setConn(conn);
 		daoProd.setConn(conn);
-		ArrayList<InfoIngRest> infoIngRests = new ArrayList<>();
+		List<InfoIngRest> infoIngRests = new ArrayList<>();
 		while (rs.next()) {
 			double precioAdicion = rs.getDouble("PRECIO_ADICION");
 			double precioSustituto = rs.getDouble("PRECIO_SUSTIUTO");
