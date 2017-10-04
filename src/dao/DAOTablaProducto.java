@@ -449,5 +449,126 @@ public class DAOTablaProducto {
 		tab.cerrarRecursos();
 	}
 	
+	//RFC4
+	/**
+	 * Da el mayor número de menus al cual pertenece un producto.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	private int darMaximoNumeroMenus() throws SQLException, Exception {
+		String sql = "SELECT MAX(NUM_MENUS) FROM (SELECT COUNT(*) AS NUM_MENUS FROM PERTENECE_A_MENU GROUP BY ID_PRODUCTO)";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		recursos.add(ps);
+		return ps.executeQuery().getInt("MAX(NUM_MENUS)");
+	}
+	
+	/**
+	 * Retorna la lista con los productos que pertenescan al mayor número de menús.
+	 * @return Arraylist con los productos que cumplen la conidicion dada.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public List<Producto> darProductosMasOfrecidos() throws SQLException, Exception {
+		
+		List<Producto> productos = new ArrayList<Producto>();
+
+		String sql = "SELECT ID_PRODUCTO FROM PERTENECE_A_MENU GROUP BY ID_PRODUCTO HAVING COUNT(*) = " + darMaximoNumeroMenus();
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while(rs.next()) 
+			productos.add(buscarProductoPorId(rs.getLong("ID_PRODUCTO")));
+				
+		return productos;
+	}
+	
+	//RFC6
+		/**
+		 * Da el mayor número de ventas que ha tenido un producto en la BD.
+		 * @throws SQLException - Cualquier error que la base de datos arroje.
+		 * @throws Exception - Cualquier error que no corresponda a la base de datos
+		 */
+		private int darMaximoNumeroVentas() throws SQLException, Exception {
+			String sql = "SELECT MAX(NUM_VENTAS_DIRECTAS + NUM_VENTAS_MENU) AS MAX FROM " + 
+					"(SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_DIRECTAS FROM PEDIDO_PROD GROUP BY ID_PRODUCTO) " + 
+					"JOIN (SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM PEDIDO_PROD JOIN PERTENECE_A_MENU " + 
+					"USING (NOMBRE_MENU, NOMBRE_RESTAURANTE) GROUP_BY ID_PRODUCTO) USING (ID_PRODUCTO)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			recursos.add(ps);
+			return ps.executeQuery().getInt("MAX");
+		}
+		
+		/**
+		 * Retorna la lista con los productos que hayan sido vendidos la mayor cantidad de veces.
+		 * @return Arraylist con los productos que cumplen la conidicion dada.
+		 * @throws SQLException - Cualquier error que la base de datos arroje.
+		 * @throws Exception - Cualquier error que no corresponda a la base de datos
+		 */
+		public List<Producto> darProductosMasVendidos() throws SQLException, Exception {
+			
+			List<Producto> productos = new ArrayList<Producto>();
+
+			String sql = "SELECT ID_PRODUCTO FROM " + 
+					"(SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_DIRECTAS FROM PEDIDO_PROD GROUP BY ID_PRODUCTO) " + 
+					"JOIN (SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM PEDIDO_PROD JOIN PERTENECE_A_MENU " + 
+					"USING (NOMBRE_MENU, NOMBRE_RESTAURANTE) GROUP_BY ID_PRODUCTO) USING (ID_PRODUCTO) " + 
+					"WHERE NUM_VENTAS_DIRECTAS + NUM_VENTAS_MENU = " + darMaximoNumeroVentas();
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs = prepStmt.executeQuery();
+			
+			while(rs.next()) 
+				productos.add(buscarProductoPorId(rs.getLong("ID_PRODUCTO")));
+					
+			return productos;
+		}
+		
+		/**
+		 * Da el mayor número de ventas que ha tenido un producto en la BD.
+		 * @throws SQLException - Cualquier error que la base de datos arroje.
+		 * @throws Exception - Cualquier error que no corresponda a la base de datos
+		 */
+		private int darMaximoNumeroVentasPorZona(String nombreZona) throws SQLException, Exception {
+			String sql = "SELECT MAX(NUM_VENTAS_DIRECTAS + NUM_VENTAS_MENU) AS MAX FROM " + 
+					"(SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_DIRECTAS FROM PEDIDO_PROD JOIN RESTAURANTE ON NOMBRE = NOMBRE_RESTAURANTE"
+					+ "WHERE NOMBRE_ZONA = " + nombreZona + " GROUP BY ID_PRODUCTO) " + 
+					"JOIN (SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM (PEDIDO_PROD JOIN PERTENECE_A_MENU " + 
+					"USING (NOMBRE_MENU, NOMBRE_RESTAURANTE)) JOIN RESTAURANTE ON NOMBRE = NOMBRE_RESTAURANTE"
+					+ "WHERE NOMBRE_ZONA = " + nombreZona + " GROUP_BY ID_PRODUCTO) USING (ID_PRODUCTO)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			recursos.add(ps);
+			return ps.executeQuery().getInt("MAX");
+		}
+		
+		/**
+		 * Retorna la lista con los productos que hayan sido vendidos la mayor cantidad de veces.
+		 * @return Arraylist con los productos que cumplen la conidicion dada.
+		 * @throws SQLException - Cualquier error que la base de datos arroje.
+		 * @throws Exception - Cualquier error que no corresponda a la base de datos
+		 */
+		public List<Producto> darProductosMasVendidosPorZona(String nombreZona) throws SQLException, Exception {
+			
+			List<Producto> productos = new ArrayList<Producto>();
+
+			String sql = "SELECT ID_PRODUCTO FROM " + 
+					"(SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_DIRECTAS FROM PEDIDO_PROD JOIN RESTAURANTE ON NOMBRE = NOMBRE_RESTAURANTE"
+					+ "WHERE NOMBRE_ZONA = " + nombreZona + " GROUP BY ID_PRODUCTO) " + 
+					"JOIN (SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM (PEDIDO_PROD JOIN PERTENECE_A_MENU " + 
+					"USING (NOMBRE_MENU, NOMBRE_RESTAURANTE)) JOIN RESTAURANTE ON NOMBRE = NOMBRE_RESTAURANTE"
+					+ "WHERE NOMBRE_ZONA = " + nombreZona + " GROUP_BY ID_PRODUCTO) USING (ID_PRODUCTO)" + 
+					"WHERE NUM_VENTAS_DIRECTAS + NUM_VENTAS_MENU = " + darMaximoNumeroVentasPorZona(nombreZona);
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs = prepStmt.executeQuery();
+			
+			while(rs.next()) 
+				productos.add(buscarProductoPorId(rs.getLong("ID_PRODUCTO")));
+					
+			return productos;
+		}
 
 }
