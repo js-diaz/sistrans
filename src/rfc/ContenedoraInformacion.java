@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-
-import vos.Informacion;
 /**
  * Clase usada para contener información.<br>
  * @author jc161
