@@ -303,7 +303,7 @@ public class DAOTablaCuenta {
 	private void insertarMenu(Cuenta c) throws SQLException, Exception {
 		DAOTablaPedidoMenu menus = new DAOTablaPedidoMenu();
 		menus.setConn(this.conn);
-		for(PedidoMenu pm : c.getPedidoMenuMinimum())
+		for(PedidoMenu pm : c.getPedidoMenu())
 			menus.addPedidoMenu(pm);
 		menus.cerrarRecursos();
 	}
@@ -314,7 +314,7 @@ public class DAOTablaCuenta {
 	private void insertarProducto(Cuenta c) throws SQLException, Exception {
 		DAOTablaPedidoProducto productos = new DAOTablaPedidoProducto();
 		productos.setConn(this.conn);
-		for(PedidoProd pp : c.getPedidoProdMinimum())
+		for(PedidoProd pp : c.getPedidoProd())
 			productos.addPedidoProd(pp);
 		productos.cerrarRecursos();
 		
@@ -379,7 +379,7 @@ public class DAOTablaCuenta {
 		Menu menu=null;
 		ContenedoraPedidosProd cp=null;
 		List<ContenedoraPedidosProd> pedidos=new ArrayList<>();
-		for(PedidoMenu m: c.getPedidoMenuMinimum())
+		for(PedidoMenu m: c.getPedidoMenu())
 		{
 			if(m.getEntregado()==true) continue;
 			menu=menus.buscarMenusPorNombreYRestaurante(m.getMenu().getNombre(), m.getMenu().getRestaurante().getNombre());
@@ -427,7 +427,7 @@ public class DAOTablaCuenta {
 			
 		}
 		ArrayList<PedidoProd> restantesProductos= new ArrayList<PedidoProd>();
-		for(PedidoProd p:c.getPedidoProdMinimum())
+		for(PedidoProd p:c.getPedidoProd())
 		{
 			try
 			{

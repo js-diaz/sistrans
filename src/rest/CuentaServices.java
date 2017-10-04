@@ -274,16 +274,43 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			throw new Exception ("se pagó la cuenta");
-			/*if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.CLIENTE) && id != tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			ped=tm.cuentaPagarCuenta(numeroCuenta);*/
+			ped=tm.cuentaPagarCuenta(numeroCuenta);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		//return Response.status(200).entity(ped).build();
+		return Response.status(200).entity(ped).build();
 	}
-	
+	/**
+     * Metodo que expone servicio REST usando POST que agrega el pedidoProd que recibe en Json
+     * @param numeroCuenta nombre del cuenta al cual agregarlo.
+     * @param pedidoProd - pedidoProd a agregar.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el pedidoProd que agrego o Json con el error que se produjo
+     */
+	@PUT
+	@Path( "{numeroCuenta: \\d+}/HOLA" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pay(@PathParam("numeroCuenta") String numeroCuenta, @HeaderParam("usuarioId") Long id ) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		PendientesOrden ped=null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.CLIENTE) && id != tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			ped=tm.cuentaPagarCuenta(numeroCuenta);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(ped).build();
+	}
 	//Subrecurso pedidoProd
 	/** Metodo que expone servicio REST usando GET que da todos los pedidoProds de la base de datos para un cuenta particular.
 	 * @param numeroCuenta nombre del cuenta.

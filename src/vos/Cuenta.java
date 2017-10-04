@@ -51,28 +51,28 @@ public class Cuenta extends CuentaMinimum {
 	 * Obtiene el listado de pedidos de productos.<br>
 	 * @return pedidoProd.
 	 */
-	public List<PedidoProd> getPedidoProdMinimum() {
+	public List<PedidoProd> getPedidoProd() {
 		return pedidoProd;
 	}
 	/**
 	 * Modifica el pedido del producto al dado por parámetro.<br>
 	 * @param pedidoProd Modifica el listado respectivo.
 	 */
-	public void setPedidoProdMinimum(List<PedidoProd> pedidoProd) {
+	public void setPedidoProd(List<PedidoProd> pedidoProd) {
 		this.pedidoProd = pedidoProd;
 	}
 	/**
 	 * Obtiene el listado de pedidos del menú.<br>
 	 * @return pedidoMenu
 	 */
-	public List<PedidoMenu> getPedidoMenuMinimum() {
+	public List<PedidoMenu> getPedidoMenu() {
 		return pedidoMenu;
 	}
 	/**
 	 * Modifica el listado de pedidos de menú al dado por parámetro.<br>
 	 * @param pedidoMenu 
 	 */
-	public void setPedidoMenuMinimum(List<PedidoMenu> pedidoMenu) {
+	public void setPedidoMenu(List<PedidoMenu> pedidoMenu) {
 		this.pedidoMenu = pedidoMenu;
 	}
 	

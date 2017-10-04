@@ -125,8 +125,7 @@ public class DAOTablaMenu {
 		List<Menu> menus = convertirEntidadMenu(rs);
 		return menus.get(0);
 	}
-
-
+	
 	/**
 	 * Metodo que busca el/los menus con el nombre que entra como parametro.
 	 * @param name - Nombre de el menu a buscar
@@ -260,7 +259,7 @@ public class DAOTablaMenu {
 			String nombre = rs.getString("NOMBRE");
 			double precio = rs.getDouble("PRECIO");
 			double costo = rs.getDouble("COSTO");
-			RestauranteMinimum restaurante = daoRest.darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE"));
+			RestauranteMinimum restaurante = daoRest.buscarRestaurantesMinimumPorName(rs.getString("NOMBRE_RESTAURANTE"));
 			List<InfoProdRest> productos = daoProd.consultarPorMenu(nombre, restaurante.getNombre());
 			List<Categoria> categorias = daoCat.consultarPorMenu(nombre, restaurante.getNombre());
 			menus.add(new Menu(nombre, precio, costo, restaurante, productos, categorias));

@@ -64,8 +64,29 @@ RF7:	Registra una zona en el sistema.
         ]
 	}
 RF8: Para este requerimiento se manejo que un usuario solo puede tener una única preferencia, la cual se puede ir modificando utilizando acciones de actualización en los diferentes subrecursos propuestos. Si se quiere agregar una preferencia se puede poner el Json directamente con toda la información disponible.
-	URL: 
+	URL: [POST] localhost:8080/VideoAndes/rest/preferencias/{idUsuario}
 	Json:
+{
+     "precioInicial": 40.36,
+    "precioFinal": 70.36,
+    "zonas": [
+        {
+            "capacidad": 55,
+            "ingresoEspecial": false,
+            "abiertaActualmente": true,
+            "capacidadOcupada": 46,
+            "nombre": "Kids"
+        }
+     ],
+	"categorias": [
+        {
+            "nombre": "Taiwanese"
+        },
+        {
+            "nombre": "Ute"
+        }
+    ]
+}
 A su vez se puede agregar parcialmente solo colocando las preferencias de precio como sigue:
 	URL:[POST]localhost:8080/VideoAndes/rest/preferencias/{idUsuario}
 	Json:{

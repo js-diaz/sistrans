@@ -55,14 +55,14 @@ public class Zona extends ZonaMinimum {
 	 * Obtiene los restaurantes de la zona.<br>
 	 * @return restaurantes
 	 */
-	public List<RestauranteMinimum> getRestauranteMinimums() {
+	public List<RestauranteMinimum> getRestaurantes() {
 		return restaurantes;
 	}
 	/**
 	 * Modifica el valor de los restaurantes al dado por parámetro.<br>
 	 * @param restaurantes
 	 */
-	public void setRestauranteMinimums(List<RestauranteMinimum> restaurantes) {
+	public void setRestaurantes(List<RestauranteMinimum> restaurantes) {
 		this.restaurantes = restaurantes;
 	}
 	

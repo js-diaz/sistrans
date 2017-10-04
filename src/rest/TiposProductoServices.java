@@ -82,7 +82,7 @@ public class TiposProductoServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{nombre:[A-Z]+}" )
+	@Path( "{nombre}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getTiposDePlatoName( @PathParam("nombre") String name) {
 		name=name.replaceAll(RotondAndesTM.SPACE, " ");
@@ -112,7 +112,7 @@ public class TiposProductoServices {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{nombre:[A-Z]+}")
+	@Path("{nombre}")
 	public Response addTiposDePlato(@PathParam("nombre")String tipo, @HeaderParam("usuarioId") Long usuarioId) {
 		tipo=tipo.replaceAll(RotondAndesTM.SPACE, " ");
 
@@ -145,10 +145,9 @@ public class TiposProductoServices {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{nombre:[A-Z]+}")
+	@Path("{nombre}")
 	public Response deleteTiposDePlato(@PathParam("nombre") String tipo, @HeaderParam("usuarioId") Long usuarioId) {
 		tipo=tipo.replaceAll(RotondAndesTM.SPACE, " ");
-
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
