@@ -25,12 +25,19 @@ public class PedidoMenu {
 	 */
 	@JsonProperty(value="menu")
 	private MenuMinimum menu;
+	
+	/**
+	 * Determina si el pedido ya fue entregado.
+	 */
+	@JsonProperty(value="entregado")
+	private Boolean entregado;
 
 	public PedidoMenu(@JsonProperty(value="cantidad") Integer cantidad, @JsonProperty(value="cuenta") CuentaMinimum cuenta,
-			@JsonProperty(value="menu") MenuMinimum menu) {
+			@JsonProperty(value="menu") MenuMinimum menu, @JsonProperty(value="entregado") Boolean entregado) {
 		this.cantidad = cantidad;
 		this.cuenta = cuenta;
 		this.menu = menu;
+		this.entregado = entregado;
 	}
 
 	public Integer getCantidad() {
@@ -55,6 +62,14 @@ public class PedidoMenu {
 
 	public void setMenu(MenuMinimum menu) {
 		this.menu = menu;
+	}
+
+	public Boolean getEntregado() {
+		return entregado;
+	}
+
+	public void setEntregado(Boolean entregado) {
+		this.entregado = entregado;
 	}
 	
 }

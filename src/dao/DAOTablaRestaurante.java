@@ -186,11 +186,13 @@ public class DAOTablaRestaurante {
 		
 		String sql = "UPDATE RESTAURANTE SET ";
 		sql += "PAG_WEB = '" + restaurante.getPagWeb() + "'";
-		if(restaurante instanceof Restaurante) {
-			Restaurante restauranteDetail = (Restaurante) restaurante;
-			sql += ", ID_REPRESENTANTE = " + restauranteDetail.getRepresentante().getId();
-			sql += ", NOMBRE_ZONA = '" + restauranteDetail.getZona().getNombre() + "'";
-		}
+		Restaurante restauranteDetail;
+		if(restaurante instanceof Restaurante) 
+			 restauranteDetail = (Restaurante) restaurante;
+		else
+			restauranteDetail = darRestaurantePorNombre(restaurante.getNombre());
+		sql += ", ID_REPRESENTANTE = " + restauranteDetail.getRepresentante().getId();
+		sql += ", NOMBRE_ZONA = '" + restauranteDetail.getZona().getNombre() + "'";
 		sql += " WHERE NOMBRE LIKE '" + restaurante.getNombre() + "'";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

@@ -125,7 +125,8 @@ public class DAOTablaPedidoMenu {
 		sql += "'" + pedidoMenu.getCuenta().getNumeroCuenta() + "', ";
 		sql += pedidoMenu.getMenu().getNombre() + ", ";
 		sql += "'" + pedidoMenu.getMenu().getRestaurante().getNombre() + "', ";
-		sql += pedidoMenu.getCantidad() + ")";
+		sql += pedidoMenu.getCantidad() + ", ";
+		sql += pedidoMenu.getEntregado()? "'0')" : "'1')";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -146,6 +147,8 @@ public class DAOTablaPedidoMenu {
 
 		String sql = "UPDATE PEDIDO_MENU SET ";
 		sql += "CANTIDAD = " + pedidoMenu.getCantidad();
+		sql += "ENTREGADO = " + (pedidoMenu.getEntregado()? "'0' " : "'1' ");
+
 		
 		sql += " WHERE NOMBRE_MENU LIKE '" + pedidoMenu.getMenu().getNombre() + "'"; 
 		sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoMenu.getMenu().getRestaurante().getNombre() + "'";
@@ -194,7 +197,8 @@ public class DAOTablaPedidoMenu {
 			int cantidad = rs.getInt("CANTIDAD");
 			MenuMinimum menu = daoMenu.buscarMenusMinimumPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
 			CuentaMinimum cuenta = daoCuenta.buscarCuentasMinimumPorNumeroDeCuenta(rs.getString("NUMERO_CUENTA"));
-			pedidoMenus.add(new PedidoMenu(cantidad, cuenta, menu));
+			boolean entregado = rs.getString("ENTREGADO").equals("1");
+			pedidoMenus.add(new PedidoMenu(cantidad, cuenta, menu, entregado));
 		}
 		daoCuenta.cerrarRecursos();
 		daoMenu.cerrarRecursos();
