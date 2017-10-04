@@ -86,6 +86,7 @@ public class CategoriaServices {
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getCategoria( @PathParam( "name" ) String name )
 	{
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{

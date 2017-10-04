@@ -65,6 +65,8 @@ public class PreferenciaCategoriaServices {
 	@Path("porCategoria")
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getPreferenciaCategoriaPorCategoria(@HeaderParam("categoria")String cat) {
+		cat=cat.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Preferencia> preferencias;
 		try {
@@ -138,6 +140,8 @@ public class PreferenciaCategoriaServices {
 	@Path("porCategoria")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletePreferenciaCategoriaPorCategoria(@HeaderParam("categoria")String categoria, @HeaderParam("usuarioId") Long usuarioId) {
+		categoria=categoria.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -193,6 +197,8 @@ public class PreferenciaCategoriaServices {
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletePreferenciaCategoria(@HeaderParam("preferencia")Long preferencia, @HeaderParam("categoria") String cat,@HeaderParam("usuarioId") Long usuarioId) {
+		cat=cat.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );

@@ -85,6 +85,8 @@ public class TiposProductoServices {
 	@Path( "{nombre:[A-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getTiposDePlatoName( @PathParam("nombre") String name) {
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		TiposDePlato tipos;
 		try {
@@ -112,6 +114,8 @@ public class TiposProductoServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{nombre:[A-Z]+}")
 	public Response addTiposDePlato(@PathParam("nombre")String tipo, @HeaderParam("usuarioId") Long usuarioId) {
+		tipo=tipo.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -143,6 +147,8 @@ public class TiposProductoServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{nombre:[A-Z]+}")
 	public Response deleteTiposDePlato(@PathParam("nombre") String tipo, @HeaderParam("usuarioId") Long usuarioId) {
+		tipo=tipo.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );

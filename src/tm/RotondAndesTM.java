@@ -49,10 +49,13 @@ import vos.Categoria;
 /**
  * Transaction Manager de la aplicacion (TM)
  * Fachada en patron singleton de la aplicacion
- * @author Monitores 2017-20
+ * @author s.guzmanm-js.diaz
  */
 public class RotondAndesTM {
-
+	/**
+	 * Espaciado de los servicios rest
+	 */
+	public static final String SPACE="%20";
 	/**
 	 * Atributo estatico que contiene el path relativo del archivo que tiene los datos de la conexion
 	 */

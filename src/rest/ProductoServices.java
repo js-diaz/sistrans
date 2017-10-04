@@ -118,6 +118,7 @@ public class ProductoServices {
 	@Path( "{nombre: [a-zA-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getProductoName( @QueryParam("nombre") String name) {
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Producto> productos;
 		try {
@@ -141,6 +142,8 @@ public class ProductoServices {
 	@Path( "{tipo: [A-Z]+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getProductoTipo( @QueryParam("tipo") String tipo) {
+		tipo=tipo.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Producto> productos;
 		try {

@@ -173,7 +173,7 @@ public class DAOTablaTiposProducto {
 		case PLATO_FUERTE: return "PLATO FUERTE";
 		case POSTRE: return "POSTRE";
 		case BEBIDA: return "BEBIDA";
-		case ACOMPANAMIENTO: return "ACOMPAÑAMIENTO";
+		case ACOMPANAMIENTO: return "ACOMPANAMIENTO";
 		default: return "NOEXISTE";
 		}
 	}
@@ -189,7 +189,7 @@ public class DAOTablaTiposProducto {
 		case"ENTRADA": return TiposDePlato.ENTRADA;
 		case "POSTRE": return TiposDePlato.POSTRE;
 		case "PLATO FUERTE": return TiposDePlato.PLATO_FUERTE;
-		case "ACOMPAÑAMIENTO": return TiposDePlato.ACOMPANAMIENTO;
+		case "ACOMPANAMIENTO": return TiposDePlato.ACOMPANAMIENTO;
 		case "BEBIDA": return TiposDePlato.BEBIDA;
 		default: return null;
 		}

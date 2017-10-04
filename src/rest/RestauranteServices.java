@@ -28,7 +28,7 @@ import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase que expone servicios REST con ruta base: http://"ip o nombre de host":8080/RestauranteAndes/rest/restaurantes/...
- * @author Monitores 2017-20
+ * @author js.diaz
  */
 @Path("restaurantes")
 public class RestauranteServices {
@@ -82,6 +82,8 @@ public class RestauranteServices {
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getRestaurante( @PathParam( "nombre" ) String nombre )
 	{
+		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
@@ -126,7 +128,7 @@ public class RestauranteServices {
     /**
      * Metodo que expone servicio REST usando PUT que modifica un restaurante.
      * @param nombre nombre del restaurante a modificar.
-     * @param restaurante información del restaurante modificado.
+     * @param restaurante informaciï¿½n del restaurante modificado.
      * @param id_ Id del usuario que realiza la solicitud.
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
@@ -135,6 +137,8 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateRestaurante(Restaurante restaurante, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre) {
+		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -165,6 +169,8 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteRestaurante(@HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre) {
+		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -193,6 +199,8 @@ public class RestauranteServices {
 	@Path( "{nombreRestaurante: [a-zA-Z]+}/menus" )
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getMenus(@PathParam("nombreRestaurante") String nombreRestaurante) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Menu> menus;
 		try {
@@ -215,6 +223,9 @@ public class RestauranteServices {
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getMenu( @PathParam( "nombre" ) String nombre, @PathParam("nombreRestaurante") String nombreRestaurante )
 	{
+		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
@@ -242,6 +253,8 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addMenu(@PathParam("nombreRestaurante") String nombreRestaurante, Menu menu, @HeaderParam("usuarioId") Long id) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -264,7 +277,7 @@ public class RestauranteServices {
      * Metodo que expone servicio REST usando PUT que modifica un restaurante.
      * @param nombre nombre del menu a modificar.
      * @param nombreRestaurante nombre del restaurante que lo contiene.
-     * @param menu información del menu modificado.
+     * @param menu informaciï¿½n del menu modificado.
      * @param id_ Id del usuario que realiza la solicitud.
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
@@ -273,6 +286,9 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateMenu(Menu menu, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre, @PathParam("nombreRestaurante") String nombreRestaurante) {
+		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -305,6 +321,9 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteMenu(@HeaderParam("usuarioId") Long id, @PathParam("nombreRestaurante") String nombreRestaurante, @PathParam("nombre") String nombre) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -332,6 +351,8 @@ public class RestauranteServices {
 	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos" )
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getInfoProdRests(@PathParam("nombreRestaurante") String nombreRestaurante) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<InfoProdRest> productos;
 		try {
@@ -352,8 +373,10 @@ public class RestauranteServices {
 	@GET
 	@Path( "{nombreRestaurante: [a-zA-Z]+}/productos/{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getInfoProdRest( @PathParam( "nombre" ) Long id, @PathParam("nombreRestaurante") String nombreRestaurante )
+	public Response getInfoProdRest( @PathParam( "id" ) Long id, @PathParam("nombreRestaurante") String nombreRestaurante )
 	{
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
@@ -381,6 +404,8 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addInfoProdRest(@PathParam("nombreRestaurante") String nombreRestaurante, InfoProdRest infoProdRest, @HeaderParam("usuarioId") Long id) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -403,7 +428,7 @@ public class RestauranteServices {
      * Metodo que expone servicio REST usando PUT que modifica un restaurante.
      * @param id id del producto a modificar.
      * @param nombreRestaurante nombre del restaurante que lo contiene.
-     * @param infoProdRest información del infoProdRest modificado.
+     * @param infoProdRest informaciï¿½n del infoProdRest modificado.
      * @param idUsuario Id del usuario que realiza la solicitud.
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
@@ -412,6 +437,8 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateInfoProdRest(InfoProdRest infoProdRest, @HeaderParam("usuarioId") Long idUsuario, @PathParam("id") Long id, @PathParam("nombreRestaurante") String nombreRestaurante) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -444,6 +471,8 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteInfoProdRest(@HeaderParam("usuarioId") Long idUsuario, @PathParam("nombreRestaurante") String nombreRestaurante, @PathParam("id") Long id) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -471,6 +500,8 @@ public class RestauranteServices {
 	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes" )
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getInfoIngRests(@PathParam("nombreRestaurante") String nombreRestaurante) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<InfoIngRest> ingredientes;
 		try {
@@ -491,8 +522,10 @@ public class RestauranteServices {
 	@GET
 	@Path( "{nombreRestaurante: [a-zA-Z]+}/ingredientes/{id: \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getInfoIngRest( @PathParam( "nombre" ) Long id, @PathParam("nombreRestaurante") String nombreRestaurante )
+	public Response getInfoIngRest( @PathParam( "id" ) Long id, @PathParam("nombreRestaurante") String nombreRestaurante )
 	{
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
@@ -520,6 +553,8 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addInfoIngRest(@PathParam("nombreRestaurante") String nombreRestaurante, InfoIngRest infoIngRest, @HeaderParam("usuarioId") Long id) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -542,7 +577,7 @@ public class RestauranteServices {
      * Metodo que expone servicio REST usando PUT que modifica un restaurante.
      * @param id id del ingrediente a modificar.
      * @param nombreRestaurante nombre del restaurante que lo contiene.
-     * @param infoIngRest información del infoIngRest modificado.
+     * @param infoIngRest informaciï¿½n del infoIngRest modificado.
      * @param idUsuario Id del usuario que realiza la solicitud.
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
@@ -551,6 +586,8 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateInfoIngRest(InfoIngRest infoIngRest, @HeaderParam("usuarioId") Long idUsuario, @PathParam("id") Long id, @PathParam("nombreRestaurante") String nombreRestaurante) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -583,6 +620,8 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteInfoIngRest(@HeaderParam("usuarioId") Long idUsuario, @PathParam("nombreRestaurante") String nombreRestaurante, @PathParam("id") Long id) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
