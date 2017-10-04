@@ -27,7 +27,7 @@ public class DAOTablaCriterio {
 	 * Enum de tipos de dato.
 	 */
 	public enum tiposDatos{
-		VARCHAR2,DATE
+		VARCHAR2,DATE, NUMBER
 	}
 	
 	/**
@@ -448,6 +448,8 @@ public class DAOTablaCriterio {
 	 */
 	private void evaluarWhere(CriterioVerdad where, ContenedoraInformacion tipos) throws SQLException, Exception{
 		String tipo=null;
+		String ant1="";
+		String ant2="";
 		if(where.getValorAnterior()!=null)
 		{
 			for(int i=0;i<tipos.getInformacion().size() && tipo==null;i++)
@@ -475,7 +477,7 @@ public class DAOTablaCriterio {
 					}
 				else if (tipo.equals(tiposDatos.DATE+"")) 
 					{
-						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "TO_DATE\\('"+where.getComparacion()+"', 'yyyy/mm/dd'\\)"));
+						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "TO_DATE\\('"+where.getComparacion()+"', 'yyyy-MM-dd hh24:mi:ss'\\)"));
 					}
 				else
 				{
@@ -485,8 +487,17 @@ public class DAOTablaCriterio {
 		}
 		else
 		{
-			evaluarWhere(where.getC1(),tipos);
-			evaluarWhere(where.getC2(),tipos);
+			if(where.getC1()!=null)
+			{
+				ant1=where.getC1().getNombre();
+				ant2=where.getC2().getNombre();
+				evaluarWhere(where.getC1(),tipos);
+				evaluarWhere(where.getC2(),tipos);
+				where.setNombre(where.getNombre().replaceAll(ant1, where.getC1().getNombre()));
+				where.setNombre(where.getNombre().replaceAll(ant2, where.getC2().getNombre()));
+			}
+			
+			
 		}
 	}
 	
@@ -494,6 +505,10 @@ public class DAOTablaCriterio {
 		String tipo=null;
 		if(having.getValorAnterior()!=null)
 		{
+			if(having.getValorAnterior().getInterno()==null) 
+				{
+					tipo=tiposDatos.NUMBER+"";
+				}
 			for(int i=0;i<tipos.getInformacion().size() && tipo==null;i++)
 			{
 				if(having.getValorAnterior().getInterno().equals(tipos.darNombre(i)))
@@ -502,6 +517,7 @@ public class DAOTablaCriterio {
 			if(having.getCriterioComparacion()!=null)
 			{
 				String tipo2=null;
+				if(having.getCriterioComparacion().getInterno()==null) tipo2=tiposDatos.NUMBER+"";
 				for(int i=0;i<tipos.getInformacion().size() && tipo2==null;i++)
 				{
 					if(having.getValorAnterior().getInterno().equals(tipos.darNombre(i)))

@@ -3794,24 +3794,24 @@
 								"method": "POST",
 								"header": [
 									{
-										"description": "",
 										"key": "usuarioId",
-										"value": "0"
+										"value": "0",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "preferencia",
-										"value": "200"
+										"value": "200",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "Content-Type",
-										"value": "application/json"
+										"value": "application/json",
+										"description": ""
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 10.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
 								"description": ""
 							},
@@ -3876,24 +3876,24 @@
 								"method": "POST",
 								"header": [
 									{
-										"description": "",
 										"key": "usuarioId",
-										"value": "0"
+										"value": "0",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "preferencia",
-										"value": "200"
+										"value": "200",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "Content-Type",
-										"value": "application/json"
+										"value": "application/json",
+										"description": ""
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
 								"description": ""
 							},
@@ -3917,24 +3917,24 @@
 								"method": "DELETE",
 								"header": [
 									{
-										"description": "",
 										"key": "usuarioId",
-										"value": "0"
+										"value": "0",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "preferencia",
-										"value": "200"
+										"value": "200",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "Content-Type",
-										"value": "application/json"
+										"value": "application/json",
+										"description": ""
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
 								"description": ""
 							},
@@ -4023,7 +4023,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"ABC\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"ABC\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
 								"description": ""
 							},
@@ -4088,24 +4088,24 @@
 								"method": "POST",
 								"header": [
 									{
-										"description": "",
 										"key": "usuarioId",
-										"value": "0"
+										"value": "0",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "preferencia",
-										"value": "200"
+										"value": "200",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "Content-Type",
-										"value": "application/json"
+										"value": "application/json",
+										"description": ""
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
 								"description": ""
 							},
@@ -4129,19 +4129,19 @@
 								"method": "GET",
 								"header": [
 									{
-										"description": "",
 										"key": "usuarioId",
-										"value": "0"
+										"value": "0",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "preferencia",
-										"value": "200"
+										"value": "200",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "Content-Type",
-										"value": "application/json"
+										"value": "application/json",
+										"description": ""
 									}
 								],
 								"body": {
@@ -4235,7 +4235,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 300,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 300,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
 								"description": ""
 							},
@@ -4255,7 +4255,7 @@
 								}
 							],
 							"request": {
-								"url": "localhost:8080/VideoAndes/rest/cuentas/300",
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
 								"method": "GET",
 								"header": [
 									{
@@ -4300,24 +4300,24 @@
 								"method": "POST",
 								"header": [
 									{
-										"description": "",
 										"key": "usuarioId",
-										"value": "0"
+										"value": "0",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "preferencia",
-										"value": "200"
+										"value": "200",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "Content-Type",
-										"value": "application/json"
+										"value": "application/json",
+										"description": ""
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
 								"description": ""
 							},
@@ -4341,19 +4341,19 @@
 								"method": "GET",
 								"header": [
 									{
-										"description": "",
 										"key": "usuarioId",
-										"value": "0"
+										"value": "0",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "preferencia",
-										"value": "200"
+										"value": "200",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "Content-Type",
-										"value": "application/json"
+										"value": "application/json",
+										"description": ""
 									}
 								],
 								"body": {
@@ -4382,24 +4382,24 @@
 								"method": "DELETE",
 								"header": [
 									{
-										"description": "",
 										"key": "usuarioId",
-										"value": "0"
+										"value": "0",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "preferencia",
-										"value": "200"
+										"value": "200",
+										"description": ""
 									},
 									{
-										"description": "",
 										"key": "Content-Type",
-										"value": "application/json"
+										"value": "application/json",
+										"description": ""
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 101,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
 								"description": ""
 							},
