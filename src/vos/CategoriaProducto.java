@@ -1,9 +1,11 @@
-package rfc;
+package vos;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import rfc.ProductoEnTotal;
 
 /**
  * Clase para embasar los productos de una categoría en el req de consulta 5

@@ -2487,9 +2487,135 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	//Reserva
 	
-	//Restaurante
+	/**
+	 * Da los productos mas ofrecidos del sistema.<br>
+	 * @return Productos en lista.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Producto> productoDarProductosMasOfrecidos() throws Exception
+	{
+		List<Producto> list =null;
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darProductosMasOfrecidos();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Da los productos mas vendidos del sistema.<br>
+	 * @return Productos en lista.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Producto> productoDarProductosMasVendidos() throws Exception
+	{
+		List<Producto> list =null;
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darProductosMasVendidos();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Da los productos mas vendidos en una zona particular.<br>
+	 * @param nombreZona nombre de la zona a revisar.
+	 * @return Productos en lista.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Producto> productoDarProductosMasVendidosPorZona(String nombreZona) throws Exception
+	{
+		List<Producto> list =null;
+		DAOTablaProducto dao = new DAOTablaProducto();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darProductosMasVendidosPorZona(nombreZona);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+
+
 	
 	//Rol
 	/**

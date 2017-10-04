@@ -1,0 +1,1816 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Pruebas Integridad de Datos",
+		"_postman_id": "2ffb276b-7921-8f98-0167-fd0374eed0a8",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Restaurante",
+			"description": "",
+			"item": [
+				{
+					"name": "agregar restaurante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PK repetida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagweb\" : \"www.hamburguesaselcorral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"local\"}\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ver restaurante obtenido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas el Corral",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "borrar restaurante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]= responseCode.code===204"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas el Corral",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK usuario no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1000, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"}\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK zona no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"}\n\t\"zona\" : {\"nombre\" : \"Sportsy\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Menu",
+			"description": "",
+			"item": [
+				{
+					"name": "agregar menu",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"menu1\",\n\t\"precio\" : 20.5,\n\t\"costo\" : 18.25,\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PK repetida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"menu1\",\n\t\"precio\" : 20.5,\n\t\"costo\" : 19.25,\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ver menu obtenido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "borrar menu",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]= responseCode.code===204"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK restaurante no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"menu1\",\n\t\"precio\" : 20.5,\n\t\"costo\" : 19.25,\n\t\"restaurante\" : { \"nombre\" : \"Wikiwiki\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "InfoProdRest",
+			"description": "",
+			"item": [
+				{
+					"name": "agregar infoProdRest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"precio\" : 20.5,\n\t\"costo\" : 18.25,\n\t\"disponibilidad\" : 300,\n\t\"fechaInicio\" : 1186110000000,\n\t\"fechaFin\": 1188615600000,\n\t\"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PK repetida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"precio\" : 21.5,\n\t\"costo\" : 19.25,\n\t\"disponibilidad\" : 350,\n\t\"fechaInicio\" : 1186110000000,\n\t\"fechaFin\": 1188615600000,\n\t\"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ver infoProdRest obtenido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "borrar infoProdRest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]= responseCode.code===204"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos/1",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK restaurante no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"precio\" : 20.5,\n\t\"costo\" : 18.25,\n\t\"disponibilidad\" : 300,\n\t\"fechaInicio\" : 1186110000000,\n\t\"fechaFin\": 1188615600000,\n\t\"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\"restaurante\" : { \"nombre\" : \"Wikiwiki\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK producto no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"precio\" : 20.5,\n\t\"costo\" : 18.25,\n\t\"disponibilidad\" : 300,\n\t\"fechaInicio\" : 1186110000000,\n\t\"fechaFin\": 1188615600000,\n\t\"producto\" : {\"id\" : 1000, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "InfoIngRest",
+			"description": "",
+			"item": [
+				{
+					"name": "agregar infoIngRest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"precioAdicion\" : 20.5,\n\t\"precioSustituto\" : 18.25,\n\t\"ingrediente\" : {\"id\" : 1, \"nombre\" : \"Veal - Round, Eye Of\", \"descripcion\" : \"nteger ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.\", \"traduccion\" : \"Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.\"},\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PK repetida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"precioAdicion\" : 21.5,\n\t\"precioSustituto\" : 18.25,\n\t\"ingrediente\" : {\"id\" : 1, \"nombre\" : \"Veal - Round, Eye Of\", \"descripcion\" : \"nteger ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.\", \"traduccion\" : \"Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.\"},\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ver infoIngRest obtenido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "borrar infoIngRest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]= responseCode.code===204"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes/1",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK restaurante no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"precioAdicion\" : 20.5,\n\t\"precioSustituto\" : 18.25,\n\t\"ingrediente\" : {\"id\" : 1, \"nombre\" : \"Veal - Round, Eye Of\", \"descripcion\" : \"nteger ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.\", \"traduccion\" : \"Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.\"},\n\t\"restaurante\" : { \"nombre\" : \"Wikiwiki\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK ingrediente no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"precioAdicion\" : 20.5,\n\t\"precioSustituto\" : 18.25,\n\t\"ingrediente\" : {\"id\" : 1000, \"nombre\" : \"Veal - Round, Eye Of\", \"descripcion\" : \"nteger ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.\", \"traduccion\" : \"Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.\"},\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PedidoProd",
+			"description": "",
+			"item": [
+				{
+					"name": "agregar pedidoProd",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n\t\"plato\" : {\n\t\t\"precio\" : 12.33,\n\t\t\"costo\" : 12.12,\n\t\t\"disponibilidad\" : 1945,\n\t\t\"fechaInicio\" : 1186110000000,\n\t\t\"fechaFin\": 1188615600000,\n\t\t\"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\t\"restaurante\" : { \"nombre\" : \"Pixonyx\", \"pagWeb\" : \"http://barnesandnoble.com\" }\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PK repetida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 1,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n\t\"plato\" : {\n\t\t\"precio\" : 12.33,\n\t\t\"costo\" : 12.12,\n\t\t\"disponibilidad\" : 1945,\n\t\t\"fechaInicio\" : 1186110000000,\n\t\t\"fechaFin\": 1188615600000,\n\t\t\"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\t\"restaurante\" : { \"nombre\" : \"Pixonyx\", \"pagWeb\" : \"http://barnesandnoble.com\" }\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ver pedidoProd obtenido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos/Pixonyx/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "borrar pedidoProd",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]= responseCode.code===204"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos/Pixonyx/1",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK cuenta no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"253468598999999\", \"fecha\" : 1185937200000},\n\t\"plato\" : {\n\t\t\"precio\" : 12.33,\n\t\t\"costo\" : 12.12,\n\t\t\"disponibilidad\" : 1945,\n\t\t\"fechaInicio\" : 1186110000000,\n\t\t\"fechaFin\": 1188615600000,\n\t\t\"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\t\"restaurante\" : { \"nombre\" : \"Pixonyx\", \"pagWeb\" : \"http://barnesandnoble.com\" }\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK infoProdRest no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n\t\"plato\" : {\n\t\t\"precio\" : 12.33,\n\t\t\"costo\" : 12.12,\n\t\t\"disponibilidad\" : 1945,\n\t\t\"fechaInicio\" : 1186110000000,\n\t\t\"fechaFin\": 1188615600000,\n\t\t\"producto\" : {\"id\" : 10000, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\t\"restaurante\" : { \"nombre\" : \"Pixonyx\", \"pagWeb\" : \"http://barnesandnoble.com\" }\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PedidoMenu",
+			"description": "",
+			"item": [
+				{
+					"name": "agregar pedidoMenu",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n\t\"menu\" : {\n\t\t\"nombre\" : \"It\",\n\t\t\"precio\" : 19.69,\n\t\t\"costo\" : 6.8,\n\t\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" }\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PK repetida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cantidad\" : 3,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n\t\"menu\" : {\n\t\t\"nombre\" : \"It\",\n\t\t\"precio\" : 19.69,\n\t\t\"costo\" : 6.8,\n\t\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" }\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ver pedidoMenu obtenido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus/Voonder/It",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "borrar pedidoMenu",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]= responseCode.code===204"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus/Voonder/It",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK cuenta no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"253468598999999\", \"fecha\" : 1185937200000},\n\t\"menu\" : {\n\t\t\"nombre\" : \"It\",\n\t\t\"precio\" : 19.69,\n\t\t\"costo\" : 6.8,\n\t\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" }\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK menu no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n\t\"menu\" : {\n\t\t\"nombre\" : \"Itttttt\",\n\t\t\"precio\" : 19.69,\n\t\t\"costo\" : 6.8,\n\t\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" }\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reserva",
+			"description": "",
+			"item": [
+				{
+					"name": "agregar reserva",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fecha\" : 1195869600000,\n\t\"personas\" : 30,\n\t\"reservador\" : {\"id\" : 101, \"nombre\" : \"Haley Carluccio\", \"correo\": \"hcarluccio0@hhs.gov\", \"rol\" : \"CLIENTE\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PK repetida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fecha\" : 1195869600000,\n\t\"personas\" : 35,\n\t\"reservador\" : {\"id\" : 101, \"nombre\" : \"Haley Carluccio\", \"correo\": \"hcarluccio0@hhs.gov\", \"rol\" : \"CLIENTE\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "ver reserva obtenido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "borrar reserva",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 204\"]= responseCode.code===204"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK usuario no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fecha\" : 1195869600000,\n\t\"personas\" : 30,\n\t\"reservador\" : {\"id\" : 101000, \"nombre\" : \"Haley Carluccio\", \"correo\": \"hcarluccio0@hhs.gov\", \"rol\" : \"CLIENTE\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK zona no valida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fecha\" : 1195869600000,\n\t\"personas\" : 30,\n\t\"reservador\" : {\"id\" : 101, \"nombre\" : \"Haley Carluccio\", \"correo\": \"hcarluccio0@hhs.gov\", \"rol\" : \"CLIENTE\"},\n\t\"zona\" : {\"nombre\" : \"Sportsy\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PerteneceAPlato",
+			"description": "",
+			"item": [
+				{
+					"name": "Agregar asociacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : 1,\n\t\"nombre\" : \"Sping Loaded Cup Dispenser\",\n\t\"tipo\" : \"ENTRADA\",\n\t\"personalizable\" : 0,\n\t\"costoProduccion\" : 31.32,\n\t\"tiempo\" : 46.7,\n\t\"ingredientes\" : [{\"id\" : 1, \"nombre\" : \"Veal - Round, Eye Of\", \"descripcion\" : \"nteger ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.\", \"traduccion\" : \"Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.\"}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Ver asociaciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar asocacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : 1,\n\t\"nombre\" : \"Sping Loaded Cup Dispenser\",\n\t\"tipo\" : \"ENTRADA\",\n\t\"personalizable\" : 0,\n\t\"costoProduccion\" : 31.32,\n\t\"tiempo\" : 46.7,\n\t\"ingredientes\" : []\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK no valido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : 1,\n\t\"nombre\" : \"Sping Loaded Cup Dispenser\",\n\t\"tipo\" : \"ENTRADA\",\n\t\"personalizable\" : 0,\n\t\"costoProduccion\" : 31.32,\n\t\"tiempo\" : 46.7,\n\t\"ingredientes\" : [{\"id\" : 10000, \"nombre\" : \"Veal - Round, Eye Of\", \"descripcion\" : \"nteger ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.\", \"traduccion\" : \"Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.\"}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PerteneceAMenu",
+			"description": "",
+			"item": [
+				{
+					"name": "Agregar asociacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"It\",\n\t\"precio\" : 19.69,\n\t\"costo\" : 6.8,\n\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" },\n\t\"platos\" : [{\n\t\t\"precio\" : 12.33,\n\t\t\"costo\" : 12.12,\n\t\t\"disponibilidad\" : 1945,\n\t\t\"fechaInicio\" : 1186110000000,\n\t\t\"fechaFin\": 1188615600000,\n\t\t\"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\t\"restaurante\" : { \"nombre\" : \"Pixonyx\", \"pagWeb\" : \"http://barnesandnoble.com\" }\n\t}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Ver asociaciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar asocacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"It\",\n\t\"precio\" : 19.69,\n\t\"costo\" : 6.8,\n\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" },\n\t\"platos\" : []\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK no valido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"It\",\n\t\"precio\" : 19.69,\n\t\"costo\" : 6.8,\n\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" },\n\t\"platos\" : [{\n\t\t\"precio\" : 12.33,\n\t\t\"costo\" : 12.12,\n\t\t\"disponibilidad\" : 1945,\n\t\t\"fechaInicio\" : 1186110000000,\n\t\t\"fechaFin\": 1188615600000,\n\t\t\"producto\" : {\"id\" : 10000, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"costoProduccion\" : 31.32, \"tiempo\" : 46.7},\n\t\t\"restaurante\" : { \"nombre\" : \"Pixonyx\", \"pagWeb\" : \"http://barnesandnoble.com\" }\n\t}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CategoriaProducto",
+			"description": "",
+			"item": [
+				{
+					"name": "Agregar asociacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : 1,\n\t\"nombre\" : \"Sping Loaded Cup Dispenser\",\n\t\"tipo\" : \"ENTRADA\",\n\t\"personalizable\" : 0,\n\t\"costoProduccion\" : 31.32,\n\t\"tiempo\" : 46.7,\n\t\"categorias\" : [{\"nombre\" : \"Colombian\"}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Ver asociaciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar asocacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : 1,\n\t\"nombre\" : \"Sping Loaded Cup Dispenser\",\n\t\"tipo\" : \"ENTRADA\",\n\t\"personalizable\" : 0,\n\t\"costoProduccion\" : 31.32,\n\t\"tiempo\" : 46.7,\n\t\"categorias\" : []\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK no valido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : 1,\n\t\"nombre\" : \"Sping Loaded Cup Dispenser\",\n\t\"tipo\" : \"ENTRADA\",\n\t\"personalizable\" : 0,\n\t\"costoProduccion\" : 31.32,\n\t\"tiempo\" : 46.7,\n\t\"categorias\" : [{\"nombre\" : \"Colombianaaaa\"}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CategoriaMenu",
+			"description": "",
+			"item": [
+				{
+					"name": "Agregar asociacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"It\",\n\t\"precio\" : 19.69,\n\t\"costo\" : 6.8,\n\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" },\n\t\"categorias\" : [{\"nombre\" : \"Colombian\"}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Ver asociaciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar asocacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"It\",\n\t\"precio\" : 19.69,\n\t\"costo\" : 6.8,\n\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" },\n\t\"categorias\" : []\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK no valido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder/menus/It",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"It\",\n\t\"precio\" : 19.69,\n\t\"costo\" : 6.8,\n\t\"restaurante\" : { \"nombre\" : \"Voonder\", \"pagWeb\" : \"https://cdbaby.com\" },\n\t\"categorias\" : [{\"nombre\" : \"Colombiaaaan\"}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CategoriaRestaurante",
+			"description": "",
+			"item": [
+				{
+					"name": "Agregar asociacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"nombre\" : \"Voonder\",\n\t\"pagWeb\" : \"https://cdbaby.com\",\n\t\"categorias\" : [{\"nombre\" : \"Colombian\"}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Ver asociaciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar asocacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"Voonder\",\n\t\"pagWeb\" : \"https://cdbaby.com\",\n\t\"categorias\" : []\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "FK no valido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Voonder",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\" : \"Voonder\",\n\t\"pagWeb\" : \"https://cdbaby.com\",\n\t\"categorias\" : [{\"nombre\" : \"Colombiaaaan\"}]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

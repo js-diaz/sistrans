@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import vos.CategoriaProducto;
+
 /**
  * Clase para el requerimiento 5 que contiene la zona
  * @author jc161

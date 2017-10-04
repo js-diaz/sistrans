@@ -227,5 +227,65 @@ public class ProductoServices {
 		return Response.status(200).entity(producto).build();
 	}
 
+	/**
+	 * Metodo que expone servicio REST usando GET que da los productos más ofrecidos de la base de datos.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-ofrecidos
+	 * @return Json con todos los productos de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path("mas-ofrecidos")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getProductosMasOfrecidos() {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<Producto> productos;
+		try {
+			productos = tm.productoDarProductosMasOfrecidos();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(productos).build();
+	}
+	
+	/**
+	 * Metodo que expone servicio REST usando GET que da los productos más vendidos de la base de datos.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-vendidos
+	 * @return Json con todos los productos de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path("mas-vendidos")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getProductosMasVendidos() {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<Producto> productos;
+		try {
+			productos = tm.productoDarProductosMasVendidos();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(productos).build();
+	}
+	
+	/**
+	 * Metodo que expone servicio REST usando GET que da los productos más vendidos de una zona particular.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-vendidos/nombreZona
+	 * @return Json con todos los productos de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path("mas-vendidos/{nombreZona: [a-zA-Z]+}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getProductosMasVendidosPorZona(@PathParam("nombreZona") String nombreZona) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<Producto> productos;
+		try {
+			productos = tm.productoDarProductosMasVendidosPorZona(nombreZona);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(productos).build();
+	}
+
 
 }
