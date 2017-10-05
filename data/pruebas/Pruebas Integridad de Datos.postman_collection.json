@@ -41,7 +41,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+							"raw": "{\n\t\"nombre\" : \"Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87},\n\t\"categorias\" : [],\n\t\"infoProductos\" : [],\n\t\"infoIngredientes\" : [],\n\t\"menus\" : []\n}"
 						},
 						"description": ""
 					},
@@ -77,7 +77,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.hamburguesaselcorral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+							"raw": "{\n\t\"nombre\" : \"Corral\",\n\t\"pagWeb\" : \"www.hamburguesaselcorral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
 						},
 						"description": ""
 					},
@@ -97,7 +97,7 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas%20el%20Corral",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Corral",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -113,13 +113,13 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 204\"]= responseCode.code===204"
+									"tests[\"Status code is 200\"]= responseCode.code===200"
 								]
 							}
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas el Corral",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Corral",
 						"method": "DELETE",
 						"header": [
 							{
@@ -164,7 +164,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1000, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+							"raw": "{\n\t\"nombre\" : \"Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1000, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
 						},
 						"description": ""
 					},
@@ -201,7 +201,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sportsy\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+							"raw": "{\n\t\"nombre\" : \"Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sportsy\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
 						},
 						"description": ""
 					},
@@ -243,7 +243,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombre\" : \"menu1\",\n\t\"precio\" : 20.5,\n\t\"costo\" : 18.25,\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" }\n}"
+							"raw": "{\n\t\"nombre\" : \"menu1\",\n\t\"precio\" : 20.5,\n\t\"costo\" : 18.25,\n\t\"restaurante\" : { \"nombre\" : \"Wikibox\", \"pagWeb\" : \"https://uiuc.edu\" },\n\t\"platos\" : [],\n\t\"categorias\" : []\n}"
 						},
 						"description": ""
 					},
@@ -315,7 +315,7 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 204\"]= responseCode.code===204"
+									"tests[\"Status code is 200\"]= responseCode.code===200"
 								]
 							}
 						}
@@ -515,7 +515,7 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikiwiki/productos",
 						"method": "POST",
 						"header": [
 							{
@@ -717,7 +717,7 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikiwki/ingredientes",
 						"method": "POST",
 						"header": [
 							{
@@ -884,7 +884,7 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 204\"]= responseCode.code===204"
+									"tests[\"Status code is 200\"]= responseCode.code===200"
 								]
 							}
 						}
@@ -919,7 +919,7 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/25346859899999/productos",
 						"method": "POST",
 						"header": [
 							{
@@ -1086,7 +1086,7 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 204\"]= responseCode.code===204"
+									"tests[\"Status code is 200\"]= responseCode.code===200"
 								]
 							}
 						}
@@ -1121,7 +1121,7 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989999/menus",
 						"method": "POST",
 						"header": [
 							{
@@ -1288,7 +1288,7 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 204\"]= responseCode.code===204"
+									"tests[\"Status code is 200\"]= responseCode.code===200"
 								]
 							}
 						}
