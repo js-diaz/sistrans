@@ -12,7 +12,7 @@ public class InfoIngRest {
 	/**
 	 * Precio de adicionar este ingrediente a algún plato.
 	 */
-	@JsonProperty(value="precioAdicion")
+	@JsonProperty(value = "precioAdicion")
 	private Double precioAdicion;
 	
 	/**

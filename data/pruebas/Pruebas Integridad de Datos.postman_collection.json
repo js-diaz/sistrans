@@ -32,6 +32,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -63,11 +68,16 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagweb\" : \"www.hamburguesaselcorral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"local\"}\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.hamburguesaselcorral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
 						},
 						"description": ""
 					},
@@ -87,7 +97,7 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas el Corral",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas%20el%20Corral",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -111,7 +121,13 @@
 					"request": {
 						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Hamburguesas el Corral",
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -139,11 +155,16 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1000, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"}\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1000, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sports\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
 						},
 						"description": ""
 					},
@@ -171,11 +192,16 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"}\n\t\"zona\" : {\"nombre\" : \"Sportsy\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
+							"raw": "{\n\t\"nombre\" : \"Hamburguesas el Corral\",\n\t\"pagWeb\" : \"www.corral.com\",\n\t\"representante\" : {\"id\" : 1, \"correo\" : \"ckoeppke0@wunderground.com\", \"nombre\" : \"Christos Koeppke\", \"rol\" : \"LOCAL\"},\n\t\"zona\" : {\"nombre\" : \"Sportsy\", \"capacidadOcupada\" : 38, \"ingresoEspecial\" : 1, \"abiertaActualmente\" : 0, \"capacidad\" : 87}\n}"
 						},
 						"description": ""
 					},
@@ -208,6 +234,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -238,6 +269,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -287,7 +323,13 @@
 					"request": {
 						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -308,12 +350,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus/menu1",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/menus",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -352,6 +399,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -382,6 +434,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -431,7 +488,13 @@
 					"request": {
 						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos/1",
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -458,6 +521,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -490,6 +558,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -528,6 +601,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -558,6 +636,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -607,7 +690,13 @@
 					"request": {
 						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes/1",
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -628,12 +717,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -660,12 +754,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/productos",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Wikibox/ingredientes",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -704,6 +803,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -734,6 +838,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -783,7 +892,13 @@
 					"request": {
 						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos/Pixonyx/1",
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -810,6 +925,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -842,6 +962,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -880,6 +1005,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -910,6 +1040,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -959,7 +1094,13 @@
 					"request": {
 						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus/Voonder/It",
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -986,6 +1127,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1019,6 +1165,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -1049,12 +1200,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1086,6 +1242,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1135,7 +1296,13 @@
 					"request": {
 						"url": "http://localhost:8080/VideoAndes/rest/usuarios/101/reservas/1195869600000",
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -1162,6 +1329,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1195,6 +1367,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -1225,12 +1402,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"url": "http://localhost:8080/VideoAndes/rest/productos",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1278,12 +1460,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"url": "http://localhost:8080/VideoAndes/rest/productos",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1309,12 +1496,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"url": "http://localhost:8080/VideoAndes/rest/productos",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1352,6 +1544,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1406,6 +1603,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -1437,6 +1639,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -1467,12 +1674,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"url": "http://localhost:8080/VideoAndes/rest/productos",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1520,12 +1732,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"url": "http://localhost:8080/VideoAndes/rest/productos",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1551,12 +1768,17 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/VideoAndes/rest/productos/1",
+						"url": "http://localhost:8080/VideoAndes/rest/productos",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1594,6 +1816,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1648,6 +1875,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -1678,6 +1910,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1715,6 +1952,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
@@ -1769,6 +2011,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
+								"description": ""
 							}
 						],
 						"body": {
@@ -1799,6 +2046,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "usuarioId",
+								"value": "0",
 								"description": ""
 							}
 						],
