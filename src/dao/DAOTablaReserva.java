@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -121,19 +122,27 @@ public class DAOTablaReserva {
 	public void addReserva(Reserva reserva) throws SQLException, Exception {
 
 		String sql = "INSERT INTO RESERVA VALUES (";
-		sql += "TO_DATE(" + reserva.getFecha() + "), ";
+		sql += 	dateFormat(reserva.getFecha()) + ", ";
 		sql += reserva.getReservador().getId() + ", ";
 		sql += "" + reserva.getPersonas() + ", ";
 		sql += "'" + reserva.getZona().getNombre() + "', ";
-		sql += reserva.getMenu() == null? "NULL, " : "'" + reserva.getMenu().getNombre() + "'";
-		sql += reserva.getMenu() == null? "NULL, " : "'" + reserva.getMenu().getRestaurante().getNombre() + "'";
+		sql += reserva.getMenu() == null? "NULL, " : "'" + reserva.getMenu().getNombre() + "', ";
+		sql += reserva.getMenu() == null? "NULL)" : "'" + reserva.getMenu().getRestaurante().getNombre() + "')";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
 	
-	
+	/**
+	 * Formatea el valor de la cuenta al dado en la base de datos.<br>
+	 * @param fecha Fecha de la cuenta.<br>
+	 * @return Valor a insertar en la base de datos
+	 */
+	private String dateFormat(Date fecha) {
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return "TO_DATE('"+x.format(fecha)+"','yyyy-MM-dd hh24:mi:ss')";
+	}
 
 	/**
 	 * Metodo que actualiza la reserva que entra como parámetro en la base de datos.

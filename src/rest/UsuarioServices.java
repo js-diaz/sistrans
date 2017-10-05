@@ -307,7 +307,7 @@ public class UsuarioServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{idUsuario: \\d+}/reservas/{fecha}" )
+	@Path( "{idUsuario: \\d+}/reservas/{fecha : \\d+}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getReserva( @PathParam( "fecha" ) Date fecha, @PathParam("idUsuario") Long idUsuario )
 	{

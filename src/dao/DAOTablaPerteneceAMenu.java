@@ -151,7 +151,7 @@ public class DAOTablaPerteneceAMenu {
 	 */
 	public void eliminarPorMenu(String nombreMenu, String nombreRestaurante) throws SQLException, Exception {
 		String sql = "DELETE FROM PERTENECE_A_MENU WHERE NOMBRE_MENU LIKE '" + nombreMenu;
-		sql += "' AND NOMBRE_RESTAURNANTE LIKE '" + nombreRestaurante + "'";
+		sql += "' AND NOMBRE_RESTAURANTE LIKE '" + nombreRestaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

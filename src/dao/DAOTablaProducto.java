@@ -234,7 +234,7 @@ public class DAOTablaProducto {
 		String sql = "UPDATE PRODUCTO SET ";
 		sql += "NOMBRE='" + producto.getNombre() + "',";
 		sql += "TIPO='" + convertirTipo(producto.getTipo()) + "',";
-		sql += "PERZONALIZABLE='" + convertirBooleano(producto.isPersonalizable()) + "',";
+		sql += "PERSONALIZABLE='" + convertirBooleano(producto.isPersonalizable()) + "',";
 		sql += "PRECIO=" + producto.getPrecio() + ",";
 		sql += "TRADUCCION='" + producto.getTraduccion() + "',";
 		sql += "DESCRIPCION='" + producto.getDescripcion() + "',";

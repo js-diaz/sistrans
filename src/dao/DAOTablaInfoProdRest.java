@@ -128,7 +128,7 @@ public class DAOTablaInfoProdRest {
 		sql += infoProdRest.getPrecio() +", ";
 		sql += infoProdRest.getCosto() + ", ";
 		sql += infoProdRest.getDisponibilidad() + ", ";
-		sql += dateFormat(infoProdRest.getFechaInicio());
+		sql += dateFormat(infoProdRest.getFechaInicio()) + ", ";
 		sql += dateFormat(infoProdRest.getFechaFin())+")";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -212,7 +212,7 @@ public class DAOTablaInfoProdRest {
 			Date fechaInicio = rs.getDate("FECHA_INICIO");
 			Date fechaFin = rs.getDate("FECHA_FIN");
 			Producto producto = daoProd.buscarProductoPorId(rs.getLong("ID_PRODUCTO"));
-			RestauranteMinimum restaurante = daoRest.buscarRestaurantesMinimumPorName(rs.getString("NOMBRE_RESTAURANTE"));
+			RestauranteMinimum restaurante = daoRest.darRestauranteMinimumPorNombre(rs.getString("NOMBRE_RESTAURANTE"));
 			infoProdRests.add(new InfoProdRest(costo, precio, disponibilidad, fechaInicio, fechaFin, producto, restaurante));
 		}
 		daoRest.cerrarRecursos();

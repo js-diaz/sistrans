@@ -73,7 +73,7 @@ public class DAOTablaMenu {
 		ResultSet rs = prepStmt.executeQuery();
 		return convertirEntidadMenu(rs);
 	}
-	
+
 	/**
 	 * Metodo que, usando la conexi�n a la base de datos, saca todos los menus de la base de datos para un restaurante particular.
 	 * @param restaurante nombre del Restaurante.
@@ -90,7 +90,7 @@ public class DAOTablaMenu {
 		ResultSet rs = prepStmt.executeQuery();
 		return convertirEntidadMenu(rs);
 	}
-	
+
 	/**
 	 * Metodo que, usando la conexi�n a la base de datos, saca todos los menus de la base de datos para un restaurante particular.
 	 * @param nombre nombre del Restaurante.
@@ -125,7 +125,7 @@ public class DAOTablaMenu {
 		List<Menu> menus = convertirEntidadMenu(rs);
 		return menus.get(0);
 	}
-	
+
 	/**
 	 * Metodo que busca el/los menus con el nombre que entra como parametro.
 	 * @param name - Nombre de el menu a buscar
@@ -135,7 +135,7 @@ public class DAOTablaMenu {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public MenuMinimum buscarMenusMinimumPorNombreYRestaurante(String name, String restaurante) throws SQLException, Exception {
-		
+
 		String sql = "SELECT * FROM MENU WHERE NOMBRE LIKE '" + name + "' AND NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -143,10 +143,10 @@ public class DAOTablaMenu {
 		ResultSet rs = prepStmt.executeQuery();
 
 		List<MenuMinimum> menus = convertirEntidadMenuMinimum(rs);
-		
+
 		return menus.get(0);
 	}
-	
+
 
 	/**
 	 * Metodo que agrega la menu que entra como parametro a la base de datos.
@@ -162,26 +162,26 @@ public class DAOTablaMenu {
 		DAOTablaPerteneceAMenu daoProducto = new DAOTablaPerteneceAMenu();
 		daoCategoria.setConn(conn);
 		daoProducto.setConn(conn);
-		
+
 		String sql = "INSERT INTO MENU VALUES (";
 		sql += "'" + menu.getNombre() + "',";
 		sql += "'" + menu.getRestaurante().getNombre() + "', ";
 		sql += menu.getPrecio() +", ";
 		sql += menu.getCosto() + ")";
-		
+
 		for(Categoria c : menu.getCategorias())
 			daoCategoria.asociarCategoriaYMenu(c.getNombre(), menu.getNombre(), menu.getRestaurante().getNombre());
 		for(InfoProdRest p : menu.getPlatos())
 			daoProducto.asociarProductoYMenu(p.getProducto().getId(), menu.getNombre(), menu.getRestaurante().getNombre());
 		daoCategoria.cerrarRecursos();
 		daoProducto.cerrarRecursos();
-		
+
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
-	
-	
+
+
 
 	/**
 	 * Metodo que actualiza la menu que entra como parámetro en la base de datos.
@@ -197,18 +197,22 @@ public class DAOTablaMenu {
 		DAOTablaPerteneceAMenu daoProducto = new DAOTablaPerteneceAMenu();
 		daoCategoria.setConn(conn);
 		daoProducto.setConn(conn);
-		
+
 		String sql = "UPDATE MENU SET ";
 		sql += "PRECIO = " + menu.getPrecio();
 		sql += ", COSTO = "+ menu.getCosto();
-		sql += " WHERE NOMBRE LIKE '" + menu.getNombre() + "' AND NOMBRE_RESTAURANTE LIKE '" + menu.getRestaurante().getNombre();
-		
-		daoCategoria.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
-		for(Categoria c : menu.getCategorias())
-			daoCategoria.asociarCategoriaYMenu(c.getNombre(), menu.getNombre(), menu.getRestaurante().getNombre());
-		daoProducto.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
-		for(InfoProdRest p : menu.getPlatos())
-			daoProducto.asociarProductoYMenu(p.getProducto().getId(), menu.getNombre(), menu.getRestaurante().getNombre());
+		sql += " WHERE NOMBRE LIKE '" + menu.getNombre() + "' AND NOMBRE_RESTAURANTE LIKE '" + menu.getRestaurante().getNombre() + "'";
+
+		if(menu.getCategorias() != null) {
+			daoCategoria.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
+			for(Categoria c : menu.getCategorias())
+				daoCategoria.asociarCategoriaYMenu(c.getNombre(), menu.getNombre(), menu.getRestaurante().getNombre());
+		}
+		if(menu.getPlatos() != null) {
+			daoProducto.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
+			for(InfoProdRest p : menu.getPlatos())
+				daoProducto.asociarProductoYMenu(p.getProducto().getId(), menu.getNombre(), menu.getRestaurante().getNombre());
+		}
 		daoCategoria.cerrarRecursos();
 		daoProducto.cerrarRecursos();
 
@@ -230,7 +234,7 @@ public class DAOTablaMenu {
 
 		borrarCategorias(menu);
 		borrarProductos(menu);
-		
+
 		String sql = "DELETE FROM MENU";
 		sql += " WHERE NOMBRE LIKE '" + menu.getNombre() + "' AND NOMBRE_RESTAURANTE LIKE '" + menu.getRestaurante().getNombre() + "'";
 
@@ -238,7 +242,7 @@ public class DAOTablaMenu {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
-	
+
 	/**
 	 * Crea un arreglo de menus con el set de resultados pasado por par�metro.<br>
 	 * @param rs Set de resultados.<br>
@@ -259,7 +263,7 @@ public class DAOTablaMenu {
 			String nombre = rs.getString("NOMBRE");
 			double precio = rs.getDouble("PRECIO");
 			double costo = rs.getDouble("COSTO");
-			RestauranteMinimum restaurante = daoRest.buscarRestaurantesMinimumPorName(rs.getString("NOMBRE_RESTAURANTE"));
+			RestauranteMinimum restaurante = daoRest.darRestauranteMinimumPorNombre(rs.getString("NOMBRE_RESTAURANTE"));
 			List<InfoProdRest> productos = daoProd.consultarPorMenu(nombre, restaurante.getNombre());
 			List<Categoria> categorias = daoCat.consultarPorMenu(nombre, restaurante.getNombre());
 			menus.add(new Menu(nombre, precio, costo, restaurante, productos, categorias));
@@ -284,13 +288,13 @@ public class DAOTablaMenu {
 			String nombre = rs.getString("NOMBRE");
 			double precio = rs.getDouble("PRECIO");
 			double costo = rs.getDouble("COSTO");
-			RestauranteMinimum restaurante = daoRest.buscarRestaurantesMinimumPorName(rs.getString("NOMBRE_RESTAURANTE"));
+			RestauranteMinimum restaurante = daoRest.darRestauranteMinimumPorNombre(rs.getString("NOMBRE_RESTAURANTE"));
 			menus.add(new MenuMinimum(nombre, precio, costo, restaurante));
-			}
+		}
 		daoRest.cerrarRecursos();
 		return menus;
 	}
-	
+
 	/**
 	 * Borra la asociacion a las categorias a las cuales pertenece el menu.<br>
 	 * @param menu Menu de donde se borran.
@@ -304,7 +308,7 @@ public class DAOTablaMenu {
 		daoCatMenu.eliminarPorMenu(menu.getNombre(), menu.getRestaurante().getNombre());
 		daoCatMenu.cerrarRecursos();
 	}
-	
+
 	/**
 	 * Borra la asociacion a los productos que contiene el menu.<br>
 	 * @param menu Menu de donde se borran.

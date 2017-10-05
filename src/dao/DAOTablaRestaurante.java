@@ -96,7 +96,7 @@ public class DAOTablaRestaurante {
 
 		return convertirEntidadRestaurante(rs).get(0);
 	}
-	
+
 
 	/**
 	 * Metodo que busca el/los restaurantes con el nombre que entra como parametro.
@@ -105,7 +105,7 @@ public class DAOTablaRestaurante {
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public RestauranteMinimum buscarRestaurantesMinimumPorName(String name) throws SQLException, Exception {
+	public RestauranteMinimum darRestauranteMinimumPorNombre(String name) throws SQLException, Exception {
 
 		String sql = "SELECT * FROM RESTAURANTE WHERE NOMBRE LIKE '" + name + "'";
 
@@ -134,7 +134,7 @@ public class DAOTablaRestaurante {
 		daoIng.setConn(conn);
 		daoMenu.setConn(conn);
 		daoProd.setConn(conn);
-		
+
 		String sql = "INSERT INTO RESTAURANTE VALUES (";
 		sql += "'" + restaurante.getNombre() + "', ";
 		sql += "'" + restaurante.getPagWeb() + "', ";
@@ -143,7 +143,7 @@ public class DAOTablaRestaurante {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
-		
+
 		daoCat.eliminarPorRestaurante(restaurante.getNombre());
 		for(Categoria c : restaurante.getCategorias())
 			daoCat.asociarCategoriaYRestaurante(c.getNombre(), restaurante.getNombre());
@@ -160,10 +160,10 @@ public class DAOTablaRestaurante {
 		daoIng.cerrarRecursos();
 		daoMenu.cerrarRecursos();
 		daoProd.cerrarRecursos();
-				
+
 	}
-	
-	
+
+
 
 	/**
 	 * Metodo que actualiza la restaurante que entra como parámetro en la base de datos.
@@ -174,7 +174,7 @@ public class DAOTablaRestaurante {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void updateRestaurante(Restaurante restaurante) throws SQLException, Exception {
-		
+
 		DAOTablaCategoriaRestaurante daoCat = new DAOTablaCategoriaRestaurante();
 		DAOTablaInfoIngRest daoIng = new DAOTablaInfoIngRest();
 		DAOTablaMenu daoMenu = new DAOTablaMenu();
@@ -183,39 +183,46 @@ public class DAOTablaRestaurante {
 		daoIng.setConn(conn);
 		daoMenu.setConn(conn);
 		daoProd.setConn(conn);
-		
+
 		String sql = "UPDATE RESTAURANTE SET ";
 		sql += "PAG_WEB = '" + restaurante.getPagWeb() + "'";
-		Restaurante restauranteDetail;
-		if(restaurante instanceof Restaurante) 
-			 restauranteDetail = (Restaurante) restaurante;
-		else
-			restauranteDetail = darRestaurantePorNombre(restaurante.getNombre());
-		sql += ", ID_REPRESENTANTE = " + restauranteDetail.getRepresentante().getId();
-		sql += ", NOMBRE_ZONA = '" + restauranteDetail.getZona().getNombre() + "'";
+
+
+		if(restaurante.getRepresentante() != null)
+			sql += ", ID_REPRESENTANTE = " + restaurante.getRepresentante().getId();
+		if(restaurante.getZona() != null)
+			sql += ", NOMBRE_ZONA = '" + restaurante.getZona().getNombre() + "'";
+
 		sql += " WHERE NOMBRE LIKE '" + restaurante.getNombre() + "'";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 
-
-		daoCat.eliminarPorRestaurante(restaurante.getNombre());
-		for(Categoria c : restaurante.getCategorias())
-			daoCat.asociarCategoriaYRestaurante(c.getNombre(), restaurante.getNombre());
-		daoIng.eliminarInfoIngRestsPorRestaurante(restaurante);
-		for(InfoIngRest i : restaurante.getInfoIngredientes())
-			daoIng.addInfoIngRest(i);
-		daoMenu.eliminarMenusPorRestaurante(restaurante);
-		for(MenuMinimum m : restaurante.getMenus())
-			daoMenu.addMenu(daoMenu.buscarMenusPorNombreYRestaurante(m.getNombre(), m.getRestaurante().getNombre()));
-		daoProd.eliminarInfoProdRestsPorRestaurante(restaurante);
-		for(InfoProdRest p : restaurante.getInfoProductos())
-			daoProd.addInfoProdRest(p);
+		if(restaurante.getCategorias() != null) {
+			daoCat.eliminarPorRestaurante(restaurante.getNombre());
+			for(Categoria c : restaurante.getCategorias())
+				daoCat.asociarCategoriaYRestaurante(c.getNombre(), restaurante.getNombre());
+		}
+		if(restaurante.getInfoIngredientes() != null) {
+			daoIng.eliminarInfoIngRestsPorRestaurante(restaurante);
+			for(InfoIngRest i : restaurante.getInfoIngredientes())
+				daoIng.addInfoIngRest(i);
+		}
+		if(restaurante.getMenus() != null) {
+			daoMenu.eliminarMenusPorRestaurante(restaurante);
+			for(MenuMinimum m : restaurante.getMenus())
+				daoMenu.addMenu(daoMenu.buscarMenusPorNombreYRestaurante(m.getNombre(), m.getRestaurante().getNombre()));
+		}
+		if(restaurante.getInfoProductos() != null) {
+			daoProd.eliminarInfoProdRestsPorRestaurante(restaurante);
+			for(InfoProdRest p : restaurante.getInfoProductos())
+				daoProd.addInfoProdRest(p);
+		}
 		daoCat.cerrarRecursos();
 		daoIng.cerrarRecursos();
 		daoMenu.cerrarRecursos();
 		daoProd.cerrarRecursos();
-		
+
 	}
 
 	/**
@@ -232,7 +239,7 @@ public class DAOTablaRestaurante {
 		borrarMenus(restaurante);
 		borrarIngredientesRelacionados(restaurante);
 		borrarProductosRelacionados(restaurante);
-		
+
 		String sql = "DELETE FROM RESTAURANTE";
 		sql += " WHERE NOMBRE LIKE " + restaurante.getNombre();
 
@@ -240,7 +247,7 @@ public class DAOTablaRestaurante {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
-	
+
 	/**
 	 * Crea un arreglo de restaurantes con el set de resultados pasado por parámetro.<br>
 	 * @param rs Set de resultados.<br>
@@ -258,7 +265,7 @@ public class DAOTablaRestaurante {
 		daoIng.setConn(conn);
 		daoMenu.setConn(conn);
 		daoProd.setConn(conn);
-		
+
 		DAOTablaUsuario daoUsuario = new DAOTablaUsuario();
 		DAOTablaZona daoZona = new DAOTablaZona();
 		daoUsuario.setConn(conn);
@@ -280,7 +287,7 @@ public class DAOTablaRestaurante {
 		daoProd.cerrarRecursos();
 		return restaurantes;
 	}
-	
+
 	/**
 	 * Crea un arreglo de restaurantes con el set de resultados pasado por parámetro.<br>
 	 * @param rs Set de resultados.<br>
@@ -298,7 +305,7 @@ public class DAOTablaRestaurante {
 		}
 		return restaurantes;
 	}
-	
+
 	/**
 	 * Borra los menus que pertenecen a un restaurante que se va a borrar.<br>
 	 * @param restaurante Restaurante de donde se borran
@@ -310,7 +317,7 @@ public class DAOTablaRestaurante {
 		daoMenu.eliminarMenusPorRestaurante(restaurante);
 		daoMenu.cerrarRecursos();
 	}
-	
+
 	/**
 	 * Borra la asociacion a las categorias a las cuales pertenece el restaurante.<br>
 	 * @param restaurante Restaurante de donde se borran.
@@ -322,7 +329,7 @@ public class DAOTablaRestaurante {
 		daoCatRest.eliminarPorRestaurante(restaurante.getNombre());
 		daoCatRest.cerrarRecursos();
 	}
-	
+
 	/**
 	 * Borra la informaci�n del los productos que son servidos por un restaurante que se va a borrar.<br>
 	 * @param restaurante Restaurante de donde se borran
@@ -334,7 +341,7 @@ public class DAOTablaRestaurante {
 		daoProducto.eliminarInfoProdRestsPorRestaurante(restaurante);
 		daoProducto.cerrarRecursos();
 	}
-	
+
 	/**
 	 * Borra la informacion de los ingrediantes que son usados por el restaurante que se va a borrar.<br>
 	 * @param restaurante Restaurante de donde se borran
@@ -346,7 +353,7 @@ public class DAOTablaRestaurante {
 		daoIngrediente.eliminarInfoIngRestsPorRestaurante(restaurante);
 		daoIngrediente.cerrarRecursos();
 	}
-	
+
 	/**
 	 * Consulta los restaurantes de una zona particular.
 	 * @param nombreZona nombre de la zona a buscar.
@@ -419,7 +426,7 @@ public class DAOTablaRestaurante {
 			sql += ", NOMBRE_ZONA = '" + restauranteDetail.getZona().getNombre() + "'";
 		}
 		sql += " WHERE NOMBRE LIKE '" + darRestauranteDeUsuario(id).getNombre() + "'";
-		
+
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -437,6 +444,6 @@ public class DAOTablaRestaurante {
 		ps.executeQuery();
 	}
 
-	
+
 
 }

@@ -193,7 +193,7 @@ public class DAOTablaInfoIngRest {
 			double precioAdicion = rs.getDouble("PRECIO_ADICION");
 			double precioSustituto = rs.getDouble("PRECIO_SUSTITUTO");
 			Ingrediente ingrediente = daoProd.buscarIngredientePorId(rs.getLong("ID_INGREDIENTE"));
-			RestauranteMinimum restaurante = daoRest.darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE"));
+			RestauranteMinimum restaurante = daoRest.darRestauranteMinimumPorNombre(rs.getString("NOMBRE_RESTAURANTE"));
 			infoIngRests.add(new InfoIngRest(precioSustituto, precioAdicion, ingrediente, restaurante));
 		}
 		daoRest.cerrarRecursos();
