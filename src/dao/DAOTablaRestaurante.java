@@ -139,7 +139,7 @@ public class DAOTablaRestaurante {
 		sql += "'" + restaurante.getNombre() + "', ";
 		sql += "'" + restaurante.getPagWeb() + "', ";
 		sql += restaurante.getRepresentante().getId() + ", ";
-		sql += "'" + restaurante.getZona().getNombre() + ")";
+		sql += "'" + restaurante.getZona().getNombre() + "')";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
