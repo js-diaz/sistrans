@@ -132,6 +132,8 @@ public class UsuarioServices {
 			}
 			if (id == null || id<0)
 				throw new Exception("Id no válida");
+			UsuarioMinimum v=tm.usuarioBuscarUsuarioMinimumPorId(id);
+			if(!v.getRol().equals(Rol.CLIENTE)) throw new Exception ("EL historial que busca no va a salir completo. Este usuario no es un cliente.");
 			usuario=tm.usuarioCompletoBuscarUsuarioPorId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
