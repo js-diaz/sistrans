@@ -211,21 +211,28 @@ public class DAOTablaPedidoMenu {
 	 */
 	public void updatePedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
 
-		if(pedidoMenu.getEntregado()==true) pagarMenu(pedidoMenu);
+		boolean mod=false;
+		if(pedidoMenu.getEntregado()==true) 
+			{
+				mod=true;
+				pagarMenu(pedidoMenu);
+			}
 		PedidoMenu pedido=buscarPedidoMenusPorNombreYCuenta(pedidoMenu.getMenu().getNombre(), pedidoMenu.getMenu().getRestaurante().getNombre(), pedidoMenu.getCuenta().getNumeroCuenta());
-		modificarPrecioCuenta(true, pedido.getMenu(),pedido.getCantidad(),pedido.getCuenta());
-
-		String sql = "UPDATE PEDIDO_MENU SET ";
-		sql += "CANTIDAD = " + pedidoMenu.getCantidad();
-		sql += ", ENTREGADO = " + (pedidoMenu.getEntregado()? "'0' " : "'1' ");
-		sql += " WHERE NOMBRE_MENU LIKE '" + pedidoMenu.getMenu().getNombre() + "'"; 
-		sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoMenu.getMenu().getRestaurante().getNombre() + "'";
-		sql += " AND NUMERO_CUENTA LIKE '" + pedidoMenu.getCuenta().getNumeroCuenta() + "'";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-		modificarPrecioCuenta(false, pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
+		if(!mod)modificarPrecioCuenta(true, pedido.getMenu(),pedido.getCantidad(),pedido.getCuenta());
+		if(!mod)
+		{
+			String sql = "UPDATE PEDIDO_MENU SET ";
+			sql += "CANTIDAD = " + pedidoMenu.getCantidad();
+			sql += ", ENTREGADO = " + (pedidoMenu.getEntregado()? "'1' " : "'0' ");
+			sql += " WHERE NOMBRE_MENU LIKE '" + pedidoMenu.getMenu().getNombre() + "'"; 
+			sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoMenu.getMenu().getRestaurante().getNombre() + "'";
+			sql += " AND NUMERO_CUENTA LIKE '" + pedidoMenu.getCuenta().getNumeroCuenta() + "'";
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			prepStmt.executeQuery();
+		}
+		
+		if(!mod)modificarPrecioCuenta(false, pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
 	}
 	/**
 	 * El restaurante registra el pago de todos los productos del menú.<br>
@@ -237,20 +244,18 @@ public class DAOTablaPedidoMenu {
 		DAOTablaMenu menus= new DAOTablaMenu();
 		menus.setConn(conn);
 		Menu menu=null;
-		ArrayList<PedidoProd> pedidos= new ArrayList<>();
 		menu=menus.buscarMenusPorNombreYRestaurante(m.getMenu().getNombre(), m.getMenu().getRestaurante().getNombre());
-		for(InfoProdRest p:menu.getPlatos())
-		pedidos.add(new PedidoProd(m.getCantidad(),m.getCuenta(),p,false));
 		menus.cerrarRecursos();
-		
-		DAOTablaPedidoProducto ped= new DAOTablaPedidoProducto();
-		ped.setConn(this.conn);
-		for(PedidoProd p: pedidos)
+		DAOTablaInfoProdRest productos= new DAOTablaInfoProdRest();
+		productos.setConn(conn);
+		InfoProdRest info=null;
+		for(InfoProdRest p:menu.getPlatos())
 		{
-			p.setEntregado(true);
-			ped.updatePedidoProd(p);
+			info=p;
+			info.setDisponibilidad(info.getDisponibilidad()-m.getCantidad());
+			productos.updateInfoProdRest(info);
 		}
-		ped.cerrarRecursos();
+		productos.cerrarRecursos();
 	}
 
 	/**

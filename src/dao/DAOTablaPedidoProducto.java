@@ -174,22 +174,29 @@ public class DAOTablaPedidoProducto {
 	 */
 	public void updatePedidoProd(PedidoProd pedidoProd) throws SQLException, Exception {
 
-		if(pedidoProd.getEntregado()==true) pagarProducto(pedidoProd);
+		boolean mod=false;
+		if(pedidoProd.getEntregado()==true)
+			{
+				mod=true;
+				pagarProducto(pedidoProd);
+			}
 		PedidoProd p=buscarPedidoProdsPorIdYCuenta(pedidoProd.getPlato().getProducto().getId(), pedidoProd.getPlato().getRestaurante().getNombre(), pedidoProd.getCuenta().getNumeroCuenta());
-		modificarPrecioCuenta(p.getCuenta(),p.getCantidad()*p.getPlato().getPrecio()*-1);
-		String sql = "UPDATE PEDIDO_PROD SET ";
-		sql += "CANTIDAD = " + pedidoProd.getCantidad();
-		sql += ", ENTREGADO = " + (pedidoProd.getEntregado()? "'1' " : "'0' ");
-		
-		sql += " WHERE ID_PRODUCTO = " + pedidoProd.getPlato().getProducto().getId(); 
-		sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoProd.getPlato().getRestaurante().getNombre() + "'";
-		sql += " AND NUMERO_CUENTA LIKE '" + pedidoProd.getCuenta().getNumeroCuenta() + "'";
+		if(!mod)modificarPrecioCuenta(p.getCuenta(),p.getCantidad()*p.getPlato().getPrecio()*-1);
+		if(!mod)
+			{
+				String sql = "UPDATE PEDIDO_PROD SET ";
+				sql += "CANTIDAD = " + pedidoProd.getCantidad();
+				sql += ", ENTREGADO = " + (pedidoProd.getEntregado()? "'1' " : "'0' ");
+				
+				sql += " WHERE ID_PRODUCTO = " + pedidoProd.getPlato().getProducto().getId(); 
+				sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoProd.getPlato().getRestaurante().getNombre() + "'";
+				sql += " AND NUMERO_CUENTA LIKE '" + pedidoProd.getCuenta().getNumeroCuenta() + "'";
 
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-		
-		modificarPrecioCuenta(pedidoProd.getCuenta(),pedidoProd.getCantidad()*pedidoProd.getPlato().getPrecio()*-1);
+				PreparedStatement prepStmt = conn.prepareStatement(sql);
+				recursos.add(prepStmt);
+				prepStmt.executeQuery();
+			}
+		if(!mod)modificarPrecioCuenta(pedidoProd.getCuenta(),pedidoProd.getCantidad()*pedidoProd.getPlato().getPrecio()*-1);
 	}
 	/**
 	 * Paga el pedido de producto dado por parámetro.<br>

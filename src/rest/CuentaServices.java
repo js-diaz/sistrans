@@ -393,7 +393,6 @@ public class CuentaServices {
 				pedidoProd.setEntregado(true);
 			}
 			if(pedidoProd.getEntregado() && !u.getRol().equals(Rol.LOCAL)) throw new Exception("No se puede modificar un pedido que ya fue entregado");
-			PedidoProd p=tm.pedidoProdBuscarPedidoProdsPorIdYCuenta(idProducto, numeroCuenta, restaurante);
 			Cuenta cu=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
 			pedidoProd.setPlato(tm.infoProdRestBuscarInfoProdRestsPorIdYRestaurante(idProducto, restaurante));
 			pedidoProd.setCuenta(cu);
@@ -550,9 +549,7 @@ public class CuentaServices {
 				pedidoMenu.setEntregado(true);
 			}
 			if(pedidoMenu.getEntregado() && !u.getRol().equals(Rol.LOCAL)) throw new Exception("No se puede modificar un pedido que ya fue entregado");
-			PedidoMenu p=tm.pedidoMenuBuscarPedidoMenusPorIdYCuenta(nombre, numeroCuenta, restaurante);
 			Cuenta cu=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
-			
 			pedidoMenu.setMenu(tm.menuBuscarMenusPorNombreYRestaurante(nombre, restaurante));
 			pedidoMenu.setCuenta(cu);
 			tm.pedidoMenuUpdatePedidoMenu(pedidoMenu);
