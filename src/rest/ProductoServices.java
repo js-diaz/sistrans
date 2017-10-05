@@ -240,7 +240,7 @@ public class ProductoServices {
 	 * @return Json con la información deseada.
 	 */
 	@POST
-	@Path("completo/{nombre: [a-zA-Z]+}")
+	@Path("completo/{nombre}")
 	@Consumes (MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response pruebaFiltros( @PathParam("nombre") String name, ContenedoraCriterios c) {
