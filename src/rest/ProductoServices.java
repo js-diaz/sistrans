@@ -250,7 +250,7 @@ public class ProductoServices {
 		try {
 			if (name == null || name.length() == 0)
 				throw new Exception("Nombre de la zona no valido");
-			zonas = tm.criteriosOrganizarPorZonaUniversal(name,c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
+			zonas = tm.criteriosOrganizarPorProductoUniversal(name,c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -269,7 +269,7 @@ public class ProductoServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<ContenedoraInformacion> zonas;
 		try {
-			zonas = tm.criteriosOrganizarPorZonasComoSeQuiera(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
+			zonas = tm.criteriosOrganizarPorProductosComoSeQuiera(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving());
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

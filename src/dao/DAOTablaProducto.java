@@ -456,10 +456,13 @@ public class DAOTablaProducto {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	private int darMaximoNumeroMenus() throws SQLException, Exception {
-		String sql = "SELECT MAX(NUM_MENUS) FROM (SELECT COUNT(*) AS NUM_MENUS FROM PERTENECE_A_MENU GROUP BY ID_PRODUCTO)";
+		String sql = "SELECT MAX(NUM_MENUS) FROM (SELECT COUNT(*) AS NUM_MENUS FROM PERTENECE_A_MENU GROUP BY ID_PLATO)";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		recursos.add(ps);
-		return ps.executeQuery().getInt("MAX(NUM_MENUS)");
+		ResultSet rs=ps.executeQuery();
+		if(rs.next())
+		return rs.getInt("MAX(NUM_MENUS)");
+		else return -1;
 	}
 	
 	/**
@@ -472,14 +475,14 @@ public class DAOTablaProducto {
 		
 		List<Producto> productos = new ArrayList<Producto>();
 
-		String sql = "SELECT ID_PRODUCTO FROM PERTENECE_A_MENU GROUP BY ID_PRODUCTO HAVING COUNT(*) = " + darMaximoNumeroMenus();
+		String sql = "SELECT ID_PLATO FROM PERTENECE_A_MENU GROUP BY ID_PLATO HAVING COUNT(*) = " + darMaximoNumeroMenus();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		
 		while(rs.next()) 
-			productos.add(buscarProductoPorId(rs.getLong("ID_PRODUCTO")));
+			productos.add(buscarProductoPorId(rs.getLong("ID_PLATO")));
 				
 		return productos;
 	}
