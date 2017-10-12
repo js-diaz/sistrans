@@ -93,8 +93,9 @@ public class DAOTablaRestaurante {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
-		return convertirEntidadRestaurante(rs).get(0);
+		List<Restaurante> rta=convertirEntidadRestaurante(rs);
+		if(rta.isEmpty()) return null;
+		return rta.get(0);
 	}
 
 
@@ -130,11 +131,14 @@ public class DAOTablaRestaurante {
 		DAOTablaInfoIngRest daoIng = new DAOTablaInfoIngRest();
 		DAOTablaMenu daoMenu = new DAOTablaMenu();
 		DAOTablaInfoProdRest daoProd = new DAOTablaInfoProdRest();
+		DAOTablaUsuario daoUsuario= new DAOTablaUsuario();
+		
 		daoCat.setConn(conn);
 		daoIng.setConn(conn);
 		daoMenu.setConn(conn);
 		daoProd.setConn(conn);
-
+		daoUsuario.setConn(conn);
+		
 		String sql = "INSERT INTO RESTAURANTE VALUES (";
 		sql += "'" + restaurante.getNombre() + "', ";
 		sql += "'" + restaurante.getPagWeb() + "', ";
@@ -143,24 +147,19 @@ public class DAOTablaRestaurante {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
-
-		daoCat.eliminarPorRestaurante(restaurante.getNombre());
+		
 		for(Categoria c : restaurante.getCategorias())
 			daoCat.asociarCategoriaYRestaurante(c.getNombre(), restaurante.getNombre());
-		daoIng.eliminarInfoIngRestsPorRestaurante(restaurante);
 		for(InfoIngRest i : restaurante.getInfoIngredientes())
 			daoIng.addInfoIngRest(i);
-		daoMenu.eliminarMenusPorRestaurante(restaurante);
 		for(MenuMinimum m : restaurante.getMenus())
 			daoMenu.addMenu(daoMenu.buscarMenusPorNombreYRestaurante(m.getNombre(), m.getRestaurante().getNombre()));
-		daoProd.eliminarInfoProdRestsPorRestaurante(restaurante);
 		for(InfoProdRest p : restaurante.getInfoProductos())
 			daoProd.addInfoProdRest(p);
 		daoCat.cerrarRecursos();
 		daoIng.cerrarRecursos();
 		daoMenu.cerrarRecursos();
 		daoProd.cerrarRecursos();
-
 	}
 
 
@@ -241,7 +240,7 @@ public class DAOTablaRestaurante {
 		borrarProductosRelacionados(restaurante);
 
 		String sql = "DELETE FROM RESTAURANTE";
-		sql += " WHERE NOMBRE LIKE " + restaurante.getNombre();
+		sql += " WHERE NOMBRE LIKE '" + restaurante.getNombre()+"'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -438,7 +437,13 @@ public class DAOTablaRestaurante {
 	 * @param id Id del representante del restaurante a borrar.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 */
-	public void borrarRestaurantePorIdRepresentante(Long id) throws SQLException {
+	public void borrarRestaurantePorIdRepresentante(Long id) throws SQLException,Exception {
+		RestauranteMinimum restaurante=darRestauranteDeUsuario(id);
+		borrarCategorias(restaurante);
+		borrarMenus(restaurante);
+		borrarIngredientesRelacionados(restaurante);
+		borrarProductosRelacionados(restaurante);
+		
 		String sql = "DELETE FROM Restaurante WHERE ID_REPRESENTANTE = " + id;
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.executeQuery();

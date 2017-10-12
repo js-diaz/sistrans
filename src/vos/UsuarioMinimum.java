@@ -51,21 +51,6 @@ public class UsuarioMinimum {
 	@JsonProperty(value="rol")
 	private Rol rol;
 	/**
-	 * Preferencia del usuario
-	 */
-	@JsonProperty(value="preferencia")
-	private Preferencia preferencia;
-	/**
-	 * historial de compras del usuario
-	 */
-	@JsonProperty(value="historial")
-	private List<Cuenta> historial;
-	/**
-	 * Restaurante del usuario si es representante.
-	 */
-	@JsonProperty(value="restaurante")
-	private Restaurante restaurante;
-	/**
 	 * Crea un nuevo usuario con los atributos dados por parámetro.<br>
 	 * @param nombre<br>
 	 * @param id<br>
