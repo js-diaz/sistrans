@@ -5,7 +5,7 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
- * Información de un producto que depende del restaurante que lo vende. Representación Detail.
+ * Informaciï¿½n de un producto que depende del restaurante que lo vende. Representaciï¿½n Detail.
  * @author JuanSebastian
  */
 public class InfoProdRest {
@@ -41,7 +41,7 @@ public class InfoProdRest {
 	private Date fechaFin;
 
 	/**
-	 * Producto que se está describiendo.
+	 * Producto que se estï¿½ describiendo.
 	 */
 	@JsonProperty(value="producto")
 	private Producto producto;
@@ -51,12 +51,17 @@ public class InfoProdRest {
 	 */
 	@JsonProperty(value="restaurante")
 	private RestauranteMinimum restaurante;
+	/**
+	 * Cantidad mÃ¡xima del producto
+	 */
+	@JsonProperty("cantidadMaxima")
+	private int cantidadMaxima;
 
 	public InfoProdRest(@JsonProperty(value="costo") Double costo, @JsonProperty(value="precio") Double precio,
 			@JsonProperty(value="disponibilidad") Integer disponibilidad, 
 			@JsonProperty(value="fechaInicio") Date fechaInicio, @JsonProperty(value="fechaFin") Date fechaFin,
 			@JsonProperty(value="producto") Producto producto,
-			@JsonProperty(value="restaurante") RestauranteMinimum restaurante) {
+			@JsonProperty(value="restaurante") RestauranteMinimum restaurante,@JsonProperty(value="cantidadMaxima")int cantidadMaxima) {
 		this.costo = costo;
 		this.precio = precio;
 		this.disponibilidad = disponibilidad;
@@ -64,6 +69,7 @@ public class InfoProdRest {
 		this.fechaFin = fechaFin;
 		this.producto = producto;
 		this.restaurante = restaurante;
+		this.cantidadMaxima=cantidadMaxima;
 	}
 
 	public Double getCosto() {
@@ -141,6 +147,15 @@ public class InfoProdRest {
 	public void setRestaurante(RestauranteMinimum restaurante) {
 		this.restaurante = restaurante;
 	}
+
+	public int getCantidadMaxima() {
+		return cantidadMaxima;
+	}
+
+	public void setCantidadMaxima(int cantidadMaxima) {
+		this.cantidadMaxima = cantidadMaxima;
+	}
+	
 	
 	
 }

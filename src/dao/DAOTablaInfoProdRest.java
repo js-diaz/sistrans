@@ -129,7 +129,8 @@ public class DAOTablaInfoProdRest {
 		sql += infoProdRest.getCosto() + ", ";
 		sql += infoProdRest.getDisponibilidad() + ", ";
 		sql += dateFormat(infoProdRest.getFechaInicio()) + ", ";
-		sql += dateFormat(infoProdRest.getFechaFin())+")";
+		sql += dateFormat(infoProdRest.getFechaFin());
+		sql+=infoProdRest.getCantidadMaxima()+")";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -154,6 +155,7 @@ public class DAOTablaInfoProdRest {
 		sql += ", DISPONIBILIDAD = " + infoProdRest.getDisponibilidad();
 		sql += ", FECHA_INICIO = "+ dateFormat(infoProdRest.getFechaInicio());
 		sql += ", FECHA_FIN =" + dateFormat(infoProdRest.getFechaFin());
+		sql+=", CANTIDAD_MAXIMA="+infoProdRest.getCantidadMaxima();
 		
 		sql += " WHERE ID_PRODUCTO = " + infoProdRest.getProducto().getId() + " AND NOMBRE_RESTAURANTE LIKE '" + infoProdRest.getRestaurante().getNombre()+"'";
 
@@ -211,9 +213,10 @@ public class DAOTablaInfoProdRest {
 			int disponibilidad = rs.getInt("DISPONIBILIDAD");
 			Date fechaInicio = rs.getDate("FECHA_INICIO");
 			Date fechaFin = rs.getDate("FECHA_FIN");
+			int maxima=rs.getInt("CANTIDAD_MAXIMA");
 			Producto producto = daoProd.buscarProductoPorId(rs.getLong("ID_PRODUCTO"));
 			RestauranteMinimum restaurante = daoRest.darRestauranteMinimumPorNombre(rs.getString("NOMBRE_RESTAURANTE"));
-			infoProdRests.add(new InfoProdRest(costo, precio, disponibilidad, fechaInicio, fechaFin, producto, restaurante));
+			infoProdRests.add(new InfoProdRest(costo, precio, disponibilidad, fechaInicio, fechaFin, producto, restaurante, maxima));
 		}
 		daoRest.cerrarRecursos();
 		daoProd.cerrarRecursos();

@@ -473,6 +473,30 @@ public class DAOTablaCuenta {
 			System.out.println(fecha);
 		}
 	}
+	/**
+	 * Retorna un listado de cuentas de esa mesa.<br>
+	 * @param id Id de la mesa.<br>
+	 * @return Listado de cuentas.<br>
+	 * @throws SQLException Excepción de la BD.<br>
+	 * @throws Exception Error cualquiera.
+	 */
+	public List<CuentaMinimum> darCuentasDeMesa(Long id) throws SQLException, Exception {
+		ArrayList<CuentaMinimum> cuentas = new ArrayList<>();
+
+		String sql = "SELECT * FROM CUENTA WHERE MESA =" + id + "";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+			String numCuenta = rs.getString("NUMEROCUENTA");
+			Double valor = rs.getDouble("VALOR");
+			Date fecha = rs.getDate("FECHA");
+			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha));
+		}
+		return cuentas;
+	}
 	
 
 }
