@@ -2262,4 +2262,3 @@ insert into RESERVA (fecha, id_reservador, num_personas, nombre_zona, nombre_men
 
 commit;
 
-SELECT * FROM INFO_PROD_REST WHERE ID_PRODUCTO=22;
