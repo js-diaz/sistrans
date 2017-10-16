@@ -232,13 +232,14 @@ public class DAOTablaCuenta {
 	/**
 	 * Metodo que elimina la cuenta que entra como parametro en la base de datos.
 	 * @param c - la cuenta a borrar. c !=  null
+	 * @param revisarPedidos Si sedeben revisar pedidos o no.<br>
 	 * <b> post: </b> se ha borrado la cuenta en la base de datos en la transaction actual. pendiente que la cuenta master
 	 * haga commit para que los cambios bajen a la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la cuenta.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void deleteCuenta(Cuenta c) throws SQLException, Exception {
-
+	public void deleteCuenta(Cuenta c,boolean revisarPedidos) throws SQLException, Exception {
+		if(revisarPedidos) revisarPedidos(c.getNumeroCuenta());
 		eliminarProductos(c);
 		eliminarMenus(c);
 		String sql = "DELETE FROM CUENTA";
@@ -248,6 +249,20 @@ public class DAOTablaCuenta {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
+	/**
+	 * Rvisa los pedidos de la cuenta y verifica si se puede cancelar o no el mismo.<br>
+	 * @param numeroCuenta Número de la cuenta.<br>
+	 * @throws SQLException Excepción de SQL si se requiere.<br>
+	 * @throws Exception Cualquier otro error generado.
+	 */
+	private void revisarPedidos(String numeroCuenta) throws SQLException, Exception{
+		Cuenta c = buscarCuentasPorNumeroDeCuenta(numeroCuenta);
+		for(PedidoProd p:c.getPedidoProd())
+			if(p.getEntregado()) throw new Exception("No puede cancelar el pedido ya que se lo han entregado oficialmente.");
+		for(PedidoMenu m:c.getPedidoMenu())
+			if(m.getEntregado()) throw new Exception("No puede cancelar el pedido al tenerse uno de ellos entregado oficialmente.");
+	}
+
 	/**
 	 * Borra el historial de un cliente por su id.<br>
 	 * @param id Id del cliente a borrar su historial.<br>

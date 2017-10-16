@@ -199,7 +199,7 @@ public class DAOTablaMesa {
 		for(CuentaMinimum c:mesa.getCuentas())
 		{
 			cuenta=dao.buscarCuentasPorNumeroDeCuenta(c.getNumeroCuenta());
-			dao.deleteCuenta(cuenta);
+			dao.deleteCuenta(cuenta,false);
 		}
 	}
 

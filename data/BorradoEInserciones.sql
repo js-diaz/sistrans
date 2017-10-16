@@ -991,6 +991,8 @@ insert into PREFERENCIA (idusuario, precioinicial, preciofinal) values (199, 18.
 insert into PREFERENCIA (idusuario, precioinicial, preciofinal) values (200, 47.98, 54.98);
 
 --INFOPRODREST
+insert into INFO_PROD_REST (id_producto, nombre_restaurante, precio, costo, disponibilidad, fecha_inicio, fecha_fin, cantidad_maxima) values (73, 'Vinder', 1.73, 17.88, 2653, TO_DATE('2017-04-23 18:56:40','yyyy-MM-dd hh24:mi:ss'), TO_DATE('2018-06-19 18:56:40','yyyy-MM-dd hh24:mi:ss'),10000);
+
 insert into INFO_PROD_REST (id_producto, nombre_restaurante, precio, costo, disponibilidad, fecha_inicio, fecha_fin, cantidad_maxima) values (91, 'Vinder', 1.73, 17.88, 2653, TO_DATE('2017-04-23 18:56:40','yyyy-MM-dd hh24:mi:ss'), TO_DATE('2018-06-19 18:56:40','yyyy-MM-dd hh24:mi:ss'),10000);
 insert into INFO_PROD_REST (id_producto, nombre_restaurante, precio, costo, disponibilidad, fecha_inicio, fecha_fin, cantidad_maxima) values (68, 'Skipstorm', 1.21, 10.6, 5488, TO_DATE('2016-11-13 03:23:37', 'yyyy-MM-dd hh24:mi:ss'),TO_DATE('2018-01-30 06:01:42', 'yyyy-MM-dd hh24:mi:ss'),10000);
 insert into INFO_PROD_REST (id_producto, nombre_restaurante, precio, costo, disponibilidad, fecha_inicio, fecha_fin, cantidad_maxima) values (17, 'Dabtype', 9.06, 6.49, 6835, TO_DATE('2017-09-05 22:38:36', 'yyyy-MM-dd hh24:mi:ss'),TO_DATE('2018-08-19 03:31:01', 'yyyy-MM-dd hh24:mi:ss'),10000);
@@ -1654,8 +1656,8 @@ insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (42.14, '
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (72.19, '3143738846', TO_DATE('2017-08-14 07:37:16', 'yyyy-MM-dd hh24:mi:ss'), 145,43);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (56.15, '9116877665', TO_DATE('2016-12-01 00:52:13', 'yyyy-MM-dd hh24:mi:ss'), 149,56);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (45.78, '3922111108', TO_DATE('2017-07-18 12:37:03', 'yyyy-MM-dd hh24:mi:ss'), 106,67);
-insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (98.3, '5040004566', TO_DATE('2017-03-14 20:31:30', 'yyyy-MM-dd hh24:mi:ss'), 101,78);
-insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (45.84, '1128271020', TO_DATE('2017-02-12 16:50:29', 'yyyy-MM-dd hh24:mi:ss'), 109,79);
+insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (98.3, '5040004566', TO_DATE('2017-03-14 20:31:30', 'yyyy-MM-dd hh24:mi:ss'), NULL,78);
+insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (45.84, '1128271020', TO_DATE('2017-02-12 16:50:29', 'yyyy-MM-dd hh24:mi:ss'), NULL,79);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (58.77, '3010962837', TO_DATE('2017-07-01 08:57:47', 'yyyy-MM-dd hh24:mi:ss'), 158,80);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (48.39, '4269709226', TO_DATE('2017-07-05 11:16:23', 'yyyy-MM-dd hh24:mi:ss'), 123,81);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (63.51, '6236412868', TO_DATE('2017-02-06 15:34:59', 'yyyy-MM-dd hh24:mi:ss'), 184,83);

@@ -209,7 +209,7 @@ public class CuentaServices {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCuenta(Cuenta cuenta, @HeaderParam("usuarioId") Long usuarioId) {
+	public Response cancelarPedido(Cuenta cuenta, @HeaderParam("usuarioId") Long usuarioId) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		try {
 			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
@@ -217,7 +217,10 @@ public class CuentaServices {
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
-			tm.cuentaDeleteCuenta(cuenta);
+			boolean revisarPedidos=true;
+			if(u.getRol().equals(Rol.OPERADOR))
+				revisarPedidos=false;
+			tm.cuentaCancelarPedido(cuenta,revisarPedidos);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

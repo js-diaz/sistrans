@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import oracle.net.aso.r;
+import rfc.ContenedoraRestauranteInfoFinanciera;
+import rfc.InformacionFinanciera;
 import vos.*;
 
 /**
@@ -447,6 +449,94 @@ public class DAOTablaRestaurante {
 		String sql = "DELETE FROM Restaurante WHERE ID_REPRESENTANTE = " + id;
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.executeQuery();
+	}
+	/**
+	 * Surte todos los productos que vende el restaurante con la capacidad máxima de cada uno.<br>
+	 * @param nombre Nombre del restaurante.<br>
+	 * @throws SQLException Si hay errores con la base de datos.<br>
+	 * @throws Exception si hay algún otro error.
+	 */
+	public void surtirRestaurante(String nombre) throws SQLException, Exception
+	{
+		DAOTablaInfoProdRest info = new DAOTablaInfoProdRest();
+		info.setConn(conn);
+		info.surtirInfoProdRest(nombre);
+		info.cerrarRecursos();
+	}
+	/**
+	 * Obtiene la información financiera del restaurante dado por parámetro.<br>
+	 * @param nombre Nombre del restaurante.<br>
+	 * @param esProd La petición es sobre los menús o sobre los productos.<br>
+	 * @throws SQLException Si hay errores en la BD.<br>
+	 * @throws Exception Si hay otros errores.
+	 */
+	public List<ContenedoraRestauranteInfoFinanciera> balanceFinanciero(String nombre,boolean esProd) throws SQLException, Exception
+	{
+		String sql=obtenerPeticionLargaInformacionFinanciera(esProd,nombre);
+		PreparedStatement prep=conn.prepareStatement(sql);
+		ResultSet rs=prep.executeQuery();
+		List<ContenedoraRestauranteInfoFinanciera> list=new ArrayList<>();
+		ContenedoraRestauranteInfoFinanciera crf=null;
+		InformacionFinanciera info=null;
+		String restaurante=null;
+		String restauranteActual=null;
+		if(rs.next())
+		{
+			restauranteActual=rs.getString("NOMBRE");
+			crf=new ContenedoraRestauranteInfoFinanciera(restauranteActual, new ArrayList<InformacionFinanciera>());
+			crf.getInformacionFinanciera().add(new InformacionFinanciera(rs.getLong("ID"), rs.getInt("CANTIDADASIGNADA"), 
+					rs.getInt("CANTIDADNOASIGNADA"), rs.getDouble("TOTALASIGNADO"), rs.getDouble("TOTALNOASIGNADO")));
+			
+		}
+		while(rs.next())
+		{
+			restaurante=rs.getString("NOMBRE");
+			if(!restaurante.equals(restauranteActual))
+			{
+				list.add(crf);
+				restauranteActual=restaurante;
+				crf=new ContenedoraRestauranteInfoFinanciera(restauranteActual, new ArrayList<InformacionFinanciera>());
+			}
+			crf.getInformacionFinanciera().add(new InformacionFinanciera(rs.getLong("ID"), rs.getInt("CANTIDADASIGNADA"), 
+					rs.getInt("CANTIDADNOASIGNADA"), rs.getDouble("TOTALASIGNADO"), rs.getDouble("TOTALNOASIGNADO")));
+		}
+		list.add(crf);
+		return list;
+		
+	}
+	/**
+	 * Obtiene la peiticón de información financiera basándose en si es para un producto o para un menú.<br>
+	 * @param esProd Determina si es un producto o menú.<br>
+	 * @param nombre Nombre del restaurante.<br>
+	 * @return Petición sql correspondiente.
+	 */
+	private String obtenerPeticionLargaInformacionFinanciera(boolean esProd, String nombre)
+	{
+		String sql="";
+		String temp="";
+		if(nombre!=null)
+			temp="AND C.NOMBRE LIKE '"+nombre+"' ";
+		if(esProd)
+		{
+			sql="SELECT C.NOMBRE, ID_PRODUCTO, NVL(SUM(C.PRECIO)*SUM(C.CANTIDADASIGNADA),0) AS TOTALASIGNADO, NVL(SUM(CANTIDADASIGNADA),0) AS CANTIDADASIGNADA,"
+					+ "                            NVL(SUM(C.PRECIO)*SUM(C.CANTIDADNOASIGNADA),0) AS TOTALNOASIGNADO, NVL(SUM(CANTIDADNOASIGNADA),0) AS CANTIDADNOASIGNADA"
+					+ " FROM (SELECT ID_PRODUCTO, NOMBRE_RESTAURANTE AS NOMBRE, (CASE WHEN C.IDUSUARIO IS NULL THEN 0 ELSE B.CANTIDAD END) AS CANTIDADASIGNADA,"
+					+ "        (CASE WHEN C.IDUSUARIO IS NOT NULL THEN 0 ELSE B.CANTIDAD END) AS CANTIDADNOASIGNADA, A.PRECIO"
+					+ "    FROM INFO_PROD_REST A NATURAL LEFT OUTER JOIN PEDIDO_PROD B LEFT OUTER JOIN CUENTA C ON B.NUMERO_CUENTA=C.NUMEROCUENTA "
+					+ "    ) C ,RESTAURANTE D "
+					+ "WHERE D.NOMBRE LIKE C.NOMBRE "+temp
+					+ "group by C.NOMBRE, C.ID_PRODUCTO, ID_PRODUCTO";
+		}
+		else
+		 sql="SELECT C.NOMBRE, NOMBRE_MENU, NVL(SUM(C.PRECIO)*SUM(C.CANTIDADASIGNADA),0) AS TOTALASIGNADO, NVL(SUM(CANTIDADASIGNADA),0) AS CANTIDADASIGNADA,"
+				+ "   NVL(SUM(C.PRECIO)*SUM(C.CANTIDADNOASIGNADA),0) AS TOTALNOASIGNADO, NVL(SUM(CANTIDADNOASIGNADA),0) AS CANTIDADNOASIGNADA "
+				+ " FROM (SELECT NOMBRE_MENU, B.NOMBRE_RESTAURANTE AS NOMBRE, (CASE WHEN C.IDUSUARIO IS NULL THEN 0 ELSE B.CANTIDAD END) AS CANTIDADASIGNADA,"
+				+ "  (CASE WHEN C.IDUSUARIO IS NOT NULL THEN 0 ELSE B.CANTIDAD END) AS CANTIDADNOASIGNADA, A.PRECIO "
+				+ " FROM (MENU A LEFT OUTER JOIN PEDIDO_MENU B ON A.NOMBRE=B.NOMBRE_MENU) LEFT OUTER JOIN CUENTA C ON B.NUMERO_CUENTA=C.NUMEROCUENTA "
+				+ "    ) C ,RESTAURANTE D "
+				+ "WHERE D.NOMBRE LIKE C.NOMBRE "+temp
+				+ "group by C.NOMBRE, NOMBRE_MENU ";
+		return sql;
 	}
 
 

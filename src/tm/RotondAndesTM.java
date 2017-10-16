@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Properties;
 
 import dao.*;
+import rfc.ContenedoraClienteProductos;
 import rfc.ContenedoraInformacion;
+import rfc.ContenedoraRestauranteInfoFinanciera;
 import rfc.ContenedoraZonaCategoriaProducto;
 import rfc.Criterio;
 import rfc.CriterioAgregacion;
@@ -1047,10 +1049,11 @@ public class RotondAndesTM {
 	}
 	/**
 	 * Borra una cuenta.<br>
-	 * @param c Cuenta<bR>
+	 * @param c Cuenta<br>
+	 * @param revisarPedidos Si se debe o no revisar los pedidos enviados.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void cuentaDeleteCuenta (Cuenta c) throws Exception
+	public void cuentaCancelarPedido (Cuenta c, boolean revisarPedidos) throws Exception
 	{
 		DAOTablaCuenta dao = new DAOTablaCuenta();
 		try
@@ -1058,7 +1061,7 @@ public class RotondAndesTM {
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
-			dao.deleteCuenta(c);
+			dao.deleteCuenta(c,revisarPedidos);
 			conn.commit();
 		}
 		catch (SQLException e) {
@@ -3249,6 +3252,49 @@ public class RotondAndesTM {
 		return u;
 	}
 	/**
+	 * Retorna una lista con la información contendia de los productos consumidos por el cliente.<br>
+	 * @param id Id del cliente.<br>
+	 * @return Lista con información.<br>
+	 * @throws Exception SI hay errores.
+	 */
+	public List<ContenedoraClienteProductos> usuarioProuctosConsumidos(Long id) throws Exception
+	{
+		List<ContenedoraClienteProductos> list=null;
+		UsuarioCompleto u =null;
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.informacionProductos(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
 	 * Agrega un usuario al sistema.<br>
 	 * @param usuario Usuario a agregar.<br>
 	 * @throws Exception Si existe algún tipo de error
@@ -4076,7 +4122,87 @@ public class RotondAndesTM {
 		}
 	}
 
-
+	/**
+	 * Registra que un restaurante desea surtir sus productos.<br>
+	 * @param nombre Nombre del restaurante.<br>
+	 * @throws Exception Si sucede algún error.
+	 */
+	public void restauranteSurtirProductos(String nombre) throws Exception {
+			DAOTablaRestaurante dao= new DAOTablaRestaurante();
+			try
+			{
+				this.conn=darConexion();
+				dao.setConn(conn);
+				dao.surtirRestaurante(nombre);
+			}
+			catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} 
+			catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			}
+			finally
+			{
+				try
+				{
+					dao.cerrarRecursos();
+					if(this.conn!=null) this.conn.close();
+				}
+				catch(SQLException exception)
+				{
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+		}
+	/**
+	 * Retorna una lista de contenedora de información para el restaurante a nivel financiero.<br>
+	 * @param restaurante Nombre del restaurante.<br>
+	 * @param esProd Si es producto o no.<br>
+	 * @return Lista de contenedoras de información.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	public List<ContenedoraRestauranteInfoFinanciera> restauranteDarInformacionFinanciera(String restaurante, boolean esProd) throws Exception
+	{
+		DAOTablaRestaurante dao= new DAOTablaRestaurante();
+		List<ContenedoraRestauranteInfoFinanciera> list=new ArrayList<>();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.balanceFinanciero(restaurante, esProd);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
 	//Menu
 	/**
 	 * Retorna las menus del sistema.<br>
@@ -6371,4 +6497,6 @@ public class RotondAndesTM {
 			}
 		}
 	}
+	
+	
 }
