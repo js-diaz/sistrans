@@ -550,19 +550,23 @@ public class DAOTablaUsuario {
 		{
 			idActual=rs.getLong("CLIENTE");
 			tieneActual=rs.getBoolean("TIENEMESA");
-			menuActual=rs.getString("NOMBRE_MENU")+";;;"+rs.getString("NOMBRE_RESTAURANTE");
+			menuActual=rs.getString("NOMBRE_RESTAURANTE")+";;;"+rs.getString("NOMBRE_MENU");
 			cp=new ContenedoraClienteProductos(idActual, new ArrayList<ContenedoraMesaMenuCliente>());
 			mmc=new ContenedoraMesaMenuCliente(rs.getBoolean("TIENEMESA"), new ArrayList<ContenedoraMenuCliente>());
-			mc=new ContenedoraMenuCliente(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"), new ArrayList<ProductoInformativo>());
+			mc=new ContenedoraMenuCliente(rs.getString("NOMBRE_RESTAURANTE"), rs.getString("NOMBRE_MENU"), new ArrayList<ProductoInformativo>());
 			p=new ProductoInformativo(rs.getString("NOMBRE"), rs.getString("TIPO"), rs.getString("DESCRIPCION"), rs.getString("TRADUCCION"), rs.getLong("ID"));
 			mc.getProducto().add(p);
 		}
 		while(rs.next())
 		{
 			nuevaId=rs.getLong("CLIENTE");
+			if(nuevaId==144) 
+				{
+				System.out.println("HOLA");
+				}
 			tiene=rs.getBoolean("TIENEMESA");
-			menu=rs.getString("NOMBRE_MENU")+";;;"+rs.getString("NOMBRE_RESTAURANTE");
-			if(nuevaId!=idActual)
+			menu=rs.getString("NOMBRE_RESTAURANTE")+";;;"+rs.getString("NOMBRE_MENU");
+			if(!nuevaId.equals(idActual))
 			{
 				mmc.getInformacionMenu().add(mc);
 				cp.getInformacionMesaMenu().add(mmc);
@@ -570,17 +574,23 @@ public class DAOTablaUsuario {
 				idActual=nuevaId;
 				tieneActual=tiene;
 				menuActual=menu;
+				String[] datos=menuActual.split(";;;");
 				cp=new ContenedoraClienteProductos(idActual, new ArrayList<ContenedoraMesaMenuCliente>());
+				mmc=new ContenedoraMesaMenuCliente(tieneActual, new ArrayList<ContenedoraMenuCliente>());
+				mc=new ContenedoraMenuCliente(datos[0],datos[1], new ArrayList<ProductoInformativo>());
+
 			}
-			if(tieneActual!=tiene)
+			else if(tieneActual!=tiene)
 			{
 				mmc.getInformacionMenu().add(mc);
 				cp.getInformacionMesaMenu().add(mmc);
 				tieneActual=tiene;
 				menuActual=menu;
+				String[] datos=menuActual.split(";;;");
 				mmc=new ContenedoraMesaMenuCliente(tieneActual, new ArrayList<ContenedoraMenuCliente>());
+				mc=new ContenedoraMenuCliente(datos[0],datos[1], new ArrayList<ProductoInformativo>());
 			}
-			if(!menu.equals(menuActual))
+			else if(!(menu.equals(menuActual)))
 			{
 				mmc.getInformacionMenu().add(mc);
 				menuActual=menu;

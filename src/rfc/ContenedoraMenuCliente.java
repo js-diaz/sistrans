@@ -12,15 +12,15 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class ContenedoraMenuCliente {
 
 	/**
-	 * Nombre del menú
-	 */
-	@JsonProperty(value="nombreMenu")
-	private String nombreMenu;
-	/**
 	 * Nombre del restaurante
 	 */
 	@JsonProperty(value="nombreRestaurante")
 	private String nombreRestaurante;
+	/**
+	 * Nombre del menú
+	 */
+	@JsonProperty(value="nombreMenu")
+	private String nombreMenu;
 	/**
 	 * Producto informativo
 	 */
@@ -33,9 +33,8 @@ public class ContenedoraMenuCliente {
 	 * @param nombreRestaurante Nombre del restaurante.<br>
 	 * @param producto Producto informativo
 	 */
-	public ContenedoraMenuCliente(@JsonProperty(value="nombreMenu")String nombreMenu, 
-			@JsonProperty(value="nombreRestaurante")String nombreRestaurante, 
-			@JsonProperty(value="producto")List<ProductoInformativo> producto) {
+	public ContenedoraMenuCliente(@JsonProperty(value="nombreRestaurante")String nombreRestaurante,
+			@JsonProperty(value="nombreMenu")String nombreMenu,	@JsonProperty(value="producto")List<ProductoInformativo> producto) {
 		super();
 		this.nombreMenu = nombreMenu;
 		this.nombreRestaurante = nombreRestaurante;

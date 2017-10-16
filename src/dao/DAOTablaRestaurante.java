@@ -477,14 +477,13 @@ public class DAOTablaRestaurante {
 		ResultSet rs=prep.executeQuery();
 		List<ContenedoraRestauranteInfoFinanciera> list=new ArrayList<>();
 		ContenedoraRestauranteInfoFinanciera crf=null;
-		InformacionFinanciera info=null;
 		String restaurante=null;
 		String restauranteActual=null;
 		if(rs.next())
 		{
 			restauranteActual=rs.getString("NOMBRE");
 			crf=new ContenedoraRestauranteInfoFinanciera(restauranteActual, new ArrayList<InformacionFinanciera>());
-			crf.getInformacionFinanciera().add(new InformacionFinanciera(rs.getLong("ID"), rs.getInt("CANTIDADASIGNADA"), 
+			crf.getInformacionFinanciera().add(new InformacionFinanciera(rs.getString("PRODUCTO"), rs.getInt("CANTIDADASIGNADA"), 
 					rs.getInt("CANTIDADNOASIGNADA"), rs.getDouble("TOTALASIGNADO"), rs.getDouble("TOTALNOASIGNADO")));
 			
 		}
@@ -497,7 +496,7 @@ public class DAOTablaRestaurante {
 				restauranteActual=restaurante;
 				crf=new ContenedoraRestauranteInfoFinanciera(restauranteActual, new ArrayList<InformacionFinanciera>());
 			}
-			crf.getInformacionFinanciera().add(new InformacionFinanciera(rs.getLong("ID"), rs.getInt("CANTIDADASIGNADA"), 
+			crf.getInformacionFinanciera().add(new InformacionFinanciera(rs.getString("PRODUCTO"), rs.getInt("CANTIDADASIGNADA"), 
 					rs.getInt("CANTIDADNOASIGNADA"), rs.getDouble("TOTALASIGNADO"), rs.getDouble("TOTALNOASIGNADO")));
 		}
 		list.add(crf);
@@ -518,24 +517,26 @@ public class DAOTablaRestaurante {
 			temp="AND C.NOMBRE LIKE '"+nombre+"' ";
 		if(esProd)
 		{
-			sql="SELECT C.NOMBRE, ID_PRODUCTO, NVL(SUM(C.PRECIO)*SUM(C.CANTIDADASIGNADA),0) AS TOTALASIGNADO, NVL(SUM(CANTIDADASIGNADA),0) AS CANTIDADASIGNADA,"
+			sql="SELECT C.NOMBRE, ID_PRODUCTO AS PRODUCTO, NVL(SUM(C.PRECIO)*SUM(C.CANTIDADASIGNADA),0) AS TOTALASIGNADO, NVL(SUM(CANTIDADASIGNADA),0) AS CANTIDADASIGNADA,"
 					+ "                            NVL(SUM(C.PRECIO)*SUM(C.CANTIDADNOASIGNADA),0) AS TOTALNOASIGNADO, NVL(SUM(CANTIDADNOASIGNADA),0) AS CANTIDADNOASIGNADA"
 					+ " FROM (SELECT ID_PRODUCTO, NOMBRE_RESTAURANTE AS NOMBRE, (CASE WHEN C.IDUSUARIO IS NULL THEN 0 ELSE B.CANTIDAD END) AS CANTIDADASIGNADA,"
 					+ "        (CASE WHEN C.IDUSUARIO IS NOT NULL THEN 0 ELSE B.CANTIDAD END) AS CANTIDADNOASIGNADA, A.PRECIO"
 					+ "    FROM INFO_PROD_REST A NATURAL LEFT OUTER JOIN PEDIDO_PROD B LEFT OUTER JOIN CUENTA C ON B.NUMERO_CUENTA=C.NUMEROCUENTA "
 					+ "    ) C ,RESTAURANTE D "
 					+ "WHERE D.NOMBRE LIKE C.NOMBRE "+temp
-					+ "group by C.NOMBRE, C.ID_PRODUCTO, ID_PRODUCTO";
+					+ "group by C.NOMBRE, C.ID_PRODUCTO, ID_PRODUCTO "
+					+ "ORDER BY C.NOMBRE, C.ID_PRODUCTO";
 		}
 		else
-		 sql="SELECT C.NOMBRE, NOMBRE_MENU, NVL(SUM(C.PRECIO)*SUM(C.CANTIDADASIGNADA),0) AS TOTALASIGNADO, NVL(SUM(CANTIDADASIGNADA),0) AS CANTIDADASIGNADA,"
+		 sql="SELECT C.NOMBRE, NOMBRE_MENU AS PRODUCTO, NVL(SUM(C.PRECIO)*SUM(C.CANTIDADASIGNADA),0) AS TOTALASIGNADO, NVL(SUM(CANTIDADASIGNADA),0) AS CANTIDADASIGNADA,"
 				+ "   NVL(SUM(C.PRECIO)*SUM(C.CANTIDADNOASIGNADA),0) AS TOTALNOASIGNADO, NVL(SUM(CANTIDADNOASIGNADA),0) AS CANTIDADNOASIGNADA "
 				+ " FROM (SELECT NOMBRE_MENU, B.NOMBRE_RESTAURANTE AS NOMBRE, (CASE WHEN C.IDUSUARIO IS NULL THEN 0 ELSE B.CANTIDAD END) AS CANTIDADASIGNADA,"
 				+ "  (CASE WHEN C.IDUSUARIO IS NOT NULL THEN 0 ELSE B.CANTIDAD END) AS CANTIDADNOASIGNADA, A.PRECIO "
 				+ " FROM (MENU A LEFT OUTER JOIN PEDIDO_MENU B ON A.NOMBRE=B.NOMBRE_MENU) LEFT OUTER JOIN CUENTA C ON B.NUMERO_CUENTA=C.NUMEROCUENTA "
 				+ "    ) C ,RESTAURANTE D "
 				+ "WHERE D.NOMBRE LIKE C.NOMBRE "+temp
-				+ "group by C.NOMBRE, NOMBRE_MENU ";
+				+ "group by C.NOMBRE, NOMBRE_MENU "
+				+ "ORDER BY C.NOMBRE, NOMBRE_MENU";
 		return sql;
 	}
 

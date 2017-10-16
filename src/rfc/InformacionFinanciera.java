@@ -11,8 +11,8 @@ public class InformacionFinanciera {
 	/**
 	 * Id del producto
 	 */
-	@JsonProperty(value="id")
-	private Long id;
+	@JsonProperty(value="producto")
+	private String  producto;
 	/**
 	 * Cantidad de cuentas asignadas.
 	 */
@@ -34,35 +34,35 @@ public class InformacionFinanciera {
 	private double totalNoAsignado;
 	/**
 	 * Construye un nuevo objeto de información financiera.<br>
-	 * @param id Id del producto.<br>
+	 * @param  producto Id del producto.<br>
 	 * @param cantidadAsignada Cantidad asignada.<br>
 	 * @param cantidadNoAsignada Cantidad no asignada.<br>
 	 * @param totalAsignado Total de mercancía asignada.<br>
 	 * @param totalNoAsignado Total de mercancía no asignada.
 	 */
-	public InformacionFinanciera(@JsonProperty(value="id")Long id, 
+	public InformacionFinanciera(@JsonProperty(value="producto")String  producto, 
 			@JsonProperty(value="cantidadAsignada")int cantidadAsignada, @JsonProperty(value="cantidadNoAsignada")int cantidadNoAsignada, 
 			@JsonProperty(value="totalAsignado")double totalAsignado, @JsonProperty(value="totalNoAsignado")double totalNoAsignado) {
 		super();
-		this.id = id;
+		this .producto =  producto;
 		this.cantidadAsignada = cantidadAsignada;
 		this.cantidadNoAsignada = cantidadNoAsignada;
 		this.totalAsignado = totalAsignado;
 		this.totalNoAsignado = totalNoAsignado;
 	}
 	/**
-	 * Obtiene el id del producto.<br>
-	 * @return id
+	 * Obtiene el  producto del producto.<br>
+	 * @return  producto
 	 */
-	public Long getId() {
-		return id;
+	public String getId() {
+		return  producto;
 	}
 	/**
-	 * Modifica el id al valor dado por parámetro.<br>
-	 * @param id
+	 * Modifica el  producto al valor dado por parámetro.<br>
+	 * @param  producto
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(String  producto) {
+		this .producto =  producto;
 	}
 	/**
 	 * Obtiene la cantidad asignada.<br>

@@ -1656,8 +1656,8 @@ insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (42.14, '
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (72.19, '3143738846', TO_DATE('2017-08-14 07:37:16', 'yyyy-MM-dd hh24:mi:ss'), 145,43);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (56.15, '9116877665', TO_DATE('2016-12-01 00:52:13', 'yyyy-MM-dd hh24:mi:ss'), 149,56);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (45.78, '3922111108', TO_DATE('2017-07-18 12:37:03', 'yyyy-MM-dd hh24:mi:ss'), 106,67);
-insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (98.3, '5040004566', TO_DATE('2017-03-14 20:31:30', 'yyyy-MM-dd hh24:mi:ss'), NULL,78);
-insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (45.84, '1128271020', TO_DATE('2017-02-12 16:50:29', 'yyyy-MM-dd hh24:mi:ss'), NULL,79);
+insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (98.3, '5040004566', TO_DATE('2017-03-14 20:31:30', 'yyyy-MM-dd hh24:mi:ss'), 101,78);
+insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (45.84, '1128271020', TO_DATE('2017-02-12 16:50:29', 'yyyy-MM-dd hh24:mi:ss'), 109,79);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (58.77, '3010962837', TO_DATE('2017-07-01 08:57:47', 'yyyy-MM-dd hh24:mi:ss'), 158,80);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (48.39, '4269709226', TO_DATE('2017-07-05 11:16:23', 'yyyy-MM-dd hh24:mi:ss'), 123,81);
 insert into CUENTA (valor, numerocuenta, fecha, idusuario,mesa) values (63.51, '6236412868', TO_DATE('2017-02-06 15:34:59', 'yyyy-MM-dd hh24:mi:ss'), 184,83);
