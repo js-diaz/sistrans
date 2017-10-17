@@ -152,9 +152,9 @@ public class RestauranteServices {
 	@Path( "{nombre}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateRestaurante(Restaurante restaurante, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre,@PathParam("surtido") boolean surtido) {
+	public Response updateRestaurante(Restaurante restaurante, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre,@HeaderParam("surtido") Boolean surtido) {
 		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
-
+		if(surtido==null) surtido=false;
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -163,7 +163,7 @@ public class RestauranteServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && id == tm.restauranteBuscarRestaurantePorNombre(nombre).getRepresentante().getId())))
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && id.equals( tm.restauranteBuscarRestaurantePorNombre(nombre).getRepresentante().getId()))))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			if(!surtido)
 			{

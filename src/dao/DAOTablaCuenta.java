@@ -87,13 +87,26 @@ public class DAOTablaCuenta {
 			List<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
 			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
 			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
-			
-			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u));
+			MesaMinimum m=buscarMesaDeCuenta(rs.getLong("MESA"));
+			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u,m));
 		}
 		return cuentas;
 	}
 
 
+	/**
+	 * Obtiene la mesa a la que pertenece la cuenta determinada.<br>
+	 * @param id Id de la mesa.<br>
+	 * @return Mesa de la cuenta.<br>
+	 * @throws SQLException Excepción en la BD.<br>
+	 * @throws Exception Cualquier otro error.
+	 */
+	private MesaMinimum buscarMesaDeCuenta(Long id) throws SQLException, Exception {
+		DAOTablaMesa dao = new DAOTablaMesa();
+		dao.setConn(conn);
+		MesaMinimum m=dao.buscarMesasMinimumPorName(id);
+		return m;
+	}
 
 	/**
 	 * Metodo que busca la cuenta con el nÃºmero de cuenta que entra como parametro.
@@ -119,7 +132,8 @@ public class DAOTablaCuenta {
 			List<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
 			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
 			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
-			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u));
+			MesaMinimum m=buscarMesaDeCuenta(rs.getLong("MESA"));
+			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u,m));
 		}
 
 		return c;
@@ -186,12 +200,14 @@ public class DAOTablaCuenta {
 	 */
 	public void addCuenta(Cuenta c) throws SQLException, Exception {
 
-		
+		Long id=null;
+		if(c.getMesa()!=null) id=c.getMesa().getId();
 		String sql = "INSERT INTO CUENTA VALUES (";
 		sql += "0,'";
 		sql += c.getNumeroCuenta() + "',";
 		sql += dateFormat(c.getFecha())+",";
-		sql+= c.getCliente().getId()+")";
+		sql+= c.getCliente().getId()+",";
+		sql+=id +")";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -218,10 +234,12 @@ public class DAOTablaCuenta {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void updateCuenta(Cuenta c) throws SQLException, Exception {
-
+		Long id=null;
+		if(c.getMesa()!=null) id=c.getMesa().getId();
 		String sql = "UPDATE CUENTA SET ";
 		sql += "VALOR=" + c.getValor() + ",";
-		sql += "FECHA=" + dateFormat(c.getFecha());
+		sql += "FECHA=" + dateFormat(c.getFecha())+",";
+		sql+="MESA="+id;
 		sql += " WHERE NUMEROCUENTA LIKE '" + c.getNumeroCuenta()+"'";
 
 

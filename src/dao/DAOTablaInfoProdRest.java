@@ -240,7 +240,7 @@ public class DAOTablaInfoProdRest {
 	 * @throws Exception Excepción cualquiera.
 	 */
 	public void surtirInfoProdRest(String nombre) throws SQLException, Exception {
-		String sql="SET DISPONIBILIDAD=CANTIDAD_MAXIMA WHERE NOMBRE_RESTAURANTE LIKE '"+nombre+"'";
+		String sql="UPDATE INFO_PROD_REST SET DISPONIBILIDAD=CANTIDAD_MAXIMA WHERE NOMBRE_RESTAURANTE LIKE '"+nombre+"'";
 		PreparedStatement ps= conn.prepareStatement(sql);
 		ps.executeQuery();
 	}

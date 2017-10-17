@@ -127,7 +127,7 @@ public class DAOTablaPedidoProducto {
 		sql += pedidoProd.getPlato().getProducto().getId() + ", ";
 		sql += "'" + pedidoProd.getPlato().getRestaurante().getNombre() + "', ";
 		sql += pedidoProd.getCantidad() + ", ";
-		sql += pedidoProd.getEntregado()? "'0')" : "'1')";
+		sql += pedidoProd.getEntregado()? "'1')" : "'0')";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -182,11 +182,10 @@ public class DAOTablaPedidoProducto {
 			}
 		PedidoProd p=buscarPedidoProdsPorIdYCuenta(pedidoProd.getPlato().getProducto().getId(), pedidoProd.getPlato().getRestaurante().getNombre(), pedidoProd.getCuenta().getNumeroCuenta());
 		if(!mod)modificarPrecioCuenta(p.getCuenta(),p.getCantidad()*p.getPlato().getPrecio()*-1);
-		if(!mod)
-			{
+		
 				String sql = "UPDATE PEDIDO_PROD SET ";
 				sql += "CANTIDAD = " + pedidoProd.getCantidad();
-				sql += ", ENTREGADO = " + (pedidoProd.getEntregado()? "'1' " : "'0' ");
+				sql += ", ENTREGADO = " + (pedidoProd.getEntregado()? "'1'" : "'0'");
 				
 				sql += " WHERE ID_PRODUCTO = " + pedidoProd.getPlato().getProducto().getId(); 
 				sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoProd.getPlato().getRestaurante().getNombre() + "'";
@@ -195,7 +194,6 @@ public class DAOTablaPedidoProducto {
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
 				prepStmt.executeQuery();
-			}
 		if(!mod)modificarPrecioCuenta(pedidoProd.getCuenta(),pedidoProd.getCantidad()*pedidoProd.getPlato().getPrecio()*-1);
 	}
 	/**
