@@ -242,7 +242,11 @@ public class DAOTablaRestaurante {
 		borrarProductosRelacionados(restaurante);
 
 		String sql = "DELETE FROM RESTAURANTE";
+<<<<<<< HEAD
+		sql += " WHERE NOMBRE LIKE '" + restaurante.getNombre() +"'";
+=======
 		sql += " WHERE NOMBRE LIKE '" + restaurante.getNombre()+"'";
+>>>>>>> 9e38f927db53a3dc18ba1f5b52b61a0e5825d595
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
