@@ -2,6 +2,7 @@
 package rest;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public class UsuarioServices {
 	 */
 	@Context
 	private ServletContext context;
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 	/**
 	 * Metodo que retorna el path de la carpeta WEB-INF/ConnectionData en el deploy actual dentro del servidor.
@@ -307,14 +310,14 @@ public class UsuarioServices {
      * el error que se produjo
      */
 	@GET
-	@Path( "{idUsuario: \\d+}/reservas/{fecha : \\d+}" )
+	@Path( "{idUsuario: \\d+}/reservas/{fecha}" )
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response getReserva( @PathParam( "fecha" ) Date fecha, @PathParam("idUsuario") Long idUsuario )
+	public Response getReserva( @PathParam( "fecha" ) String fecha, @PathParam("idUsuario") Long idUsuario )
 	{
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
-			Reserva v = tm.reservaBuscarReservasPorFechaYUsuario(fecha, idUsuario);
+			Reserva v = tm.reservaBuscarReservasPorFechaYUsuario(sdf.parse(fecha), idUsuario);
 			if(v == null) 
 				return Response.status( 404 ).entity( v ).build( );
 			return Response.status( 200 ).entity( v ).build( );
@@ -368,7 +371,7 @@ public class UsuarioServices {
 	@Path( "{idUsuario: \\d+}/reservas/{fecha}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateReserva(Reserva reserva, @HeaderParam("usuarioId") Long id, @PathParam("fecha") Date fecha, @PathParam("idUsuario") Long idUsuario) {
+	public Response updateReserva(Reserva reserva, @HeaderParam("usuarioId") Long id, @PathParam("fecha") String fecha, @PathParam("idUsuario") Long idUsuario) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -379,7 +382,7 @@ public class UsuarioServices {
 		try {
 			if(!(u.getRol().equals(Rol.OPERADOR) || id == idUsuario))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			reserva.setFecha(fecha);
+			reserva.setFecha(sdf.parse(fecha));
 			reserva.setReservador(tm.usuarioBuscarUsuarioPorId(idUsuario));
 			tm.reservaUpdateReserva(reserva);
 		} catch (Exception e) {
@@ -400,7 +403,7 @@ public class UsuarioServices {
 	@Path( "{idUsuario: \\d+}/reservas/{fecha}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteReserva(@HeaderParam("usuarioId") Long id, @PathParam("idUsuario") Long idUsuario, @PathParam("fecha") Date fecha) {
+	public Response deleteReserva(@HeaderParam("usuarioId") Long id, @PathParam("idUsuario") Long idUsuario, @PathParam("fecha") String fecha) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -411,7 +414,7 @@ public class UsuarioServices {
 		try {
 			if(!(u.getRol().equals(Rol.OPERADOR) || id == idUsuario))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			tm.reservaDeleteReserva(fecha, idUsuario);
+			tm.reservaDeleteReserva(sdf.parse(fecha), idUsuario);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

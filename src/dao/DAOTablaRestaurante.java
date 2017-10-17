@@ -241,7 +241,7 @@ public class DAOTablaRestaurante {
 		borrarProductosRelacionados(restaurante);
 
 		String sql = "DELETE FROM RESTAURANTE";
-		sql += " WHERE NOMBRE LIKE " + restaurante.getNombre();
+		sql += " WHERE NOMBRE LIKE '" + restaurante.getNombre() +"'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

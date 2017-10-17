@@ -101,7 +101,7 @@ public class DAOTablaReserva {
 	 */
 	public Reserva buscarReservasPorFechaYUsuario(Date fecha, Long reservador) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM RESERVA WHERE FECHA = " + fecha + " AND ID_RESERVADOR = " + reservador;
+		String sql = "SELECT * FROM RESERVA WHERE FECHA = " + dateFormat(fecha) + " AND ID_RESERVADOR = " + reservador;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -159,7 +159,7 @@ public class DAOTablaReserva {
 		sql += "NOMBRE_ZONA = '" + reserva.getZona().getNombre() + "', ";
 		sql += "NOMBRE_MENU = " + reserva.getMenu() == null? "NULL, " : "'" + reserva.getMenu().getNombre() + "'";
 		sql += "NOMBRE_RESTAURANTE = " + reserva.getMenu() == null? "NULL, " : "'" + reserva.getMenu().getRestaurante().getNombre() + "'";
-		sql += " WHERE FECHA = TO_DATE(" + reserva.getFecha() + ") AND ID_RESERVADOR = " + reserva.getReservador().getId();
+		sql += " WHERE FECHA = TO_DATE(" + dateFormat(reserva.getFecha()) + ") AND ID_RESERVADOR = " + reserva.getReservador().getId();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -177,7 +177,7 @@ public class DAOTablaReserva {
 	public void deleteReserva(Reserva reserva) throws SQLException, Exception {
 
 		String sql = "DELETE FROM RESERVA";
-		sql += " WHERE FECHA = TO_DATE(" + reserva.getFecha() + ") AND ID_RESERVADOR = " + reserva.getReservador().getId();
+		sql += " WHERE FECHA = TO_DATE(" + dateFormat(reserva.getFecha()) + ") AND ID_RESERVADOR = " + reserva.getReservador().getId();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
