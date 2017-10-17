@@ -187,6 +187,7 @@ public class DAOTablaZona {
 		borrarCondiciones(zona);
 		modificarPreferencias(zona.getNombre());
 		borrarReservas(zona.getNombre());
+		borrarMesas(zona.getNombre());
 		
 		String sql = "DELETE FROM ZONA";
 		sql += " WHERE NOMBRE LIKE '" + zona.getNombre()+"'";
@@ -195,6 +196,20 @@ public class DAOTablaZona {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
+	/**
+	 * Borra las mesas pertenecientes a la zona.<br>
+	 * @param nombre Nombre de la zona.
+	 * @throws SQLException Si hay errores en la BD.
+	 * @throws Exception SI hay otro error.
+	 */
+	private void borrarMesas(String nombre) throws SQLException, Exception {
+		DAOTablaMesa mesa = new DAOTablaMesa();
+		mesa.setConn(conn);
+		mesa.borrarMesasPorZona(nombre);
+		mesa.cerrarRecursos();
+		
+	}
+
 	/**
 	 * Retorna los productos dados por zona y categoría en una fecha inicial y final.<br>
 	 * @param fechaInicial Fecha inicial.<br>
@@ -319,11 +334,27 @@ public class DAOTablaZona {
 			String nombre=rs.getString("NOMBRE");
 			List<CondicionTecnica> condiciones= accederACondicionesZona(nombre);
 			List<RestauranteMinimum> restaurantes= accederARestauranteMinimums(nombre);
-			zonas.add(new Zona(capacidad, ingresoEspecial, abiertaActualmente, capacidadOcupada, nombre, condiciones, restaurantes));
+			List<MesaMinimum> mesas= accederAMesasMinimums(nombre);
+			zonas.add(new Zona(capacidad, ingresoEspecial, abiertaActualmente, capacidadOcupada, nombre, condiciones, restaurantes,mesas));
 		}
 		return zonas;
 	}
-	
+	/**
+	 * Retorna una lista de mesas a nivel minimum.<br>
+	 * @param nombre Nombre de la zona.<br>
+	 * @return Mesas de la zona.<br>
+	 * @throws SQLException Si hay alguna excepción en la base de datos.<br>
+	 * @throws Exception SI hay algún otro error.
+	 */
+	private List<MesaMinimum> accederAMesasMinimums(String nombre) throws SQLException, Exception {
+		DAOTablaMesa dao = new DAOTablaMesa();
+		List<MesaMinimum> list= new ArrayList<>();
+		dao.setConn(conn);
+		list=dao.buscarMesasPorZona(nombre);
+		dao.cerrarRecursos();
+		return list;
+	}
+
 	/**
 	 * Crea un arreglo de zonas con el set de resultados pasado por parámetro.<br>
 	 * @param rs Set de resultados.<br>

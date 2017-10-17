@@ -24,6 +24,7 @@ import vos.InfoProdRest;
 import vos.Menu;
 import vos.Restaurante;
 import vos.Usuario;
+import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
 
 /**
@@ -108,17 +109,29 @@ public class RestauranteServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addRestaurante(Restaurante restaurante, @HeaderParam("usuarioId") Long id) {
+		
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
+		UsuarioMinimum usuario=null;
 		try {
 			u=tm.usuarioBuscarUsuarioPorId(id);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
+		try
+		{
+			usuario=restaurante.getRepresentante();
+			if(usuario==null) throw new Exception("El restaurante debe tener un dueño");
+		}
+		catch(Exception e)
+		{
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
 		try {
 			if(!(u.getRol().equals(Rol.OPERADOR))) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			tm.restauranteAddRestaurante(restaurante);
+			Usuario usu=new Usuario(usuario.getNombre(),null,usuario.getCorreo(),usuario.getRol(),null,null,null);
+			tm.restauranteAddRestaurante(restaurante,usu);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

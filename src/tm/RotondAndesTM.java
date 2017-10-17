@@ -40,6 +40,7 @@ import vos.Producto;
 import vos.Producto.TiposDePlato;
 import vos.Reserva;
 import vos.Restaurante;
+import vos.RestauranteMinimum;
 import vos.Usuario;
 import vos.UsuarioMinimum.Rol;
 import vos.Zona;
@@ -3255,20 +3256,6 @@ public class RotondAndesTM {
 	public void usuarioAddUsuario(Usuario usuario) throws Exception
 	{
 		DAOTablaUsuario dao = new DAOTablaUsuario();
-		Preferencia p = usuario.getPreferencia();
-		if(p!=null)
-		{
-			for(Categoria c: p.getCategorias())
-			{
-				if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
-					throw new Exception("La categoría del usuario no existe "+c.getNombre());
-			}
-			for(ZonaMinimum z: p.getZonaMinimums())
-			{
-				if(zonaBuscarZonasPorName(z.getNombre())==null)
-					throw new Exception("La zona del usuario no existe "+z.getNombre());
-			}
-		}
 		try
 		{
 			this.conn=darConexion();
@@ -3945,9 +3932,10 @@ public class RotondAndesTM {
 	 * @param restaurante Restaurante.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void restauranteAddRestaurante(Restaurante restaurante) throws Exception
+	public void restauranteAddRestaurante(Restaurante restaurante, Usuario usuario) throws Exception
 	{
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		DAOTablaUsuario daoU= new DAOTablaUsuario();
 		for(Categoria c: restaurante.getCategorias())
 		{
 			if(categoriaBuscarCategoriasPorName(c.getNombre())==null) 
@@ -3956,23 +3944,39 @@ public class RotondAndesTM {
 		try
 		{
 			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			
+			usuario.setRestaurante(new RestauranteMinimum(restaurante.getNombre(), restaurante.getPagWeb()));
+			daoU.setConn(conn);
+			usuario.setRol(Rol.LOCAL);
+			daoU.addUsuario(usuario);
+			
 			dao.setConn(conn);
+			UsuarioMinimum rep=(UsuarioMinimum) usuario;
+			restaurante.setRepresentante(rep);
 			dao.addRestaurante(restaurante);
+			conn.commit();
+			
+			
+			
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} 
 		catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		}
 		finally
 		{
 			try
 			{
+				daoU.cerrarRecursos();
 				dao.cerrarRecursos();
 				if(this.conn!=null) this.conn.close();
 			}
@@ -4031,20 +4035,28 @@ public class RotondAndesTM {
 	public void restauranteDeleteRestaurante(String restaurante) throws Exception
 	{
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		DAOTablaUsuario daoU= new DAOTablaUsuario();
 		try
 		{
 			this.conn=darConexion();
+			conn.setAutoCommit(false);
 			dao.setConn(conn);
-			dao.deleteRestaurante(dao.darRestaurantePorNombre(restaurante));
+			Restaurante r=dao.darRestaurantePorNombre(restaurante);			
+			daoU.setConn(conn);
+			daoU.deleteUsuario(new Usuario(r.getRepresentante().getNombre(), r.getRepresentante().getId(), r.getRepresentante().getCorreo(), r.getRepresentante().getRol(), null, null, null));
+			
+			conn.commit();
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		} 
 		catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		}
 		finally
@@ -4052,6 +4064,7 @@ public class RotondAndesTM {
 			try
 			{
 				dao.cerrarRecursos();
+				daoU.cerrarRecursos();
 				if(this.conn!=null) this.conn.close();
 			}
 			catch(SQLException exception)

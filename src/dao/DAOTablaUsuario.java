@@ -235,7 +235,21 @@ public class DAOTablaUsuario {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void addUsuario(Usuario usuario) throws SQLException, Exception {
-
+		if(usuario.getRol()==null) throw new Exception("El usuario debe tener un rol");
+		switch(usuario.getRol())
+		{
+		case CLIENTE: 
+			if(usuario.getRestaurante()!=null) throw new Exception("No se le puede asignar un cliente como dueño de un restaurante");
+			break;
+		case LOCAL: 
+			if(usuario.getRestaurante()==null)
+			throw new Exception("No se puede asignar un usuario de tipo local sin su restaurante");
+			if(usuario.getPreferencia()!=null) throw new Exception("EL usuario no puede tener preferencias al ser dueño de un local");
+			break;
+		default:
+			if(usuario.getPreferencia()!=null || usuario.getRestaurante()!=null) throw new Exception("Un"+usuario.getRol()+" no puede tener asociado un restaurante o una preferencia");
+			break;
+		}
 		String valor="select IDUSUARIO.NEXTVAL as VALOR from dual";
 		PreparedStatement prepStmt = conn.prepareStatement(valor);
 		recursos.add(prepStmt);
