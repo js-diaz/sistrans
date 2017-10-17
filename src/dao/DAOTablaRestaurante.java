@@ -441,6 +441,7 @@ public class DAOTablaRestaurante {
 	 */
 	public void borrarRestaurantePorIdRepresentante(Long id) throws SQLException,Exception {
 		RestauranteMinimum restaurante=darRestauranteDeUsuario(id);
+		if(restaurante==null) return;
 		borrarCategorias(restaurante);
 		borrarMenus(restaurante);
 		borrarIngredientesRelacionados(restaurante);
