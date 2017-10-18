@@ -2,6 +2,7 @@
 package rest;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -18,11 +19,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import rfc.ContenedoraRestauranteInfoFinanciera;
 import tm.RotondAndesTM;
 import vos.InfoIngRest;
 import vos.InfoProdRest;
 import vos.Menu;
 import vos.Restaurante;
+import vos.RestauranteMinimum;
 import vos.Usuario;
 import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
@@ -137,21 +140,21 @@ public class RestauranteServices {
 		}
 		return Response.status(200).entity(restaurante).build();
 	}
-	
     /**
      * Metodo que expone servicio REST usando PUT que modifica un restaurante.
      * @param nombre nombre del restaurante a modificar.
      * @param restaurante informaci�n del restaurante modificado.
      * @param id_ Id del usuario que realiza la solicitud.
+     * @param surtido Si se desea surtir o no la orden.
      * @return Json con el restaurante que elimino o Json con el error que se produjo
      */
 	@PUT
 	@Path( "{nombre}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateRestaurante(Restaurante restaurante, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre) {
+	public Response updateRestaurante(Restaurante restaurante, @HeaderParam("usuarioId") Long id, @PathParam("nombre") String nombre,@HeaderParam("surtido") Boolean surtido) {
 		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
-
+		if(surtido==null) surtido=false;
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -160,10 +163,19 @@ public class RestauranteServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && id == tm.restauranteBuscarRestaurantePorNombre(nombre).getRepresentante().getId())))
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && id.equals( tm.restauranteBuscarRestaurantePorNombre(nombre).getRepresentante().getId()))))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			restaurante.setNombre(nombre);
-			tm.restauranteUpdateRestaurante(restaurante);
+			if(!surtido)
+			{
+				restaurante.setNombre(nombre);
+				tm.restauranteUpdateRestaurante(restaurante);
+			}
+			else{
+				if(!(u.getRol().equals(Rol.LOCAL)))
+					throw new Exception("Solo un restaurante puede surtir sus productos.");
+				tm.restauranteSurtirProductos(nombre);
+			}
+			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -201,7 +213,37 @@ public class RestauranteServices {
 		return Response.status(200).entity("Objeto borrado correctamente").build();
 	}
 	
-	
+	/**
+	 * REQUERIMIENTO DE CONSULTA 8
+     * Metodo que expone servicio REST usando GET que busca las cifras de productos del restaurante usando el id que entra como parametro
+     * @param nombre - Nombre del restaurante a buscar que entra en la URL como parametro 
+     * @return Json con el/los restaurantes encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@GET
+	@Path( "informacion-financiera/" )
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response getInformacionFinancieraRestaurante( @HeaderParam( "usuarioId" ) Long usuarioId, @HeaderParam("esProducto") Boolean esProd )
+	{
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
+		if(esProd==null) esProd=true;
+		List<ContenedoraRestauranteInfoFinanciera> list=new ArrayList<>();
+		try
+		{
+			Usuario u = tm.usuarioBuscarUsuarioPorId(usuarioId);
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.LOCAL))) throw new Exception("No se permite acceder a este servicio si no es operador o local.");
+			RestauranteMinimum v = u.getRestaurante();
+			String nombre=null;
+			if(v!=null) nombre=v.getNombre();
+			list=tm.restauranteDarInformacionFinanciera(nombre, esProd);
+			if(list==null) return Response.status( 404 ).entity( list ).build( );			
+			return Response.status( 200 ).entity( list ).build( );			
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
+	}
 	//Subrecurso menu
 	/** Metodo que expone servicio REST usando GET que da todos los menus de la base de datos para un restaurante particular.
 	 * @param nombreRestaurante nombre del restaurante.

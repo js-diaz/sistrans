@@ -233,5 +233,16 @@ public class DAOTablaInfoProdRest {
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.executeQuery();
 	}
+	/**
+	 * Surte cada uno de los productos de un restaurante dado.<br>
+	 * @param nombre Nombre del restaurante.<br>
+	 * @throws SQLException Excepción de BD.<br>
+	 * @throws Exception Excepción cualquiera.
+	 */
+	public void surtirInfoProdRest(String nombre) throws SQLException, Exception {
+		String sql="UPDATE INFO_PROD_REST SET DISPONIBILIDAD=CANTIDAD_MAXIMA WHERE NOMBRE_RESTAURANTE LIKE '"+nombre+"'";
+		PreparedStatement ps= conn.prepareStatement(sql);
+		ps.executeQuery();
+	}
 
 }

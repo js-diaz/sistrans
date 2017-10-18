@@ -9,7 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
+import rfc.ContenedoraClienteProductos;
+import rfc.ContenedoraMenuCliente;
+import rfc.ContenedoraMesaMenuCliente;
+import rfc.ProductoInformativo;
 import rfc.UsuarioCompleto;
 import vos.*;
 import vos.UsuarioMinimum;
@@ -497,6 +502,109 @@ public class DAOTablaUsuario {
 			frecuencias[dia-1]=conteo;
 		}
 		return frecuencias;
+	}
+	
+	/**
+	 * Retorna la información de los productos consumidos por un cliente, distinguiendo entre si pidió o no en una mesa, y si pidió de algún menú o no.<br>
+	 * @param id Id del cliente.<br>
+	 * @return contenedora de información requerida.<br>
+	 * @throws SQLException SI hay errores de la BD.<br>
+	 * @throws Exception SI hay algún otro error.
+	 */
+	public List<ContenedoraClienteProductos> informacionProductos(Long id) throws SQLException,Exception
+	{
+		
+		String cliente="";
+		if(id!=null) cliente="AND IDUSUARIO="+id;
+		String sql="SELECT CLIENTE,TIENEMESA,NOMBRE_MENU,ID,NOMBRE,DESCRIPCION,TRADUCCION,TIPO,NOMBRE_RESTAURANTE,CANTIDAD FROM ("
+				+ "SELECT USUARIO.ID AS CLIENTE,(CASE WHEN  CUENTA.MESA IS NULL THEN 0"
+				+ "    ELSE 1 END) AS TIENEMESA ,NULL AS NOMBRE_MENU, PRODUCTO.ID, PRODUCTO.NOMBRE, PRODUCTO.DESCRIPCION, PRODUCTO.TRADUCCION, PRODUCTO.TIPO,PEDIDO_PROD.NOMBRE_RESTAURANTE,SUM(PEDIDO_PROD.CANTIDAD) AS CANTIDAD "
+				+ "FROM CUENTA,PEDIDO_PROD, PRODUCTO,USUARIO "
+				+ "WHERE IDUSUARIO=USUARIO.ID AND CUENTA.NUMEROCUENTA LIKE PEDIDO_PROD.NUMERO_CUENTA AND PEDIDO_PROD.ID_PRODUCTO=PRODUCTO.ID "+cliente
+				+ "GROUP BY USUARIO.ID, (CASE WHEN CUENTA.MESA IS NULL THEN 0 ELSE 1 END), NULL, PRODUCTO.ID, PRODUCTO.NOMBRE, PRODUCTO.DESCRIPCION, "
+				+ "PRODUCTO.TRADUCCION, PRODUCTO.TIPO, PEDIDO_PROD.NOMBRE_RESTAURANTE) "
+				+ "UNION("
+				+ "SELECT USUARIO.ID AS CLIENTE,(CASE WHEN CUENTA.MESA IS NULL THEN 0"
+				+ "    ELSE 1 END) AS TIENEMESA ,MENU.NOMBRE AS NOMBREMENU, PRODUCTO.ID, PRODUCTO.NOMBRE, PRODUCTO.DESCRIPCION, PRODUCTO.TRADUCCION, PRODUCTO.TIPO, MENU.NOMBRE_RESTAURANTE, SUM(PEDIDO_MENU.CANTIDAD) AS CANTIDAD "
+				+ "FROM CUENTA,PEDIDO_MENU, PRODUCTO, MENU, PERTENECE_A_MENU,USUARIO "
+				+ "WHERE IDUSUARIO=USUARIO.ID AND CUENTA.NUMEROCUENTA LIKE PEDIDO_MENU.NUMERO_CUENTA AND PEDIDO_MENU.NOMBRE_MENU LIKE MENU.NOMBRE "
+				+ "AND PEDIDO_MENU.NOMBRE_RESTAURANTE LIKE MENU.NOMBRE_RESTAURANTE AND PERTENECE_A_MENU.NOMBRE_RESTAURANTE LIKE MENU.NOMBRE_RESTAURANTE "
+				+ "AND PERTENECE_A_MENU.NOMBRE_MENU LIKE MENU.NOMBRE AND PRODUCTO.ID = PERTENECE_A_MENU.ID_PLATO "+cliente
+				+ " GROUP BY USUARIO.ID, (CASE WHEN CUENTA.MESA IS NULL THEN 0 ELSE 1 END), MENU.NOMBRE, PRODUCTO.ID, PRODUCTO.NOMBRE, "
+				+ "PRODUCTO.DESCRIPCION, PRODUCTO.TRADUCCION, PRODUCTO.TIPO, MENU.NOMBRE_RESTAURANTE) "
+				+ "ORDER BY CLIENTE,TIENEMESA,NOMBRE_MENU";
+		PreparedStatement prep=conn.prepareStatement(sql);
+		ResultSet rs=prep.executeQuery();
+		Long idActual=null;
+		String menuActual="";
+		Long nuevaId=null;
+		String menu="";
+		boolean tieneActual=false;
+		boolean tiene=false;
+		ContenedoraClienteProductos cp=null;
+		ContenedoraMesaMenuCliente mmc=null;
+		ContenedoraMenuCliente mc=null;
+		ProductoInformativo p=null;
+		List<ContenedoraClienteProductos> list=new ArrayList<>();
+		if(rs.next())
+		{
+			idActual=rs.getLong("CLIENTE");
+			tieneActual=rs.getBoolean("TIENEMESA");
+			menuActual=rs.getString("NOMBRE_RESTAURANTE")+";;;"+rs.getString("NOMBRE_MENU");
+			cp=new ContenedoraClienteProductos(idActual, new ArrayList<ContenedoraMesaMenuCliente>());
+			mmc=new ContenedoraMesaMenuCliente(rs.getBoolean("TIENEMESA"), new ArrayList<ContenedoraMenuCliente>());
+			mc=new ContenedoraMenuCliente(rs.getString("NOMBRE_RESTAURANTE"), rs.getString("NOMBRE_MENU"), new ArrayList<ProductoInformativo>());
+			p=new ProductoInformativo(rs.getString("NOMBRE"), rs.getString("TIPO"), rs.getString("DESCRIPCION"), rs.getString("TRADUCCION"), rs.getLong("ID"));
+			mc.getProducto().add(p);
+		}
+		while(rs.next())
+		{
+			nuevaId=rs.getLong("CLIENTE");
+			if(nuevaId==144) 
+				{
+				System.out.println("HOLA");
+				}
+			tiene=rs.getBoolean("TIENEMESA");
+			menu=rs.getString("NOMBRE_RESTAURANTE")+";;;"+rs.getString("NOMBRE_MENU");
+			if(!nuevaId.equals(idActual))
+			{
+				mmc.getInformacionMenu().add(mc);
+				cp.getInformacionMesaMenu().add(mmc);
+				list.add(cp);
+				idActual=nuevaId;
+				tieneActual=tiene;
+				menuActual=menu;
+				String[] datos=menuActual.split(";;;");
+				cp=new ContenedoraClienteProductos(idActual, new ArrayList<ContenedoraMesaMenuCliente>());
+				mmc=new ContenedoraMesaMenuCliente(tieneActual, new ArrayList<ContenedoraMenuCliente>());
+				mc=new ContenedoraMenuCliente(datos[0],datos[1], new ArrayList<ProductoInformativo>());
+
+			}
+			else if(tieneActual!=tiene)
+			{
+				mmc.getInformacionMenu().add(mc);
+				cp.getInformacionMesaMenu().add(mmc);
+				tieneActual=tiene;
+				menuActual=menu;
+				String[] datos=menuActual.split(";;;");
+				mmc=new ContenedoraMesaMenuCliente(tieneActual, new ArrayList<ContenedoraMenuCliente>());
+				mc=new ContenedoraMenuCliente(datos[0],datos[1], new ArrayList<ProductoInformativo>());
+			}
+			else if(!(menu.equals(menuActual)))
+			{
+				mmc.getInformacionMenu().add(mc);
+				menuActual=menu;
+				String[] datos=menuActual.split(";;;");
+				mc=new ContenedoraMenuCliente(datos[0],datos[1], new ArrayList<ProductoInformativo>());
+			}
+			p=new ProductoInformativo(rs.getString("NOMBRE"), rs.getString("TIPO"), rs.getString("DESCRIPCION"), rs.getString("TRADUCCION"), rs.getLong("ID"));
+			mc.getProducto().add(p);
+		}
+		mmc.getInformacionMenu().add(mc);
+		cp.getInformacionMesaMenu().add(mmc);
+		list.add(cp);
+		return list;
+
 	}
 
 }

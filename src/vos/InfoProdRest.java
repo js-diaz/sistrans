@@ -39,16 +39,9 @@ public class InfoProdRest {
 	 */
 	@JsonProperty(value="fechaFin") 
 	private Date fechaFin;
-
-	/**
-<<<<<<< HEAD
-	 * Cantidad máxima del producto que puede tener el restaurante.
-	 */
-	@JsonProperty(value="cantidadMaxima")
-	private Integer cantidadMaxima;
 	
 	/**
-	 * Producto que se está describiendo.
+	 * Producto que se estï¿½ describiendo.
 =======
 	 * Producto que se estï¿½ describiendo.
 >>>>>>> 9e38f927db53a3dc18ba1f5b52b61a0e5825d595
@@ -71,12 +64,7 @@ public class InfoProdRest {
 			@JsonProperty(value="disponibilidad") Integer disponibilidad, 
 			@JsonProperty(value="fechaInicio") Date fechaInicio, @JsonProperty(value="fechaFin") Date fechaFin,
 			@JsonProperty(value="producto") Producto producto,
-<<<<<<< HEAD
-			@JsonProperty(value="restaurante") RestauranteMinimum restaurante, 
-			@JsonProperty(value="cantidadMaxima") Integer cantidadMaxima) {
-=======
 			@JsonProperty(value="restaurante") RestauranteMinimum restaurante,@JsonProperty(value="cantidadMaxima")int cantidadMaxima) {
->>>>>>> 9e38f927db53a3dc18ba1f5b52b61a0e5825d595
 		this.costo = costo;
 		this.precio = precio;
 		this.disponibilidad = disponibilidad;
@@ -84,11 +72,7 @@ public class InfoProdRest {
 		this.fechaFin = fechaFin;
 		this.producto = producto;
 		this.restaurante = restaurante;
-<<<<<<< HEAD
 		this.cantidadMaxima = cantidadMaxima;
-=======
-		this.cantidadMaxima=cantidadMaxima;
->>>>>>> 9e38f927db53a3dc18ba1f5b52b61a0e5825d595
 	}
 
 	public Double getCosto() {
@@ -166,25 +150,12 @@ public class InfoProdRest {
 	public void setRestaurante(RestauranteMinimum restaurante) {
 		this.restaurante = restaurante;
 	}
-
-<<<<<<< HEAD
-	public Integer getCantidadMaxima() {
-		return cantidadMaxima;
-	}
-
-	public void setCantidadMaxima(Integer cantidadMaxima) {
-		this.cantidadMaxima = cantidadMaxima;
-	}
-=======
 	public int getCantidadMaxima() {
 		return cantidadMaxima;
 	}
 
 	public void setCantidadMaxima(int cantidadMaxima) {
 		this.cantidadMaxima = cantidadMaxima;
-	}
-	
->>>>>>> 9e38f927db53a3dc18ba1f5b52b61a0e5825d595
-	
+	}	
 	
 }

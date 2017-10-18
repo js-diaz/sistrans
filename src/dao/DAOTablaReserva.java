@@ -83,7 +83,7 @@ public class DAOTablaReserva {
 	 */
 	public ArrayList<Reserva> darReservasPorUsuario(Long usuario) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM RESERVA WHERE ID_USUARIO = " + usuario;
+		String sql = "SELECT * FROM RESERVA WHERE ID_RESERVADOR = " + usuario;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -185,7 +185,7 @@ public class DAOTablaReserva {
 	}
 	
 	/**
-	 * Crea un arreglo de reservas con el set de resultados pasado por parámetro.<br>
+	 * Crea un arreglo de reservas con el set de resultados pasado por parï¿½metro.<br>
 	 * @param rs Set de resultados.<br>
 	 * @return reservas Lista de reservas convertidas.<br>
 	 * @throws SQLException AlgÃºn problema de la base de datos.<br>
@@ -217,7 +217,7 @@ public class DAOTablaReserva {
 	/**
 	 * Elimina todos los reservas pertenecientes al reservador dado.
 	 * @param reservador Usuario al cual eliminarle los reservas.
-	 * @throws SQLException Algún problema de la base de datos.<br>
+	 * @throws SQLException Algï¿½n problema de la base de datos.<br>
 	 */
 	public void eliminarReservasPorUsuario(UsuarioMinimum reservador) throws SQLException {
 		String sql = "DELETE FROM RESERVA WHERE ID_RESERVADOR = " + reservador.getId();
@@ -228,7 +228,7 @@ public class DAOTablaReserva {
 	/**
 	 * Elimina todas las reservas en la zona dada.
 	 * @param nombreZona nombre de la zona al cual eliminarle las reservas.
-	 * @throws SQLException Algún problema de la base de datos.<br>
+	 * @throws SQLException Algï¿½n problema de la base de datos.<br>
 	 */
 	public void borrarPorZona(String nombreZona) throws SQLException {
 		String sql = "DELETE FROM RESERVA WHERE NOMBRE_ZONA LIKE '" + nombreZona + "'";

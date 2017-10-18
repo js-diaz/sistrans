@@ -219,18 +219,16 @@ public class DAOTablaPedidoMenu {
 			}
 		PedidoMenu pedido=buscarPedidoMenusPorNombreYCuenta(pedidoMenu.getMenu().getNombre(), pedidoMenu.getMenu().getRestaurante().getNombre(), pedidoMenu.getCuenta().getNumeroCuenta());
 		if(!mod)modificarPrecioCuenta(true, pedido.getMenu(),pedido.getCantidad(),pedido.getCuenta());
-		if(!mod)
-		{
+		
 			String sql = "UPDATE PEDIDO_MENU SET ";
 			sql += "CANTIDAD = " + pedidoMenu.getCantidad();
-			sql += ", ENTREGADO = " + (pedidoMenu.getEntregado()? "'1' " : "'0' ");
+			sql += ", ENTREGADO = " + (pedidoMenu.getEntregado()? "'1'" : "'0'");
 			sql += " WHERE NOMBRE_MENU LIKE '" + pedidoMenu.getMenu().getNombre() + "'"; 
 			sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoMenu.getMenu().getRestaurante().getNombre() + "'";
 			sql += " AND NUMERO_CUENTA LIKE '" + pedidoMenu.getCuenta().getNumeroCuenta() + "'";
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
 			prepStmt.executeQuery();
-		}
 		
 		if(!mod)modificarPrecioCuenta(false, pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
 	}

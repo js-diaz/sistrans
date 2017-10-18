@@ -132,13 +132,22 @@ public class DAOTablaMesa {
 	 */
 	public void addMesa(Mesa mesa) throws SQLException, Exception {
 
+		String valor="select IDMESA.NEXTVAL as VALOR from dual";
+		PreparedStatement prepStmt = conn.prepareStatement(valor);
+		recursos.add(prepStmt);
+		ResultSet rs=prepStmt.executeQuery();
+		if(rs.next())
+		{
+			mesa.setId(rs.getLong("VALOR"));
+		}
+		
 		String sql = "INSERT INTO MESA VALUES (";
 		sql += ""+mesa.getId() + ",";
 		sql += mesa.getCapacidad() + ",";
-		sql+=mesa.getCapacidadOcupada()+",'";
-		sql+=mesa.getZona().getNombre()+"'";
+		sql+=0+",'";
+		sql+=mesa.getZona().getNombre()+"')";
 		
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
@@ -155,16 +164,27 @@ public class DAOTablaMesa {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void updateMesa(Mesa mesa) throws SQLException, Exception {
-
+		Mesa mesaOriginal=buscarMesasPorId(mesa.getId());
+		DAOTablaZona dao = new DAOTablaZona();
+		dao.setConn(conn);
+		Zona z=dao.buscarZonasPorName(mesa.getZona().getNombre());
+		z.setCapacidadOcupada(z.getCapacidadOcupada()-mesaOriginal.getCapacidadOcupada());
+		dao.updateZona(z);
+		
 		String sql = "UPDATE MESA SET ";
 		sql+="CAPACIDAD="+mesa.getCapacidad()+",";
 		sql+="CAPACIDADOCUPADA="+mesa.getCapacidadOcupada();
 		sql += " WHERE ID =" + mesa.getId()+"";
 
-
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		z=dao.buscarZonasPorName(mesa.getZona().getNombre());
+		z.setCapacidadOcupada(z.getCapacidadOcupada()+mesa.getCapacidadOcupada());
+		dao.updateZona(z);
+		dao.cerrarRecursos();
+		
 	}
 
 	/**
@@ -178,7 +198,12 @@ public class DAOTablaMesa {
 	public void deleteMesa(Mesa mesa) throws SQLException, Exception {
 
 		borrarCuentasMesa(mesa);
-		
+		DAOTablaZona dao = new DAOTablaZona();
+		dao.setConn(conn);
+		Zona z=dao.buscarZonasPorName(mesa.getZona().getNombre());
+		z.setCapacidadOcupada(z.getCapacidadOcupada()-mesa.getCapacidadOcupada());
+		dao.updateZona(z);
+		dao.cerrarRecursos();
 		String sql = "DELETE FROM MESA";
 		sql += " WHERE ID =" + mesa.getId()+"";
 
@@ -199,18 +224,8 @@ public class DAOTablaMesa {
 		for(CuentaMinimum c:mesa.getCuentas())
 		{
 			cuenta=dao.buscarCuentasPorNumeroDeCuenta(c.getNumeroCuenta());
-			dao.deleteCuenta(cuenta);
+			dao.deleteCuenta(cuenta,false);
 		}
-	}
-
-	/**
-	 * Formatea el valor de la cuenta al dado en la base de datos.<br>
-	 * @param fecha Fecha de la cuenta.<br>
-	 * @return Valor a insertar en la base de datos
-	 */
-	private String dateFormat(Date fecha) {
-		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		return "TO_DATE('"+x.format(fecha)+"','yyyy-MM-dd hh24:mi:ss')";
 	}
 	
 	/**

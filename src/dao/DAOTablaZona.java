@@ -139,7 +139,7 @@ public class DAOTablaZona {
 		sql += zona.getCapacidad() + ",";
 		sql +="'"+ convertirBooleano(zona.isIngresoEspecial())+"',";
 		sql+="'"+convertirBooleano(zona.isAbiertaActualmente())+"',";
-		sql+=zona.getCapacidadOcupada()+")";
+		sql+=0+")";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -160,6 +160,16 @@ public class DAOTablaZona {
 	 */
 	public void updateZona(Zona zona) throws SQLException, Exception {
 
+		DAOTablaMesa dao = new DAOTablaMesa();
+		dao.setConn(conn);
+		List<MesaMinimum> mesas=dao.buscarMesasPorZona(zona.getNombre());
+		int capacidadTotal=0;
+		for(MesaMinimum m:mesas)
+			capacidadTotal+=m.getCapacidadOcupada();
+		dao.cerrarRecursos();
+		
+		if(capacidadTotal>zona.getCapacidadOcupada()) throw new Exception("Hay mesas que están ocupadas actualmente con un valor mayor a la capacidad que quiere asignar.");
+		
 		String sql = "UPDATE ZONA SET ";
 		sql += "CAPACIDAD=" + zona.getCapacidad() + ",";
 		sql+="INGRESOESPECIAL='"+convertirBooleano(zona.isIngresoEspecial())+"',";

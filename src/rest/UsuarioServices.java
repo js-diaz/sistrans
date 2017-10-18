@@ -27,6 +27,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import tm.RotondAndesTM;
 import vos.Reserva;
 import vos.Usuario;
+import rfc.ContenedoraClienteProductos;
 import rfc.UsuarioCompleto;
 import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
@@ -143,6 +144,36 @@ public class UsuarioServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(usuario).build();
+	}
+	/**
+	 * REQUERIMIENTO DE CONSULTA 7
+     * Metodo que expone servicio REST usando GET que busca los productos consumidos por el usuario con el id que entra como parametro
+     * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios/nombre/nombre?nombre=<<nombre>>" para la busqueda"
+     * @param name - Nombre del usuario a buscar que entra en la URL como parametro 
+     * @return Json con el/los usuarios encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@GET
+	@Path("productos")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getProductosUsuario( @HeaderParam("usuarioId") Long usuarioId) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<ContenedoraClienteProductos> list=null;
+		try {
+			
+			UsuarioMinimum u = tm.usuarioBuscarUsuarioMinimumPorId( usuarioId );
+			if(usuarioId!=null)
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.CLIENTE)))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
+			if(usuarioId!=null && u.getRol().equals(Rol.OPERADOR)) usuarioId=null;
+			list=tm.usuarioProuctosConsumidos(usuarioId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(list).build();
 	}
 	/**
      * Metodo que expone servicio REST usando GET que busca el usuario con el nombre que entra como parametro

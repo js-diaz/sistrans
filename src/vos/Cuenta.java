@@ -28,6 +28,11 @@ public class Cuenta extends CuentaMinimum {
 	 */
 	@JsonProperty (value="cliente")
 	private UsuarioMinimum cliente;
+	/**
+	 * Mesa a la que pertenece la cuenta.<br>
+	 */
+	@JsonProperty(value="mesa")
+	private MesaMinimum mesa;
 	
 	
 	/**
@@ -40,11 +45,11 @@ public class Cuenta extends CuentaMinimum {
 	 * @param cliente Cliente al que se le factura.
 	 */
 	public Cuenta(@JsonProperty(value="pedidoProd")List<PedidoProd> pedidoProd, @JsonProperty(value="pedidoMenu")List<PedidoMenu> pedidoMenu, @JsonProperty(value="valor")double valor, @JsonProperty(value="numeroCuenta")String numeroCuenta,
-			@JsonProperty(value="fecha")Date fecha, @JsonProperty(value="cliente")UsuarioMinimum cliente) {
+			@JsonProperty(value="fecha")Date fecha, @JsonProperty(value="cliente")UsuarioMinimum cliente, @JsonProperty(value="mesa") MesaMinimum mesa) {
 		super(valor,numeroCuenta,fecha);
 		this.pedidoProd = pedidoProd;
 		this.pedidoMenu = pedidoMenu;
-		
+		this.mesa=mesa;
 		this.cliente = cliente;
 	}
 	/**
@@ -91,6 +96,22 @@ public class Cuenta extends CuentaMinimum {
 	public void setCliente (UsuarioMinimum c)
 	{
 		cliente=c;
+	}
+	/**
+	 * Obtiene la mesa de la cuenta.<br>
+	 * @return mesa
+	 */
+	public MesaMinimum getMesa()
+	{
+		return mesa;
+	}
+	/**
+	 * Modifica la mesa al valor dado por parámetro.<br>
+	 * @param mesa
+	 */
+	public void setMesa(MesaMinimum mesa)
+	{
+		this.mesa=mesa;
 	}
 	
 }

@@ -1,0 +1,266 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RequerimientosConsultaIteracion3",
+		"_postman_id": "9ddfcd0f-7059-4adb-5b17-d38737207877",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RC8",
+			"description": "",
+			"item": [
+				{
+					"name": "Información por menús de restaurante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"key": "esProducto",
+								"value": "false"
+							}
+						],
+						"body": {},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Información por producto de restaurantes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0"
+							},
+							{
+								"key": "esProducto",
+								"value": "false",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Información de productos del restaurante Topicstorm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "35"
+							},
+							{
+								"key": "esProducto",
+								"value": "false",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Información de menús del restaurante Topicstorm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "35"
+							},
+							{
+								"key": "esProducto",
+								"value": "false"
+							}
+						],
+						"body": {},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Información de un no restaurante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "101"
+							},
+							{
+								"key": "esProducto",
+								"value": "false"
+							}
+						],
+						"body": {},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RC7",
+			"description": "",
+			"item": [
+				{
+					"name": "Información de un solo usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "113"
+							}
+						],
+						"body": {},
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/productos",
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Información de todos los usuarios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {},
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/productos",
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Información de un no cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "5"
+							},
+							{
+								"key": "esProd",
+								"value": "false",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/productos",
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
