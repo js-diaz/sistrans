@@ -30,11 +30,7 @@ public class Producto {
 	 */
 	@JsonProperty(value="nombre")
 	private String nombre;
-	/**
-	 * Precio del producto
-	 */
-	@JsonProperty(value="precio")
-	private double precio;
+	
 	/**
 	 * Tipo del producto
 	 */
@@ -55,11 +51,7 @@ public class Producto {
 	 */
 	@JsonProperty(value="tiempo")
 	private double tiempo;
-	/**
-	 * Costo de producción del plato
-	 */
-	@JsonProperty(value="costoProduccion")
-	private double costoProduccion;
+	
 	/**
 	 * Identificación del producto
 	 */
@@ -87,18 +79,16 @@ public class Producto {
 	 * @param costoProduccion<br>
 	 * @param id <br>
 	 */
-	public Producto(@JsonProperty(value="personalizable")boolean personalizable, @JsonProperty(value="nombre")String nombre,@JsonProperty(value="precio") double prcio, @JsonProperty(value="tipo")TiposDePlato tipo, @JsonProperty(value="descripcion")String descripcion,
-			@JsonProperty(value="traduccion")String traduccion, @JsonProperty(value="tiempo")double tiempo, @JsonProperty(value="costoProduccion")double costoProduccion, @JsonProperty(value="id")Long id
+	public Producto(@JsonProperty(value="personalizable")boolean personalizable, @JsonProperty(value="nombre")String nombre, @JsonProperty(value="tipo")TiposDePlato tipo, @JsonProperty(value="descripcion")String descripcion,
+			@JsonProperty(value="traduccion")String traduccion, @JsonProperty(value="tiempo")double tiempo, @JsonProperty(value="id")Long id
 			,@JsonProperty(value="ingredientes") List<Ingrediente> ingredientes, @JsonProperty(value="categorias")List<Categoria> categorias) {
 		super();
 		this.personalizable = personalizable;
 		this.nombre = nombre;
-		this.precio = prcio;
 		this.tipo = tipo;
 		this.descripcion = descripcion;
 		this.traduccion = traduccion;
 		this.tiempo = tiempo;
-		this.costoProduccion = costoProduccion;
 		this.id = id;
 		this.ingredientes=ingredientes;
 		this.categorias=categorias;
@@ -131,20 +121,7 @@ public class Producto {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	/**
-	 * Obtiene el precio del producto.<br>
-	 * @return precio
-	 */
-	public double getPrecio() {
-		return precio;
-	}
-	/**
-	 * Modifica el precio del producto al dado por parámetro.<br>
-	 * @param precio
-	 */
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
+	
 	/**
 	 * Obtiene el tipo de plato.<br>
 	 * @return tipo
@@ -200,20 +177,6 @@ public class Producto {
 	 */
 	public void setTiempo(double tiempo) {
 		this.tiempo = tiempo;
-	}
-	/**
-	 * Obtiene el costo de producción.<br>
-	 * @return costoProduccion
-	 */
-	public double getCostoProduccion() {
-		return costoProduccion;
-	}
-	/**
-	 * Modifica el costo de producción al dado por parámetro.<br>
-	 * @param costoProduccion
-	 */
-	public void setCostoProduccion(double costoProduccion) {
-		this.costoProduccion = costoProduccion;
 	}
 	/**
 	 * Obtiene el id.<br>

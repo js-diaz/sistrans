@@ -35,6 +35,7 @@ import vos.InfoProdRest;
 import vos.Ingrediente;
 import vos.Menu;
 import vos.MenuMinimum;
+import vos.Mesa;
 import vos.PedidoMenu;
 import vos.PedidoProd;
 import vos.Preferencia;
@@ -1174,6 +1175,218 @@ public class RotondAndesTM {
 			}
 		}
 	}
+	//Mesa
+	/**
+	 * Retorna una lista de mesas en el sistema.<br>
+	 * @return Lista de mesas.<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public List<Mesa> mesaDarMesas() throws Exception
+	{
+		ArrayList<Mesa> list = null;
+		DAOTablaMesa dao = new DAOTablaMesa();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.darMesas();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
+	 * Busca un mesa por id.<br>
+	 * @param id Id del mesa.<br>
+	 * @return Mesa.<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public Mesa mesaBuscarMesaPorId(Long id) throws Exception
+	{
+		Mesa i = null;
+		DAOTablaMesa dao = new DAOTablaMesa();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			i=dao.buscarMesasPorId(id);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return i;
+	}
+	/**
+	 * Agrega una mesa al sistema.<br>
+	 * @param mesa Mesa.<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void mesaAddMesa(Mesa mesa) throws Exception
+	{
+		DAOTablaMesa dao = new DAOTablaMesa();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			dao.addMesa(mesa);
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Actualiza un mesa<br>
+	 * @param mesa Mesa.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void mesaUpdateMesa(Mesa mesa) throws Exception
+	{
+		DAOTablaMesa dao = new DAOTablaMesa();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			dao.updateMesa(mesa);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	/**
+	 * Borra un mesa <br>
+	 * @param mesa Mesa.<bR>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void mesaDeleteMesa(Mesa mesa) throws Exception
+	{
+		DAOTablaMesa dao = new DAOTablaMesa();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			dao.deleteMesa(mesa);
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
 	//Ingrediente
 	/**
 	 * Retorna una lista de ingredientes en el sistema.<br>
@@ -1379,11 +1592,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	//PedidoMenu
 	
-	//PedidoProducto
-	
-	//PerteneceAProducto
 	
 	//Preferencia
 	/**

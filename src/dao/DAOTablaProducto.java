@@ -92,15 +92,13 @@ public class DAOTablaProducto {
 			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
 			TiposDePlato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
-			Double prcio =rs.getDouble("PRECIO");
-			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
 			String descripcion  = rs.getString("DESCRIPCION");
 			String traduccion = rs.getString("TRADUCCION");
 			Double tiempo = rs.getDouble("TIEMPO");
-			List<Ingrediente> ingredientes = buscarIngredientes(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
-			List<Categoria> categorias = buscarCategorias(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
+			List<Ingrediente> ingredientes = buscarIngredientes(new Producto(false, "", null, "", "", 0, id, null, null));
+			List<Categoria> categorias = buscarCategorias(new Producto(false, "",  null, "", "", 0,  id, null, null));
 			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
-			productos.add(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id, ingredientes, categorias));
+			productos.add(new Producto(personalizable, nombre, tipo, descripcion, traduccion, tiempo, id, ingredientes, categorias));
 		}
 		tipos.cerrarRecursos();
 		return productos;
@@ -128,15 +126,13 @@ public class DAOTablaProducto {
 			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
 			TiposDePlato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
-			Double prcio =rs.getDouble("PRECIO");
-			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
 			String descripcion  = rs.getString("DESCRIPCION");
 			String traduccion = rs.getString("TRADUCCION");
 			Double tiempo = rs.getDouble("TIEMPO");
-			List<Ingrediente> ingredientes = buscarIngredientes(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
-			List<Categoria> categorias = buscarCategorias(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
+			List<Ingrediente> ingredientes = buscarIngredientes(new Producto(false, "",  null, "", "", 0,  id, null, null));
+			List<Categoria> categorias = buscarCategorias(new Producto(false, "",  null, "", "", 0,  id, null, null));
 			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
-			productos.add(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id, ingredientes, categorias));
+			productos.add(new Producto(personalizable, nombre, tipo, descripcion, traduccion, tiempo, id, ingredientes, categorias));
 		
 		}
 		tipos.cerrarRecursos();
@@ -166,15 +162,13 @@ public class DAOTablaProducto {
 			String nombre = rs.getString("NOMBRE");
 			Long id2 = rs.getLong("ID");
 			TiposDePlato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
-			Double prcio =rs.getDouble("PRECIO");
-			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
 			String descripcion  = rs.getString("DESCRIPCION");
 			String traduccion = rs.getString("TRADUCCION");
 			Double tiempo = rs.getDouble("TIEMPO");
-			List<Ingrediente> ingredientes=buscarIngredientes(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
-			List<Categoria> categorias=buscarCategorias(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
+			List<Ingrediente> ingredientes=buscarIngredientes(new Producto(false, "", null, "", "", 0,  id, null, null));
+			List<Categoria> categorias=buscarCategorias(new Producto(false, "",  null, "", "", 0,  id, null, null));
 			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
-			producto=(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id2, ingredientes, categorias));
+			producto=(new Producto(personalizable, nombre, tipo, descripcion, traduccion, tiempo, id2, ingredientes, categorias));
 		
 		}
 		tipos.cerrarRecursos();
@@ -204,11 +198,9 @@ public class DAOTablaProducto {
 		sql += producto.getId()+ ",'";
 		sql += producto.getNombre() + "','";
 		sql += convertirTipo(producto.getTipo())+"','";
-		sql+= convertirBooleano(producto.isPersonalizable())+"',";
-		sql+=producto.getPrecio()+",'";
+		sql+= convertirBooleano(producto.isPersonalizable())+"','";
 		sql+=producto.getTraduccion()+"','";
 		sql+=producto.getDescripcion()+"',";
-		sql+=producto.getCostoProduccion()+",";
 		sql+=producto.getTiempo()+ ")";
 
 		 prepStmt = conn.prepareStatement(sql);
@@ -235,10 +227,8 @@ public class DAOTablaProducto {
 		sql += "NOMBRE='" + producto.getNombre() + "',";
 		sql += "TIPO='" + convertirTipo(producto.getTipo()) + "',";
 		sql += "PERSONALIZABLE='" + convertirBooleano(producto.isPersonalizable()) + "',";
-		sql += "PRECIO=" + producto.getPrecio() + ",";
 		sql += "TRADUCCION='" + producto.getTraduccion() + "',";
 		sql += "DESCRIPCION='" + producto.getDescripcion() + "',";
-		sql += "COSTOPRODUCCION=" + producto.getCostoProduccion() + ",";
 		sql += "TIEMPO=" + producto.getTiempo();
 
 		sql += " WHERE ID = " + producto.getId();
@@ -304,15 +294,13 @@ public class DAOTablaProducto {
 			String nombre = rs.getString("NOMBRE");
 			Long id = rs.getLong("ID");
 			TiposDePlato tipo= tipos.buscarTipos_De_PlatosPorName(rs.getString("TIPO"));
-			Double prcio =rs.getDouble("PRECIO");
-			Double costoProduccion=rs.getDouble("COSTOPRODUCCION");
 			String descripcion  = rs.getString("DESCRIPCION");
 			String traduccion = rs.getString("TRADUCCION");
 			Double tiempo = rs.getDouble("TIEMPO");
-			List<Ingrediente> ingredientes=buscarIngredientes(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
-			List<Categoria> categorias=buscarCategorias(new Producto(false, "", 0, null, "", "", 0, 0, id, null, null));
+			List<Ingrediente> ingredientes=buscarIngredientes(new Producto(false, "",  null, "", "", 0,  id, null, null));
+			List<Categoria> categorias=buscarCategorias(new Producto(false, "",  null, "", "", 0,  id, null, null));
 			boolean personalizable=convertirABooleano(rs.getString("PERSONALIZABLE"));
-			productos.add(new Producto(personalizable, nombre, prcio, tipo, descripcion, traduccion, tiempo, costoProduccion, id, ingredientes, categorias));
+			productos.add(new Producto(personalizable, nombre, tipo, descripcion, traduccion, tiempo, id, ingredientes, categorias));
 		
 		}
 		tipos.cerrarRecursos();
