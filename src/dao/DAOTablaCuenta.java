@@ -202,11 +202,13 @@ public class DAOTablaCuenta {
 
 		Long id=null;
 		if(c.getMesa()!=null) id=c.getMesa().getId();
+		Long idCliente=null;
+		if(c.getCliente()!=null) idCliente=c.getCliente().getId();
 		String sql = "INSERT INTO CUENTA VALUES (";
 		sql += "0,'";
 		sql += c.getNumeroCuenta() + "',";
 		sql += dateFormat(c.getFecha())+",";
-		sql+= c.getCliente().getId()+",";
+		sql+= idCliente+",";
 		sql+=id +")";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

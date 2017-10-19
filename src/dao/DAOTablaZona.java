@@ -158,15 +158,11 @@ public class DAOTablaZona {
 	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la zona.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void updateZona(Zona zona) throws SQLException, Exception {
-
-		DAOTablaMesa dao = new DAOTablaMesa();
-		dao.setConn(conn);
-		List<MesaMinimum> mesas=dao.buscarMesasPorZona(zona.getNombre());
+	public void updateZona(Zona zona) throws SQLException, Exception {		
+		List<MesaMinimum> mesas=zona.getMesas();
 		int capacidadTotal=0;
 		for(MesaMinimum m:mesas)
 			capacidadTotal+=m.getCapacidadOcupada();
-		dao.cerrarRecursos();
 		
 		if(capacidadTotal>zona.getCapacidadOcupada()) throw new Exception("Hay mesas que están ocupadas actualmente con un valor mayor a la capacidad que quiere asignar.");
 		

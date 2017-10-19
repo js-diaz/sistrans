@@ -202,6 +202,7 @@ public class DAOTablaMesa {
 		dao.setConn(conn);
 		Zona z=dao.buscarZonasPorName(mesa.getZona().getNombre());
 		z.setCapacidadOcupada(z.getCapacidadOcupada()-mesa.getCapacidadOcupada());
+		z.getMesas().remove(mesa);
 		dao.updateZona(z);
 		dao.cerrarRecursos();
 		String sql = "DELETE FROM MESA";
@@ -221,6 +222,7 @@ public class DAOTablaMesa {
 		DAOTablaCuenta dao= new DAOTablaCuenta();
 		dao.setConn(conn);
 		Cuenta cuenta;
+		if(mesa.getCuentas()!=null)
 		for(CuentaMinimum c:mesa.getCuentas())
 		{
 			cuenta=dao.buscarCuentasPorNumeroDeCuenta(c.getNumeroCuenta());

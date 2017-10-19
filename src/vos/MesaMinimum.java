@@ -80,6 +80,19 @@ public class MesaMinimum {
 	public void setCapacidadOcupada(int capacidadOcupada) {
 		this.capacidadOcupada = capacidadOcupada;
 	}
+	/**
+	 * Override del equals.<br>
+	 * @param m Objeto a comparar.<br>
+	 * @return Si el objeto es o no igual al que se está comparando.
+	 */
+	@Override
+	public boolean equals(Object m)
+	{
+		if(!(m instanceof Mesa)) return false;
+		Mesa mesa=(Mesa)m;
+		if(this.getId().equals(mesa.getId())) return true;
+		else return false;
+	}
 	
 	
 	
