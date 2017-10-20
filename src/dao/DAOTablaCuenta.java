@@ -88,7 +88,8 @@ public class DAOTablaCuenta {
 			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
 			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
 			MesaMinimum m=buscarMesaDeCuenta(rs.getLong("MESA"));
-			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u,m));
+			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u,m, pagado));
 		}
 		return cuentas;
 	}
@@ -133,7 +134,8 @@ public class DAOTablaCuenta {
 			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
 			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
 			MesaMinimum m=buscarMesaDeCuenta(rs.getLong("MESA"));
-			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u,m));
+			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			c=(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u,m, pagado));
 		}
 
 		return c;
@@ -160,7 +162,8 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			c=(new CuentaMinimum(valor,numCuenta,fecha));
+			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			c=(new CuentaMinimum(valor,numeroCuenta,fecha, pagado));
 		}
 		return c;
 	}
@@ -184,7 +187,8 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha));
+			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha, pagado));
 		}
 		return cuentas;
 	}
@@ -209,7 +213,8 @@ public class DAOTablaCuenta {
 		sql += c.getNumeroCuenta() + "',";
 		sql += dateFormat(c.getFecha())+",";
 		sql+= idCliente+",";
-		sql+=id +")";
+		sql+=id+"," ;
+		sql+="'0')";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -480,6 +485,8 @@ public class DAOTablaCuenta {
 		}
 		daoPedido.cerrarRecursos();
 		productos.cerrarRecursos();
+		
+		
 		//Analiza los productos y menús restantes
 		for(PedidoProd p:restantesProductos)
 		{
@@ -491,6 +498,11 @@ public class DAOTablaCuenta {
 			{
 				c.setValor(c.getValor()-(p.getCantidad()+p.getPlato().getCosto()));
 			}
+		}
+		if(restantesProductos.isEmpty() && menusPendientes.isEmpty())
+		{
+			c.setPagada(true);
+			updateCuenta(c);
 		}
 		return new PendientesOrden(restantesProductos, menusPendientes);
 	}
@@ -528,7 +540,60 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha));
+			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha,pagado));
+		}
+		return cuentas;
+	}
+	
+	/**
+	 * Retorna un listado de cuentas de esa mesa.<br>
+	 * @param id Id de la mesa.<br>
+	 * @return Listado de cuentas.<br>
+	 * @throws SQLException Excepción de la BD.<br>
+	 * @throws Exception Error cualquiera.
+	 */
+	public List<CuentaMinimum> darCuentasNoPagadasDeMesa(Long id) throws SQLException, Exception {
+		ArrayList<CuentaMinimum> cuentas = new ArrayList<>();
+
+		String sql = "SELECT * FROM CUENTA WHERE MESA =" + id + " AND PAGADA='0'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+			String numCuenta = rs.getString("NUMEROCUENTA");
+			Double valor = rs.getDouble("VALOR");
+			Date fecha = rs.getDate("FECHA");
+			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha,pagado));
+		}
+		return cuentas;
+	}
+	
+	/**
+	 * Retorna un listado de cuentas pagadas de esa mesa.<br>
+	 * @param id Id de la mesa.<br>
+	 * @return Listado de cuentas.<br>
+	 * @throws SQLException Excepción de la BD.<br>
+	 * @throws Exception Error cualquiera.
+	 */
+	public List<CuentaMinimum> darCuentasPagadasDeMesa(Long id) throws SQLException, Exception {
+		ArrayList<CuentaMinimum> cuentas = new ArrayList<>();
+
+		String sql = "SELECT * FROM CUENTA WHERE MESA =" + id + " AND PAGADA='1'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+			String numCuenta = rs.getString("NUMEROCUENTA");
+			Double valor = rs.getDouble("VALOR");
+			Date fecha = rs.getDate("FECHA");
+			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha,pagado));
 		}
 		return cuentas;
 	}

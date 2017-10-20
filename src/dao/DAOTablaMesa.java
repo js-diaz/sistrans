@@ -245,23 +245,27 @@ public class DAOTablaMesa {
 			int capacidadOcupada=rs.getInt("CAPACIDADOCUPADA");
 			Long id=rs.getLong("ID");
 			ZonaMinimum zona=buscarZona(rs.getString("ZONA"));
-			List<CuentaMinimum> cuentas= accederACuentas(id);
-			mesas.add(new Mesa(id,capacidad, capacidadOcupada, zona,cuentas));
+			List<CuentaMinimum> cuentas= accederACuentas(id,false);
+			List<CuentaMinimum> pagadas=accederACuentas(id,true);
+			mesas.add(new Mesa(id,capacidad, capacidadOcupada, zona,cuentas,pagadas));
 		}
 		return mesas;
 	}
 	/**
 	 * Retorna las cuentas de una mesa específica.<br>
 	 * @param id Id de la mesa.<br>
+	 * @param eta Si está o no en la lista.<br>
 	 * @return cuentas.<br>
 	 * @throws SQLException Error en la BD.<br>
 	 * @throws Exception Excepción
 	 */
-	private List<CuentaMinimum> accederACuentas(Long id) throws SQLException, Exception {
+	private List<CuentaMinimum> accederACuentas(Long id, boolean esta) throws SQLException, Exception {
 		List<CuentaMinimum> list= new ArrayList<>();
 		DAOTablaCuenta c= new DAOTablaCuenta();
 		c.setConn(conn);
-		list=c.darCuentasDeMesa(id);
+		if(esta)
+			list=c.darCuentasPagadasDeMesa(id);
+		else list=c.darCuentasNoPagadasDeMesa(id);
 		c.cerrarRecursos();
 		return list;
 	}

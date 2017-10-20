@@ -45,8 +45,8 @@ public class Cuenta extends CuentaMinimum {
 	 * @param cliente Cliente al que se le factura.
 	 */
 	public Cuenta(@JsonProperty(value="pedidoProd")List<PedidoProd> pedidoProd, @JsonProperty(value="pedidoMenu")List<PedidoMenu> pedidoMenu, @JsonProperty(value="valor")double valor, @JsonProperty(value="numeroCuenta")String numeroCuenta,
-			@JsonProperty(value="fecha")Date fecha, @JsonProperty(value="cliente")UsuarioMinimum cliente, @JsonProperty(value="mesa") MesaMinimum mesa) {
-		super(valor,numeroCuenta,fecha);
+			@JsonProperty(value="fecha")Date fecha, @JsonProperty(value="cliente")UsuarioMinimum cliente, @JsonProperty(value="mesa") MesaMinimum mesa, @JsonProperty(value="pagada") Boolean pagada) {
+		super(valor,numeroCuenta,fecha,pagada);
 		this.pedidoProd = pedidoProd;
 		this.pedidoMenu = pedidoMenu;
 		this.mesa=mesa;

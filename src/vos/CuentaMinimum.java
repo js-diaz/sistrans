@@ -13,6 +13,11 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class CuentaMinimum {
 	/**
+	 * Está pagada o no
+	 */
+	@JsonProperty(value="pagada")
+	protected Boolean pagada;
+	/**
 	 * Valor total de la cuenta
 	 */
 	@JsonProperty(value="valor")
@@ -39,7 +44,7 @@ public class CuentaMinimum {
 	 * @param cliente Cliente al que se le factura.
 	 */
 	public CuentaMinimum( @JsonProperty(value="valor")double valor, @JsonProperty(value="numeroCuenta")String numeroCuenta,
-			@JsonProperty(value="fecha")Date fecha) {
+			@JsonProperty(value="fecha")Date fecha, @JsonProperty(value="pagada") Boolean pagada) {
 		super();
 		this.valor = valor;
 		this.numeroCuenta = numeroCuenta;
@@ -88,6 +93,22 @@ public class CuentaMinimum {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	/**
+	 * Obtiene si está pagada o no<br>
+	 * @return pagada
+	 */
+	public Boolean getPagada() {
+		return pagada;
+	}
+	/**
+	 * Modifica si está pagada o no con el valor dado por parámetro.<br>
+	 * @param pagada
+	 */
+	public void setPagada(Boolean pagada) {
+		this.pagada = pagada;
+	}
+	
+	
 	
 	
 	

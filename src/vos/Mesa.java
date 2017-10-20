@@ -22,6 +22,11 @@ public class Mesa extends MesaMinimum {
 	@JsonProperty(value="cuentas")
 	private List<CuentaMinimum> cuentas;
 	/**
+	 * Listado de cuentas pagadas.
+	 */
+	@JsonProperty(value="pagadas")
+	private List<CuentaMinimum> pagadas;
+	/**
 	 * Construye una nueva mesa con los parámetros dados.<br>
 	 * @param id Id de la mesa.<br>
 	 * @param capacidad Capacidad de la mesa.<br>
@@ -31,10 +36,11 @@ public class Mesa extends MesaMinimum {
 	 */
 	public Mesa(@JsonProperty(value="id")Long id, @JsonProperty(value="capacidad")int capacidad, 
 			@JsonProperty(value="capacidadOcupada")int capacidadOcupada, @JsonProperty(value="zona")ZonaMinimum zona, 
-			@JsonProperty(value="cuentas")List<CuentaMinimum> cuentas) {
+			@JsonProperty(value="cuentas")List<CuentaMinimum> cuentas,@JsonProperty(value="pagadas") List<CuentaMinimum> pagadas) {
 		super(id, capacidad, capacidadOcupada);
 		this.zona = zona;
 		this.cuentas = cuentas;
+		this.pagadas=pagadas;
 	}
 	/**
 	 * Obtiene la zona en representación minimum.<br>
@@ -64,6 +70,22 @@ public class Mesa extends MesaMinimum {
 	public void setCuentas(List<CuentaMinimum> cuentas) {
 		this.cuentas = cuentas;
 	}
+	/**
+	 * Obtiene cuentas pagadas.<br>
+	 * @return pagadas
+	 */
+	public List<CuentaMinimum> getPagadas() {
+		return pagadas;
+	}
+	/**
+	 * Modificar las cuentas pagadas al valor dado por parámetro.<br>
+	 * @param pagadas
+	 */
+	public void setPagadas(List<CuentaMinimum> pagadas) {
+		this.pagadas = pagadas;
+	}
+	
+	
 	
 	
 	
