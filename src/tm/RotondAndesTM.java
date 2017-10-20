@@ -4511,6 +4511,7 @@ public class RotondAndesTM {
 			if(categoriaBuscarCategoriasPorName(c.getNombre())==null) 
 				throw new Exception("Hay categorias del menu que no existen en el sistema con "+c.getNombre());
 		}
+		menuVerficarTiposDeProducto(menu);
 		try
 		{
 			this.conn=darConexion();
@@ -4542,6 +4543,13 @@ public class RotondAndesTM {
 			}
 		}
 	}
+
+	private void menuVerficarTiposDeProducto(Menu menu) throws Exception {
+		for(InfoProdRest plato : menu.getPlatos())
+			for(InfoProdRest otroPlato : menu.getPlatos())
+				if(plato != otroPlato && plato.getProducto().getTipo() == otroPlato.getProducto().getTipo())
+					throw new Exception("El menu tiene dos platos del mismo tipo");
+	}
 	/**
 	 * Actualiza una menu.<br>
 	 * @param menu Menu.<br>
@@ -4549,6 +4557,7 @@ public class RotondAndesTM {
 	 */
 	public void menuUpdateMenu(Menu menu) throws Exception
 	{
+		menuVerficarTiposDeProducto(menu);
 		DAOTablaMenu dao = new DAOTablaMenu();
 		try
 		{
@@ -6404,6 +6413,51 @@ public class RotondAndesTM {
 	}
 	
 	/**
+	 * Agrega una pedidoProd con equivalencias.<br>
+	 * @param pedidoProd PedidoProd.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void pedidoProdAddPedidoProdConEquivalencias(PedidoProd pedidoProd) throws Exception
+	{
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			dao.addPedidoProd(pedidoProd);
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+	
+	/**
 	 * Actualiza una pedidoProd.<br>
 	 * @param pedidoProd PedidoProd.<br>
 	 * @throws Exception Si existe algún tipo de error
@@ -6619,6 +6673,51 @@ public class RotondAndesTM {
 			}
 		}
 	}
+	
+	/**
+	 * Agrega una pedidoMenu con equivalencias.<br>
+	 * @param pedidoMenu PedidoMenu.<br>
+	 * @throws Exception Si existe algún tipo de error
+	 */
+	public void pedidoMenuAddPedidoMenuConEquivalencias(PedidoMenu pedidoMenu) throws Exception
+	{
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			dao.addPedidoMenu(pedidoMenu);
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
 	
 	/**
 	 * Actualiza una pedidoMenu.<br>

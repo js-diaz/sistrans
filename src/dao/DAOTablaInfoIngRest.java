@@ -131,6 +131,7 @@ public class DAOTablaInfoIngRest {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		insertarSustitutos(infoIngRest);
 	}
 	
 	
@@ -154,6 +155,17 @@ public class DAOTablaInfoIngRest {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		insertarSustitutos(infoIngRest);
+	}
+
+	private void insertarSustitutos(InfoIngRest infoIngRest) throws SQLException, Exception {
+		DAOTablaSustitutosIngrediente daoSust = new DAOTablaSustitutosIngrediente();
+		daoSust.setConn(conn);
+		daoSust.eliminarPorIngrediente(infoIngRest.getIngrediente().getId(), infoIngRest.getRestaurante().getNombre());
+		for(Ingrediente ing : infoIngRest.getSustitutos())
+			daoSust.asociarSustitutoYIngrediente(ing.getId(), infoIngRest.getIngrediente().getId(), infoIngRest.getRestaurante().getNombre());
+		daoSust.cerrarRecursos();
 	}
 
 	/**
@@ -186,18 +198,22 @@ public class DAOTablaInfoIngRest {
 	{
 		DAOTablaRestaurante daoRest = new DAOTablaRestaurante();
 		DAOTablaIngrediente daoProd = new DAOTablaIngrediente();
+		DAOTablaSustitutosIngrediente daoSust = new DAOTablaSustitutosIngrediente();
 		daoRest.setConn(conn);
 		daoProd.setConn(conn);
+		daoSust.setConn(conn);
 		List<InfoIngRest> infoIngRests = new ArrayList<>();
 		while (rs.next()) {
 			double precioAdicion = rs.getDouble("PRECIO_ADICION");
 			double precioSustituto = rs.getDouble("PRECIO_SUSTITUTO");
 			Ingrediente ingrediente = daoProd.buscarIngredientePorId(rs.getLong("ID_INGREDIENTE"));
 			RestauranteMinimum restaurante = daoRest.darRestauranteMinimumPorNombre(rs.getString("NOMBRE_RESTAURANTE"));
-			infoIngRests.add(new InfoIngRest(precioSustituto, precioAdicion, ingrediente, restaurante));
+			List<Ingrediente> sustitutos = daoSust.consultarPorIngrediente(ingrediente.getId(), restaurante.getNombre());
+			infoIngRests.add(new InfoIngRest(precioSustituto, precioAdicion, ingrediente, restaurante, sustitutos));
 		}
 		daoRest.cerrarRecursos();
 		daoProd.cerrarRecursos();
+		daoSust.cerrarRecursos();
 		return infoIngRests;
 	}
 	

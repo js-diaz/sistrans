@@ -366,6 +366,38 @@ public class CuentaServices {
 	}
 	
     /**
+     * Metodo que expone servicio REST usando POST que agrega el pedidoProd que recibe en Json. Este puede aceptar equivalencias de ingredientes.
+     * @param numeroCuenta nombre del cuenta al cual agregarlo.
+     * @param pedidoProd - pedidoProd a agregar.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el pedidoProd que agrego o Json con el error que se produjo
+     */
+	@POST
+	@Path( "{numeroCuenta: \\d+}/productos-con-equivalencias" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addPedidoProdConEquivalencias(@PathParam("numeroCuenta") String numeroCuenta, PedidoProd pedidoProd, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			pedidoProd.setCuenta(c);
+			tm.pedidoProdAddPedidoProdConEquivalencias(pedidoProd);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidoProd).build();
+	}
+
+	
+    /**
      * Metodo que expone servicio REST usando PUT que modifica un cuenta.
      * @param idProducto nombre del pedidoProd a modificar.
      * @param numeroCuenta nombre del cuenta que lo contiene.
@@ -518,6 +550,38 @@ public class CuentaServices {
 		}
 		return Response.status(200).entity(pedidoMenu).build();
 	}
+	
+    /**
+     * Metodo que expone servicio REST usando POST que agrega el pedidoMenu que recibe en Json. Este puede tener equivalencias de productos.
+     * @param numeroCuenta nombre del cuenta al cual agregarlo.
+     * @param pedidoMenu - pedidoMenu a agregar.
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el pedidoMenu que agrego o Json con el error que se produjo
+     */
+	@POST
+	@Path( "{numeroCuenta: \\d+}/menus-con-equivalencias" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addPedidoMenuConEquivalencias(@PathParam("numeroCuenta") String numeroCuenta, PedidoMenu pedidoMenu, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
+			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			pedidoMenu.setCuenta(c);
+			tm.pedidoMenuAddPedidoMenuConEquivalencias(pedidoMenu);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidoMenu).build();
+	}
+
 	
     /**
      * Metodo que expone servicio REST usando PUT que modifica un cuenta.
