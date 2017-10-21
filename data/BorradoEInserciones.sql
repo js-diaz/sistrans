@@ -2264,4 +2264,4 @@ insert into RESERVA (fecha, id_reservador, num_personas, nombre_zona, nombre_men
 
 commit;
 
-SELECT * FROM CUENTA WHERE NUMEROCUENTA LIKE '2' and IDUSUARIO IS NULL;
+SELECT * FROM MENU WHERE NOMBRE LIKE 'It';
