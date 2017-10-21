@@ -23,7 +23,9 @@ import rfc.PendientesOrden;
 import tm.RotondAndesTM;
 import vos.Cuenta;
 import vos.PedidoMenu;
+import vos.PedidoMenuConSustituciones;
 import vos.PedidoProd;
+import vos.PedidoProdConSustituciones;
 import vos.Usuario;
 import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
@@ -376,7 +378,7 @@ public class CuentaServices {
 	@Path( "{numeroCuenta: \\d+}/productos-con-equivalencias" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addPedidoProdConEquivalencias(@PathParam("numeroCuenta") String numeroCuenta, PedidoProd pedidoProd, @HeaderParam("usuarioId") Long id) {
+	public Response addPedidoProdConEquivalencias(@PathParam("numeroCuenta") String numeroCuenta, PedidoProdConSustituciones pedidoProd, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -562,7 +564,7 @@ public class CuentaServices {
 	@Path( "{numeroCuenta: \\d+}/menus-con-equivalencias" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addPedidoMenuConEquivalencias(@PathParam("numeroCuenta") String numeroCuenta, PedidoMenu pedidoMenu, @HeaderParam("usuarioId") Long id) {
+	public Response addPedidoMenuConEquivalencias(@PathParam("numeroCuenta") String numeroCuenta, PedidoMenuConSustituciones pedidoMenu, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {

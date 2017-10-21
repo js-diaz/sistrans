@@ -1,5 +1,7 @@
 package vos;
 
+import java.util.List;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
@@ -31,7 +33,7 @@ public class PedidoMenu {
 	 */
 	@JsonProperty(value="entregado")
 	private Boolean entregado;
-
+	
 	public PedidoMenu(@JsonProperty(value="cantidad") Integer cantidad, @JsonProperty(value="cuenta") CuentaMinimum cuenta,
 			@JsonProperty(value="menu") MenuMinimum menu, @JsonProperty(value="entregado") Boolean entregado) {
 		this.cantidad = cantidad;

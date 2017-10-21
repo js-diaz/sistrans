@@ -37,13 +37,18 @@ import vos.Menu;
 import vos.MenuMinimum;
 import vos.Mesa;
 import vos.PedidoMenu;
+import vos.PedidoMenuConSustituciones;
 import vos.PedidoProd;
+import vos.PedidoProdConSustituciones;
 import vos.Preferencia;
 import vos.Producto;
 import vos.Producto.TiposDePlato;
 import vos.Reserva;
 import vos.Restaurante;
 import vos.RestauranteMinimum;
+import vos.SustitucionIngrediente;
+import vos.SustitucionIngredienteEnProducto;
+import vos.SustitucionProducto;
 import vos.Usuario;
 import vos.UsuarioMinimum.Rol;
 import vos.Zona;
@@ -3469,7 +3474,6 @@ public class RotondAndesTM {
 	public List<ContenedoraClienteProductos> usuarioProuctosConsumidos(Long id) throws Exception
 	{
 		List<ContenedoraClienteProductos> list=null;
-		UsuarioCompleto u =null;
 		DAOTablaUsuario dao = new DAOTablaUsuario();
 		try
 		{
@@ -6417,15 +6421,20 @@ public class RotondAndesTM {
 	 * @param pedidoProd PedidoProd.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void pedidoProdAddPedidoProdConEquivalencias(PedidoProd pedidoProd) throws Exception
+	public void pedidoProdAddPedidoProdConEquivalencias(PedidoProdConSustituciones pedidoProd) throws Exception
 	{
 		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		DAOTablaSustitucionIngrediente daoIngrediente = new DAOTablaSustitucionIngrediente();
 		try
 		{
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
 			dao.addPedidoProd(pedidoProd);
+			daoIngrediente.setConn(conn);
+			// TODO revisar que las sustituciones sean validas
+			for(SustitucionIngrediente s : pedidoProd.getSustituciones())
+				daoIngrediente.addSustitucionIngrediente(s, pedidoProd);
 			conn.commit();
 		}
 		catch (SQLException e) {
@@ -6445,6 +6454,7 @@ public class RotondAndesTM {
 			try
 			{
 				dao.cerrarRecursos();
+				daoIngrediente.cerrarRecursos();
 				if(this.conn!=null) this.conn.close();
 			}
 			catch(SQLException exception)
@@ -6679,15 +6689,25 @@ public class RotondAndesTM {
 	 * @param pedidoMenu PedidoMenu.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void pedidoMenuAddPedidoMenuConEquivalencias(PedidoMenu pedidoMenu) throws Exception
+	public void pedidoMenuAddPedidoMenuConEquivalencias(PedidoMenuConSustituciones pedidoMenu) throws Exception
 	{
 		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		DAOTablaSustitucionProducto daoProducto = new DAOTablaSustitucionProducto();
+		DAOTablaSustitucionIngredienteEnProducto daoIngrediente = new DAOTablaSustitucionIngredienteEnProducto();
 		try
 		{
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
 			dao.addPedidoMenu(pedidoMenu);
+			
+			daoProducto.setConn(conn);
+			for(SustitucionProducto s : pedidoMenu.getSustitucionesProducto())
+				daoProducto.addSustitucionProducto(s, pedidoMenu);
+			daoIngrediente.setConn(conn);
+			for(SustitucionIngredienteEnProducto s : pedidoMenu.getSustitucionesIngrediente())
+				daoIngrediente.addSustitucionIngredienteEnProducto(s, pedidoMenu);
+
 			conn.commit();
 		}
 		catch (SQLException e) {
@@ -6707,6 +6727,8 @@ public class RotondAndesTM {
 			try
 			{
 				dao.cerrarRecursos();
+				daoProducto.cerrarRecursos();
+				daoIngrediente.cerrarRecursos();
 				if(this.conn!=null) this.conn.close();
 			}
 			catch(SQLException exception)
