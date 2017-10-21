@@ -49,6 +49,7 @@ public class CuentaMinimum {
 		this.valor = valor;
 		this.numeroCuenta = numeroCuenta;
 		this.fecha = fecha;
+		this.pagada=pagada;
 	}
 	
 	/**

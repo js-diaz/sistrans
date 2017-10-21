@@ -14,6 +14,7 @@ import java.util.List;
 import rfc.ContenedoraPedidosProd;
 import rfc.PendientesOrden;
 import vos.*;
+import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
@@ -88,7 +89,7 @@ public class DAOTablaCuenta {
 			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
 			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
 			MesaMinimum m=buscarMesaDeCuenta(rs.getLong("MESA"));
-			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
 			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u,m, pagado));
 		}
 		return cuentas;
@@ -132,10 +133,16 @@ public class DAOTablaCuenta {
 			Date fecha = rs.getDate("FECHA");
 			List<PedidoMenu> menus= darPedidosMenus(numeroCuenta);
 			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
-			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
-			MesaMinimum m=buscarMesaDeCuenta(rs.getLong("MESA"));
-			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
-			c=(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u,m, pagado));
+			Long id=rs.getLong("IDUSUARIO");
+			UsuarioMinimum u=null;
+			if(!rs.wasNull())
+			u = buscarUsuarioPorId(id);
+			id=rs.getLong("MESA");
+			MesaMinimum m=null;
+			if(!rs.wasNull())
+			 m=buscarMesaDeCuenta(rs.getLong("MESA"));
+			boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u,m, pagado));
 		}
 
 		return c;
@@ -162,7 +169,7 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
 			c=(new CuentaMinimum(valor,numeroCuenta,fecha, pagado));
 		}
 		return c;
@@ -187,7 +194,7 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
 			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha, pagado));
 		}
 		return cuentas;
@@ -208,6 +215,13 @@ public class DAOTablaCuenta {
 		if(c.getMesa()!=null) id=c.getMesa().getId();
 		Long idCliente=null;
 		if(c.getCliente()!=null) idCliente=c.getCliente().getId();
+		DAOTablaUsuario daoU= new DAOTablaUsuario();
+		if(idCliente!=null)
+		{
+			daoU.setConn(conn);
+			UsuarioMinimum u=daoU.buscarUsuarioMinimumPorId(idCliente);
+			if(u==null || !u.getRol().equals(Rol.CLIENTE)) throw new Exception("Este cliente no puede tener una cuenta");
+		}
 		String sql = "INSERT INTO CUENTA VALUES (";
 		sql += "0,'";
 		sql += c.getNumeroCuenta() + "',";
@@ -540,7 +554,7 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
 			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha,pagado));
 		}
 		return cuentas;
@@ -566,7 +580,7 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
 			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha,pagado));
 		}
 		return cuentas;
@@ -592,10 +606,44 @@ public class DAOTablaCuenta {
 			String numCuenta = rs.getString("NUMEROCUENTA");
 			Double valor = rs.getDouble("VALOR");
 			Date fecha = rs.getDate("FECHA");
-			Boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
+			boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
 			cuentas.add(new CuentaMinimum(valor,numCuenta,fecha,pagado));
 		}
 		return cuentas;
+	}
+	/**
+	 * Verifica entre todos sus pedidos si ya está pagado y modifica el valor de pagado.<br>
+	 */
+	public void verificarPagado(String numCuenta) throws SQLException, Exception{
+		DAOTablaPedidoMenu pedidoMenu= new DAOTablaPedidoMenu();
+		pedidoMenu.setConn(conn);
+		boolean menu=pedidoMenu.hayPedidoMenusPendientesPorCuenta(numCuenta);
+		pedidoMenu.cerrarRecursos();
+		if(!menu)
+		{
+			DAOTablaPedidoProducto pedidoProd = new DAOTablaPedidoProducto();
+			pedidoProd.setConn(conn);
+			boolean prod=pedidoProd.hayPedidoProdPendientesPorCuenta(numCuenta);
+			pedidoProd.cerrarRecursos();
+			if(!prod)
+			{
+				marcarPagada(numCuenta);
+			}
+		}
+		// TODO Auto-generated method stub
+		
+	}
+	/**
+	 * Marca una cuenta como si ya estuviera pagada.<br>
+	 * @param numCuenta Número de la cuenta.<br>
+	 * @throws SQLException Excepción en la BD.<br>
+	 * @throws Exception Si hay otro error.
+	 */
+	private void marcarPagada(String numCuenta) throws SQLException, Exception {
+		String sql="UPDATE CUENTA SET PAGADA='1' WHERE NUMEROCUENTA LIKE '"+numCuenta+"'";
+		PreparedStatement prep = conn.prepareStatement(sql);
+		prep.executeQuery();
+		
 	}
 	
 

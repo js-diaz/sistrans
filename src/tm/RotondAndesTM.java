@@ -3469,7 +3469,6 @@ public class RotondAndesTM {
 	public List<ContenedoraClienteProductos> usuarioProuctosConsumidos(Long id) throws Exception
 	{
 		List<ContenedoraClienteProductos> list=null;
-		UsuarioCompleto u =null;
 		DAOTablaUsuario dao = new DAOTablaUsuario();
 		try
 		{

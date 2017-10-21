@@ -210,9 +210,9 @@ public class DAOTablaPedidoMenu {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void updatePedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
-
+		if(pedidoMenu.getCuenta().getPagada()) throw new Exception("Su cuenta ya está pagada");
 		boolean mod=false;
-		if(pedidoMenu.getEntregado()==true) 
+		if(pedidoMenu.getEntregado()) 
 			{
 				mod=true;
 				pagarMenu(pedidoMenu);
@@ -231,6 +231,13 @@ public class DAOTablaPedidoMenu {
 			prepStmt.executeQuery();
 		
 		if(!mod)modificarPrecioCuenta(false, pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
+		if(mod)
+		{
+			 DAOTablaCuenta c= new DAOTablaCuenta();
+			c.setConn(conn);
+			c.verificarPagado(pedidoMenu.getCuenta().getNumeroCuenta());
+			c.cerrarRecursos();
+		}
 	}
 	/**
 	 * El restaurante registra el pago de todos los productos del menú.<br>
@@ -254,6 +261,7 @@ public class DAOTablaPedidoMenu {
 			productos.updateInfoProdRest(info);
 		}
 		productos.cerrarRecursos();
+		
 	}
 
 	/**
@@ -326,6 +334,24 @@ public class DAOTablaPedidoMenu {
 		String sql = "SELECT * FROM PEDIDO_MENU WHERE NUMERO_CUENTA LIKE '" + numeroCuenta + "'";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		return convertirEntidadPedidoMenu(ps.executeQuery());
+	}
+	/**
+	 * Verifica si hay pedidos de menú pendientes para la cuenta.<br>
+	 * @param numCuenta Número de la cuenta.<br>
+	 * @return Si hay o no pedidos pendientes.<br>
+	 * @throws SQLException Excepción de sql si hay erroes en la bd.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	public boolean hayPedidoMenusPendientesPorCuenta(String numCuenta) throws SQLException, Exception{
+		// TODO Auto-generated method stub
+		String sql="SELECT * FROM PEDIDO_MENU WHERE NUMERO_CUENTA LIKE '"+numCuenta+"'";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs=ps.executeQuery();
+		while(rs.next())
+		{
+			if(rs.getString("ENTREGADO").equals("0")) return true;
+		}
+		return false;
 	}
 
 

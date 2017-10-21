@@ -175,6 +175,7 @@ public class DAOTablaPedidoProducto {
 	public void updatePedidoProd(PedidoProd pedidoProd) throws SQLException, Exception {
 
 		boolean mod=false;
+		if(pedidoProd.getCuenta().getPagada()) throw new Exception("Su cuenta ya está pagada");
 		if(pedidoProd.getEntregado()==true)
 			{
 				mod=true;
@@ -195,6 +196,13 @@ public class DAOTablaPedidoProducto {
 				recursos.add(prepStmt);
 				prepStmt.executeQuery();
 		if(!mod)modificarPrecioCuenta(pedidoProd.getCuenta(),pedidoProd.getCantidad()*pedidoProd.getPlato().getPrecio()*-1);
+		if(mod)
+		{
+			DAOTablaCuenta c= new DAOTablaCuenta();
+			c.setConn(conn);
+			c.verificarPagado(pedidoProd.getCuenta().getNumeroCuenta());
+			c.cerrarRecursos();
+		}
 	}
 	/**
 	 * Paga el pedido de producto dado por parámetro.<br>
@@ -282,6 +290,23 @@ public class DAOTablaPedidoProducto {
 		PreparedStatement ps = conn.prepareStatement(sql);
 		return convertirEntidadPedidoProd(ps.executeQuery());
 	}
-
+	/**
+	 * Verifica si hay pedidos de producto pendientes para la cuenta.<br>
+	 * @param numCuenta Número de la cuenta.<br>
+	 * @return Si hay o no pedidos pendientes.<br>
+	 * @throws SQLException Excepción de sql si hay erroes en la bd.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	public boolean hayPedidoProdPendientesPorCuenta(String numCuenta) throws SQLException, Exception{
+		// TODO Auto-generated method stub
+		String sql="SELECT * FROM PEDIDO_PROD WHERE NUMERO_CUENTA LIKE '"+numCuenta+"' AND ENTREGADO='0'";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs=ps.executeQuery();
+		while(rs.next())
+		{
+			if(rs.getString("ENTREGADO").equals("0")) return true;
+		}
+		return false;
+	}	
 
 }
