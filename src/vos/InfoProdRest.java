@@ -172,4 +172,28 @@ public class InfoProdRest {
 	public void setSustitutos(List<Producto> sustitutos) {
 		this.sustitutos = sustitutos;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		InfoProdRest other = (InfoProdRest) obj;
+		if (producto == null) {
+			if (other.producto != null)
+				return false;
+		} else if (!producto.equals(other.producto))
+			return false;
+		if (restaurante == null) {
+			if (other.restaurante != null)
+				return false;
+		} else if (!restaurante.equals(other.restaurante))
+			return false;
+		return true;
+	}
+	
+	
 }

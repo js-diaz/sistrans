@@ -6432,9 +6432,12 @@ public class RotondAndesTM {
 			dao.setConn(conn);
 			dao.addPedidoProd(pedidoProd);
 			daoIngrediente.setConn(conn);
-			// TODO revisar que las sustituciones sean validas
-			for(SustitucionIngrediente s : pedidoProd.getSustituciones())
+			for(SustitucionIngrediente s : pedidoProd.getSustituciones()) {
+				InfoIngRest original = infoIngRestBuscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoProd.getPlato().getRestaurante().getNombre());
+				if(!pedidoProd.getPlato().getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto()))
+					throw new Exception("La sustitución pedida no es válida.");
 				daoIngrediente.addSustitucionIngrediente(s, pedidoProd);
+			}
 			conn.commit();
 		}
 		catch (SQLException e) {
@@ -6488,7 +6491,7 @@ public class RotondAndesTM {
 			e.printStackTrace();
 			conn.rollback();
 			throw e;
-		} 
+		}
 		catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
@@ -6692,6 +6695,7 @@ public class RotondAndesTM {
 	public void pedidoMenuAddPedidoMenuConEquivalencias(PedidoMenuConSustituciones pedidoMenu) throws Exception
 	{
 		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		DAOTablaMenu daoMenu = new DAOTablaMenu();
 		DAOTablaSustitucionProducto daoProducto = new DAOTablaSustitucionProducto();
 		DAOTablaSustitucionIngredienteEnProducto daoIngrediente = new DAOTablaSustitucionIngredienteEnProducto();
 		try
@@ -6701,12 +6705,25 @@ public class RotondAndesTM {
 			dao.setConn(conn);
 			dao.addPedidoMenu(pedidoMenu);
 			
+			daoMenu.setConn(conn);
+			Menu menu = daoMenu.buscarMenusPorNombreYRestaurante(pedidoMenu.getMenu().getNombre(), pedidoMenu.getMenu().getRestaurante().getNombre());
+			
 			daoProducto.setConn(conn);
-			for(SustitucionProducto s : pedidoMenu.getSustitucionesProducto())
+			for(SustitucionProducto s : pedidoMenu.getSustitucionesProducto()) {
+				InfoProdRest original = infoProdRestBuscarInfoProdRestsPorIdYRestaurante(s.getOriginal().getId(), menu.getRestaurante().getNombre());
+				if(!menu.getPlatos().contains(original) || !original.getSustitutos().contains(s.getSustituto()))
+					throw new Exception("La sustitución pedida no es válida.");
 				daoProducto.addSustitucionProducto(s, pedidoMenu);
+			}
+			
 			daoIngrediente.setConn(conn);
-			for(SustitucionIngredienteEnProducto s : pedidoMenu.getSustitucionesIngrediente())
+			for(SustitucionIngredienteEnProducto s : pedidoMenu.getSustitucionesIngrediente()) {
+				InfoProdRest producto = infoProdRestBuscarInfoProdRestsPorIdYRestaurante(s.getProducto().getId(), menu.getRestaurante().getNombre());
+				InfoIngRest original = infoIngRestBuscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoMenu.getMenu().getRestaurante().getNombre());
+				if(!menu.getPlatos().contains(producto) || !producto.getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto()))
+					throw new Exception("La sustitución pedida no es válida.");
 				daoIngrediente.addSustitucionIngredienteEnProducto(s, pedidoMenu);
+			}
 
 			conn.commit();
 		}
@@ -6727,6 +6744,7 @@ public class RotondAndesTM {
 			try
 			{
 				dao.cerrarRecursos();
+				daoMenu.cerrarRecursos();
 				daoProducto.cerrarRecursos();
 				daoIngrediente.cerrarRecursos();
 				if(this.conn!=null) this.conn.close();
