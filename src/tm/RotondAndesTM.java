@@ -1393,6 +1393,12 @@ public class RotondAndesTM {
 		}
 	}
 	
+	/**
+	 * Método que ordena los pedidos de producto pedidos en la mesa dada.
+	 * @param pedidos Pedidos a ordenar
+	 * @param mesa Mesa que hace los pedidos
+	 * @throws Exception Si algo falla en la ejecucción. El tal caso no se hace ningún cambio a la BD.
+	 */
 	public void mesaRegistrarPedidosProducto(List<PedidoProd> pedidos, Mesa mesa) throws Exception {
 		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
 		try
@@ -1401,6 +1407,9 @@ public class RotondAndesTM {
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
 			for(PedidoProd pedido : pedidos) {
+				if(!mesa.getCuentas().contains(pedido.getCuenta()))
+					throw new Exception("no se puede pedir una cuenta que no venga de esta mesa.");
+				dao.addPedidoProd(pedido);
 			}
 			conn.commit();
 		}
@@ -1431,8 +1440,90 @@ public class RotondAndesTM {
 	
 	}
 	
+	/**
+	 * Método que ordena los pedidos de menu pedidos en la mesa dada.
+	 * @param pedidos Pedidos a ordenar
+	 * @param mesa Mesa que hace los pedidos
+	 * @throws Exception Si algo falla en la ejecucción. El tal caso no se hace ningún cambio a la BD.
+	 */	
 	public void mesaRegistrarPedidosMenu(List<PedidoMenu> pedidos, Mesa mesa) throws Exception{
-		
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		try
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			for(PedidoMenu pedido : pedidos) {
+				if(!mesa.getCuentas().contains(pedido.getCuenta()))
+					throw new Exception("no se puede pedir una cuenta que no venga de esta mesa.");
+				dao.addPedidoMenu(pedido);
+			}
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}		
+	}
+	
+	/**
+	 * Método que registra el servicio de los pedidos de cierta mesa.
+	 * @param mesa mesa de la cual se registran los pedidos.
+	 * @throws Exception Si hay algún error en la operación. El tal caso no se hace ningún cambio a la BD.
+	 */
+	public void mesaRegistrarServicio(Mesa mesa) throws Exception{
+		try
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			for(CuentaMinimum cuenta : mesa.getCuentas()) {
+				cuentaPagarCuenta(cuenta.getNumeroCuenta());
+			}
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
 	}
 	
 	//Ingrediente
