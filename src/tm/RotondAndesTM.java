@@ -1392,6 +1392,49 @@ public class RotondAndesTM {
 			}
 		}
 	}
+	
+	public void mesaRegistrarPedidosProducto(List<PedidoProd> pedidos, Mesa mesa) throws Exception {
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		try
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			for(PedidoProd pedido : pedidos) {
+			}
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	
+	}
+	
+	public void mesaRegistrarPedidosMenu(List<PedidoMenu> pedidos, Mesa mesa) throws Exception{
+		
+	}
+	
 	//Ingrediente
 	/**
 	 * Retorna una lista de ingredientes en el sistema.<br>
@@ -6845,6 +6888,5 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
 	
 }
