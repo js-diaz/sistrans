@@ -228,6 +228,12 @@ public class DAOTablaMesa {
 			cuenta=dao.buscarCuentasPorNumeroDeCuenta(c.getNumeroCuenta());
 			dao.deleteCuenta(cuenta,false);
 		}
+		for(CuentaMinimum c:mesa.getPagadas())
+		{
+			cuenta=dao.buscarCuentasPorNumeroDeCuenta(c.getNumeroCuenta());
+			dao.deleteCuenta(cuenta,false);
+		}
+		dao.cerrarRecursos();
 	}
 	
 	/**
@@ -321,7 +327,7 @@ public class DAOTablaMesa {
 		return mesas;
 	}
 	/**
-	 * Busca las mesas por nombre de zona.<br>
+	 * Borra las mesas por nombre de zona.<br>
 	 * @param nombre Nombre de la zona.<br>
 	 * @return Listado de mesas.<br>
 	 * @throws SQLException Si hay errores en la BD.<br>
@@ -334,6 +340,25 @@ public class DAOTablaMesa {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
-	//TODO OPCIONAL ¿DEBERía DEFINIR LA ACTUALIZACIÓN DE ZONA PARA MANEJAR MESAS?
+		/**
+		 * Cancela las cuentas de una mesa de una mesa.<br>
+		 * @param mesa Mesa a borrar.<br>
+		 * @throws SQLException Error en la BD.<br>
+		 * @throws Exception Cualquier otro error.
+		 */
+	public List<CuentaMinimum> borrarCuentasActivasMesa(Mesa mesa) throws SQLException, Exception {
+		DAOTablaCuenta dao= new DAOTablaCuenta();
+		dao.setConn(conn);
+		Cuenta cuenta;
+		if(mesa.getCuentas()==null || mesa.getCuentas().isEmpty()) throw new Exception("Esta mesa no tiene cuentas para pagar");
+		for(CuentaMinimum c:mesa.getCuentas())
+		{
+			cuenta=dao.buscarCuentasPorNumeroDeCuenta(c.getNumeroCuenta());
+			dao.deleteCuenta(cuenta,true);
+		}
+		dao.cerrarRecursos();
+		return mesa.getPagadas();
+		
+	}
 }
 

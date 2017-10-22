@@ -355,7 +355,8 @@ public class CuentaServices {
 		}
 		try {
 			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
-			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
+			if(id!=null)
+			if(!(u.getRol().equals(Rol.OPERADOR) || id.equals(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			pedidoProd.setCuenta(c);
 			tm.pedidoProdAddPedidoProd(pedidoProd);
@@ -388,7 +389,8 @@ public class CuentaServices {
 		}
 		try {
 			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
-			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.LOCAL) || (u.getRol().equals(Rol.CLIENTE) && c.getCliente()!=null && id != c.getCliente().getId())))
+			if(id!=null)
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.LOCAL) || (u.getRol().equals(Rol.CLIENTE) && c.getCliente()!=null && !id.equals(c.getCliente().getId()))))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			if(u.getRol().equals(Rol.LOCAL)) 
 			{
@@ -418,7 +420,7 @@ public class CuentaServices {
 	@Path( "{numeroCuenta: \\d+}/productos/{restaurante: [a-zA-Z]+}/{id: \\d+}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deletePedidoProd(@HeaderParam("usuarioId") Long id, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("id") Long idProducto, @PathParam("restaurante") String restaurante) {
+	public Response cancelarPedidoProd(@HeaderParam("usuarioId") Long id, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("id") Long idProducto, @PathParam("restaurante") String restaurante) {
 		restaurante=restaurante.replaceAll(RotondAndesTM.SPACE, " ");
 
 		RotondAndesTM tm = new RotondAndesTM(getPath());
@@ -429,9 +431,9 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))
+			if(!((u!=null && u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(restaurante)) || id .equals(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			tm.pedidoProdDeletePedidoProd(numeroCuenta, idProducto, restaurante);
+			tm.pedidoProdCancelarPedidoProd(numeroCuenta, idProducto, restaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -509,7 +511,7 @@ public class CuentaServices {
 		}
 		try {
 			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
-			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())) 
+			if(!(u.getRol().equals(Rol.OPERADOR) || id.equals(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			pedidoMenu.setCuenta(c);
 			tm.pedidoMenuAddPedidoMenu(pedidoMenu);
@@ -544,7 +546,7 @@ public class CuentaServices {
 		}
 		try {
 			Cuenta c=tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta);
-			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.LOCAL) || (u.getRol().equals(Rol.CLIENTE) && c.getCliente()!=null && id != c.getCliente().getId())))
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.LOCAL) || (u.getRol().equals(Rol.CLIENTE) && c.getCliente()!=null && !id.equals(c.getCliente().getId()))))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			if(u.getRol().equals(Rol.LOCAL)) 
 			{
@@ -574,7 +576,7 @@ public class CuentaServices {
 	@Path( "{numeroCuenta: \\d+}/menus/{restaurante: [a-zA-Z]+}/{nombre: [a-zA-Z]+}" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deletePedidoMenu(@HeaderParam("usuarioId") Long id, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("nombre") String nombre, @PathParam("restaurante") String restaurante) {
+	public Response cancelarPedidoMenu(@HeaderParam("usuarioId") Long id, @PathParam("numeroCuenta") String numeroCuenta, @PathParam("nombre") String nombre, @PathParam("restaurante") String restaurante) {
 		restaurante=restaurante.replaceAll(RotondAndesTM.SPACE, " ");
 		nombre=nombre.replaceAll(RotondAndesTM.SPACE, " ");
 
@@ -586,12 +588,14 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!(u.getRol().equals(Rol.OPERADOR) || id == tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId()))
+			if(!((u!=null && u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(restaurante)) || id.equals(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
-			tm.pedidoMenuDeletePedidoMenu(numeroCuenta, nombre, restaurante);
+			tm.cancelarPedidoMenu(numeroCuenta, nombre, restaurante);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity("pedidoMenu eliminado correctamente").build();
 	}
+	
+	
 }

@@ -112,6 +112,7 @@ public class DAOTablaPedidoMenu {
 		ResultSet rs = prepStmt.executeQuery();
 
 		List<PedidoMenu> pedidoMenus = convertirEntidadPedidoMenu(rs);
+		if(pedidoMenus.isEmpty()) return null;
 		return pedidoMenus.get(0);
 	}
 
@@ -272,8 +273,9 @@ public class DAOTablaPedidoMenu {
 	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo actualizar la pedidoMenu.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public void deletePedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
-		
+	public void cancelarPedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
+		if(pedidoMenu.getEntregado()) throw new Exception("No puede borrar un pedido que ya se ha entregado");
+
 		String sql = "DELETE FROM PEDIDO_MENU";
 		sql += " WHERE NOMBRE_MENU LIKE '" + pedidoMenu.getMenu().getNombre() + "'"; 
 		sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoMenu.getMenu().getRestaurante().getNombre() + "'";

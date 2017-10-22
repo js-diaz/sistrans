@@ -1177,6 +1177,50 @@ public class RotondAndesTM {
 	}
 	//Mesa
 	/**
+	 * Borra las cuentas de una mesa<br>
+	 * @param Mesa cuyas cuentas se van a borrar.<br>
+	 * @throws Exception Si existe algún error
+	 */
+	public List<CuentaMinimum> mesaBorrarCuentasActivasPorMesa(Mesa mesa) throws Exception
+	{	List<CuentaMinimum> list=new ArrayList<>();
+		DAOTablaMesa dao = new DAOTablaMesa();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			list=dao.borrarCuentasActivasMesa(mesa);
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
+	}
+	/**
 	 * Retorna una lista de mesas en el sistema.<br>
 	 * @return Lista de mesas.<bR>
 	 * @throws Exception Si existe algún tipo de error
@@ -6450,7 +6494,7 @@ public class RotondAndesTM {
 	 * @param pedidoProd PedidoProd.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void pedidoProdDeletePedidoProd(String numeroCuenta, Long id, String restaurante) throws Exception
+	public void pedidoProdCancelarPedidoProd(String numeroCuenta, Long id, String restaurante) throws Exception
 	{
 		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
 		try
@@ -6667,7 +6711,7 @@ public class RotondAndesTM {
 	 * @param pedidoMenu PedidoMenu.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public void pedidoMenuDeletePedidoMenu(String numeroCuenta, String nombre, String restaurante) throws Exception
+	public void cancelarPedidoMenu(String numeroCuenta, String nombre, String restaurante) throws Exception
 	{
 		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
 		try
@@ -6675,7 +6719,7 @@ public class RotondAndesTM {
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
-			dao.deletePedidoMenu(dao.buscarPedidoMenusPorNombreYCuenta(nombre, restaurante, numeroCuenta));
+			dao.cancelarPedidoMenu(dao.buscarPedidoMenusPorNombreYCuenta(nombre, restaurante, numeroCuenta));
 			conn.commit();
 		}
 		catch (SQLException e) {

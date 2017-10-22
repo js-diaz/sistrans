@@ -2,6 +2,7 @@
 package rest;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -22,7 +23,10 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
+import vos.Cuenta;
+import vos.CuentaMinimum;
 import vos.Mesa;
+import vos.Usuario;
 import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
 
@@ -178,6 +182,32 @@ public class MesaServices {
 		}
 		return Response.status(200).entity(mesa).build();
 	}
-
-
+	
+	/**
+     * Metodo que expone servicio REST usando DELETE que elimina el mesa que recibe en Json
+     * <b>URL: </b> http://"ip o nombre de host":8080/MesaAndes/rest/mesas
+     * @param mesa - mesa a aliminar. 
+     * @param usuarioId Id del usuario que realiza la solicitud.
+     * @return Json con el mesa que elimino o Json con el error que se produjo
+     */
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("canceloCuenta")
+	public Response cancelarCuentasPorMesa(Mesa mesa, @HeaderParam("usuarioId") Long usuarioId) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<CuentaMinimum> list = new ArrayList<>();
+		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId( usuarioId );
+			if(!((u!=null && u.getRol().equals(Rol.LOCAL))))
+			{
+				throw new Exception("El usuario no tiene permitido usar el sistema");
+			}
+			list=tm.mesaBorrarCuentasActivasPorMesa(mesa);
+			
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(list).build();
+	}
 }

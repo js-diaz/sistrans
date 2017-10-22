@@ -108,6 +108,7 @@ public class DAOTablaPedidoProducto {
 		ResultSet rs = prepStmt.executeQuery();
 
 		List<PedidoProd> pedidoProds = convertirEntidadPedidoProd(rs);
+		if(pedidoProds.isEmpty()) return null;
 		return pedidoProds.get(0);
 	}
 
@@ -229,7 +230,7 @@ public class DAOTablaPedidoProducto {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void deletePedidoProd(PedidoProd pedidoProd) throws SQLException, Exception {
-		
+		if(pedidoProd.getEntregado()) throw new Exception("No puede borrar un pedido que ya se ha entregado");
 		String sql = "DELETE FROM PEDIDO_PROD";
 		sql += " WHERE ID_PRODUCTO = " + pedidoProd.getPlato().getProducto().getId(); 
 		sql += " AND NOMBRE_RESTAURANTE LIKE '" + pedidoProd.getPlato().getRestaurante().getNombre() + "'";
