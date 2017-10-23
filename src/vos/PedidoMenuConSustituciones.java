@@ -5,7 +5,7 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
- * Pedido que ha hecho un cliente de un menu, con sustituciones en él.
+ * Pedido que ha hecho un cliente de un menu, con sustituciones en él. Representación Detail
  * @author JuanSebastian
  */
 public class PedidoMenuConSustituciones extends PedidoMenu {
