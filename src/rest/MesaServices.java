@@ -190,7 +190,7 @@ public class MesaServices {
 	@Path( "{id: \\d+}/pedidos-producto" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registrarPedidosProducto(@PathParam("id") String numeroMesa, List<PedidoProd> pedidos, @HeaderParam("usuarioId") Long id) {
+	public Response registrarPedidosProducto(@PathParam("id") Long idMesa, List<PedidoProd> pedidos, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -199,7 +199,7 @@ public class MesaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			Mesa mesa = tm.mesaBuscarMesaPorId(id);
+			Mesa mesa = tm.mesaBuscarMesaPorId(idMesa);
 			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.CLIENTE))) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			tm.mesaRegistrarPedidosProducto(pedidos, mesa);
@@ -220,7 +220,7 @@ public class MesaServices {
 	@Path( "{id: \\d+}/pedidos-menu" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registrarPedidosMenu(@PathParam("id") String numeroMesa, List<PedidoMenu> pedidos, @HeaderParam("usuarioId") Long id) {
+	public Response registrarPedidosMenu(@PathParam("id") Long idMesa, List<PedidoMenu> pedidos, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -229,7 +229,7 @@ public class MesaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			Mesa mesa = tm.mesaBuscarMesaPorId(id);
+			Mesa mesa = tm.mesaBuscarMesaPorId(idMesa);
 			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.CLIENTE))) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			tm.mesaRegistrarPedidosMenu(pedidos, mesa);
@@ -249,7 +249,7 @@ public class MesaServices {
 	@Path( "{id: \\d+}/servicio" )
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registrarServicio(@PathParam("id") String numeroMesa, @HeaderParam("usuarioId") Long id) {
+	public Response registrarServicio(@PathParam("id") Long idMesa, @HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -258,7 +258,7 @@ public class MesaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			Mesa mesa = tm.mesaBuscarMesaPorId(id);
+			Mesa mesa = tm.mesaBuscarMesaPorId(idMesa);
 			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.LOCAL))) 
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			tm.mesaRegistrarServicio(mesa);

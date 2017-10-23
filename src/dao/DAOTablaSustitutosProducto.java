@@ -79,7 +79,7 @@ public class DAOTablaSustitutosProducto {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		while (rs.next()) {
-			Long id = rs.getLong("ID_PLATO");
+			Long id = rs.getLong("ID_SUSTITUTO");
 			sustitutos.add(daoSustituto.buscarProductoPorId(id));
 		}
 		daoSustituto.cerrarRecursos();

@@ -58,14 +58,14 @@ public class DAOTablaSustitucionIngredienteEnProducto {
 
 	/**
 	 * Metodo que, usando la conexión a la base de datos, saca todos los sustitucionIngredientes de la base de datos
-	 * <b>SQL Statement:</b> SELECT * FROM SUSTITUCION_INGREDIENTE_EN_PRODUCTOS;
+	 * <b>SQL Statement:</b> SELECT * FROM SUSN_INGREDIENTE_EN_PRODUCTOS;
 	 * @return Arraylist con los sustitucionIngredientes de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public List<SustitucionIngredienteEnProducto> darSustitucionIngredienteEnProductos() throws SQLException, Exception {
 
-		String sql = "SELECT * FROM SUSTITUCION_INGREDIENTE_EN_PRODUCTO";
+		String sql = "SELECT * FROM SUSN_INGREDIENTE_EN_PRODUCTO";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -82,7 +82,7 @@ public class DAOTablaSustitucionIngredienteEnProducto {
 	 */
 	public List<SustitucionIngredienteEnProducto> darSustitucionIngredienteEnProductosPorPedidoMenu(String cuenta, String menu, String restaurante) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM SUSTITUCION_INGREDIENTE_EN_PRODUCTO WHERE NUMERO_CUENTA LIKE '" + cuenta + "'";
+		String sql = "SELECT * FROM SUSN_INGREDIENTE_EN_PRODUCTO WHERE NUMERO_CUENTA LIKE '" + cuenta + "'";
 		sql += " AND NOMBRE_MENU LIKE '" + menu + "' AND NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -101,7 +101,7 @@ public class DAOTablaSustitucionIngredienteEnProducto {
 	 */
 	public SustitucionIngredienteEnProducto buscarSustitucionIngredienteEnProductosPorNombreYPedidoMenu(String cuenta, String menu, String restaurante, Long producto, Long original, Long sustituto) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM SUSTITUCION_INGREDIENTE_EN_PRODUCTO WHERE NUMERO_CUENTA LIKE '" + cuenta + "'";
+		String sql = "SELECT * FROM SUSN_INGREDIENTE_EN_PRODUCTO WHERE NUMERO_CUENTA LIKE '" + cuenta + "'";
 		sql += " AND NOMBRE_MENU LIKE '" + menu + "' AND ID_PRODUCTO = " + producto + "' AND NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
 		sql += "AND ID_ORIGINAL = " + original + " AND ID_SUSTITUTO = " + sustituto;
 
@@ -123,7 +123,7 @@ public class DAOTablaSustitucionIngredienteEnProducto {
 	 */
 	public void addSustitucionIngredienteEnProducto(SustitucionIngredienteEnProducto sustitucionIngrediente, PedidoMenu pedido) throws SQLException, Exception {
 
-		String sql = "INSERT INTO SUSTITUCION_INGREDIENTE_EN_PRODUCTO VALUES (";
+		String sql = "INSERT INTO SUSN_INGREDIENTE_EN_PRODUCTO VALUES (";
 		sql += sustitucionIngrediente.getOriginal().getId() + ", ";
 		sql += sustitucionIngrediente.getSustituto().getId() + ", ";
 		sql += sustitucionIngrediente.getProducto().getId() +", ";
@@ -146,7 +146,7 @@ public class DAOTablaSustitucionIngredienteEnProducto {
 	 */
 	public void deleteSustitucionIngredienteEnProducto(SustitucionIngredienteEnProducto sustitucionIngrediente, PedidoMenu pedido) throws SQLException, Exception {
 
-		String sql = "DELETE FROM SUSTITUCION_INGREDIENTE_EN_PRODUCTO";
+		String sql = "DELETE FROM SUSN_INGREDIENTE_EN_PRODUCTO";
 		sql += " WHERE ID_ORIGINAL = " + sustitucionIngrediente.getOriginal().getId();
 		sql += " AND ID_SUSTITUTO = " + sustitucionIngrediente.getSustituto().getId();
 		sql += " AND ID_PRODUCTO = " + sustitucionIngrediente.getProducto().getId();
@@ -190,7 +190,7 @@ public class DAOTablaSustitucionIngredienteEnProducto {
 	 * @throws SQLException Alg�n problema de la base de datos.<br>
 	 */
 	public void eliminarSustitucionIngredienteEnProductosPorPedidoMenu(PedidoMenu pedido) throws SQLException {
-		String sql = "DELETE FROM SUSTITUCION_INGREDIENTE_EN_PRODUCTO WHERE NUMERO_CUENTA LIKE '" + pedido.getCuenta().getNumeroCuenta() + "'";
+		String sql = "DELETE FROM SUSN_INGREDIENTE_EN_PRODUCTO WHERE NUMERO_CUENTA LIKE '" + pedido.getCuenta().getNumeroCuenta() + "'";
 		sql += " AND NOMBRE_MENU LIKE '" + pedido.getMenu().getNombre() + "' AND NOMBRE_RESTAURANTE LIKE '" + pedido.getMenu().getRestaurante().getNombre() + "'";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.executeQuery();
