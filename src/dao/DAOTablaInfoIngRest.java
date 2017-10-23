@@ -150,7 +150,7 @@ public class DAOTablaInfoIngRest {
 		sql += "PRECIO_ADICION = " + infoIngRest.getPrecioAdicion();
 		sql += ", PRECIO_SUSTITUTO = "+ infoIngRest.getPrecioSustituto();
 		
-		sql += " WHERE ID_INGREDIENTE = " + infoIngRest.getIngrediente().getId() + " AND NOMBRE_RESTAURANTE LIKE '" + infoIngRest.getRestaurante().getNombre();
+		sql += " WHERE ID_INGREDIENTE = " + infoIngRest.getIngrediente().getId() + " AND NOMBRE_RESTAURANTE LIKE '" + infoIngRest.getRestaurante().getNombre() + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

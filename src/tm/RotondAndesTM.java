@@ -1407,8 +1407,10 @@ public class RotondAndesTM {
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
 			for(PedidoProd pedido : pedidos) {
-				if(!mesa.getCuentas().contains(pedido.getCuenta()))
+				if(!mesa.getCuentas().contains(pedido.getCuenta())) {
+					conn.rollback();
 					throw new Exception("no se puede pedir una cuenta que no venga de esta mesa.");
+				}
 				dao.addPedidoProd(pedido);
 			}
 			conn.commit();
@@ -1454,8 +1456,10 @@ public class RotondAndesTM {
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
 			for(PedidoMenu pedido : pedidos) {
-				if(!mesa.getCuentas().contains(pedido.getCuenta()))
+				if(!mesa.getCuentas().contains(pedido.getCuenta())) {
+					conn.rollback();
 					throw new Exception("no se puede pedir una cuenta que no venga de esta mesa.");
+				}
 				dao.addPedidoMenu(pedido);
 			}
 			conn.commit();
@@ -6568,8 +6572,10 @@ public class RotondAndesTM {
 			daoIngrediente.setConn(conn);
 			for(SustitucionIngrediente s : pedidoProd.getSustituciones()) {
 				InfoIngRest original = infoIngRestBuscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoProd.getPlato().getRestaurante().getNombre());
-				if(!pedidoProd.getPlato().getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto()))
+				if(!pedidoProd.getPlato().getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto())) {
+					conn.rollback();
 					throw new Exception("La sustitución pedida no es válida.");
+				}
 				daoIngrediente.addSustitucionIngrediente(s, pedidoProd);
 			}
 			conn.commit();
@@ -6845,8 +6851,10 @@ public class RotondAndesTM {
 			daoProducto.setConn(conn);
 			for(SustitucionProducto s : pedidoMenu.getSustitucionesProducto()) {
 				InfoProdRest original = infoProdRestBuscarInfoProdRestsPorIdYRestaurante(s.getOriginal().getId(), menu.getRestaurante().getNombre());
-				if(!menu.getPlatos().contains(original) || !original.getSustitutos().contains(s.getSustituto()))
+				if(!menu.getPlatos().contains(original) || !original.getSustitutos().contains(s.getSustituto())) {
+					conn.rollback();
 					throw new Exception("La sustitución pedida no es válida.");
+				}
 				daoProducto.addSustitucionProducto(s, pedidoMenu);
 			}
 			
