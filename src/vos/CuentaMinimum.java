@@ -93,7 +93,6 @@ public class CuentaMinimum {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-<<<<<<< HEAD
 	/**
 	 * Obtiene si está pagada o no<br>
 	 * @return pagada
@@ -110,7 +109,6 @@ public class CuentaMinimum {
 	}
 	
 	
-=======
 
 	@Override
 	public boolean equals(Object obj) {
@@ -128,7 +126,6 @@ public class CuentaMinimum {
 			return false;
 		return true;
 	}
->>>>>>> js-diaz
 	
 	
 	
