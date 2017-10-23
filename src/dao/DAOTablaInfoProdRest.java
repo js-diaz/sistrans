@@ -135,6 +135,8 @@ public class DAOTablaInfoProdRest {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		insertarSustitutos(infoProdRest);
 	}
 	
 	
@@ -162,6 +164,17 @@ public class DAOTablaInfoProdRest {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		insertarSustitutos(infoProdRest);
+	}
+
+	private void insertarSustitutos(InfoProdRest infoProdRest) throws SQLException, Exception {
+		DAOTablaSustitutosProducto daoSust = new DAOTablaSustitutosProducto();
+		daoSust.setConn(conn);
+		daoSust.eliminarPorProducto(infoProdRest.getProducto().getId(), infoProdRest.getRestaurante().getNombre());
+		for(Producto prod : infoProdRest.getSustitutos())
+			daoSust.asociarSustitutoYProducto(prod.getId(), infoProdRest.getProducto().getId(), infoProdRest.getRestaurante().getNombre());
+		daoSust.cerrarRecursos();
 	}
 	
 	/**
@@ -204,8 +217,10 @@ public class DAOTablaInfoProdRest {
 	{
 		DAOTablaRestaurante daoRest = new DAOTablaRestaurante();
 		DAOTablaProducto daoProd = new DAOTablaProducto();
+		DAOTablaSustitutosProducto daoSust = new DAOTablaSustitutosProducto();
 		daoRest.setConn(conn);
 		daoProd.setConn(conn);
+		daoSust.setConn(conn);
 		List<InfoProdRest> infoProdRests = new ArrayList<>();
 		while (rs.next()) {
 			double precio = rs.getDouble("PRECIO");
@@ -216,10 +231,12 @@ public class DAOTablaInfoProdRest {
 			Integer cantidadMaxima = rs.getInt("CANTIDAD_MAXIMA");
 			Producto producto = daoProd.buscarProductoPorId(rs.getLong("ID_PRODUCTO"));
 			RestauranteMinimum restaurante = daoRest.darRestauranteMinimumPorNombre(rs.getString("NOMBRE_RESTAURANTE"));
-			infoProdRests.add(new InfoProdRest(costo, precio, disponibilidad, fechaInicio, fechaFin, producto, restaurante, cantidadMaxima));
+			List<Producto> sustitutos = daoSust.consultarPorProducto(producto.getId(), restaurante.getNombre());
+			infoProdRests.add(new InfoProdRest(costo, precio, disponibilidad, fechaInicio, fechaFin, producto, restaurante, cantidadMaxima, sustitutos));
 		}
 		daoRest.cerrarRecursos();
 		daoProd.cerrarRecursos();
+		daoSust.cerrarRecursos();
 		return infoProdRests;
 	}
 	

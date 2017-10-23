@@ -1,7 +1,6 @@
 package vos;
 
 import java.util.Date;
-
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;

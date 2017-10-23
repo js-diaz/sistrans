@@ -37,13 +37,18 @@ import vos.Menu;
 import vos.MenuMinimum;
 import vos.Mesa;
 import vos.PedidoMenu;
+import vos.PedidoMenuConSustituciones;
 import vos.PedidoProd;
+import vos.PedidoProdConSustituciones;
 import vos.Preferencia;
 import vos.Producto;
 import vos.Producto.TiposDePlato;
 import vos.Reserva;
 import vos.Restaurante;
 import vos.RestauranteMinimum;
+import vos.SustitucionIngrediente;
+import vos.SustitucionIngredienteEnProducto;
+import vos.SustitucionProducto;
 import vos.Usuario;
 import vos.UsuarioMinimum.Rol;
 import vos.Zona;
@@ -1431,6 +1436,144 @@ public class RotondAndesTM {
 			}
 		}
 	}
+	
+	/**
+	 * Método que ordena los pedidos de producto pedidos en la mesa dada.
+	 * @param pedidos Pedidos a ordenar
+	 * @param mesa Mesa que hace los pedidos
+	 * @throws Exception Si algo falla en la ejecucción. El tal caso no se hace ningún cambio a la BD.
+	 */
+	public void mesaRegistrarPedidosProducto(List<PedidoProd> pedidos, Mesa mesa) throws Exception {
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		try
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			for(PedidoProd pedido : pedidos) {
+				if(!mesa.getCuentas().contains(pedido.getCuenta())) {
+					conn.rollback();
+					throw new Exception("no se puede pedir una cuenta que no venga de esta mesa.");
+				}
+				dao.addPedidoProd(pedido);
+			}
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	
+	}
+	
+	/**
+	 * Método que ordena los pedidos de menu pedidos en la mesa dada.
+	 * @param pedidos Pedidos a ordenar
+	 * @param mesa Mesa que hace los pedidos
+	 * @throws Exception Si algo falla en la ejecucción. El tal caso no se hace ningún cambio a la BD.
+	 */	
+	public void mesaRegistrarPedidosMenu(List<PedidoMenu> pedidos, Mesa mesa) throws Exception{
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		try
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			for(PedidoMenu pedido : pedidos) {
+				if(!mesa.getCuentas().contains(pedido.getCuenta())) {
+					conn.rollback();
+					throw new Exception("no se puede pedir una cuenta que no venga de esta mesa.");
+				}
+				dao.addPedidoMenu(pedido);
+			}
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}		
+	}
+	
+	/**
+	 * Método que registra el servicio de los pedidos de cierta mesa.
+	 * @param mesa mesa de la cual se registran los pedidos.
+	 * @throws Exception Si hay algún error en la operación. El tal caso no se hace ningún cambio a la BD.
+	 */
+	public void mesaRegistrarServicio(Mesa mesa) throws Exception{
+		try
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			for(CuentaMinimum cuenta : mesa.getCuentas()) {
+				cuentaPagarCuenta(cuenta.getNumeroCuenta());
+			}
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
 	//Ingrediente
 	/**
 	 * Retorna una lista de ingredientes en el sistema.<br>
@@ -4554,6 +4697,7 @@ public class RotondAndesTM {
 			if(categoriaBuscarCategoriasPorName(c.getNombre())==null) 
 				throw new Exception("Hay categorias del menu que no existen en el sistema con "+c.getNombre());
 		}
+		menuVerficarTiposDeProducto(menu);
 		try
 		{
 			this.conn=darConexion();
@@ -4585,6 +4729,13 @@ public class RotondAndesTM {
 			}
 		}
 	}
+
+	private void menuVerficarTiposDeProducto(Menu menu) throws Exception {
+		for(InfoProdRest plato : menu.getPlatos())
+			for(InfoProdRest otroPlato : menu.getPlatos())
+				if(plato != otroPlato && plato.getProducto().getTipo() == otroPlato.getProducto().getTipo())
+					throw new Exception("El menu tiene dos platos del mismo tipo");
+	}
 	/**
 	 * Actualiza una menu.<br>
 	 * @param menu Menu.<br>
@@ -4592,6 +4743,7 @@ public class RotondAndesTM {
 	 */
 	public void menuUpdateMenu(Menu menu) throws Exception
 	{
+		menuVerficarTiposDeProducto(menu);
 		DAOTablaMenu dao = new DAOTablaMenu();
 		try
 		{
@@ -6447,6 +6599,62 @@ public class RotondAndesTM {
 	}
 	
 	/**
+	 * Agrega una pedidoProd con equivalencias.<br>
+	 * @param pedidoProd PedidoProd.<br>
+	 * @throws Exception Si existe algÃºn tipo de error
+	 */
+	public void pedidoProdAddPedidoProdConEquivalencias(PedidoProdConSustituciones pedidoProd) throws Exception
+	{
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		DAOTablaSustitucionIngrediente daoIngrediente = new DAOTablaSustitucionIngrediente();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			dao.addPedidoProd(pedidoProd);
+			daoIngrediente.setConn(conn);
+			for(SustitucionIngrediente s : pedidoProd.getSustituciones()) {
+				InfoIngRest original = infoIngRestBuscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoProd.getPlato().getRestaurante().getNombre());
+				if(!pedidoProd.getPlato().getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto())) {
+					conn.rollback();
+					throw new Exception("La sustitución pedida no es válida.");
+				}
+				daoIngrediente.addSustitucionIngrediente(s, pedidoProd);
+			}
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				daoIngrediente.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+	
+	/**
 	 * Actualiza una pedidoProd.<br>
 	 * @param pedidoProd PedidoProd.<br>
 	 * @throws Exception Si existe algÃºn tipo de error
@@ -6467,7 +6675,7 @@ public class RotondAndesTM {
 			e.printStackTrace();
 			conn.rollback();
 			throw e;
-		} 
+		}
 		catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
@@ -6664,6 +6872,80 @@ public class RotondAndesTM {
 	}
 	
 	/**
+	 * Agrega una pedidoMenu con equivalencias.<br>
+	 * @param pedidoMenu PedidoMenu.<br>
+	 * @throws Exception Si existe algÃºn tipo de error
+	 */
+	public void pedidoMenuAddPedidoMenuConEquivalencias(PedidoMenuConSustituciones pedidoMenu) throws Exception
+	{
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		DAOTablaMenu daoMenu = new DAOTablaMenu();
+		DAOTablaSustitucionProducto daoProducto = new DAOTablaSustitucionProducto();
+		DAOTablaSustitucionIngredienteEnProducto daoIngrediente = new DAOTablaSustitucionIngredienteEnProducto();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			dao.addPedidoMenu(pedidoMenu);
+			
+			daoMenu.setConn(conn);
+			Menu menu = daoMenu.buscarMenusPorNombreYRestaurante(pedidoMenu.getMenu().getNombre(), pedidoMenu.getMenu().getRestaurante().getNombre());
+			
+			daoProducto.setConn(conn);
+			for(SustitucionProducto s : pedidoMenu.getSustitucionesProducto()) {
+				InfoProdRest original = infoProdRestBuscarInfoProdRestsPorIdYRestaurante(s.getOriginal().getId(), menu.getRestaurante().getNombre());
+				if(!menu.getPlatos().contains(original) || !original.getSustitutos().contains(s.getSustituto())) {
+					conn.rollback();
+					throw new Exception("La sustitución pedida no es válida.");
+				}
+				daoProducto.addSustitucionProducto(s, pedidoMenu);
+			}
+			
+			daoIngrediente.setConn(conn);
+			for(SustitucionIngredienteEnProducto s : pedidoMenu.getSustitucionesIngrediente()) {
+				InfoProdRest producto = infoProdRestBuscarInfoProdRestsPorIdYRestaurante(s.getProducto().getId(), menu.getRestaurante().getNombre());
+				InfoIngRest original = infoIngRestBuscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoMenu.getMenu().getRestaurante().getNombre());
+				if(!menu.getPlatos().contains(producto) || !producto.getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto()))
+					throw new Exception("La sustitución pedida no es válida.");
+				daoIngrediente.addSustitucionIngredienteEnProducto(s, pedidoMenu);
+			}
+
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				daoMenu.cerrarRecursos();
+				daoProducto.cerrarRecursos();
+				daoIngrediente.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+	
+	/**
 	 * Actualiza una pedidoMenu.<br>
 	 * @param pedidoMenu PedidoMenu.<br>
 	 * @throws Exception Si existe algÃºn tipo de error
@@ -6749,6 +7031,5 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
 	
 }

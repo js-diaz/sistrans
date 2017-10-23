@@ -15,17 +15,19 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 import tm.RotondAndesTM;
 import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.Mesa;
+<<<<<<< HEAD
+=======
+import vos.PedidoMenu;
+import vos.PedidoProd;
+>>>>>>> js-diaz
 import vos.Usuario;
 import vos.UsuarioMinimum;
 import vos.UsuarioMinimum.Rol;
@@ -184,6 +186,7 @@ public class MesaServices {
 	}
 	
 	/**
+<<<<<<< HEAD
      * Metodo que expone servicio REST usando DELETE que elimina el mesa que recibe en Json
      * <b>URL: </b> http://"ip o nombre de host":8080/MesaAndes/rest/mesas
      * @param mesa - mesa a aliminar. 
@@ -210,4 +213,94 @@ public class MesaServices {
 		}
 		return Response.status(200).entity(list).build();
 	}
+=======
+	 * Método que ordena los pedidos de producto pedidos en la mesa dada.
+	 * @param numeroMesa Número de la mesa que ordena los pedidos.
+	 * @param pedidos Pedidos a ordenar.
+	 * @param id Id del usuario que hace la modificación.
+	 * @return Response con los pedidos añadidos.
+	 */
+	@POST
+	@Path( "{id: \\d+}/pedidos-producto" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registrarPedidosProducto(@PathParam("id") Long idMesa, List<PedidoProd> pedidos, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			Mesa mesa = tm.mesaBuscarMesaPorId(idMesa);
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.CLIENTE))) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.mesaRegistrarPedidosProducto(pedidos, mesa);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidos).build();
+	}
+
+	/**
+	 * Método que ordena los pedidos de menu pedidos en la mesa dada.
+	 * @param numeroMesa Número de la mesa que ordena los pedidos.
+	 * @param pedidos Pedidos a ordenar.
+	 * @param id Id del usuario que hace la modificación.
+	 * @return Response con los pedidos añadidos.
+	 */
+	@POST
+	@Path( "{id: \\d+}/pedidos-menu" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registrarPedidosMenu(@PathParam("id") Long idMesa, List<PedidoMenu> pedidos, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			Mesa mesa = tm.mesaBuscarMesaPorId(idMesa);
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.CLIENTE))) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.mesaRegistrarPedidosMenu(pedidos, mesa);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(pedidos).build();
+	}
+
+	/**
+	 * Método que registra el servicio de los pedidos de cierta mesa.
+	 * @param numeroMesa Número de la mesa de la cuál se quiere registrar el servicio.
+	 * @param id Id del usuario que realiza la operación
+	 * @return Response según si la operación fue efectuada correctamente o no.
+	 */
+	@PUT
+	@Path( "{id: \\d+}/servicio" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registrarServicio(@PathParam("id") Long idMesa, @HeaderParam("usuarioId") Long id) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(id);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			Mesa mesa = tm.mesaBuscarMesaPorId(idMesa);
+			if(!(u.getRol().equals(Rol.OPERADOR) || u.getRol().equals(Rol.LOCAL))) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			tm.mesaRegistrarServicio(mesa);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity("El servicio fue registrado correctamente.").build();
+	}
+
+>>>>>>> js-diaz
 }

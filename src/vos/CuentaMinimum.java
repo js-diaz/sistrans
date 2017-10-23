@@ -2,7 +2,6 @@ package vos;
 
 import java.util.Date;
 
-import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -94,6 +93,7 @@ public class CuentaMinimum {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+<<<<<<< HEAD
 	/**
 	 * Obtiene si está pagada o no<br>
 	 * @return pagada
@@ -110,6 +110,25 @@ public class CuentaMinimum {
 	}
 	
 	
+=======
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CuentaMinimum other = (CuentaMinimum) obj;
+		if (numeroCuenta == null) {
+			if (other.numeroCuenta != null)
+				return false;
+		} else if (!numeroCuenta.equals(other.numeroCuenta))
+			return false;
+		return true;
+	}
+>>>>>>> js-diaz
 	
 	
 	

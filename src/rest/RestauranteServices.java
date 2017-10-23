@@ -512,6 +512,40 @@ public class RestauranteServices {
 		}
 		return Response.status(200).entity(infoProdRest).build();
 	}
+	
+	/**
+	 * Método que expone un servicio Rest para añadir una equivalencia de productos.
+	 * @param idSustituto id del producto sustituto.
+	 * @param idUsuario id del usuario que hace la transacción.
+	 * @param id id del producto.
+	 * @param nombreRestaurante nombre del restaurante al cual pretenece.
+	 * @return
+	 */
+	@POST
+	@Path( "{nombreRestaurante}/productos/{id: \\d+}/equivalencias/{idSustituto: \\d+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response insertarSustitutoProducto(@PathParam("idSustituto") Long idSustituto, @HeaderParam("usuarioId") Long idUsuario, @PathParam("id") Long id, @PathParam("nombreRestaurante") String nombreRestaurante) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(idUsuario);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && idUsuario == tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante).getRepresentante().getId())))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			InfoProdRest infoProdRest = tm.infoProdRestBuscarInfoProdRestsPorIdYRestaurante(id, nombreRestaurante);
+			infoProdRest.getSustitutos().add(tm.productoBuscarProductoPorId(idSustituto));
+			tm.infoProdRestUpdateInfoProdRest(infoProdRest);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity("Equivalencia registrada correctamente.").build();
+	}
 
 	
     /**
@@ -660,6 +694,40 @@ public class RestauranteServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(infoIngRest).build();
+	}
+
+	/**
+	 * Método que expone un servicio Rest para añadir una equivalencia de ingredientes.
+	 * @param idSustituto id del ingrediente sustituto.
+	 * @param idUsuario id del usuario que hace la transacción.
+	 * @param id id del ingrediente.
+	 * @param nombreRestaurante nombre del restaurante al cual pretenece.
+	 * @return
+	 */
+	@POST
+	@Path( "{nombreRestaurante}/ingredientes/{id: \\d+}/equivalencias/{idSustituto: \\d+}" )
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response insertarSustitutoIngrediente(@PathParam("idSustituto") Long idSustituto, @HeaderParam("usuarioId") Long idUsuario, @PathParam("id") Long id, @PathParam("nombreRestaurante") String nombreRestaurante) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Usuario u =null;
+		try {
+			u=tm.usuarioBuscarUsuarioPorId(idUsuario);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		try {
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && idUsuario == tm.restauranteBuscarRestaurantePorNombre(nombreRestaurante).getRepresentante().getId())))
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			InfoIngRest infoIngRest = tm.infoIngRestBuscarInfoIngRestsPorIdYRestaurante(id, nombreRestaurante);
+			infoIngRest.getSustitutos().add(tm.ingredienteBuscarIngredientePorId(idSustituto));
+			tm.infoIngRestUpdateInfoIngRest(infoIngRest);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity("Equivalencia registrada correctamente.").build();
 	}
 
 	

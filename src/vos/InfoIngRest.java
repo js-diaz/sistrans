@@ -1,5 +1,7 @@
 package vos;
 
+import java.util.List;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
@@ -32,13 +34,21 @@ public class InfoIngRest {
 	 */
 	@JsonProperty(value="restaurante")
 	private RestauranteMinimum restaurante;
+	
+	/**
+	 * Ingredientes que pueden sustituir a este.
+	 */
+	@JsonProperty(value="sustitutos")
+	private List<Ingrediente> sustitutos;
 
 	public InfoIngRest(@JsonProperty(value="precioAdicion") Double precioAdicion, @JsonProperty(value="precioSustituto") Double precioSustituto,
-			@JsonProperty(value="ingrediente") Ingrediente ingrediente, @JsonProperty(value="restaurante") RestauranteMinimum restaurante) {
+			@JsonProperty(value="ingrediente") Ingrediente ingrediente, @JsonProperty(value="restaurante") RestauranteMinimum restaurante,
+			@JsonProperty(value="sustitutos") List<Ingrediente> sustitutos) {
 		this.precioAdicion = precioAdicion;
 		this.precioSustituto = precioSustituto;
 		this.ingrediente = ingrediente;
 		this.restaurante = restaurante;
+		this.sustitutos = sustitutos;
 	}
 
 	public Double getPrecioAdicion() {
@@ -73,6 +83,12 @@ public class InfoIngRest {
 		this.restaurante = restaurante;
 	}
 	
+	public List<Ingrediente> getSustitutos() {
+		return sustitutos;
+	}
 	
+	public void setSustitutos(List<Ingrediente> sustitutos) {
+		this.sustitutos = sustitutos;
+	}
 
 }

@@ -2,7 +2,7 @@
 package dao;
 
 
-import java.sql.Connection; 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,12 +11,11 @@ import java.util.List;
 
 import rfc.ContenedoraInformacion;
 import rfc.Criterio;
+import rfc.Criterio.Agregaciones;
 import rfc.CriterioAgregacion;
 import rfc.CriterioOrden;
 import rfc.CriterioVerdad;
 import rfc.CriterioVerdadHaving;
-import rfc.Criterio.Agregaciones;
-import vos.*;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación utilizando todos los criterios para requerimientos de búsqueda.

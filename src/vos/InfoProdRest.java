@@ -1,6 +1,7 @@
 package vos;
 
 import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -41,10 +42,7 @@ public class InfoProdRest {
 	private Date fechaFin;
 	
 	/**
-	 * Producto que se estÔøΩ describiendo.
-=======
-	 * Producto que se estÔøΩ describiendo.
->>>>>>> 9e38f927db53a3dc18ba1f5b52b61a0e5825d595
+	 * Producto que se est· describiendo.
 	 */
 	@JsonProperty(value="producto")
 	private Producto producto;
@@ -54,17 +52,25 @@ public class InfoProdRest {
 	 */
 	@JsonProperty(value="restaurante")
 	private RestauranteMinimum restaurante;
+
 	/**
 	 * Cantidad m√°xima del producto
 	 */
-	@JsonProperty("cantidadMaxima")
+	@JsonProperty(value="cantidadMaxima")
 	private int cantidadMaxima;
 
+	/**
+	 * Productos que pueden sustituir a este.
+	 */
+	@JsonProperty(value="sustitutos")
+	private List<Producto> sustitutos;
+	
 	public InfoProdRest(@JsonProperty(value="costo") Double costo, @JsonProperty(value="precio") Double precio,
 			@JsonProperty(value="disponibilidad") Integer disponibilidad, 
 			@JsonProperty(value="fechaInicio") Date fechaInicio, @JsonProperty(value="fechaFin") Date fechaFin,
 			@JsonProperty(value="producto") Producto producto,
-			@JsonProperty(value="restaurante") RestauranteMinimum restaurante,@JsonProperty(value="cantidadMaxima")int cantidadMaxima) {
+			@JsonProperty(value="restaurante") RestauranteMinimum restaurante, @JsonProperty(value="cantidadMaxima") int cantidadMaxima,
+			@JsonProperty(value="sustitutos") List<Producto> sustitutos) {
 		this.costo = costo;
 		this.precio = precio;
 		this.disponibilidad = disponibilidad;
@@ -73,6 +79,7 @@ public class InfoProdRest {
 		this.producto = producto;
 		this.restaurante = restaurante;
 		this.cantidadMaxima = cantidadMaxima;
+		this.sustitutos = sustitutos;
 	}
 
 	public Double getCosto() {
@@ -157,5 +164,36 @@ public class InfoProdRest {
 	public void setCantidadMaxima(int cantidadMaxima) {
 		this.cantidadMaxima = cantidadMaxima;
 	}	
+	
+	public List<Producto> getSustitutos() {
+		return sustitutos;
+	}
+	
+	public void setSustitutos(List<Producto> sustitutos) {
+		this.sustitutos = sustitutos;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		InfoProdRest other = (InfoProdRest) obj;
+		if (producto == null) {
+			if (other.producto != null)
+				return false;
+		} else if (!producto.equals(other.producto))
+			return false;
+		if (restaurante == null) {
+			if (other.restaurante != null)
+				return false;
+		} else if (!restaurante.equals(other.restaurante))
+			return false;
+		return true;
+	}
+	
 	
 }
