@@ -630,7 +630,6 @@ public class DAOTablaCuenta {
 				marcarPagada(numCuenta);
 			}
 		}
-		// TODO Auto-generated method stub
 		
 	}
 	/**
@@ -643,6 +642,72 @@ public class DAOTablaCuenta {
 		String sql="UPDATE CUENTA SET PAGADA='1' WHERE NUMEROCUENTA LIKE '"+numCuenta+"'";
 		PreparedStatement prep = conn.prepareStatement(sql);
 		prep.executeQuery();
+		
+	}
+
+	/**
+	 * Permite cancelar los pedidos de cuenta por restaurante.<br>
+	 * @param c Cuenta.<br>
+	 * @param nombreRestaurante Nombre del restaurante
+	 * @throws SQLException Si hay errores en la BD.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	public void cancelarPedidosCuentaPorRestaurante(Cuenta c,String nombreRestaurante) throws SQLException, Exception {
+		boolean productoVacio=eliminarProductosPorRestaurante(c,nombreRestaurante);
+		boolean menuVacio=eliminarMenusPorRestaurante(c, nombreRestaurante);
+		if(productoVacio && menuVacio)
+		{
+			String sql = "DELETE FROM CUENTA";
+			sql += " WHERE NUMEROCUENTA = '" + c.getNumeroCuenta()+"'";
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			prepStmt.executeQuery();
+		}
+				
+	}
+	/**
+	 * Elimina pedidos de menú por restaurante.<br>
+	 * @param c Cuenta.<br>
+	 * @param nombreRestaurante Nombre del restaurante.<br>
+	 * @throws SQLException Excepción de BD.<br>
+	 * @throws Exception Excepción cualquiera.
+	 */
+	private boolean eliminarMenusPorRestaurante(Cuenta c, String nombreRestaurante) throws SQLException, Exception {
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		dao.setConn(conn);
+		List<PedidoMenu> list=dao.buscarMenusPorNumCuenta(c.getNumeroCuenta());
+		for(PedidoMenu p:list)
+		{
+			if(p.getEntregado() && p.getMenu().getRestaurante().getNombre().equals(nombreRestaurante)) throw new Exception("El pedido de producto del restaurante "+nombreRestaurante+" ya ha sido entregado");
+		}
+		dao.eliminarPedidoMenusPorRestaurante(c,nombreRestaurante);
+		list=dao.buscarMenusPorNumCuenta(c.getNumeroCuenta());
+		dao.cerrarRecursos();
+		if(list==null || list.isEmpty()) return true;
+		else return false;
+	}
+	/**
+	 * Elimina pedidos de producto por restaurante.<br>
+	 * @param c Cuenta.<br>
+	 * @param nombreRestaurante Nombre del restaurante.<br>
+	 * @return 
+	 * @throws SQLException Excepción de BD.<br>
+	 * @throws Exception Excepción cualquiera.
+	 */
+	private boolean eliminarProductosPorRestaurante(Cuenta c, String nombreRestaurante) throws SQLException, Exception {
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		dao.setConn(conn);
+		List<PedidoProd> list=dao.buscarProductosPorNumCuenta(c.getNumeroCuenta());
+		for(PedidoProd p:list)
+		{
+			if(p.getEntregado() && p.getPlato().getRestaurante().getNombre().equals(nombreRestaurante)) throw new Exception("El pedido de producto del restaurante "+nombreRestaurante+" ya ha sido entregado");
+		}
+		dao.eliminarPedidoProdPorRestaurante(c,nombreRestaurante);
+		list=dao.buscarProductosPorNumCuenta(c.getNumeroCuenta());
+		dao.cerrarRecursos();
+		if(list==null || list.isEmpty()) return true;
+		else return false;
 		
 	}
 	

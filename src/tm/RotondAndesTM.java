@@ -1184,9 +1184,10 @@ public class RotondAndesTM {
 	/**
 	 * Borra las cuentas de una mesa<br>
 	 * @param Mesa cuyas cuentas se van a borrar.<br>
+	 * @param Nombre del restaurante cuyas cuentas se van a borrar.<br>
 	 * @throws Exception Si existe algÃºn error
 	 */
-	public List<CuentaMinimum> mesaBorrarCuentasActivasPorMesa(Mesa mesa) throws Exception
+	public List<CuentaMinimum> mesaBorrarCuentasActivasPorMesa(Mesa mesa, String nombreRestaurante) throws Exception
 	{	List<CuentaMinimum> list=new ArrayList<>();
 		DAOTablaMesa dao = new DAOTablaMesa();
 		try
@@ -1194,7 +1195,7 @@ public class RotondAndesTM {
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
-			list=dao.borrarCuentasActivasMesa(mesa);
+			list=dao.borrarCuentasActivasPorRestaurante(mesa, nombreRestaurante);
 			conn.commit();
 		}
 		catch (SQLException e) {
@@ -1438,10 +1439,10 @@ public class RotondAndesTM {
 	}
 	
 	/**
-	 * Método que ordena los pedidos de producto pedidos en la mesa dada.
+	 * Mï¿½todo que ordena los pedidos de producto pedidos en la mesa dada.
 	 * @param pedidos Pedidos a ordenar
 	 * @param mesa Mesa que hace los pedidos
-	 * @throws Exception Si algo falla en la ejecucción. El tal caso no se hace ningún cambio a la BD.
+	 * @throws Exception Si algo falla en la ejecucciï¿½n. El tal caso no se hace ningï¿½n cambio a la BD.
 	 */
 	public void mesaRegistrarPedidosProducto(List<PedidoProd> pedidos, Mesa mesa) throws Exception {
 		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
@@ -1487,10 +1488,10 @@ public class RotondAndesTM {
 	}
 	
 	/**
-	 * Método que ordena los pedidos de menu pedidos en la mesa dada.
+	 * Mï¿½todo que ordena los pedidos de menu pedidos en la mesa dada.
 	 * @param pedidos Pedidos a ordenar
 	 * @param mesa Mesa que hace los pedidos
-	 * @throws Exception Si algo falla en la ejecucción. El tal caso no se hace ningún cambio a la BD.
+	 * @throws Exception Si algo falla en la ejecucciï¿½n. El tal caso no se hace ningï¿½n cambio a la BD.
 	 */	
 	public void mesaRegistrarPedidosMenu(List<PedidoMenu> pedidos, Mesa mesa) throws Exception{
 		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
@@ -1535,9 +1536,9 @@ public class RotondAndesTM {
 	}
 	
 	/**
-	 * Método que registra el servicio de los pedidos de cierta mesa.
+	 * Mï¿½todo que registra el servicio de los pedidos de cierta mesa.
 	 * @param mesa mesa de la cual se registran los pedidos.
-	 * @throws Exception Si hay algún error en la operación. El tal caso no se hace ningún cambio a la BD.
+	 * @throws Exception Si hay algï¿½n error en la operaciï¿½n. El tal caso no se hace ningï¿½n cambio a la BD.
 	 */
 	public void mesaRegistrarServicio(Mesa mesa) throws Exception{
 		try
@@ -6618,7 +6619,7 @@ public class RotondAndesTM {
 				InfoIngRest original = infoIngRestBuscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoProd.getPlato().getRestaurante().getNombre());
 				if(!pedidoProd.getPlato().getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto())) {
 					conn.rollback();
-					throw new Exception("La sustitución pedida no es válida.");
+					throw new Exception("La sustituciï¿½n pedida no es vï¿½lida.");
 				}
 				daoIngrediente.addSustitucionIngrediente(s, pedidoProd);
 			}
@@ -6897,7 +6898,7 @@ public class RotondAndesTM {
 				InfoProdRest original = infoProdRestBuscarInfoProdRestsPorIdYRestaurante(s.getOriginal().getId(), menu.getRestaurante().getNombre());
 				if(!menu.getPlatos().contains(original) || !original.getSustitutos().contains(s.getSustituto())) {
 					conn.rollback();
-					throw new Exception("La sustitución pedida no es válida.");
+					throw new Exception("La sustituciï¿½n pedida no es vï¿½lida.");
 				}
 				daoProducto.addSustitucionProducto(s, pedidoMenu);
 			}
@@ -6907,7 +6908,7 @@ public class RotondAndesTM {
 				InfoProdRest producto = infoProdRestBuscarInfoProdRestsPorIdYRestaurante(s.getProducto().getId(), menu.getRestaurante().getNombre());
 				InfoIngRest original = infoIngRestBuscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoMenu.getMenu().getRestaurante().getNombre());
 				if(!menu.getPlatos().contains(producto) || !producto.getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto()))
-					throw new Exception("La sustitución pedida no es válida.");
+					throw new Exception("La sustituciï¿½n pedida no es vï¿½lida.");
 				daoIngrediente.addSustitucionIngredienteEnProducto(s, pedidoMenu);
 			}
 
