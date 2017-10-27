@@ -203,7 +203,7 @@ public class MesaServices {
 			{
 				throw new Exception("El usuario no tiene permitido usar el sistema");
 			}
-			list=tm.mesaBorrarCuentasActivasPorMesa(mesa);
+			list=tm.mesaBorrarCuentasActivasPorMesa(mesa,u.getRestaurante().getNombre());
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

@@ -346,7 +346,7 @@ public class DAOTablaMesa {
 		 * @throws SQLException Error en la BD.<br>
 		 * @throws Exception Cualquier otro error.
 		 */
-	public List<CuentaMinimum> borrarCuentasActivasMesa(Mesa mesa) throws SQLException, Exception {
+	public List<CuentaMinimum> borrarCuentasActivasPorRestaurante(Mesa mesa, String nombreRestaurante) throws SQLException, Exception {
 		DAOTablaCuenta dao= new DAOTablaCuenta();
 		dao.setConn(conn);
 		Cuenta cuenta;
@@ -354,7 +354,7 @@ public class DAOTablaMesa {
 		for(CuentaMinimum c:mesa.getCuentas())
 		{
 			cuenta=dao.buscarCuentasPorNumeroDeCuenta(c.getNumeroCuenta());
-			dao.deleteCuenta(cuenta,true);
+			dao.cancelarPedidosCuentaPorRestaurante(cuenta, nombreRestaurante);
 		}
 		dao.cerrarRecursos();
 		return mesa.getPagadas();

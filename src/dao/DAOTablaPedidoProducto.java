@@ -308,6 +308,18 @@ public class DAOTablaPedidoProducto {
 			if(rs.getString("ENTREGADO").equals("0")) return true;
 		}
 		return false;
+	}
+	/**
+	 * Elimina todos los pedidos de productos por restaurante en una cuenta específica.<br>
+	 * @param c Cuenta.<br>
+	 * @param nombreRestaurante Nombre del restaurante.<br>
+	 * @throws SQLException Si hay errores en la BD.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	public void eliminarPedidoProdPorRestaurante(Cuenta c, String nombreRestaurante) throws SQLException, Exception{
+		String sql = "DELETE FROM PEDIDO_PROD WHERE NUMERO_CUENTA LIKE '" + c.getNumeroCuenta() + "' AND NOMBRE_RESTAURANTE LIKE '"+nombreRestaurante+"'";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.executeQuery();
 	}	
 
 }

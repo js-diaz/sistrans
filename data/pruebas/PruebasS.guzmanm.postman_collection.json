@@ -3459,6 +3459,45 @@
 								"description": null
 							},
 							"response": []
+						},
+						{
+							"name": "Borra la cuenta agregada copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0"
+									},
+									{
+										"key": "preferencia",
+										"value": "200",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
+								},
+								"url": "localhost:8080/VideoAndes/rest/cuentas",
+								"description": null
+							},
+							"response": []
 						}
 					],
 					"_postman_isSubFolder": true
@@ -6371,7 +6410,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": " {\n \t\"id\":101,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
+									"raw": " {\n \t \"id\": 101,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 0,\n        \"nombre\": \"Nueva\"\n    },\n    \"cuentas\": [],\n    \"pagadas\": []\n }"
 								},
 								"url": "localhost:8080/VideoAndes/rest/mesas",
 								"description": ""
@@ -6685,7 +6724,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": " {\n \t\"id\":103,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
+									"raw": " {\n \t\"id\":103,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    },\n    \"cuentas\": [],\n    \"pagadas\": []\n }"
 								},
 								"url": "localhost:8080/VideoAndes/rest/mesas",
 								"description": ""
@@ -7042,7 +7081,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": " {\n \t\"id\":103,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
+									"raw": " {\n \t\"id\":103,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    },\n    \"cuentas\": [],\n    \"pagadas\": []\n }"
 								},
 								"url": "localhost:8080/VideoAndes/rest/mesas",
 								"description": ""
@@ -7347,7 +7386,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": " {\n \t\"id\":103,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
+									"raw": " {\n \t\"id\":103,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    },\n    \"cuentas\": [],\n    \"pagadas\": []\n }"
 								},
 								"url": "localhost:8080/VideoAndes/rest/mesas",
 								"description": ""

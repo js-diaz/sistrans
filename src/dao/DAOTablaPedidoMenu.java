@@ -355,6 +355,19 @@ public class DAOTablaPedidoMenu {
 		}
 		return false;
 	}
+	/**
+	 * Elimina todos los pedidos de menús por restaurante en una cuenta específica.<br>
+	 * @param c Cuenta.<br>
+	 * @param nombreRestaurante Nombre del restaurante.<br>
+	 * @throws SQLException Si hay errores en la BD.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	public void eliminarPedidoMenusPorRestaurante(Cuenta c, String nombreRestaurante) throws SQLException, Exception{
+		String sql = "DELETE FROM PEDIDO_MENU WHERE NUMERO_CUENTA LIKE '" + c.getNumeroCuenta() + "' AND NOMBRE_RESTAURANTE LIKE '"+nombreRestaurante+"'";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.executeQuery();
+		
+	}
 
 
 }
