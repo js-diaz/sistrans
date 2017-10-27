@@ -1,2 +1,0 @@
-insert into INFO_PROD_REST (id_producto, nombre_restaurante, precio, costo, disponibilidad, fecha_inicio, fecha_fin, cantidad_maxima) values (34, 'Tazzy', 3.64, 1.07, 45, TO_DATE('2015-03-09 17:43:03', 'yyyy-MM-dd hh24:mi:ss'),TO_DATE('2018-03-10 18:47:48', 'yyyy-MM-dd hh24:mi:ss'), 10000);
-insert into SUSTITUTOS_INGREDIENTE (id_ingrediente, id_sustituto, nombre_restaurante) values (96, 62, 'Tazzy');

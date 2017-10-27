@@ -94,7 +94,7 @@ public class RotondAndesTM {
 	 * Atributo que guarda el driver que se va a usar para conectarse a la base de datos.
 	 */
 	private String driver;
-	
+
 	/**
 	 * conexion a la base de datos
 	 */
@@ -314,13 +314,13 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	//CategoriaProducto
-	
+
 	//CategoriaMenu
-	
+
 	//CategoriaRestaurante
-	
+
 	//Condiciones
 	/**
 	 * Retorna todas las condiciones del sistema.<br>
@@ -376,7 +376,7 @@ public class RotondAndesTM {
 		try
 		{
 			this.conn=darConexion();
-			
+
 			dao.setConn(conn);
 			c=dao.buscarCondicionTecnicasPorName(name);
 		}
@@ -419,7 +419,7 @@ public class RotondAndesTM {
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
-			
+
 			dao.addCondicionTecnica(c);
 		}
 		catch (SQLException e) {
@@ -506,7 +506,7 @@ public class RotondAndesTM {
 			this.conn=darConexion();
 			dao.setConn(conn);
 			list=dao.consultarZona(nombreZona);
-			
+
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -533,7 +533,7 @@ public class RotondAndesTM {
 			}
 		}
 		return list;
-		
+
 	}
 	/**
 	 * Consulta las zonas que cumplen con la condición.<br>
@@ -1189,42 +1189,42 @@ public class RotondAndesTM {
 	 */
 	public List<CuentaMinimum> mesaBorrarCuentasActivasPorMesa(Mesa mesa, String nombreRestaurante) throws Exception
 	{	List<CuentaMinimum> list=new ArrayList<>();
-		DAOTablaMesa dao = new DAOTablaMesa();
+	DAOTablaMesa dao = new DAOTablaMesa();
+	try
+	{
+		this.conn=darConexion();
+		conn.setAutoCommit(false);
+		dao.setConn(conn);
+		list=dao.borrarCuentasActivasMesa(mesa);
+		conn.commit();
+	}
+	catch (SQLException e) {
+		System.err.println("SQLException:" + e.getMessage());
+		e.printStackTrace();
+		conn.rollback();
+		throw e;
+	} 
+	catch (Exception e) {
+		System.err.println("GeneralException:" + e.getMessage());
+		e.printStackTrace();
+		conn.rollback();
+		throw e;
+	}
+	finally
+	{
 		try
 		{
-			this.conn=darConexion();
-			conn.setAutoCommit(false);
-			dao.setConn(conn);
-			list=dao.borrarCuentasActivasPorRestaurante(mesa, nombreRestaurante);
-			conn.commit();
+			dao.cerrarRecursos();
+			if(this.conn!=null) this.conn.close();
 		}
-		catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			conn.rollback();
-			throw e;
-		} 
-		catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			conn.rollback();
-			throw e;
-		}
-		finally
+		catch(SQLException exception)
 		{
-			try
-			{
-				dao.cerrarRecursos();
-				if(this.conn!=null) this.conn.close();
-			}
-			catch(SQLException exception)
-			{
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
+			System.err.println("SQLException closing resources:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
 		}
-		return list;
+	}
+	return list;
 	}
 	/**
 	 * Retorna una lista de mesas en el sistema.<br>
@@ -1437,7 +1437,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	/**
 	 * M�todo que ordena los pedidos de producto pedidos en la mesa dada.
 	 * @param pedidos Pedidos a ordenar
@@ -1484,9 +1484,9 @@ public class RotondAndesTM {
 				throw exception;
 			}
 		}
-	
+
 	}
-	
+
 	/**
 	 * M�todo que ordena los pedidos de menu pedidos en la mesa dada.
 	 * @param pedidos Pedidos a ordenar
@@ -1534,19 +1534,21 @@ public class RotondAndesTM {
 			}
 		}		
 	}
-	
+
 	/**
 	 * M�todo que registra el servicio de los pedidos de cierta mesa.
 	 * @param mesa mesa de la cual se registran los pedidos.
 	 * @throws Exception Si hay alg�n error en la operaci�n. El tal caso no se hace ning�n cambio a la BD.
 	 */
 	public void mesaRegistrarServicio(Mesa mesa) throws Exception{
+		DAOTablaCuenta dao = new DAOTablaCuenta();
 		try
 		{
 			this.conn = darConexion();
 			conn.setAutoCommit(false);
+			dao.setConn(conn);
 			for(CuentaMinimum cuenta : mesa.getCuentas()) {
-				cuentaPagarCuenta(cuenta.getNumeroCuenta());
+				dao.pagarCuenta(cuenta.getNumeroCuenta());
 			}
 			conn.commit();
 		}
@@ -1564,6 +1566,7 @@ public class RotondAndesTM {
 		{
 			try
 			{
+				dao.cerrarRecursos();
 				if(this.conn!=null) this.conn.close();
 			}
 			catch(SQLException exception)
@@ -1574,7 +1577,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	//Ingrediente
 	/**
 	 * Retorna una lista de ingredientes en el sistema.<br>
@@ -1780,8 +1783,8 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
-	
+
+
 	//Preferencia
 	/**
 	 * Retorna preferencias del sistema.<br>
@@ -1837,7 +1840,7 @@ public class RotondAndesTM {
 		try
 		{
 			this.conn=darConexion();
-			
+
 			dao.setConn(conn);
 			p=dao.buscarPreferenciaPorId(id);
 		}
@@ -1920,17 +1923,17 @@ public class RotondAndesTM {
 	{
 		DAOTablaPreferencia dao = new DAOTablaPreferencia();
 		if(p.getCategorias()!=null)
-		for(Categoria c: p.getCategorias())
-		{
-			if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
-				throw new Exception("La categoría del usuario no existe "+c.getNombre());
-		}
+			for(Categoria c: p.getCategorias())
+			{
+				if(categoriaBuscarCategoriasPorName(c.getNombre())==null)
+					throw new Exception("La categoría del usuario no existe "+c.getNombre());
+			}
 		if(p.getZonaMinimums()!=null)
-		for(ZonaMinimum z: p.getZonaMinimums())
-		{
-			if(zonaBuscarZonasPorName(z.getNombre())==null)
-				throw new Exception("La zona del usuario no existe "+z.getNombre());
-		}
+			for(ZonaMinimum z: p.getZonaMinimums())
+			{
+				if(zonaBuscarZonasPorName(z.getNombre())==null)
+					throw new Exception("La zona del usuario no existe "+z.getNombre());
+			}
 		try
 		{
 			this.conn=darConexion();
@@ -2148,7 +2151,7 @@ public class RotondAndesTM {
 	public void preferenciaCategoriaInsertarPreferenciasPorCategoria(Long idUsuario,List<Categoria> categorias) throws Exception
 	{
 		DAOTablaPreferenciaCategoria dao = new DAOTablaPreferenciaCategoria();
-		
+
 		try
 		{
 			this.conn=darConexion();
@@ -2317,7 +2320,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	///PreferenciaZona
 	/**
 	 * Retorna un listado de zonas para el id de preferencia.<br>
@@ -2431,7 +2434,7 @@ public class RotondAndesTM {
 			e.printStackTrace();
 			conn.rollback();
 			throw e;
-			
+
 		}
 		finally
 		{
@@ -2932,7 +2935,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Da los productos mas ofrecidos del sistema.<br>
 	 * @return Productos en lista.<br>
@@ -2974,7 +2977,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Da los productos mas vendidos del sistema.<br>
 	 * @return Productos en lista.<br>
@@ -3016,7 +3019,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Da los productos mas vendidos en una zona particular.<br>
 	 * @param nombreZona nombre de la zona a revisar.
@@ -3061,7 +3064,7 @@ public class RotondAndesTM {
 	}
 
 
-	
+
 	//Rol
 	/**
 	 * Da los roles en el sistema.<br>
@@ -3312,7 +3315,7 @@ public class RotondAndesTM {
 			}
 		}
 		return tipo;
-		
+
 	}
 	/**
 	 * Agrega un nuevo tipo al sistema.<br>
@@ -3733,7 +3736,7 @@ public class RotondAndesTM {
 				throw exception;
 			}
 		}
-		
+
 	}
 	/**
 	 * Actualiza al usuario.<br>
@@ -4208,7 +4211,7 @@ public class RotondAndesTM {
 		}
 		return informacion;
 	}
-	
+
 	/**
 	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
 	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
@@ -4246,7 +4249,7 @@ public class RotondAndesTM {
 		}
 		return informacion;
 	}
-	
+
 	/**
 	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
 	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
@@ -4284,7 +4287,7 @@ public class RotondAndesTM {
 		return informacion;
 	}
 
-	
+
 	//Restaurante
 	/**
 	 * Retorna las restaurantes del sistema.<br>
@@ -4387,20 +4390,20 @@ public class RotondAndesTM {
 		{
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
-			
+
 			usuario.setRestaurante(new RestauranteMinimum(restaurante.getNombre(), restaurante.getPagWeb()));
 			daoU.setConn(conn);
 			usuario.setRol(Rol.LOCAL);
 			daoU.addUsuario(usuario);
-			
+
 			dao.setConn(conn);
 			UsuarioMinimum rep=(UsuarioMinimum) usuario;
 			restaurante.setRepresentante(rep);
 			dao.addRestaurante(restaurante);
 			conn.commit();
-			
-			
-			
+
+
+
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -4486,7 +4489,7 @@ public class RotondAndesTM {
 			Restaurante r=dao.darRestaurantePorNombre(restaurante);			
 			daoU.setConn(conn);
 			daoU.deleteUsuario(new Usuario(r.getRepresentante().getNombre(), r.getRepresentante().getId(), r.getRepresentante().getCorreo(), r.getRepresentante().getRol(), null, null, null));
-			
+
 			conn.commit();
 		}
 		catch (SQLException e) {
@@ -4524,38 +4527,38 @@ public class RotondAndesTM {
 	 * @throws Exception Si sucede algún error.
 	 */
 	public void restauranteSurtirProductos(String nombre) throws Exception {
-			DAOTablaRestaurante dao= new DAOTablaRestaurante();
+		DAOTablaRestaurante dao= new DAOTablaRestaurante();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.surtirRestaurante(nombre);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
 			try
 			{
-				this.conn=darConexion();
-				dao.setConn(conn);
-				dao.surtirRestaurante(nombre);
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
 			}
-			catch (SQLException e) {
-				System.err.println("SQLException:" + e.getMessage());
-				e.printStackTrace();
-				throw e;
-			} 
-			catch (Exception e) {
-				System.err.println("GeneralException:" + e.getMessage());
-				e.printStackTrace();
-				throw e;
-			}
-			finally
+			catch(SQLException exception)
 			{
-				try
-				{
-					dao.cerrarRecursos();
-					if(this.conn!=null) this.conn.close();
-				}
-				catch(SQLException exception)
-				{
-					System.err.println("SQLException closing resources:" + exception.getMessage());
-					exception.printStackTrace();
-					throw exception;
-				}
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
 			}
 		}
+	}
 	/**
 	 * Retorna una lista de contenedora de información para el restaurante a nivel financiero.<br>
 	 * @param restaurante Nombre del restaurante.<br>
@@ -4684,7 +4687,7 @@ public class RotondAndesTM {
 		}
 		return z;
 	}
-	
+
 	/**
 	 * Agrega una menu.<br>
 	 * @param menu Menu.<br>
@@ -4942,7 +4945,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	/**
 	 * Actualiza una infoProdRest.<br>
 	 * @param infoProdRest InfoProdRest.<br>
@@ -5021,7 +5024,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	//InfoIngRest	
 	/**
 	 * Retorna las infoIngRests del sistema.<br>
@@ -5225,7 +5228,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	///PerteneceAMenu
 	/**
 	 * Retorna un listado de menus para un producto de infoProdRest.<br>
@@ -5313,7 +5316,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Borra infoProdRests de menu por id.<br>
 	 * @param producto id del producto.<br>
@@ -5479,7 +5482,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Retorna productos por una ingrediente dada.<br>
 	 * @param ingrediente Id del ingrediente.<br>
@@ -5522,7 +5525,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Borra productos de ingrediente por id.<br>
 	 * @param producto id del producto.<br>
@@ -5685,7 +5688,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Retorna productos por una categoria dada.<br>
 	 * @param categoria Nombre de la categoria.<br>
@@ -5728,7 +5731,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Borra productos de categoria por id.<br>
 	 * @param producto id del producto.<br>
@@ -5768,7 +5771,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	/**
 	 * Modifica las productos si se elimina una categoria.<br>
 	 * @param categoria nombre del categoria.<br>
@@ -5848,7 +5851,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	///CategoriaRestaurante
 	/**
 	 * Retorna un listado de categorias para un restaurante de restaurante.<br>
@@ -5892,7 +5895,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Retorna restaurantes por una categoria dada.<br>
 	 * @param categoria nombre de la categoria.<br>
@@ -5935,7 +5938,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Borra restaurantes de categoria por id.<br>
 	 * @param restaurante nombre del restaurante.<br>
@@ -5975,7 +5978,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	/**
 	 * Modifica las restaurantes si se elimina una categoria.<br>
 	 * @param categoria nombre de la categoria.<br>
@@ -6142,7 +6145,7 @@ public class RotondAndesTM {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Borra categorias de menu por id.<br>
 	 * @param categoria nombre del categoria.<br>
@@ -6263,7 +6266,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	//Reserva
 	/**
 	 * Retorna las reservas del sistema.<br>
@@ -6598,7 +6601,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	/**
 	 * Agrega una pedidoProd con equivalencias.<br>
 	 * @param pedidoProd PedidoProd.<br>
@@ -6607,21 +6610,24 @@ public class RotondAndesTM {
 	public void pedidoProdAddPedidoProdConEquivalencias(PedidoProdConSustituciones pedidoProd) throws Exception
 	{
 		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
-		DAOTablaSustitucionIngrediente daoIngrediente = new DAOTablaSustitucionIngrediente();
+		DAOTablaSustitucionIngrediente daoSustIng = new DAOTablaSustitucionIngrediente();
+		DAOTablaInfoIngRest daoIng = new DAOTablaInfoIngRest();
 		try
 		{
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
 			dao.addPedidoProd(pedidoProd);
-			daoIngrediente.setConn(conn);
+			PedidoProd infoPedido = dao.buscarPedidoProdsPorIdYCuenta(pedidoProd.getPlato().getProducto().getId(), pedidoProd.getPlato().getRestaurante().getNombre(), pedidoProd.getCuenta().getNumeroCuenta());
+			daoSustIng.setConn(conn);
+			daoIng.setConn(conn);
 			for(SustitucionIngrediente s : pedidoProd.getSustituciones()) {
-				InfoIngRest original = infoIngRestBuscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoProd.getPlato().getRestaurante().getNombre());
-				if(!pedidoProd.getPlato().getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto())) {
+				InfoIngRest original = daoIng.buscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoProd.getPlato().getRestaurante().getNombre());
+				if(!infoPedido.getPlato().getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto())) {
 					conn.rollback();
 					throw new Exception("La sustituci�n pedida no es v�lida.");
 				}
-				daoIngrediente.addSustitucionIngrediente(s, pedidoProd);
+				daoSustIng.addSustitucionIngrediente(s, pedidoProd);
 			}
 			conn.commit();
 		}
@@ -6642,7 +6648,8 @@ public class RotondAndesTM {
 			try
 			{
 				dao.cerrarRecursos();
-				daoIngrediente.cerrarRecursos();
+				daoSustIng.cerrarRecursos();
+				daoIng.cerrarRecursos();
 				if(this.conn!=null) this.conn.close();
 			}
 			catch(SQLException exception)
@@ -6654,7 +6661,7 @@ public class RotondAndesTM {
 		}
 	}
 
-	
+
 	/**
 	 * Actualiza una pedidoProd.<br>
 	 * @param pedidoProd PedidoProd.<br>
@@ -6871,7 +6878,7 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 	/**
 	 * Agrega una pedidoMenu con equivalencias.<br>
 	 * @param pedidoMenu PedidoMenu.<br>
@@ -6881,35 +6888,40 @@ public class RotondAndesTM {
 	{
 		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
 		DAOTablaMenu daoMenu = new DAOTablaMenu();
-		DAOTablaSustitucionProducto daoProducto = new DAOTablaSustitucionProducto();
-		DAOTablaSustitucionIngredienteEnProducto daoIngrediente = new DAOTablaSustitucionIngredienteEnProducto();
+		DAOTablaSustitucionProducto daoSusProducto = new DAOTablaSustitucionProducto();
+		DAOTablaSustitucionIngredienteEnProducto daoSusIngrediente = new DAOTablaSustitucionIngredienteEnProducto();
+		DAOTablaInfoProdRest daoProducto = new DAOTablaInfoProdRest();
+		DAOTablaInfoIngRest daoIngrediente = new DAOTablaInfoIngRest();
 		try
 		{
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
 			dao.setConn(conn);
 			dao.addPedidoMenu(pedidoMenu);
-			
+
 			daoMenu.setConn(conn);
 			Menu menu = daoMenu.buscarMenusPorNombreYRestaurante(pedidoMenu.getMenu().getNombre(), pedidoMenu.getMenu().getRestaurante().getNombre());
-			
+
+			daoSusProducto.setConn(conn);
 			daoProducto.setConn(conn);
 			for(SustitucionProducto s : pedidoMenu.getSustitucionesProducto()) {
-				InfoProdRest original = infoProdRestBuscarInfoProdRestsPorIdYRestaurante(s.getOriginal().getId(), menu.getRestaurante().getNombre());
+				InfoProdRest original = daoProducto.buscarInfoProdRestsPorIdYRestaurante(s.getOriginal().getId(), menu.getRestaurante().getNombre());
 				if(!menu.getPlatos().contains(original) || !original.getSustitutos().contains(s.getSustituto())) {
 					conn.rollback();
 					throw new Exception("La sustituci�n pedida no es v�lida.");
 				}
-				daoProducto.addSustitucionProducto(s, pedidoMenu);
+				daoSusProducto.addSustitucionProducto(s, pedidoMenu);
 			}
-			
+
+			daoSusIngrediente.setConn(conn);
 			daoIngrediente.setConn(conn);
 			for(SustitucionIngredienteEnProducto s : pedidoMenu.getSustitucionesIngrediente()) {
-				InfoProdRest producto = infoProdRestBuscarInfoProdRestsPorIdYRestaurante(s.getProducto().getId(), menu.getRestaurante().getNombre());
-				InfoIngRest original = infoIngRestBuscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoMenu.getMenu().getRestaurante().getNombre());
+				InfoProdRest producto = daoProducto.buscarInfoProdRestsPorIdYRestaurante(s.getProducto().getId(), menu.getRestaurante().getNombre());
+				InfoIngRest original = daoIngrediente.buscarInfoIngRestsPorIdYRestaurante(s.getOriginal().getId(), pedidoMenu.getMenu().getRestaurante().getNombre());
 				if(!menu.getPlatos().contains(producto) || !producto.getProducto().getIngredientes().contains(s.getOriginal()) || !original.getSustitutos().contains(s.getSustituto()))
 					throw new Exception("La sustituci�n pedida no es v�lida.");
-				daoIngrediente.addSustitucionIngredienteEnProducto(s, pedidoMenu);
+				daoSusIngrediente.addSustitucionIngredienteEnProducto(s, pedidoMenu);
+
 			}
 
 			conn.commit();
@@ -6934,6 +6946,8 @@ public class RotondAndesTM {
 				daoMenu.cerrarRecursos();
 				daoProducto.cerrarRecursos();
 				daoIngrediente.cerrarRecursos();
+				daoSusProducto.cerrarRecursos();
+				daoSusIngrediente.cerrarRecursos();
 				if(this.conn!=null) this.conn.close();
 			}
 			catch(SQLException exception)
@@ -6945,7 +6959,7 @@ public class RotondAndesTM {
 		}
 	}
 
-	
+
 	/**
 	 * Actualiza una pedidoMenu.<br>
 	 * @param pedidoMenu PedidoMenu.<br>
@@ -7032,5 +7046,5 @@ public class RotondAndesTM {
 			}
 		}
 	}
-	
+
 }
