@@ -271,6 +271,17 @@
 				},
 				{
 					"name": "Borrar equivalencia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -360,6 +371,54 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "agregar pedido menu con sustituciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"numeroCuenta\" : \"2534685989\"},\n\t\"menu\" : {\n\t\t\"nombre\" : \"Tampflex\",\n\t\t\"costo\" : 8.48,\n\t\t\"restaurante\" : { \"nombre\" : \"Centimia\"}\n\t},\n\t\"sustitucionesProducto\" : [{\"original\" : {\"id\" : 74}, \"sustituto\" : {\"id\" : 39}}],\n\t\"sustitucionesIngrediente\" : []\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus-con-equivalencias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"cuentas",
+								"2534685989",
+								"menus-con-equivalencias"
+							]
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		},
@@ -414,6 +473,54 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "Registrar pedidos de menu de una mesa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"cantidad\" : 1,\n\t\t\"cuenta\" : {\"numeroCuenta\" : \"8418177816\"},\n\t\t\"menu\" : {\"nombre\" : \"Flowdesk\", \"restaurante\" : {\"nombre\" : \"Voonyx\"}, \"costo\" : 2.39},\n\t\t\"entregado\" : 0\n\t},\n\t{\n\t\t\"cantidad\" : 2,\n\t\t\"cuenta\" : {\"numeroCuenta\" : \"2534685989\"},\n\t\t\"menu\" : {\"nombre\" : \"Subin\", \"restaurante\" : {\"nombre\" : \"Kimia\"}, \"costo\" : 15.38},\n\t\t\"entregado\" : 0\n\t}\n]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/mesas/1/pedidos-menu",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"mesas",
+								"1",
+								"pedidos-menu"
+							]
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		},
@@ -423,6 +530,17 @@
 			"item": [
 				{
 					"name": "Registrar el servicio correctamente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]= responseCode.code===200"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -444,6 +562,47 @@
 								"rest",
 								"mesas",
 								"1",
+								"servicio"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar el servicio de una mesa inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"]= responseCode.code===500"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "0"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/mesas/1000/servicio",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"mesas",
+								"1000",
 								"servicio"
 							]
 						},
