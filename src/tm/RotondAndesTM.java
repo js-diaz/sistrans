@@ -1195,7 +1195,7 @@ public class RotondAndesTM {
 		this.conn=darConexion();
 		conn.setAutoCommit(false);
 		dao.setConn(conn);
-		list=dao.borrarCuentasActivasMesa(mesa);
+		list=dao.borrarCuentasActivasPorRestaurante(mesa, nombreRestaurante);
 		conn.commit();
 	}
 	catch (SQLException e) {

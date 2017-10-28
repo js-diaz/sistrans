@@ -2264,4 +2264,3 @@ insert into RESERVA (fecha, id_reservador, num_personas, nombre_zona, nombre_men
 
 commit;
 
-SELECT * FROM MENU WHERE NOMBRE LIKE 'It';

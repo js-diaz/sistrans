@@ -464,7 +464,7 @@ public class DAOTablaCuenta {
 				}
 				for(PedidoProd p: cont.getPedidosProd())
 				{
-					if(p.getPlato().getDisponibilidad()<p.getCantidad())
+					if(p.getPlato().getDisponibilidad()>=p.getCantidad())
 					{
 						info=p.getPlato();
 						info.setDisponibilidad(info.getDisponibilidad()-p.getCantidad());
