@@ -21,7 +21,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.RotondAndesTM;
-import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.Mesa;
 import vos.PedidoMenu;
