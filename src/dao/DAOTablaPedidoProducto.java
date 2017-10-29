@@ -178,10 +178,10 @@ public class DAOTablaPedidoProducto {
 		boolean mod=false;
 		if(pedidoProd.getCuenta().getPagada()) throw new Exception("Su cuenta ya está pagada");
 		if(pedidoProd.getEntregado()==true)
-			{
-				mod=true;
-				pagarProducto(pedidoProd);
-			}
+		{
+			mod=true;
+			pagarProducto(pedidoProd);
+		}
 		PedidoProd p=buscarPedidoProdsPorIdYCuenta(pedidoProd.getPlato().getProducto().getId(), pedidoProd.getPlato().getRestaurante().getNombre(), pedidoProd.getCuenta().getNumeroCuenta());
 		if(!mod)modificarPrecioCuenta(p.getCuenta(),p.getCantidad()*p.getPlato().getPrecio()*-1);
 		
