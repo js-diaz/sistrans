@@ -438,8 +438,9 @@ public class DAOTablaCuenta {
 			if(m.getEntregado()==true) continue;
 			menu=menus.buscarMenusPorNombreYRestaurante(m.getMenu().getNombre(), m.getMenu().getRestaurante().getNombre());
 			cp=new ContenedoraPedidosProd(menu.getNombre(),new ArrayList<PedidoProd>());
-			for(InfoProdRest p:menu.getPlatos())
-			cp.getPedidosProd().add(new PedidoProd(m.getCantidad(),m.getCuenta(),p,false));
+			for(InfoProdRest p:menu.getPlatos()) {
+				cp.getPedidosProd().add(new PedidoProd(m.getCantidad(),m.getCuenta(),p,false));
+			}
 			pedidos.add(cp);
 		}
 		menus.cerrarRecursos();

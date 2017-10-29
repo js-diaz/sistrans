@@ -466,7 +466,7 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!((u!=null && u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(restaurante)) || id .equals(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())))
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u!=null && u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(restaurante)) || id .equals(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			tm.pedidoProdCancelarPedidoProd(numeroCuenta, idProducto, restaurante);
 		} catch (Exception e) {
@@ -655,7 +655,7 @@ public class CuentaServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!((u!=null && u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(restaurante)) || id.equals(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())))
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u!=null && u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(restaurante)) || id.equals(tm.cuentaBuscarCuentasPorNumeroDeCuenta(numeroCuenta).getCliente().getId())))
 				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			tm.cancelarPedidoMenu(numeroCuenta, nombre, restaurante);
 		} catch (Exception e) {

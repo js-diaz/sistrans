@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 import vos.MenuMinimum;
 import vos.UsuarioMinimum;
@@ -141,7 +142,8 @@ public class DAOTablaReserva {
 	 */
 	private String dateFormat(Date fecha) {
 		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		return "TO_DATE('"+x.format(fecha)+"','yyyy-MM-dd hh24:mi:ss')";
+		x.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+		return "TO_DATE('"+ x.format(fecha) + "', 'yyyy-MM-dd hh24:mi:ss')";
 	}
 
 	/**
@@ -205,7 +207,7 @@ public class DAOTablaReserva {
 			int personas = rs.getInt("NUM_PERSONAS");
 			UsuarioMinimum reservador = daoUsuario.buscarUsuarioMinimumPorId(rs.getLong("ID_RESERVADOR"));
 			ZonaMinimum zona = daoZona.buscarZonasMinimumPorName(rs.getString("NOMBRE_ZONA"));
-			MenuMinimum menu = daoMenu.buscarMenusPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
+			MenuMinimum menu = rs.getString("NOMBRE_MENU") == null? null : daoMenu.buscarMenusPorNombreYRestaurante(rs.getString("NOMBRE_MENU"), rs.getString("NOMBRE_RESTAURANTE"));
 			reservas.add(new Reserva(fecha, personas, reservador, zona, menu));
 		}
 		daoUsuario.cerrarRecursos();
