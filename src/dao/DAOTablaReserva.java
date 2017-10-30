@@ -177,6 +177,7 @@ public class DAOTablaReserva {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void deleteReserva(Reserva reserva) throws SQLException, Exception {
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 		String sql = "DELETE FROM RESERVA";
 		sql += " WHERE FECHA = " + dateFormat(reserva.getFecha()) + " AND ID_RESERVADOR = " + reserva.getReservador().getId();

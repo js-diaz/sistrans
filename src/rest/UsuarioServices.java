@@ -3,9 +3,8 @@ package rest;
 
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-
+import java.util.TimeZone;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
@@ -345,6 +344,7 @@ public class UsuarioServices {
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response getReserva( @PathParam( "fecha" ) String fecha, @PathParam("idUsuario") Long idUsuario )
 	{
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
@@ -403,6 +403,7 @@ public class UsuarioServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateReserva(Reserva reserva, @HeaderParam("usuarioId") Long id, @PathParam("fecha") String fecha, @PathParam("idUsuario") Long idUsuario) {
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
@@ -435,6 +436,7 @@ public class UsuarioServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteReserva(@HeaderParam("usuarioId") Long id, @PathParam("idUsuario") Long idUsuario, @PathParam("fecha") String fecha) {
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Usuario u =null;
 		try {
