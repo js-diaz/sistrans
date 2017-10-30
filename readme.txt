@@ -1,4 +1,4 @@
-﻿ESPECIFICACIONES PARA CORRER EL PROYECTO
+ESPECIFICACIONES PARA CORRER EL PROYECTO
 1. Realizar “clean” antes de correr la aplicación web.
 2. Seleccionar “Run As”-> “Run On Server”.
 3. Esperar al despliegue de la aplicación.
@@ -551,3 +551,5 @@ RFC6: Este requerimiento se tiene en dos modalidades, para toda la rotonda y par
 y en:
 	-URL:[GET] localhost:8080/VideoAndes/rest/productos/mas-ofrecidos/{zona}
 	-Json: no aplica.
+
+Para los requerimientos de la iteración 3, se utilizó un archivo Excel, como se sugería en el enunciado del ejercicio.
