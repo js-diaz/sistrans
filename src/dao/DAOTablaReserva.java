@@ -142,7 +142,6 @@ public class DAOTablaReserva {
 	 */
 	private String dateFormat(Date fecha) {
 		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		x.setTimeZone(TimeZone.getTimeZone("Europe/London"));
 		return "TO_DATE('"+ x.format(fecha) + "', 'yyyy-MM-dd hh24:mi:ss')";
 	}
 
@@ -177,9 +176,10 @@ public class DAOTablaReserva {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void deleteReserva(Reserva reserva) throws SQLException, Exception {
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 		String sql = "DELETE FROM RESERVA";
-		sql += " WHERE FECHA = TO_DATE(" + dateFormat(reserva.getFecha()) + ") AND ID_RESERVADOR = " + reserva.getReservador().getId();
+		sql += " WHERE FECHA = TO_DATE('" + x.format(reserva.getFecha()) + "', 'yyyy-MM-dd hh24:mi:ss') AND ID_RESERVADOR = " + reserva.getReservador().getId();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
