@@ -101,9 +101,7 @@ public class DAOTablaReserva {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public Reserva buscarReservasPorFechaYUsuario(Date fecha, Long reservador) throws SQLException, Exception {
-
 		String sql = "SELECT * FROM RESERVA WHERE FECHA = " + dateFormat(fecha) + " AND ID_RESERVADOR = " + reservador;
-
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
@@ -121,9 +119,11 @@ public class DAOTablaReserva {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void addReserva(Reserva reserva) throws SQLException, Exception {
-
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		x.setTimeZone(TimeZone.getTimeZone("America/Bogota"));
+		
 		String sql = "INSERT INTO RESERVA VALUES (";
-		sql += 	dateFormat(reserva.getFecha()) + ", ";
+		sql += "TO_DATE('"+ x.format(reserva.getFecha()) + "', 'yyyy-MM-dd hh24:mi:ss')" + ", ";
 		sql += reserva.getReservador().getId() + ", ";
 		sql += "" + reserva.getPersonas() + ", ";
 		sql += "'" + reserva.getZona().getNombre() + "', ";
@@ -142,7 +142,7 @@ public class DAOTablaReserva {
 	 */
 	private String dateFormat(Date fecha) {
 		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		x.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+		x.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
 		return "TO_DATE('"+ x.format(fecha) + "', 'yyyy-MM-dd hh24:mi:ss')";
 	}
 
@@ -179,7 +179,7 @@ public class DAOTablaReserva {
 	public void deleteReserva(Reserva reserva) throws SQLException, Exception {
 
 		String sql = "DELETE FROM RESERVA";
-		sql += " WHERE FECHA = TO_DATE(" + dateFormat(reserva.getFecha()) + ") AND ID_RESERVADOR = " + reserva.getReservador().getId();
+		sql += " WHERE FECHA = " + dateFormat(reserva.getFecha()) + " AND ID_RESERVADOR = " + reserva.getReservador().getId();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
