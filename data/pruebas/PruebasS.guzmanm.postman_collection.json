@@ -2,18 +2,15 @@
 	"variables": [],
 	"info": {
 		"name": "PruebasS.guzmanm",
-		"_postman_id": "8a8b5ff7-dc85-8f9a-6ecf-bdb17d060d27",
-		"description": "",
+		"_postman_id": "924d1e67-27d6-7d45-dcc2-c4a343659f31",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "PruebasZona",
-			"description": null,
 			"item": [
 				{
 					"name": "PK",
-					"description": null,
 					"item": [
 						{
 							"name": "Agrega nueva zona",
@@ -49,8 +46,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						},
@@ -74,8 +70,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva"
 							},
 							"response": []
 						},
@@ -113,8 +108,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						},
@@ -138,8 +132,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva"
 							},
 							"response": []
 						}
@@ -148,7 +141,6 @@
 				},
 				{
 					"name": "CK",
-					"description": null,
 					"item": [
 						{
 							"name": "Capacidad ocupada inferior a 0",
@@ -184,8 +176,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": -1,\n        \"nombre\": \"Sports\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						},
@@ -223,8 +214,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": -1,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 10,\n        \"nombre\": \"Sports\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						},
@@ -262,8 +252,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 50,\n        \"nombre\": \"Sports\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						}
@@ -274,11 +263,9 @@
 		},
 		{
 			"name": "PruebasIngrediente",
-			"description": null,
 			"item": [
 				{
 					"name": "PK",
-					"description": null,
 					"item": [
 						{
 							"name": "Insertar un ingrediente",
@@ -339,8 +326,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/ingredientes/101",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/101"
 							},
 							"response": []
 						},
@@ -373,8 +359,7 @@
 									"mode": "raw",
 									"raw": "{\n        \"nombre\":\"Nuevo\",\n        \"descripcion\":\"Un ingrediente\",\n        \"traduccion\":\"An ingredient\",\n        \"id\":101\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/ingredientes",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/ingredientes"
 							},
 							"response": []
 						},
@@ -403,8 +388,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/ingredientes/101",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/101"
 							},
 							"response": []
 						}
@@ -413,7 +397,6 @@
 				},
 				{
 					"name": "CK",
-					"description": null,
 					"item": [
 						{
 							"name": "Insertar un ingrediente sin descripción",
@@ -474,8 +457,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/ingredientes/102",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/102"
 							},
 							"response": []
 						},
@@ -538,8 +520,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/ingredientes/103",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/103"
 							},
 							"response": []
 						},
@@ -602,8 +583,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/ingredientes/104",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/104"
 							},
 							"response": []
 						},
@@ -666,8 +646,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/ingredientes/105",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/105"
 							},
 							"response": []
 						},
@@ -730,8 +709,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/ingredientes/106",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/106"
 							},
 							"response": []
 						},
@@ -794,8 +772,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/ingredientes/107",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/ingredientes/107"
 							},
 							"response": []
 						}
@@ -806,11 +783,9 @@
 		},
 		{
 			"name": "PruebasCategoria",
-			"description": null,
 			"item": [
 				{
 					"name": "PK",
-					"description": null,
 					"item": [
 						{
 							"name": "Crea nueva categoría",
@@ -841,8 +816,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/categorias",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/categorias"
 							},
 							"response": []
 						},
@@ -876,8 +850,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/categorias/Nueva",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/categorias/Nueva"
 							},
 							"response": []
 						},
@@ -910,8 +883,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/categorias",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/categorias"
 							},
 							"response": []
 						},
@@ -944,8 +916,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/categorias",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/categorias"
 							},
 							"response": []
 						},
@@ -979,8 +950,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/categorias/Nueva",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/categorias/Nueva"
 							},
 							"response": []
 						}
@@ -991,11 +961,9 @@
 		},
 		{
 			"name": "PruebasUsuario",
-			"description": null,
 			"item": [
 				{
 					"name": "PK",
-					"description": null,
 					"item": [
 						{
 							"name": "Crea un nuevo usuario",
@@ -1026,8 +994,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios"
 							},
 							"response": []
 						},
@@ -1060,8 +1027,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios/221",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios/221"
 							},
 							"response": []
 						},
@@ -1094,8 +1060,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":221,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios"
 							},
 							"response": []
 						},
@@ -1128,8 +1093,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":51,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios/221",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios/221"
 							},
 							"response": []
 						}
@@ -1138,7 +1102,6 @@
 				},
 				{
 					"name": "FK",
-					"description": null,
 					"item": [
 						{
 							"name": "Crea un nuevo usuario con rol inexistente",
@@ -1169,8 +1132,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": null,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios"
 							},
 							"response": []
 						},
@@ -1203,8 +1165,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":51,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios/222",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios/222"
 							},
 							"response": []
 						},
@@ -1237,8 +1198,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios"
 							},
 							"response": []
 						},
@@ -1271,8 +1231,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios/222",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios/222"
 							},
 							"response": []
 						},
@@ -1305,8 +1264,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":222,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios"
 							},
 							"response": []
 						},
@@ -1339,8 +1297,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":51,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios/222",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios/222"
 							},
 							"response": []
 						}
@@ -1351,11 +1308,9 @@
 		},
 		{
 			"name": "PruebasPreferencia",
-			"description": null,
 			"item": [
 				{
 					"name": "PK",
-					"description": null,
 					"item": [
 						{
 							"name": "Crea un nuevo usuario",
@@ -1386,8 +1341,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios"
 							},
 							"response": []
 						},
@@ -1420,8 +1374,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/223",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/223"
 							},
 							"response": []
 						},
@@ -1454,8 +1407,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/223",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/223"
 							},
 							"response": []
 						},
@@ -1488,8 +1440,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/223",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/223"
 							},
 							"response": []
 						},
@@ -1522,8 +1473,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/223",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/223"
 							},
 							"response": []
 						}
@@ -1532,7 +1482,6 @@
 				},
 				{
 					"name": "FK",
-					"description": null,
 					"item": [
 						{
 							"name": "Agrega preferencvia copy",
@@ -1563,8 +1512,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/1000",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/1000"
 							},
 							"response": []
 						},
@@ -1597,8 +1545,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/1000",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/1000"
 							},
 							"response": []
 						},
@@ -1620,8 +1567,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/223",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/223"
 							},
 							"response": []
 						},
@@ -1654,8 +1600,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/223",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/223"
 							},
 							"response": []
 						},
@@ -1688,8 +1633,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/223",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/223"
 							},
 							"response": []
 						},
@@ -1722,8 +1666,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"precioInicial\": 80,\n        \"precioFinal\": 180\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/223",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/223"
 							},
 							"response": []
 						},
@@ -1756,8 +1699,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"id\":223,\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios"
 							},
 							"response": []
 						}
@@ -1768,11 +1710,9 @@
 		},
 		{
 			"name": "PruebasProducto",
-			"description": null,
 			"item": [
 				{
 					"name": "PK",
-					"description": null,
 					"item": [
 						{
 							"name": "Nuevo producto",
@@ -1803,8 +1743,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -1837,8 +1776,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/101",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/101"
 							},
 							"response": []
 						},
@@ -1871,8 +1809,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n        \"id\":101,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -1905,8 +1842,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/101",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/101"
 							},
 							"response": []
 						}
@@ -1915,7 +1851,6 @@
 				},
 				{
 					"name": "FK",
-					"description": null,
 					"item": [
 						{
 							"name": "Nuevo producto con tipo inexistente",
@@ -1946,8 +1881,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -1981,8 +1915,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/102",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/102"
 							},
 							"response": []
 						},
@@ -2015,8 +1948,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"ENTRADA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -2050,8 +1982,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/103",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/103"
 							},
 							"response": []
 						},
@@ -2084,8 +2015,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"ENTRADA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n        \"id\":\"103\",\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -2119,8 +2049,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/103",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/103"
 							},
 							"response": []
 						},
@@ -2154,8 +2083,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/tipos/ENTRADA",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/tipos/ENTRADA"
 							},
 							"response": []
 						}
@@ -2164,7 +2092,6 @@
 				},
 				{
 					"name": "CK",
-					"description": null,
 					"item": [
 						{
 							"name": "Sin descripción",
@@ -2195,8 +2122,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"BEBIDA\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -2230,8 +2156,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/104",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/104"
 							},
 							"response": []
 						},
@@ -2264,8 +2189,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"BEBIDA\",\n        \"descripcion\": \"\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -2299,8 +2223,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/105",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/105"
 							},
 							"response": []
 						},
@@ -2333,8 +2256,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"BEBIDA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -2368,8 +2290,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/106",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/106"
 							},
 							"response": []
 						},
@@ -2402,8 +2323,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"BEBIDA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -2437,8 +2357,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/107",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/107"
 							},
 							"response": []
 						},
@@ -2471,8 +2390,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"ENTRADA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -2506,8 +2424,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/108",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/108"
 							},
 							"response": []
 						},
@@ -2540,8 +2457,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"tipo\": \"ENTRADA\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n        \"id\":108,\n         \"categorias\":[],\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos"
 							},
 							"response": []
 						},
@@ -2575,8 +2491,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"personalizable\": true,\n        \"nombre\": \"Nuevo plato\",\n        \"precio\": 200,\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"nOqKROYhql\",\n        \"traduccion\": \"CdNWDkklSE\",\n        \"tiempo\": 4,\n         \"categorias\":[],\n        \"costoProduccion\": 100,\n        \"ingredientes\": [{\"nombre\": \"aeJBdjjhFK\",\n        \"descripcion\": \"SjVqIAiRRJ\",\n        \"traduccion\": \"rLWTNjQeKH\",\n        \"id\": 1}]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/productos/108",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/productos/108"
 							},
 							"response": []
 						}
@@ -2587,7 +2502,6 @@
 		},
 		{
 			"name": "PruebasRol",
-			"description": null,
 			"item": [
 				{
 					"name": "Insertar nueva PK",
@@ -2618,8 +2532,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES"
 					},
 					"response": []
 				},
@@ -2652,8 +2565,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"OPERADOR\"\n}"
 						},
-						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES"
 					},
 					"response": []
 				},
@@ -2686,8 +2598,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES"
 					},
 					"response": []
 				},
@@ -2720,8 +2631,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES"
 					},
 					"response": []
 				},
@@ -2754,8 +2664,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"OPERADOR\"\n}"
 						},
-						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/rols/ORGANIZADORES"
 					},
 					"response": []
 				},
@@ -2788,8 +2697,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/rols/HOLA",
-						"description": null
+						"url": "http://localhost:8080/VideoAndes/rest/rols/HOLA"
 					},
 					"response": []
 				},
@@ -2822,8 +2730,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"OPERADOR\"\n}"
 						},
-						"url": "localhost:8080/VideoAndes/rest/rols/HOLA",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/rols/HOLA"
 					},
 					"response": []
 				}
@@ -2831,7 +2738,6 @@
 		},
 		{
 			"name": "PruebasTipos",
-			"description": null,
 			"item": [
 				{
 					"name": "Insertar nueva PK",
@@ -2862,8 +2768,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA"
 					},
 					"response": []
 				},
@@ -2897,8 +2802,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA"
 					},
 					"response": []
 				},
@@ -2935,8 +2839,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA"
 					},
 					"response": []
 				},
@@ -2974,8 +2877,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA"
 					},
 					"response": []
 				},
@@ -3008,8 +2910,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/tipos/BEBIDA"
 					},
 					"response": []
 				},
@@ -3042,8 +2943,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/tipos/HOLA",
-						"description": null
+						"url": "http://localhost:8080/VideoAndes/rest/tipos/HOLA"
 					},
 					"response": []
 				},
@@ -3076,8 +2976,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/tipos/HOLA",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/tipos/HOLA"
 					},
 					"response": []
 				}
@@ -3085,7 +2984,6 @@
 		},
 		{
 			"name": "PruebasCondicion",
-			"description": null,
 			"item": [
 				{
 					"name": "Crea condición",
@@ -3116,8 +3014,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
-						"description": null
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/"
 					},
 					"response": []
 				},
@@ -3151,8 +3048,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/Nueva",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/Nueva"
 					},
 					"response": []
 				},
@@ -3185,8 +3081,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
-						"description": null
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/"
 					},
 					"response": []
 				},
@@ -3219,8 +3114,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
-						"description": null
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/"
 					},
 					"response": []
 				},
@@ -3254,8 +3148,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/Nueva",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/Nueva"
 					},
 					"response": []
 				}
@@ -3263,11 +3156,9 @@
 		},
 		{
 			"name": "PruebasCuenta",
-			"description": null,
 			"item": [
 				{
 					"name": "PK",
-					"description": null,
 					"item": [
 						{
 							"name": "Agrega una nueva cuenta",
@@ -3302,8 +3193,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 10.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -3340,8 +3230,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1"
 							},
 							"response": []
 						},
@@ -3378,8 +3267,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -3417,8 +3305,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -3455,8 +3342,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1"
 							},
 							"response": []
 						},
@@ -3494,8 +3380,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						}
@@ -3504,7 +3389,6 @@
 				},
 				{
 					"name": "CK",
-					"description": null,
 					"item": [
 						{
 							"name": "Agrega una nueva cuenta con número inválido",
@@ -3539,8 +3423,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"ABC\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -3577,8 +3460,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/ABC",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/ABC"
 							},
 							"response": []
 						},
@@ -3615,8 +3497,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -3653,8 +3534,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1"
 							},
 							"response": []
 						},
@@ -3691,8 +3571,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\"\n     }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						}
@@ -3701,7 +3580,6 @@
 				},
 				{
 					"name": "FK",
-					"description": null,
 					"item": [
 						{
 							"name": "Agrega una nueva cuenta con usuario inválido",
@@ -3736,8 +3614,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 300,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -3774,8 +3651,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1"
 							},
 							"response": []
 						},
@@ -3812,8 +3688,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -3850,8 +3725,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1"
 							},
 							"response": []
 						},
@@ -3888,8 +3762,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -3926,8 +3799,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n    \t\"id\": 102,\n\t\t\"correo\": \"hcarluccio0@hhs.gov\",\n    \t\"rol\": \"CLIENTE\"\n    },\n    \"mesa\":\n    {\n    \t\"id\": 109,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8\n    }\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -3964,8 +3836,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1"
 							},
 							"response": []
 						},
@@ -4002,8 +3873,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    },\n  \"mesa\":\n    {\n      \"id\": 1,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8\n    }\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -4040,8 +3910,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Brock Robelow\",\n        \"id\": 9,\n        \"correo\": \"brobelow8@princeton.edu\",\n        \"rol\": \"LOCAL\",\n        \"preferencia\": null,\n        \"historial\": null,\n        \"restaurante\": null\n    },\n    \"pedidoProdMinimum\": [],\n    \"pedidoMenuMinimum\": []}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1"
 							},
 							"response": []
 						},
@@ -4078,8 +3947,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						}
@@ -4090,7 +3958,6 @@
 		},
 		{
 			"name": "PruebasCONDICIONZONA",
-			"description": null,
 			"item": [
 				{
 					"name": "Agrega nueva zona",
@@ -4126,8 +3993,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n        ]\n}"
 						},
-						"url": "localhost:8080/VideoAndes/rest/zonas",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/zonas"
 					},
 					"response": []
 				},
@@ -4160,8 +4026,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
-						"description": null
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/"
 					},
 					"response": []
 				},
@@ -4202,8 +4067,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/"
 					},
 					"response": []
 				},
@@ -4240,8 +4104,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona"
 					},
 					"response": []
 				},
@@ -4283,8 +4146,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion"
 					},
 					"response": []
 				},
@@ -4325,8 +4187,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/"
 					},
 					"response": []
 				},
@@ -4363,8 +4224,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona"
 					},
 					"response": []
 				},
@@ -4406,8 +4266,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion"
 					},
 					"response": []
 				},
@@ -4448,8 +4307,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/"
 					},
 					"response": []
 				},
@@ -4491,8 +4349,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona"
 					},
 					"response": []
 				},
@@ -4534,8 +4391,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion"
 					},
 					"response": []
 				},
@@ -4576,8 +4432,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/"
 					},
 					"response": []
 				},
@@ -4619,8 +4474,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona"
 					},
 					"response": []
 				},
@@ -4662,8 +4516,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion"
 					},
 					"response": []
 				},
@@ -4704,8 +4557,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/"
 					},
 					"response": []
 				},
@@ -4747,8 +4599,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porZona"
 					},
 					"response": []
 				},
@@ -4790,8 +4641,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/zonas/porCondicion"
 					},
 					"response": []
 				},
@@ -4815,8 +4665,7 @@
 							"mode": "raw",
 							"raw": ""
 						},
-						"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/zonas/Nueva"
 					},
 					"response": []
 				},
@@ -4850,8 +4699,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 						},
-						"url": "localhost:8080/VideoAndes/rest/condiciones/Nueva",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/condiciones/Nueva"
 					},
 					"response": []
 				},
@@ -4884,8 +4732,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/condiciones/",
-						"description": null
+						"url": "http://localhost:8080/VideoAndes/rest/condiciones/"
 					},
 					"response": []
 				},
@@ -4923,8 +4770,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"SIN CONDICIÓN\"\n            }\n        ]\n}"
 						},
-						"url": "localhost:8080/VideoAndes/rest/zonas",
-						"description": null
+						"url": "localhost:8080/VideoAndes/rest/zonas"
 					},
 					"response": []
 				}
@@ -4932,11 +4778,9 @@
 		},
 		{
 			"name": "PruebasPreferenciaCategoria",
-			"description": null,
 			"item": [
 				{
 					"name": "PK",
-					"description": null,
 					"item": [
 						{
 							"name": "Crear nuevas preferencias para categorías",
@@ -4971,8 +4815,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias"
 							},
 							"response": []
 						},
@@ -5009,8 +4852,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia"
 							},
 							"response": []
 						},
@@ -5047,8 +4889,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias"
 							},
 							"response": []
 						},
@@ -5085,8 +4926,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia"
 							},
 							"response": []
 						},
@@ -5123,8 +4963,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia"
 							},
 							"response": []
 						},
@@ -5157,8 +4996,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios/200",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios/200"
 							},
 							"response": []
 						},
@@ -5192,8 +5030,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/categorias/Filipino",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/categorias/Filipino"
 							},
 							"response": []
 						},
@@ -5227,8 +5064,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/categorias/Cuban",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/categorias/Cuban"
 							},
 							"response": []
 						},
@@ -5262,8 +5098,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/categorias/Ute",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/categorias/Ute"
 							},
 							"response": []
 						}
@@ -5272,7 +5107,6 @@
 				},
 				{
 					"name": "FK",
-					"description": null,
 					"item": [
 						{
 							"name": "Crear nuevas preferencias para categorías copy",
@@ -5307,8 +5141,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias"
 							},
 							"response": []
 						},
@@ -5345,8 +5178,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia"
 							},
 							"response": []
 						},
@@ -5379,8 +5211,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios/300",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios/300"
 							},
 							"response": []
 						},
@@ -5417,8 +5248,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"HOLA\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias"
 							},
 							"response": []
 						},
@@ -5455,8 +5285,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia"
 							},
 							"response": []
 						},
@@ -5490,8 +5319,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/categorias/HOLA",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/categorias/HOLA"
 							},
 							"response": []
 						},
@@ -5528,8 +5356,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias"
 							},
 							"response": []
 						},
@@ -5566,8 +5393,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia"
 							},
 							"response": []
 						},
@@ -5604,8 +5430,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/categorias/porPreferencia"
 							},
 							"response": []
 						}
@@ -5616,11 +5441,9 @@
 		},
 		{
 			"name": "PruebasPreferenciaZona",
-			"description": null,
 			"item": [
 				{
 					"name": "PK",
-					"description": null,
 					"item": [
 						{
 							"name": "Crear nuevas preferencias para zonas",
@@ -5655,8 +5478,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n  },\n  {\n    \"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"Computers\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas"
 							},
 							"response": []
 						},
@@ -5693,8 +5515,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia"
 							},
 							"response": []
 						},
@@ -5731,8 +5552,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n  },\n  {\n    \"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"Computers\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas"
 							},
 							"response": []
 						},
@@ -5769,8 +5589,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia"
 							},
 							"response": []
 						},
@@ -5807,8 +5626,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia"
 							},
 							"response": []
 						},
@@ -5841,8 +5659,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios/200",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios/200"
 							},
 							"response": []
 						},
@@ -5876,8 +5693,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas/Sports",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas/Sports"
 							},
 							"response": []
 						},
@@ -5911,8 +5727,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas/Computers",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas/Computers"
 							},
 							"response": []
 						}
@@ -5921,7 +5736,6 @@
 				},
 				{
 					"name": "FK",
-					"description": null,
 					"item": [
 						{
 							"name": "Crear nuevas preferencias para categorías copy",
@@ -5956,8 +5770,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n  },\n  {\n    \"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"Computers\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas"
 							},
 							"response": []
 						},
@@ -5994,8 +5807,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia"
 							},
 							"response": []
 						},
@@ -6028,8 +5840,7 @@
 									"mode": "raw",
 									"raw": "\n    {\n        \"nombre\": \"USUARIO\",\n        \"correo\": \"fYYgBEXCii\",\n        \"rol\": \"CLIENTE\",\n        \"preferencia\": null,\n        \"historial\": [],\n        \"restaurante\": null\n    }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/usuarios/300",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/usuarios/300"
 							},
 							"response": []
 						},
@@ -6066,8 +5877,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n  },\n  {\n    \"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"HOLA\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas"
 							},
 							"response": []
 						},
@@ -6104,8 +5914,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia"
 							},
 							"response": []
 						},
@@ -6139,8 +5948,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"nombre\":\"Nueva\"\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas/HOLA",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas/HOLA"
 							},
 							"response": []
 						},
@@ -6177,8 +5985,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"capacidad\": 87,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 38,\n        \"nombre\": \"Sports\"\n  },\n  {\n    \"capacidad\": 57,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": false,\n        \"capacidadOcupada\": 17,\n        \"nombre\": \"Computers\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas"
 							},
 							"response": []
 						},
@@ -6215,8 +6022,7 @@
 									"mode": "raw",
 									"raw": "[\n  {\n    \"nombre\":\"Filipino\"\n  },\n  {\n    \"nombre\":\"Ute\"\n  },\n  {\n    \"nombre\":\"Cuban\"\n  }\n]"
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia"
 							},
 							"response": []
 						},
@@ -6253,8 +6059,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/preferencias/zonas/porPreferencia"
 							},
 							"response": []
 						}
@@ -6265,16 +6070,13 @@
 		},
 		{
 			"name": "PruebasPreferenciaZona",
-			"description": null,
 			"item": []
 		},
 		{
 			"name": "PruebasMesa",
-			"description": "",
 			"item": [
 				{
 					"name": "PK",
-					"description": "",
 					"item": [
 						{
 							"name": "Agrega nueva zona copy copy",
@@ -6310,8 +6112,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						},
@@ -6344,8 +6145,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -6378,8 +6178,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas/101",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas/101"
 							},
 							"response": []
 						},
@@ -6412,8 +6211,7 @@
 									"mode": "raw",
 									"raw": " {\n \t \"id\": 101,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 0,\n        \"nombre\": \"Nueva\"\n    },\n    \"cuentas\": [],\n    \"pagadas\": []\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -6446,8 +6244,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":101,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas/101",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas/101"
 							},
 							"response": []
 						},
@@ -6485,8 +6282,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						}
@@ -6495,7 +6291,6 @@
 				},
 				{
 					"name": "FK",
-					"description": "",
 					"item": [
 						{
 							"name": "Agrega mesa con zona inexistente",
@@ -6526,8 +6321,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -6560,8 +6354,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":101,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas/102",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas/102"
 							},
 							"response": []
 						},
@@ -6599,8 +6392,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						},
@@ -6633,8 +6425,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -6667,8 +6458,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas/103",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas/103"
 							},
 							"response": []
 						},
@@ -6692,8 +6482,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva"
 							},
 							"response": []
 						},
@@ -6726,8 +6515,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":103,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    },\n    \"cuentas\": [],\n    \"pagadas\": []\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -6760,8 +6548,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":101,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas/103",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas/103"
 							},
 							"response": []
 						},
@@ -6799,8 +6586,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						}
@@ -6809,7 +6595,6 @@
 				},
 				{
 					"name": "CK",
-					"description": "",
 					"item": [
 						{
 							"name": "Agrega nueva zona copy copy",
@@ -6845,8 +6630,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						},
@@ -6879,8 +6663,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": -1,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -6913,8 +6696,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":101,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas/104",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas/104"
 							},
 							"response": []
 						},
@@ -6947,8 +6729,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -6981,8 +6762,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas/105",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas/105"
 							},
 							"response": []
 						},
@@ -7015,8 +6795,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":105,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 9,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -7049,8 +6828,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":105,\n    \"capacidad\": -1,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -7083,8 +6861,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":103,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    },\n    \"cuentas\": [],\n    \"pagadas\": []\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -7122,8 +6899,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						}
@@ -7132,7 +6908,6 @@
 				},
 				{
 					"name": "Agregar una mesa",
-					"description": "",
 					"item": [
 						{
 							"name": "Agrega nueva zona copy copy",
@@ -7168,8 +6943,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 7,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						},
@@ -7202,8 +6976,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -7236,8 +7009,7 @@
 									"mode": "raw",
 									"raw": " {\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas/106",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas/106"
 							},
 							"response": []
 						},
@@ -7270,8 +7042,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":106,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 2,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -7295,8 +7066,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva"
 							},
 							"response": []
 						},
@@ -7329,8 +7099,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":106,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    }\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -7354,8 +7123,7 @@
 									"mode": "raw",
 									"raw": ""
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas/Nueva"
 							},
 							"response": []
 						},
@@ -7388,8 +7156,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"id\":103,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 0,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Nueva\"\n    },\n    \"cuentas\": [],\n    \"pagadas\": []\n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/mesas",
-								"description": ""
+								"url": "localhost:8080/VideoAndes/rest/mesas"
 							},
 							"response": []
 						},
@@ -7427,8 +7194,7 @@
 									"mode": "raw",
 									"raw": "{\n  \"capacidad\": 49,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 39,\n        \"nombre\": \"Nueva\",\n        \"condiciones\": [\n            {\n                \"nombre\": \"Organized\"\n            }\n        ]\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/zonas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/zonas"
 							},
 							"response": []
 						}

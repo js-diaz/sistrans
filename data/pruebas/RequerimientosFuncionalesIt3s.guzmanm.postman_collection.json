@@ -2,14 +2,13 @@
 	"variables": [],
 	"info": {
 		"name": "RequerimientosFuncionalesIt3s.guzmanm",
-		"_postman_id": "ea0a780b-e715-e74b-5ef6-5b7b617417a9",
+		"_postman_id": "436bcbef-cfee-20cc-7c28-9b79b4ccee18",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "RF13",
-			"description": "",
 			"item": [
 				{
 					"name": "Obtener el restaurante Topicstorm",
@@ -33,9 +32,11 @@
 								"disabled": true
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Topicstorm",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Topicstorm"
 					},
 					"response": []
 				},
@@ -72,8 +73,7 @@
 							"mode": "raw",
 							"raw": "{\"nombre\": \"Topicstorm\",\n    \"pagWeb\": \"https://multiply.com\",\n    \"zona\": {\n        \"capacidad\": 96,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 6,\n        \"nombre\": \"Baby\"\n    },\n    \"categorias\": [\n        {\n            \"nombre\": \"Cheyenne\"\n        }\n    ],\n    \"representante\": {\n        \"nombre\": \"Ewan Van der Son\",\n        \"id\": 35,\n        \"correo\": \"evany@jimdo.com\",\n        \"rol\": \"LOCAL\"\n    },\n    \"infoProductos\": [\n        {\n            \"costo\": 4.42,\n            \"precio\": 11.58,\n            \"disponibilidad\": 6140,\n            \"fechaInicio\": \"2017-04-03\",\n            \"fechaFin\": \"2018-04-12\",\n            \"producto\": {\n                \"personalizable\": false,\n                \"nombre\": \"Quail - Whole, Bone - In\",\n                \"tipo\": \"ACOMPANAMIENTO\",\n                \"descripcion\": \"Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.\",\n                \"traduccion\": \"Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat.\",\n                \"tiempo\": 58.5,\n                \"id\": 91,\n                \"ingredientes\": [],\n                \"categorias\": [\n                    {\n                        \"nombre\": \"Sioux\"\n                    }\n                ]\n            },\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            },\n            \"cantidadMaxima\": 10000\n        }\n    ],\n    \"infoIngredientes\": [\n        {\n            \"precioAdicion\": 2.21,\n            \"precioSustituto\": 2.52,\n            \"ingrediente\": {\n                \"nombre\": \"Wine - Rosso Toscano Igt\",\n                \"descripcion\": \"Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.\",\n                \"traduccion\": \"Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.\",\n                \"id\": 28\n            },\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        }\n    ],\n    \"menus\": [\n        {\n            \"nombre\": \"Cardguard\",\n            \"precio\": 3.53,\n            \"costo\": 18.76,\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        },\n        {\n            \"nombre\": \"Ronstring\",\n            \"precio\": 19.22,\n            \"costo\": 2.28,\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        }\n    ]\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Topicstorm",
-						"description": ""
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Topicstorm"
 					},
 					"response": []
 				},
@@ -110,8 +110,7 @@
 							"mode": "raw",
 							"raw": "{\"nombre\": \"Topicstorm\",\n    \"pagWeb\": \"https://multiply.com\",\n    \"zona\": {\n        \"capacidad\": 96,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 6,\n        \"nombre\": \"Baby\"\n    },\n    \"categorias\": [\n        {\n            \"nombre\": \"Cheyenne\"\n        }\n    ],\n    \"representante\": {\n        \"nombre\": \"Ewan Van der Son\",\n        \"id\": 35,\n        \"correo\": \"evany@jimdo.com\",\n        \"rol\": \"LOCAL\"\n    },\n    \"infoProductos\": [\n        {\n            \"costo\": 4.42,\n            \"precio\": 11.58,\n            \"disponibilidad\": 6140,\n            \"fechaInicio\": \"2017-04-03\",\n            \"fechaFin\": \"2018-04-12\",\n            \"producto\": {\n                \"personalizable\": false,\n                \"nombre\": \"Quail - Whole, Bone - In\",\n                \"precio\": 89.09,\n                \"tipo\": \"ACOMPANAMIENTO\",\n                \"descripcion\": \"Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.\",\n                \"traduccion\": \"Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat.\",\n                \"tiempo\": 58.5,\n                \"costoProduccion\": 47.02,\n                \"id\": 91,\n                \"ingredientes\": [],\n                \"categorias\": [\n                    {\n                        \"nombre\": \"Sioux\"\n                    }\n                ]\n            },\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            },\n            \"cantidadMaxima\": 10000\n        }\n    ],\n    \"infoIngredientes\": [\n        {\n            \"precioAdicion\": 2.21,\n            \"precioSustituto\": 2.52,\n            \"ingrediente\": {\n                \"nombre\": \"Wine - Rosso Toscano Igt\",\n                \"descripcion\": \"Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.\",\n                \"traduccion\": \"Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.\",\n                \"id\": 28\n            },\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        }\n    ],\n    \"menus\": [\n        {\n            \"nombre\": \"Cardguard\",\n            \"precio\": 3.53,\n            \"costo\": 18.76,\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        },\n        {\n            \"nombre\": \"Ronstring\",\n            \"precio\": 19.22,\n            \"costo\": 2.28,\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        }\n    ]\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Topicstorm",
-						"description": ""
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Topicstorm"
 					},
 					"response": []
 				},
@@ -148,8 +147,7 @@
 							"mode": "raw",
 							"raw": "{\"nombre\": \"Topicstorm\",\n    \"pagWeb\": \"https://multiply.com\",\n    \"zona\": {\n        \"capacidad\": 96,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 6,\n        \"nombre\": \"Baby\"\n    },\n    \"categorias\": [\n        {\n            \"nombre\": \"Cheyenne\"\n        }\n    ],\n    \"representante\": {\n        \"nombre\": \"Ewan Van der Son\",\n        \"id\": 35,\n        \"correo\": \"evany@jimdo.com\",\n        \"rol\": \"LOCAL\"\n    },\n    \"infoProductos\": [\n        {\n            \"costo\": 4.42,\n            \"precio\": 11.58,\n            \"disponibilidad\": 6140,\n            \"fechaInicio\": \"2017-04-03\",\n            \"fechaFin\": \"2018-04-12\",\n            \"producto\": {\n                \"personalizable\": false,\n                \"nombre\": \"Quail - Whole, Bone - In\",\n                \"tipo\": \"ACOMPANAMIENTO\",\n                \"descripcion\": \"Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.\",\n                \"traduccion\": \"Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat.\",\n                \"tiempo\": 58.5,\n                \"id\": 91,\n                \"ingredientes\": [],\n                \"categorias\": [\n                    {\n                        \"nombre\": \"Sioux\"\n                    }\n                ]\n            },\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            },\n            \"cantidadMaxima\": 10000\n        }\n    ],\n    \"infoIngredientes\": [\n        {\n            \"precioAdicion\": 2.21,\n            \"precioSustituto\": 2.52,\n            \"ingrediente\": {\n                \"nombre\": \"Wine - Rosso Toscano Igt\",\n                \"descripcion\": \"Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.\",\n                \"traduccion\": \"Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.\",\n                \"id\": 28\n            },\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        }\n    ],\n    \"menus\": [\n        {\n            \"nombre\": \"Cardguard\",\n            \"precio\": 3.53,\n            \"costo\": 18.76,\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        },\n        {\n            \"nombre\": \"Ronstring\",\n            \"precio\": 19.22,\n            \"costo\": 2.28,\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        }\n    ]\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Topicstorm",
-						"description": ""
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Topicstorm"
 					},
 					"response": []
 				}
@@ -157,11 +155,9 @@
 		},
 		{
 			"name": "RF17v1",
-			"description": "",
 			"item": [
 				{
 					"name": "Cancela de forma exitosa",
-					"description": "",
 					"item": [
 						{
 							"name": "CREA UNA NUEVA CUENTA",
@@ -196,8 +192,7 @@
 									"mode": "raw",
 									"raw": " {\n   \"pedidoProd\": [\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }\n    ],\n    \"pedidoMenu\": [\n        {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        },\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Y-Solowarm\",\n                \"precio\": 15.19,\n                \"costo\": 2.85,\n                \"restaurante\": {\n                    \"nombre\": \"Kaymbo\",\n                    \"pagWeb\": \"http://oracle.com\"\n                }\n            },\n            \"entregado\": true\n        }\n    ],\n    \"valor\": 58.15,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2017-01-18\",\n    \"cliente\": {\n        \"nombre\": \"Annabela Killeley\",\n        \"id\": 168,\n        \"correo\": \"akilleley1v@tmall.com\",\n        \"rol\": \"CLIENTE\"\n    }\n    \n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -234,8 +229,7 @@
 									"mode": "raw",
 									"raw": "{\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos"
 							},
 							"response": []
 						},
@@ -272,8 +266,7 @@
 									"mode": "raw",
 									"raw": " {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1/menus",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1/menus"
 							},
 							"response": []
 						},
@@ -311,8 +304,7 @@
 									"mode": "raw",
 									"raw": "{\n    \"pedidoProd\": [\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": 1484697600000\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": 1500076800000,\n                \"fechaFin\": 1517011200000,\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                },\n                \"cantidadMaxima\": 0\n            },\n            \"entregado\": false\n        }\n    ],\n    \"pedidoMenu\": [\n        {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": 1484697600000\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        },\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": 1484697600000\n            },\n            \"menu\": {\n                \"nombre\": \"Y-Solowarm\",\n                \"precio\": 15.19,\n                \"costo\": 2.85,\n                \"restaurante\": {\n                    \"nombre\": \"Kaymbo\",\n                    \"pagWeb\": \"http://oracle.com\"\n                }\n            },\n            \"entregado\": true\n        }\n    ],\n    \"valor\": 58.15,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": 1484697600000,\n    \"cliente\": {\n        \"nombre\": \"Annabela Killeley\",\n        \"id\": 168,\n        \"correo\": \"akilleley1v@tmall.com\",\n        \"rol\": \"CLIENTE\"\n    },\n    \"mesa\": null\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -349,8 +341,7 @@
 									"mode": "raw",
 									"raw": "{\"nombre\": \"Topicstorm\",\n    \"pagWeb\": \"https://multiply.com\",\n    \"zona\": {\n        \"capacidad\": 96,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 6,\n        \"nombre\": \"Baby\"\n    },\n    \"categorias\": [\n        {\n            \"nombre\": \"Cheyenne\"\n        }\n    ],\n    \"representante\": {\n        \"nombre\": \"Ewan Van der Son\",\n        \"id\": 35,\n        \"correo\": \"evany@jimdo.com\",\n        \"rol\": \"LOCAL\"\n    },\n    \"infoProductos\": [\n        {\n            \"costo\": 4.42,\n            \"precio\": 11.58,\n            \"disponibilidad\": 6140,\n            \"fechaInicio\": \"2017-04-03\",\n            \"fechaFin\": \"2018-04-12\",\n            \"producto\": {\n                \"personalizable\": false,\n                \"nombre\": \"Quail - Whole, Bone - In\",\n                \"precio\": 89.09,\n                \"tipo\": \"ACOMPANAMIENTO\",\n                \"descripcion\": \"Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.\",\n                \"traduccion\": \"Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat.\",\n                \"tiempo\": 58.5,\n                \"costoProduccion\": 47.02,\n                \"id\": 91,\n                \"ingredientes\": [],\n                \"categorias\": [\n                    {\n                        \"nombre\": \"Sioux\"\n                    }\n                ]\n            },\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            },\n            \"cantidadMaxima\": 10000\n        }\n    ],\n    \"infoIngredientes\": [\n        {\n            \"precioAdicion\": 2.21,\n            \"precioSustituto\": 2.52,\n            \"ingrediente\": {\n                \"nombre\": \"Wine - Rosso Toscano Igt\",\n                \"descripcion\": \"Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.\",\n                \"traduccion\": \"Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.\",\n                \"id\": 28\n            },\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        }\n    ],\n    \"menus\": [\n        {\n            \"nombre\": \"Cardguard\",\n            \"precio\": 3.53,\n            \"costo\": 18.76,\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        },\n        {\n            \"nombre\": \"Ronstring\",\n            \"precio\": 19.22,\n            \"costo\": 2.28,\n            \"restaurante\": {\n                \"nombre\": \"Topicstorm\",\n                \"pagWeb\": \"https://multiply.com\"\n            }\n        }\n    ]\n}"
 								},
-								"url": "http://localhost:8080/VideoAndes/rest/cuentas/1",
-								"description": ""
+								"url": "http://localhost:8080/VideoAndes/rest/cuentas/1"
 							},
 							"response": []
 						}
@@ -359,7 +350,6 @@
 				},
 				{
 					"name": "Cancela con fallos",
-					"description": "",
 					"item": [
 						{
 							"name": "CREA UNA NUEVA CUENTA",
@@ -394,8 +384,7 @@
 									"mode": "raw",
 									"raw": " {\n \t\"pedidoProd\": [\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }\n    ],\n    \"pedidoMenu\": [\n        {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        },\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Y-Solowarm\",\n                \"precio\": 15.19,\n                \"costo\": 2.85,\n                \"restaurante\": {\n                    \"nombre\": \"Kaymbo\",\n                    \"pagWeb\": \"http://oracle.com\"\n                }\n            },\n            \"entregado\": true\n        }\n    ],\n    \"valor\": 58.15,\n    \"numeroCuenta\": \"9\",\n    \"fecha\": \"2017-01-18\",\n    \"cliente\": {\n        \"nombre\": \"Annabela Killeley\",\n        \"id\": 168,\n        \"correo\": \"akilleley1v@tmall.com\",\n        \"rol\": \"CLIENTE\"\n    }\n    \n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -432,8 +421,7 @@
 									"mode": "raw",
 									"raw": "{\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/9/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/9/productos"
 							},
 							"response": []
 						},
@@ -470,8 +458,7 @@
 									"mode": "raw",
 									"raw": " {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/9/menus",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/9/menus"
 							},
 							"response": []
 						},
@@ -508,8 +495,7 @@
 									"mode": "raw",
 									"raw": "{\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/9/productos/Skinte/8",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/9/productos/Skinte/8"
 							},
 							"response": []
 						},
@@ -546,8 +532,7 @@
 									"mode": "raw",
 									"raw": " {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/9/menus/Voonyx/Matsoft",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/9/menus/Voonyx/Matsoft"
 							},
 							"response": []
 						},
@@ -585,8 +570,7 @@
 									"mode": "raw",
 									"raw": "{\n    \"pedidoProd\": [\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": 1484697600000\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": 1500076800000,\n                \"fechaFin\": 1517011200000,\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                },\n                \"cantidadMaxima\": 0\n            },\n            \"entregado\": false\n        }\n    ],\n    \"pedidoMenu\": [\n        {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": 1484697600000\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        },\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": 1484697600000\n            },\n            \"menu\": {\n                \"nombre\": \"Y-Solowarm\",\n                \"precio\": 15.19,\n                \"costo\": 2.85,\n                \"restaurante\": {\n                    \"nombre\": \"Kaymbo\",\n                    \"pagWeb\": \"http://oracle.com\"\n                }\n            },\n            \"entregado\": true\n        }\n    ],\n    \"valor\": 58.15,\n    \"numeroCuenta\": \"9\",\n    \"fecha\": 1484697600000,\n    \"cliente\": {\n        \"nombre\": \"Annabela Killeley\",\n        \"id\": 168,\n        \"correo\": \"akilleley1v@tmall.com\",\n        \"rol\": \"CLIENTE\"\n    },\n    \"mesa\": null\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						}
@@ -597,11 +581,9 @@
 		},
 		{
 			"name": "RF17V2",
-			"description": "",
 			"item": [
 				{
 					"name": "Cancela producto de forma exitosa",
-					"description": "",
 					"item": [
 						{
 							"name": "CREA UNA NUEVA CUENTA",
@@ -636,8 +618,7 @@
 									"mode": "raw",
 									"raw": " {\n   \"pedidoProd\": [\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }\n    ],\n    \"pedidoMenu\": [\n        {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        },\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Y-Solowarm\",\n                \"precio\": 15.19,\n                \"costo\": 2.85,\n                \"restaurante\": {\n                    \"nombre\": \"Kaymbo\",\n                    \"pagWeb\": \"http://oracle.com\"\n                }\n            },\n            \"entregado\": true\n        }\n    ],\n    \"valor\": 58.15,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2017-01-18\",\n    \"cliente\": {\n        \"nombre\": \"Annabela Killeley\",\n        \"id\": 168,\n        \"correo\": \"akilleley1v@tmall.com\",\n        \"rol\": \"CLIENTE\"\n    }\n    \n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -674,8 +655,7 @@
 									"mode": "raw",
 									"raw": "{\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos"
 							},
 							"response": []
 						},
@@ -700,7 +680,10 @@
 										"value": "8"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": "http://localhost:8080/VideoAndes/rest/cuentas/1/productos/Skinte/8"
 							},
 							"response": []
@@ -721,7 +704,10 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": "http://localhost:8080/VideoAndes/rest/cuentas/1/productos/Skinte/8"
 							},
 							"response": []
@@ -760,8 +746,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						}
@@ -770,11 +755,9 @@
 				},
 				{
 					"name": "Cancela producto con fallos",
-					"description": "",
 					"item": [
 						{
 							"name": "Cancela al no ser restaurante",
-							"description": "",
 							"item": [
 								{
 									"name": "CREA UNA NUEVA CUENTA",
@@ -809,8 +792,7 @@
 											"mode": "raw",
 											"raw": " {\n   \"pedidoProd\": [\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"2\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }\n    ],\n    \"pedidoMenu\": [\n        {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        },\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Y-Solowarm\",\n                \"precio\": 15.19,\n                \"costo\": 2.85,\n                \"restaurante\": {\n                    \"nombre\": \"Kaymbo\",\n                    \"pagWeb\": \"http://oracle.com\"\n                }\n            },\n            \"entregado\": true\n        }\n    ],\n    \"valor\": 58.15,\n    \"numeroCuenta\": \"2\",\n    \"fecha\": \"2017-01-18\",\n    \"cliente\": {\n        \"nombre\": \"Annabela Killeley\",\n        \"id\": 168,\n        \"correo\": \"akilleley1v@tmall.com\",\n        \"rol\": \"CLIENTE\"\n    }\n    \n }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas"
 									},
 									"response": []
 								},
@@ -847,8 +829,7 @@
 											"mode": "raw",
 											"raw": "{\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"2\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/2/productos",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/2/productos"
 									},
 									"response": []
 								},
@@ -870,7 +851,7 @@
 										"header": [
 											{
 												"key": "usuarioId",
-												"value": "0"
+												"value": "67"
 											}
 										],
 										"body": {},
@@ -894,7 +875,10 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/2/productos/Skinte/8"
 									},
 									"response": []
@@ -904,7 +888,6 @@
 						},
 						{
 							"name": "Cancela al haberlo pagado",
-							"description": "",
 							"item": [
 								{
 									"name": "Restaurante registra servicio de un producto",
@@ -939,8 +922,7 @@
 											"mode": "raw",
 											"raw": "{\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"2\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/2/productos/Skinte/8",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/2/productos/Skinte/8"
 									},
 									"response": []
 								},
@@ -965,7 +947,10 @@
 												"value": "8"
 											}
 										],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/2/productos/Skinte/8"
 									},
 									"response": []
@@ -986,7 +971,10 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/2/productos/Skinte/8"
 									},
 									"response": []
@@ -999,7 +987,6 @@
 				},
 				{
 					"name": "Cancela menú de forma exitosa",
-					"description": "",
 					"item": [
 						{
 							"name": "CREA UNA NUEVA CUENTA",
@@ -1034,8 +1021,7 @@
 									"mode": "raw",
 									"raw": " {\n   \"pedidoProd\": [\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }\n    ],\n    \"pedidoMenu\": [\n        {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        },\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Y-Solowarm\",\n                \"precio\": 15.19,\n                \"costo\": 2.85,\n                \"restaurante\": {\n                    \"nombre\": \"Kaymbo\",\n                    \"pagWeb\": \"http://oracle.com\"\n                }\n            },\n            \"entregado\": true\n        }\n    ],\n    \"valor\": 58.15,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2017-01-18\",\n    \"cliente\": {\n        \"nombre\": \"Annabela Killeley\",\n        \"id\": 168,\n        \"correo\": \"akilleley1v@tmall.com\",\n        \"rol\": \"CLIENTE\"\n    }\n    \n }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						},
@@ -1072,8 +1058,7 @@
 									"mode": "raw",
 									"raw": " {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        }"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas/1/menus",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas/1/menus"
 							},
 							"response": []
 						},
@@ -1098,7 +1083,10 @@
 										"value": "67"
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": "http://localhost:8080/VideoAndes/rest/cuentas/1/menus/Voonyx/Matsoft"
 							},
 							"response": []
@@ -1119,7 +1107,10 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": "http://localhost:8080/VideoAndes/rest/cuentas/1/menus/Voonyx/Matsoft"
 							},
 							"response": []
@@ -1158,8 +1149,7 @@
 									"mode": "raw",
 									"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    }}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/cuentas",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/cuentas"
 							},
 							"response": []
 						}
@@ -1168,11 +1158,9 @@
 				},
 				{
 					"name": "Cancela menú con fallos",
-					"description": "",
 					"item": [
 						{
 							"name": "Cancela al no ser restaurante",
-							"description": "",
 							"item": [
 								{
 									"name": "CREA UNA NUEVA CUENTA",
@@ -1207,8 +1195,7 @@
 											"mode": "raw",
 											"raw": " {\n   \"pedidoProd\": [\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"20\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }\n    ],\n    \"pedidoMenu\": [\n        {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        },\n        {\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"4604174961\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Y-Solowarm\",\n                \"precio\": 15.19,\n                \"costo\": 2.85,\n                \"restaurante\": {\n                    \"nombre\": \"Kaymbo\",\n                    \"pagWeb\": \"http://oracle.com\"\n                }\n            },\n            \"entregado\": true\n        }\n    ],\n    \"valor\": 58.15,\n    \"numeroCuenta\": \"20\",\n    \"fecha\": \"2017-01-18\",\n    \"cliente\": {\n        \"nombre\": \"Annabela Killeley\",\n        \"id\": 168,\n        \"correo\": \"akilleley1v@tmall.com\",\n        \"rol\": \"CLIENTE\"\n    }\n    \n }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas"
 									},
 									"response": []
 								},
@@ -1245,8 +1232,7 @@
 											"mode": "raw",
 											"raw": " {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/20/menus",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/20/menus"
 									},
 									"response": []
 								},
@@ -1268,7 +1254,7 @@
 										"header": [
 											{
 												"key": "usuarioId",
-												"value": "0"
+												"value": "8"
 											}
 										],
 										"body": {},
@@ -1292,7 +1278,10 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/20/menus/Voonyx/Matsoft"
 									},
 									"response": []
@@ -1302,7 +1291,6 @@
 						},
 						{
 							"name": "Cancela al haberlo pagado",
-							"description": "",
 							"item": [
 								{
 									"name": "Restaurante registra servicio de un menú",
@@ -1337,8 +1325,7 @@
 											"mode": "raw",
 											"raw": " {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/20/menus/Voonyx/Matsoft",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/20/menus/Voonyx/Matsoft"
 									},
 									"response": []
 								},
@@ -1363,7 +1350,10 @@
 												"value": "67"
 											}
 										],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/20/menus/Voonyx/Matsoft"
 									},
 									"response": []
@@ -1384,7 +1374,10 @@
 									"request": {
 										"method": "GET",
 										"header": [],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/20/menus/Voonyx/Matsoft"
 									},
 									"response": []
@@ -1397,11 +1390,9 @@
 				},
 				{
 					"name": "Cancela desde una mesa",
-					"description": null,
 					"item": [
 						{
 							"name": "Forma exitosa",
-							"description": "",
 							"item": [
 								{
 									"name": "Agregar cuenta con mesa válida",
@@ -1436,8 +1427,7 @@
 											"mode": "raw",
 											"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    },\n  \"mesa\":\n    {\n      \"id\": 1,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8\n    }\n}"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas"
 									},
 									"response": []
 								},
@@ -1474,8 +1464,7 @@
 											"mode": "raw",
 											"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"10\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    },\n  \"mesa\":\n    {\n      \"id\": 1,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8\n    }\n}"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas"
 									},
 									"response": []
 								},
@@ -1512,8 +1501,7 @@
 											"mode": "raw",
 											"raw": "{\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos"
 									},
 									"response": []
 								},
@@ -1550,8 +1538,7 @@
 											"mode": "raw",
 											"raw": "{\n    \"cantidad\": 1,\n    \"cuenta\": {\n        \"valor\": 10,\n        \"numeroCuenta\": \"8418177816\",\n        \"fecha\": \"2017-03-10\",\n        \"pagada\": true\n    },\n    \"plato\": {\n        \"costo\": 10.6,\n        \"precio\": 1.21,\n        \"disponibilidad\": 5486,\n        \"fechaInicio\": \"2016-11-13\",\n        \"fechaFin\": \"2018-01-30\",\n        \"producto\": {\n            \"personalizable\": false,\n            \"nombre\": \"Tofu - Firm\",\n            \"tipo\": \"ENTRADA\",\n            \"descripcion\": null,\n            \"traduccion\": null,\n            \"tiempo\": 97.7,\n            \"id\": 68,\n            \"ingredientes\": [],\n            \"categorias\": [\n                {\n                    \"nombre\": \"Sri Lankan\"\n                }\n            ]\n        },\n        \"restaurante\": {\n            \"nombre\": \"Skipstorm\",\n            \"pagWeb\": \"https://cornell.edu\"\n        },\n        \"cantidadMaxima\": 10000,\n                \"sustitutos\": []\n\n    },\n    \"entregado\":false\n}"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/10/productos",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/10/productos"
 									},
 									"response": []
 								},
@@ -1584,8 +1571,7 @@
 											"mode": "raw",
 											"raw": "{\n    \"id\": 1,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    },\n    \"cuentas\": [\n        {\n            \"valor\": 13.12,\n            \"numeroCuenta\": \"1\",\n            \"fecha\": \"2018-10-30\",\n            \"pagada\": false\n        },\n        {\n            \"valor\": 10.6,\n            \"numeroCuenta\": \"10\",\n            \"fecha\": \"2018-10-30\",\n            \"pagada\": false\n        }\n    ],\n    \"pagadas\": [\n        {\n            \"valor\": 92.85,\n            \"numeroCuenta\": \"2534685989\",\n            \"fecha\": \"2016-12-13\",\n            \"pagada\": true\n        },\n        {\n            \"valor\": 62.6,\n            \"numeroCuenta\": \"8418177816\",\n            \"fecha\": \"2017-03-10\",\n            \"pagada\": true\n        }\n    ]\n}"
 										},
-										"url": "localhost:8080/VideoAndes/rest/mesas/canceloCuenta",
-										"description": ""
+										"url": "localhost:8080/VideoAndes/rest/mesas/canceloCuenta"
 									},
 									"response": []
 								},
@@ -1610,7 +1596,10 @@
 												"value": "0"
 											}
 										],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/1"
 									},
 									"response": []
@@ -1636,7 +1625,10 @@
 												"value": "0"
 											}
 										],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/10"
 									},
 									"response": []
@@ -1646,7 +1638,6 @@
 						},
 						{
 							"name": "Forma fallida 1: Se pagó la cuenta antes de cancelarse",
-							"description": "",
 							"item": [
 								{
 									"name": "Agregar cuenta con mesa válida copy",
@@ -1681,8 +1672,7 @@
 											"mode": "raw",
 											"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    },\n  \"mesa\":\n    {\n      \"id\": 1,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8\n    }\n}"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas"
 									},
 									"response": []
 								},
@@ -1719,8 +1709,7 @@
 											"mode": "raw",
 											"raw": "{\n    \"cantidad\": 8,\n    \"cuenta\": {\n        \"valor\": 0,\n        \"numeroCuenta\": \"1\",\n        \"fecha\": \"2018-10-30\",\n        \"pagada\": false}\n    ,\n    \"plato\": {\n        \"costo\": 1.64,\n        \"precio\": 1.79,\n        \"disponibilidad\": 6020,\n        \"fechaInicio\": 1500076800000,\n        \"fechaFin\": 1517011200000,\n        \"producto\": {\n            \"personalizable\": true,\n            \"nombre\": \"Tomatoes Tear Drop Yellow\",\n            \"tipo\": \"ACOMPANAMIENTO\",\n            \"descripcion\": null,\n            \"traduccion\": null,\n            \"tiempo\": 0,\n            \"id\": 8,\n            \"ingredientes\": [\n                {\n                    \"nombre\": \"Bread - 10 Grain\",\n                    \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                    \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                    \"id\": 18\n                }\n            ],\n            \"categorias\": [\n                {\n                    \"nombre\": \"Filipino\"\n                }\n            ]\n        },\n        \"restaurante\": {\n            \"nombre\": \"Skinte\",\n            \"pagWeb\": \"http://zdnet.com\"\n        },\n        \"cantidadMaxima\": 0,\n        \"sustitutos\": null\n    },\n    \"entregado\": false\n}"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos"
 									},
 									"response": []
 								},
@@ -1757,8 +1746,7 @@
 											"mode": "raw",
 											"raw": "{\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"2\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos/Skinte/8",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos/Skinte/8"
 									},
 									"response": []
 								},
@@ -1791,8 +1779,7 @@
 											"mode": "raw",
 											"raw": "{\n    \"id\": 1,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    },\n    \"cuentas\": [\n        {\n            \"valor\": 10.6,\n            \"numeroCuenta\": \"10\",\n            \"fecha\": \"2018-10-30\",\n            \"pagada\": false\n        }\n    ],\n    \"pagadas\": [\n        {\n            \"valor\": 92.85,\n            \"numeroCuenta\": \"2534685989\",\n            \"fecha\": \"2016-12-13\",\n            \"pagada\": true\n        },\n        {\n            \"valor\": 13.12,\n            \"numeroCuenta\": \"1\",\n            \"fecha\": \"2018-10-30\",\n            \"pagada\": true\n        },\n        {\n            \"valor\": 62.6,\n            \"numeroCuenta\": \"8418177816\",\n            \"fecha\": \"2017-03-10\",\n            \"pagada\": true\n        }\n    ]\n}"
 										},
-										"url": "localhost:8080/VideoAndes/rest/mesas/canceloCuenta",
-										"description": ""
+										"url": "localhost:8080/VideoAndes/rest/mesas/canceloCuenta"
 									},
 									"response": []
 								},
@@ -1817,7 +1804,10 @@
 												"value": "0"
 											}
 										],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/1"
 									},
 									"response": []
@@ -1827,7 +1817,6 @@
 						},
 						{
 							"name": "Forma fallida 2: Se registró un servicio antes de cancelar",
-							"description": "",
 							"item": [
 								{
 									"name": "Agregar cuenta con mesa válida copy",
@@ -1862,8 +1851,7 @@
 											"mode": "raw",
 											"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"15\",\n    \"fecha\": \"2018-10-31\",\n    \"cliente\": {\n        \"nombre\": \"Haley Carluccio\",\n      \"id\": 101,\n    \"correo\": \"hcarluccio0@hhs.gov\",\n      \"rol\": \"CLIENTE\"\n    },\n  \"mesa\":\n    {\n      \"id\": 1,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8\n    }\n}"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas"
 									},
 									"response": []
 								},
@@ -1937,8 +1925,7 @@
 											"mode": "raw",
 											"raw": "{\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"15\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/15/productos",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/15/productos"
 									},
 									"response": []
 								},
@@ -1975,8 +1962,7 @@
 											"mode": "raw",
 											"raw": "{\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"15\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
 										},
-										"url": "localhost:8080/VideoAndes/rest/cuentas/15/productos/Skinte/8",
-										"description": null
+										"url": "localhost:8080/VideoAndes/rest/cuentas/15/productos/Skinte/8"
 									},
 									"response": []
 								},
@@ -2009,8 +1995,7 @@
 											"mode": "raw",
 											"raw": "{\n    \"id\": 1,\n    \"capacidad\": 8,\n    \"capacidadOcupada\": 8,\n    \"zona\": {\n        \"capacidad\": 55,\n        \"ingresoEspecial\": true,\n        \"abiertaActualmente\": true,\n        \"capacidadOcupada\": 48,\n        \"nombre\": \"Clothing\"\n    },\n    \"cuentas\": [\n        {\n            \"valor\": 37,\n            \"numeroCuenta\": \"15\",\n            \"fecha\": \"2018-10-30\",\n            \"pagada\": false\n        }\n    ],\n    \"pagadas\": [\n        {\n            \"valor\": 37,\n            \"numeroCuenta\": \"1\",\n            \"fecha\": \"2018-10-30\",\n            \"pagada\": true\n        },\n        {\n            \"valor\": 92.85,\n            \"numeroCuenta\": \"2534685989\",\n            \"fecha\": \"2016-12-13\",\n            \"pagada\": true\n        },\n        {\n            \"valor\": 62.6,\n            \"numeroCuenta\": \"8418177816\",\n            \"fecha\": \"2017-03-10\",\n            \"pagada\": true\n        }\n    ]\n}"
 										},
-										"url": "localhost:8080/VideoAndes/rest/mesas/canceloCuenta",
-										"description": ""
+										"url": "localhost:8080/VideoAndes/rest/mesas/canceloCuenta"
 									},
 									"response": []
 								},
@@ -2035,7 +2020,10 @@
 												"value": "0"
 											}
 										],
-										"body": {},
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
 										"url": "http://localhost:8080/VideoAndes/rest/cuentas/1"
 									},
 									"response": []
