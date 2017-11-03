@@ -2,14 +2,13 @@
 	"variables": [],
 	"info": {
 		"name": "PruebasReqConsultas.diaz",
-		"_postman_id": "238333e5-c7b7-6124-ed9f-2cd3a4643a36",
+		"_postman_id": "b35bcea8-5bab-168c-d3e8-db31471bab00",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "RFC1",
-			"description": "",
 			"item": [
 				{
 					"name": "Json ordenado solo ordenamiento",
@@ -25,16 +24,13 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/completo",
 						"method": "POST",
 						"header": [
 							{
-								"description": "",
 								"key": "usuarioId",
 								"value": "0"
 							},
 							{
-								"description": "",
 								"key": "Content-Type",
 								"value": "application/json"
 							}
@@ -43,7 +39,7 @@
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t]\n\t\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/completo"
 					},
 					"response": []
 				},
@@ -61,25 +57,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"COSTOPRODUCCION\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t]\n}"
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"COSTO\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTO\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t]\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/completo"
 					},
 					"response": []
 				},
@@ -97,25 +90,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t\"operacion1\":\">\",\n\t\t\"valorComparacion1\":\"100\",\n\t\t\"afirmativo1\":true\n\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/completo"
 					},
 					"response": []
 				},
@@ -133,25 +123,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t\"operacion1\":\"<=\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t},\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"NOMBRE_CATEGORIA\",\n\t\t\t\"agregacion\":\"COUNT\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t\"operacion1\":\">\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t}\n}"
+							"raw": "{\n\t\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTO\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t\"operacion1\":\"<=\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t},\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"NOMBRE_CATEGORIA\",\n\t\t\t\"agregacion\":\"COUNT\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t\"operacion1\":\">\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/completo"
 					},
 					"response": []
 				},
@@ -169,25 +156,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"TIEMPO\"\n\t\t\t},\n\t\t\t\"valores\":[\"98\",\"96\"],\n\t\t\t\"afirmativo1\":true\n\t\t},\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valores\":[\"1\",\"2\"],\n\t\t\t\"afirmativo1\":false\n\t\t}\n}"
+							"raw": "{\n\t\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTO\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"TIEMPO\"\n\t\t\t},\n\t\t\t\"valores\":[\"98\",\"96\"],\n\t\t\t\"afirmativo1\":true\n\t\t},\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"COSTO\",\n\t\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valores\":[\"1\",\"2\"],\n\t\t\t\"afirmativo1\":false\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/completo"
 					},
 					"response": []
 				},
@@ -205,25 +189,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"PRECIO\"\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"COSTOPRODUCCION\"\n\t\t\t},\n\t\t\t\"operacion1\":\"=\",\n\t\t\t\"afirmativo1\":true\n\t\t}\n}"
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"PRECIO\"\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"COSTO\"\n\t\t\t},\n\t\t\t\"operacion1\":\"=\",\n\t\t\t\"afirmativo1\":false\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/completo"
 					},
 					"response": []
 				},
@@ -241,25 +222,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"COSTOPRODUCCION\",\n\t\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"operacion1\":\">\",\n\t\t\t\"afirmativo1\":true\n\t\t}\n}"
+							"raw": "{\t\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"COSTO\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"COSTO\",\n\t\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"PRECIO\",\n\t\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"operacion1\":\">\",\n\t\t\t\"afirmativo1\":true\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/completo"
 					},
 					"response": []
 				},
@@ -278,25 +256,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"FECHA_FIN\",\n\t\t\t\"ascendente\":true\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA_INICIO\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion1\":\"2017-04-08\",\n\t\t\t\t\"operacion1\":\">=\",\n\t\t\t\t\"afirmativo1\":true\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA_INICIO\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"<=\",\n\t\t\t\t\"afirmativo1\":true,\n\t\t\t\t\"valorComparacion1\":\"2018-01-01\"\n\t\t\t\t\n\t\t\t\t\n\t\t\t},\n\t\t\t\"conjuncion\":true,\n\t\t\t\"afirmativo1\":true\n\t\t\t\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/completo"
 					},
 					"response": []
 				}
@@ -304,7 +279,6 @@
 		},
 		{
 			"name": "RFC4",
-			"description": "",
 			"item": [
 				{
 					"name": "Dar productos mas ofrecidos",
@@ -320,14 +294,13 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/mas-ofrecidos",
 						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/mas-ofrecidos"
 					},
 					"response": []
 				}
@@ -335,7 +308,6 @@
 		},
 		{
 			"name": "RFC6",
-			"description": "",
 			"item": [
 				{
 					"name": "Dar productos mas vendidos",
@@ -351,14 +323,13 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/mas-vendidos",
 						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/mas-vendidos"
 					},
 					"response": []
 				},
@@ -376,14 +347,13 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/mas-vendidos/Garden",
 						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/mas-vendidos/Garden"
 					},
 					"response": []
 				},
@@ -395,20 +365,19 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 404\"]= responseCode.code===404"
+									"tests[\"Status code is 200\"]= responseCode.code===200"
 								]
 							}
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/productos/mas-vendidos/Gardenito",
 						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/productos/mas-vendidos/Gardenitos"
 					},
 					"response": []
 				}
