@@ -2,11 +2,15 @@
 package dao;
 
 
-import java.sql.Connection; 
+import java.sql.Connection;
+
+import bsh.EvalError;
+import bsh.Interpreter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import oracle.net.aso.r;
@@ -20,6 +24,7 @@ import vos.*;
  */
 public class DAOTablaRestaurante {
 
+	
 
 	/**
 	 * Arraylits de recursos que se usan para la ejecuci�n de sentencias SQL
@@ -540,6 +545,27 @@ public class DAOTablaRestaurante {
 				+ "group by C.NOMBRE, NOMBRE_MENU "
 				+ "ORDER BY C.NOMBRE, NOMBRE_MENU";
 		return sql;
+	}
+	
+	public static void main(String[] args) throws EvalError {
+
+		Interpreter i = new Interpreter();  // Construct an interpreter
+		i.set("foo", 5);                    // Set variables
+		i.set("date", new Date() ); 
+		
+		
+		int[] a = new int[]{1,2,3};
+		int[]b=new int[]{3,2,1};
+		for(int j=0;j<3;j++)
+		{
+			i.set("a", a[j]);
+			i.set("b", b[j]);
+			i.eval("bar= a==b");
+			System.out.println(i.get("bar"));
+		}
+		Date date = (Date)i.get("date");    // retrieve a variable
+		
+		
 	}
 
 
