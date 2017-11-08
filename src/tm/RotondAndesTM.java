@@ -24,6 +24,7 @@ import rfc.CriterioAgregacion;
 import rfc.CriterioOrden;
 import rfc.CriterioVerdad;
 import rfc.CriterioVerdadHaving;
+import rfc.LimiteFechas;
 import rfc.PendientesOrden;
 import rfc.UsuarioCompleto;
 import vos.UsuarioMinimum;
@@ -4287,6 +4288,79 @@ public class RotondAndesTM {
 		return informacion;
 	}
 
+	/**
+	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+	 */
+	public List<ContenedoraInformacion> criteriosFiltrarClientesProductos(
+			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having,LimiteFechas limite, String nombreRestaurante, Boolean es) throws Exception {
+		List<ContenedoraInformacion> informacion=null;
+		DAOTablaCriterio dao=null;
+		try 
+		{
+			dao=new DAOTablaCriterio();
+			dao.setConn(darConexion());
+			informacion = dao.generarListaFiltradaUsuarioProductos(criteriosOrganizacion, criteriosAgrupamiento, agregaciones, where, having, nombreRestaurante, es, limite);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return informacion;
+	}
+
+	/**
+	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
+	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
+	 */
+	public List<ContenedoraInformacion> criteriosFiltrarClientesMenus(
+			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
+			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having,LimiteFechas limite, String nombreRestaurante, Boolean es) throws Exception {
+		List<ContenedoraInformacion> informacion=null;
+		DAOTablaCriterio dao=null;
+		try 
+		{
+			dao=new DAOTablaCriterio();
+			dao.setConn(darConexion());
+			informacion = dao.generarListaFiltradaUsuarioMenus(criteriosOrganizacion, criteriosAgrupamiento, agregaciones, where, having, nombreRestaurante, es, limite);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return informacion;
+	}
 
 	//Restaurante
 	/**

@@ -19,7 +19,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import rfc.ContenedoraCriterios;
+import rfc.ContenedoraCriteriosConLimiteFecha;
+import rfc.ContenedoraInformacion;
 import rfc.ContenedoraRestauranteInfoFinanciera;
+import rfc.LimiteFechas;
 import tm.RotondAndesTM;
 import vos.InfoIngRest;
 import vos.InfoProdRest;
@@ -514,9 +518,9 @@ public class RestauranteServices {
 	}
 	
 	/**
-	 * Método que expone un servicio Rest para añadir una equivalencia de productos.
+	 * Mï¿½todo que expone un servicio Rest para aï¿½adir una equivalencia de productos.
 	 * @param idSustituto id del producto sustituto.
-	 * @param idUsuario id del usuario que hace la transacción.
+	 * @param idUsuario id del usuario que hace la transacciï¿½n.
 	 * @param id id del producto.
 	 * @param nombreRestaurante nombre del restaurante al cual pretenece.
 	 * @return
@@ -697,9 +701,9 @@ public class RestauranteServices {
 	}
 
 	/**
-	 * Método que expone un servicio Rest para añadir una equivalencia de ingredientes.
+	 * Mï¿½todo que expone un servicio Rest para aï¿½adir una equivalencia de ingredientes.
 	 * @param idSustituto id del ingrediente sustituto.
-	 * @param idUsuario id del usuario que hace la transacción.
+	 * @param idUsuario id del usuario que hace la transacciï¿½n.
 	 * @param id id del ingrediente.
 	 * @param nombreRestaurante nombre del restaurante al cual pretenece.
 	 * @return
@@ -761,5 +765,66 @@ public class RestauranteServices {
 		}
 		return Response.status(200).entity("infoIngRest eliminado correctamente").build();
 	}
-
+	//RFC9-RFC10 PRODUCTOS
+	/**
+	 * Genera un filtro por nombre de zona con las caracterÃ­sticas que prefiere el usuario.<br>
+	 * @param name Nombre de la zona.<br>
+	 * @param c Criterios del usuario.<br>
+	 * @return Json con la informaciÃ³n deseada.
+	 */
+	@POST
+	@Path("/{nombre}/clientesPorProducto")
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pruebaFiltrosProducto( @HeaderParam("usuarioId") Long usuarioId, @HeaderParam("es") Boolean es, ContenedoraCriteriosConLimiteFecha contenedora,@PathParam("nombre")String nombreRestaurante) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		
+		if(es==null) es=false;
+		List<ContenedoraInformacion> zonas;
+		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId(usuarioId);
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(nombreRestaurante))))
+					throw new Exception("Usted no tiene los permisos para acceder a esta funcionalidad de filtros");
+			if (nombreRestaurante == null || nombreRestaurante.length() == 0)
+				throw new Exception("Nombre del restaurante no valido");
+			ContenedoraCriterios c= contenedora.getContenedoraCriterios();
+			LimiteFechas limite=contenedora.getLimiteFechas();
+			zonas = tm.criteriosFiltrarClientesProductos(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving(),limite,nombreRestaurante,es);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zonas).build();
+	}
+	//RFC9-RFC10 MENÃšS
+	/**
+	 * Genera un filtro por nombre de zona con las caracterÃ­sticas que prefiere el usuario.<br>
+	 * @param name Nombre de la zona.<br>
+	 * @param c Criterios del usuario.<br>
+	 * @return Json con la informaciÃ³n deseada.
+	 */
+	@POST
+	@Path("/{nombre}/clientesPorMenu")
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pruebaFiltrosMenu( @HeaderParam("usuarioId") Long usuarioId, @HeaderParam("es") Boolean es, ContenedoraCriteriosConLimiteFecha contenedora,@PathParam("nombre")String nombreRestaurante) {
+		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		
+		if(es==null) es=false;
+		List<ContenedoraInformacion> zonas;
+		try {
+			Usuario u = tm.usuarioBuscarUsuarioPorId(usuarioId);
+			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(nombreRestaurante))))
+					throw new Exception("Usted no tiene los permisos para acceder a esta funcionalidad de filtros");
+			if (nombreRestaurante == null || nombreRestaurante.length() == 0)
+				throw new Exception("Nombre del restaurante no valido");
+			ContenedoraCriterios c= contenedora.getContenedoraCriterios();
+			LimiteFechas limite=contenedora.getLimiteFechas();
+			zonas = tm.criteriosFiltrarClientesMenus(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving(),limite,nombreRestaurante,es);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zonas).build();
+	}
 }
