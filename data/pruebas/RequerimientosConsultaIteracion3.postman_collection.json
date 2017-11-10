@@ -2,14 +2,12 @@
 	"variables": [],
 	"info": {
 		"name": "RequerimientosConsultaIteracion3",
-		"_postman_id": "9ddfcd0f-7059-4adb-5b17-d38737207877",
-		"description": "",
+		"_postman_id": "0f4eb8f5-41ba-7898-9243-ee124338b89f",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "RC8",
-			"description": "",
 			"item": [
 				{
 					"name": "Información por menús de restaurante",
@@ -36,9 +34,11 @@
 								"value": "false"
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera"
 					},
 					"response": []
 				},
@@ -68,9 +68,11 @@
 								"disabled": true
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera"
 					},
 					"response": []
 				},
@@ -100,9 +102,11 @@
 								"disabled": true
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera"
 					},
 					"response": []
 				},
@@ -131,9 +135,11 @@
 								"value": "false"
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera"
 					},
 					"response": []
 				},
@@ -162,9 +168,11 @@
 								"value": "false"
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/informacion-financiera"
 					},
 					"response": []
 				}
@@ -172,7 +180,6 @@
 		},
 		{
 			"name": "RC7",
-			"description": "",
 			"item": [
 				{
 					"name": "Información de un solo usuario",
@@ -195,9 +202,11 @@
 								"value": "113"
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/usuarios/productos",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/productos"
 					},
 					"response": []
 				},
@@ -222,9 +231,11 @@
 								"value": "0"
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/usuarios/productos",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/productos"
 					},
 					"response": []
 				},
@@ -254,9 +265,11 @@
 								"disabled": true
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/usuarios/productos",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/usuarios/productos"
 					},
 					"response": []
 				}

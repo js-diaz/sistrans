@@ -2,11 +2,15 @@
 package dao;
 
 
-import java.sql.Connection; 
+import java.sql.Connection;
+
+import bsh.EvalError;
+import bsh.Interpreter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import oracle.net.aso.r;
@@ -20,6 +24,7 @@ import vos.*;
  */
 public class DAOTablaRestaurante {
 
+	
 
 	/**
 	 * Arraylits de recursos que se usan para la ejecuciï¿½n de sentencias SQL
@@ -541,7 +546,118 @@ public class DAOTablaRestaurante {
 				+ "ORDER BY C.NOMBRE, NOMBRE_MENU";
 		return sql;
 	}
+	
+	public static void main(String[] args) throws EvalError {
 
+		Interpreter i = new Interpreter();  // Construct an interpreter
+		i.set("foo", 5);                    // Set variables
+		i.set("date", new Date() ); 
+		
+		
+		int[] a = new int[]{1,2,3};
+		int[]b=new int[]{3,2,1};
+		for(int j=0;j<3;j++)
+		{
+			i.set("a", a[j]);
+			i.set("b", b[j]);
+			i.eval("bar= a==b");
+			System.out.println(i.get("bar"));
+		}
+		Date date = (Date)i.get("date");    // retrieve a variable
+		
+		
+	}
+	
+	/**
+	 * Da el mayor número de ventas que ha tenido un restaurante en la BD.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	private int darMinimoNumeroVentasPorDiaDeLaSemana(String dia) throws SQLException, Exception {
+		String sql = "SELECT MIN(NUM_VENTAS_PRODUCTO + NUM_VENTAS_MENU) AS MIN FROM " + 
+				"(SELECT NOMBRE_RESTAURANTE, SUM(CANTIDAD) AS NUM_VENTAS_PRODUCTO FROM PEDIDO_PROD JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+				+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "'GROUP BY NOMBRE_RESTAURANTE)" + 
+				"JOIN (SELECT NOMBRE_RESTAURANTE, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM PEDIDO_MENU JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+				+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY NOMBRE_RESTAURANTE) USING (NOMBRE_RESTAURANTE)";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		recursos.add(ps);
+		ResultSet rs=ps.executeQuery();
+		if(rs.next())
+		rs.getInt("MIN");
+		return -1;
+	}
+	
+	/**
+	 * Retorna la lista con los restaurantes que hayan tenida la mayor cantidad de ventas.
+	 * @return Arraylist con los restaurantes que cumplen la conidicion dada.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public List<Restaurante> darRestaurantesMenosFrecuentadosPorDiaDeLaSemana(String dia) throws SQLException, Exception {
+		
+		List<Restaurante> restaurantes = new ArrayList<>();
+
+		String sql = "SELECT NOMBRE_RESTAURANTE FROM "
+				+ "(SELECT NOMBRE_RESTAURANTE, SUM(CANTIDAD) AS NUM_VENTAS_PRODUCTO FROM PEDIDO_PROD JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+				+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "'GROUP BY NOMBRE_RESTAURANTE)"
+				+ "JOIN (SELECT NOMBRE_RESTAURANTE, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM PEDIDO_MENU JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+				+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY NOMBRE_RESTAURANTE) USING (NOMBRE_RESTAURANTE)"
+				+ "WHERE NUM_VENTAS_PRODUCTO + NUM_VENTAS_MENU = " + darMinimoNumeroVentasPorDiaDeLaSemana(dia);
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while(rs.next()) 
+			restaurantes.add(darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE")));				
+		return restaurantes;
+	}
+
+
+	/**
+	 * Da el mayor número de ventas que ha tenido un restaurante en la BD.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	private int darMaximoNumeroVentasPorDiaDeLaSemana(String dia) throws SQLException, Exception {
+		String sql = "SELECT MAX(NUM_VENTAS_PRODUCTO + NUM_VENTAS_MENU) AS MAX FROM " + 
+				"(SELECT NOMBRE_RESTAURANTE, SUM(CANTIDAD) AS NUM_VENTAS_PRODUCTO FROM PEDIDO_PROD JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+				+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "'GROUP BY NOMBRE_RESTAURANTE)" + 
+				"JOIN (SELECT NOMBRE_RESTAURANTE, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM PEDIDO_MENU JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+				+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY NOMBRE_RESTAURANTE) USING (NOMBRE_RESTAURANTE)";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		recursos.add(ps);
+		ResultSet rs=ps.executeQuery();
+		if(rs.next())
+		rs.getInt("MAX");
+		return -1;
+	}
+	
+	/**
+	 * Retorna la lista con los restaurantes que hayan tenida la mayor cantidad de ventas.
+	 * @return Arraylist con los restaurantes que cumplen la conidicion dada.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public List<Restaurante> darRestaurantesMasFrecuentadosPorDiaDeLaSemana(String dia) throws SQLException, Exception {
+		
+		List<Restaurante> restaurantes = new ArrayList<>();
+
+		String sql = "SELECT NOMBRE_RESTAURANTE FROM "
+				+ "(SELECT NOMBRE_RESTAURANTE, SUM(CANTIDAD) AS NUM_VENTAS_PRODUCTO FROM PEDIDO_PROD JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+				+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "'GROUP BY NOMBRE_RESTAURANTE)"
+				+ "JOIN (SELECT NOMBRE_RESTAURANTE, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM PEDIDO_MENU JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+				+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY NOMBRE_RESTAURANTE) USING (NOMBRE_RESTAURANTE)"
+				+ "WHERE NUM_VENTAS_PRODUCTO + NUM_VENTAS_MENU = " + darMaximoNumeroVentasPorDiaDeLaSemana(dia);
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while(rs.next()) 
+			restaurantes.add(darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE")));				
+		return restaurantes;
+	}
 
 
 }

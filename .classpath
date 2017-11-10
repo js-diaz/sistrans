@@ -17,5 +17,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/Users/jc161/Documents/GIT PROJECTS/iteracion2/libs/bsh-2.0b4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

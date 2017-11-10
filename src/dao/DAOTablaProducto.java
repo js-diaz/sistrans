@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -567,5 +568,102 @@ public class DAOTablaProducto {
 					
 			return productos;
 		}
+
+		/**
+		 * Da el mayor número de ventas que ha tenido un producto en la BD.
+		 * @throws SQLException - Cualquier error que la base de datos arroje.
+		 * @throws Exception - Cualquier error que no corresponda a la base de datos
+		 */
+		private int darMaximoNumeroVentasPorDiaDeLaSemana(String dia) throws SQLException, Exception {
+			String sql = "SELECT MAX(NUM_VENTAS_DIRECTAS + NUM_VENTAS_MENU) AS MAX FROM " + 
+					"(SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_DIRECTAS FROM PEDIDO_PROD JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+					+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY ID_PRODUCTO) " + 
+					"JOIN (SELECT ID_PLATO, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM (PEDIDO_MENU JOIN PERTENECE_A_MENU " + 
+					"USING (NOMBRE_MENU, NOMBRE_RESTAURANTE)) JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+					+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY ID_PLATO) ON (ID_PRODUCTO=ID_PLATO)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			recursos.add(ps);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next())
+			rs.getInt("MAX");
+			return -1;
+		}
+		
+		/**
+		 * Retorna la lista con los productos que hayan sido vendidos la mayor cantidad de veces.
+		 * @return Arraylist con los productos que cumplen la conidicion dada.
+		 * @throws SQLException - Cualquier error que la base de datos arroje.
+		 * @throws Exception - Cualquier error que no corresponda a la base de datos
+		 */
+		public List<Producto> darProductosMasVendidosPorDiaDeLaSemana(String dia) throws SQLException, Exception {
+			
+			List<Producto> productos = new ArrayList<Producto>();
+
+			String sql = "SELECT ID_PRODUCTO FROM " + 
+					"(SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_DIRECTAS FROM PEDIDO_PROD JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+					+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY ID_PRODUCTO) " + 
+					"JOIN (SELECT ID_PLATO AS ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM (PEDIDO_MENU JOIN PERTENECE_A_MENU " + 
+					"USING (NOMBRE_MENU, NOMBRE_RESTAURANTE)) JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+					+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY ID_PLATO) USING (ID_PRODUCTO)" + 
+					"WHERE NUM_VENTAS_DIRECTAS + NUM_VENTAS_MENU = " + darMaximoNumeroVentasPorDiaDeLaSemana(dia);
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs = prepStmt.executeQuery();
+			
+			while(rs.next()) 
+				productos.add(buscarProductoPorId(rs.getLong("ID_PRODUCTO")));
+					
+			return productos;
+		}
+		
+		/**
+		 * Da el mayor número de ventas que ha tenido un producto en la BD.
+		 * @throws SQLException - Cualquier error que la base de datos arroje.
+		 * @throws Exception - Cualquier error que no corresponda a la base de datos
+		 */
+		private int darMinimoNumeroVentasPorDiaDeLaSemana(String dia) throws SQLException, Exception {
+			String sql = "SELECT MIN(NUM_VENTAS_DIRECTAS + NUM_VENTAS_MENU) AS MIN FROM " + 
+					"(SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_DIRECTAS FROM PEDIDO_PROD JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+					+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY ID_PRODUCTO) " + 
+					"JOIN (SELECT ID_PLATO, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM (PEDIDO_MENU JOIN PERTENECE_A_MENU " + 
+					"USING (NOMBRE_MENU, NOMBRE_RESTAURANTE)) JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+					+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY ID_PLATO) ON (ID_PRODUCTO=ID_PLATO)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			recursos.add(ps);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next())
+			rs.getInt("MIN");
+			return -1;
+		}
+		
+		/**
+		 * Retorna la lista con los productos que hayan sido vendidos la mayor cantidad de veces.
+		 * @return Arraylist con los productos que cumplen la conidicion dada.
+		 * @throws SQLException - Cualquier error que la base de datos arroje.
+		 * @throws Exception - Cualquier error que no corresponda a la base de datos
+		 */
+		public List<Producto> darProductosMenosVendidosPorDiaDeLaSemana(String dia) throws SQLException, Exception {
+			
+			List<Producto> productos = new ArrayList<Producto>();
+
+			String sql = "SELECT ID_PRODUCTO FROM " + 
+					"(SELECT ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_DIRECTAS FROM PEDIDO_PROD JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+					+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY ID_PRODUCTO) " + 
+					"JOIN (SELECT ID_PLATO AS ID_PRODUCTO, SUM(CANTIDAD) AS NUM_VENTAS_MENU FROM (PEDIDO_MENU JOIN PERTENECE_A_MENU " + 
+					"USING (NOMBRE_MENU, NOMBRE_RESTAURANTE)) JOIN CUENTA ON (NUMERO_CUENTA = NUMEROCUENTA)"
+					+ "WHERE TO_CHAR(FECHA, 'DAY') LIKE '" + dia + "' GROUP BY ID_PLATO) USING (ID_PRODUCTO)" + 
+					"WHERE NUM_VENTAS_DIRECTAS + NUM_VENTAS_MENU = " + darMinimoNumeroVentasPorDiaDeLaSemana(dia);
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs = prepStmt.executeQuery();
+			
+			while(rs.next()) 
+				productos.add(buscarProductoPorId(rs.getLong("ID_PRODUCTO")));
+					
+			return productos;
+		}
+
 
 }
