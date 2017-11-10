@@ -119,11 +119,9 @@ public class DAOTablaReserva {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void addReserva(Reserva reserva) throws SQLException, Exception {
-		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		x.setTimeZone(TimeZone.getTimeZone("America/Bogota"));
 		
 		String sql = "INSERT INTO RESERVA VALUES (";
-		sql += "TO_DATE('"+ x.format(reserva.getFecha()) + "', 'yyyy-MM-dd hh24:mi:ss')" + ", ";
+		sql += dateFormat(reserva.getFecha()) + ", ";
 		sql += reserva.getReservador().getId() + ", ";
 		sql += "" + reserva.getPersonas() + ", ";
 		sql += "'" + reserva.getZona().getNombre() + "', ";
