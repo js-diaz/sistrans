@@ -4601,7 +4601,7 @@ public class RotondAndesTM {
 			daoU.addUsuario(usuario);
 
 			dao.setConn(conn);
-			UsuarioMinimum rep=(UsuarioMinimum) usuario;
+			UsuarioMinimum rep=usuario;
 			restaurante.setRepresentante(rep);
 			dao.addRestaurante(restaurante);
 			conn.commit();

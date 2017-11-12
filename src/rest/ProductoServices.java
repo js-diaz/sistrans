@@ -28,8 +28,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import rfc.ContenedoraCriterios;
 import rfc.ContenedoraInformacion;
 import tm.RotondAndesTM;
