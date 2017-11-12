@@ -566,7 +566,6 @@ public class DAOTablaCriterio {
 			if(nombre.contains(a+""))
 			{
 				temp=temp.replaceAll(a+"", "");
-				break;
 			}
 		}
 		for(Criterio.PalabrasEspeciales a: Criterio.PalabrasEspeciales.values())
@@ -574,7 +573,6 @@ public class DAOTablaCriterio {
 			if(nombre.contains(a+""))
 			{
 				temp=temp.replaceAll(a+"", "");
-				break;
 			}
 		}
 		temp=temp.replaceAll("\\*","");
@@ -963,15 +961,12 @@ public class DAOTablaCriterio {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
-		
 		List<Criterio> c=new ArrayList<>();
 		while (rs.next()) {
 			String name2 = rs.getString("COLUMN_NAME");
-			if(name2.equals("IDUSUARIO")||name2.equals("NOMBRE_CATEGORIA")||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
+			if(name2.equals("NOMBRE")||name2.equals("NOMBRE_CATEGORIA")||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
 			c.add(new Criterio(name2));
 		}
-		c.add(new Criterio("NOMBRE_PRODUCTO")); c.add(new Criterio("CATEGORIA_PRODUCTO"));
 		return c;
 	}
 	/**
@@ -984,7 +979,7 @@ public class DAOTablaCriterio {
 	public Criterio buscarCriteriosUsuarioPorProducto(String name) throws SQLException, Exception {
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
 				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA' OR "
-				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA'))";
+				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA' OR TABLE_NAME LIKE 'NOMBRE_CATEGORIA'))";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -998,7 +993,7 @@ public class DAOTablaCriterio {
 		}
 		if(c==null)
 		{
-			if(name.equals("NOMBRE_PRODUCTO") || name.equals("CATEGORIA_PRODUCTO"))
+			if(name.equals("NOMBRE_PRODUCTO"))
 				c=new Criterio(name);
 		}
 		return c;
@@ -1058,27 +1053,35 @@ public class DAOTablaCriterio {
 		for(CriterioOrden c: criteriosOrganizacion)
 		{
 			if(existentesOrd.indexOf(c)>=0) continue;
-			if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+			if(c.getAgregacion()==null)
+			{
+				if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+			}
 			existentesOrd.add(c);
 		}
 		if(agregacionesSeleccion!=null)
-		for(CriterioAgregacion a: agregacionesSeleccion)
 		{
-			if(agreSelec.indexOf(a)>=0) continue;
-			agreSelec.add(a);
+			for(CriterioAgregacion a: agregacionesSeleccion)
+			{
+				if(agreSelec.indexOf(a)>=0) continue;
+				agreSelec.add(a);
+			}
 		}
 		String es="";
 		if(!esDelRestaurante) es="NOT";
 		//Empieza la creación de los datos del query
-		String from ="FROM ( SELECT PEDIDO_PROD.ENTREGADO, CUENTA.VALOR, CUENTA.FECHA, PRODUCTO.TIEMPO, PRODUCTO.PERSONALIZABLE, INFO_PROD_REST.FECHA_INICIO, INFO_PROD_REST.FECHA_FIN, CANTIDAD_MAXIMA, DISPONIBILIDAD, CUENTA.IDUSUARIO,USUARIO.NOMBRE,CORREO, PEDIDO_PROD.NOMBRE_RESTAURANTE, PEDIDO_PROD.ID_PRODUCTO,PRODUCTO.NOMBRE AS NOMBRE_PRODUCTO,PEDIDO_PROD.CANTIDAD, DESCRIPCION,TRADUCCION,TIPO, PRECIO,COSTO, MESA, NUMEROCUENTA, PAGADA, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA AS CATEGORIA_PRODUCTO"
-				+ " FROM PEDIDO_PROD, PRODUCTO,CUENTA,USUARIO,INFO_PROD_REST, CATEGORIA_PRODUCTO"
-				+ " WHERE CATEGORIA_PRODUCTO.ID_PRODUCTO=PRODUCTO.ID AND USUARIO.ID=CUENTA.IDUSUARIO AND CUENTA.NUMEROCUENTA=PEDIDO_PROD.NUMERO_CUENTA AND INFO_PROD_REST.ID_PRODUCTO=PRODUCTO.ID AND INFO_PROD_REST.NOMBRE_RESTAURANTE=PEDIDO_PROD.NOMBRE_RESTAURANTE"
-				+ " AND PEDIDO_PROD.ID_PRODUCTO=PRODUCTO.ID AND PEDIDO_PROD.NOMBRE_RESTAURANTE "+es+" LIKE '"+nombreRestaurante+"' AND CUENTA.FECHA<="+toDate(limite.getFechaFinal())+" AND CUENTA.FECHA>="+toDate(limite.getFechaInicial())
-				+ " ) NATURAL LEFT OUTER JOIN( PREFERENCIA NATURAL FULL OUTER JOIN PREFERENCIACATEGORIA NATURAL FULL OUTER JOIN PREFERENCIAZONA)";
+		String from =" FROM (PEDIDO_PROD NATURAL INNER JOIN INFO_PROD_REST)NATURAL INNER JOIN CATEGORIA_PRODUCTO, PRODUCTO,USUARIO, "
+				+ " CUENTA NATURAL LEFT OUTER JOIN"
+				+ "( PREFERENCIA NATURAL FULL OUTER JOIN PREFERENCIACATEGORIA "
+				+ "NATURAL FULL OUTER JOIN PREFERENCIAZONA)";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where=""; 
+		String where="WHERE ID_PRODUCTO=PRODUCTO.ID "
+				+ "AND USUARIO.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA "
+				+ "AND ID_PRODUCTO=PRODUCTO.ID  "
+				+ " AND NOMBRE_RESTAURANTE "+es+" LIKE '"+nombreRestaurante+"' "
+				+ "AND FECHA<="+toDate(limite.getFechaFinal())+" AND FECHA>="+toDate(limite.getFechaInicial());
 		String having="";
 		String temp="";
 		//Verifica agrupaciones
@@ -1119,16 +1122,34 @@ public class DAOTablaCriterio {
 		//Verifica órdenes
 		if(existentesOrd.size()>0)
 		{
-			temp=simplificarOrden(existentesOrd.get(0).getNombre());
-			if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(temp)==null) 
-				throw new Exception("Uno de los criterios no existe");
+			if(existentesOrd.get(0).getAgregacion()==null)
+			{
+				temp=simplificarOrden(existentesOrd.get(0).getNombre());
+				if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(simplificarOrden(existentesOrd.get(0).getNombre()))==null) 
+					throw new Exception("Uno de los criterios no existe");
+			}
+			else
+			{
+				temp=simplificarAgrupacion(existentesOrd.get(0).getAgregacion().getNombre());
+				if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(temp)==null) 
+					throw new Exception("Uno de los criterios no existe "+temp+".");
+			}
 			orderBy+="ORDER BY "+existentesOrd.get(0).getNombre();
 			existentesOrd.remove(0);
 			for(CriterioOrden c: existentesOrd)
 			{
-				temp=simplificarOrden(c.getNombre());
-				if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(simplificarOrden(c.getNombre()))==null) 
-					throw new Exception("Uno de los criterios no existe");
+				if(c.getAgregacion()==null)
+				{
+					temp=simplificarOrden(c.getNombre());
+					if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(simplificarOrden(c.getNombre()))==null) 
+						throw new Exception("Uno de los criterios no existe");
+				}
+				else
+				{
+					temp=simplificarAgrupacion(c.getAgregacion().getNombre());
+					if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(temp)==null) 
+						throw new Exception("Uno de los criterios no existe "+temp+".");
+				}
 				orderBy+=", "+c.getNombre();
 			}
 		}
@@ -1136,6 +1157,7 @@ public class DAOTablaCriterio {
 		//Verifica where
 		if(operacionesWhere!=null)
 			{
+				where+=" AND ";
 				for(Criterio c:operacionesWhere.getCriterios())
 				{
 					operaciones=simplificar(c.getNombre());
@@ -1144,7 +1166,7 @@ public class DAOTablaCriterio {
 						throw new Exception("El criterio no existe en la base");
 				}
 				evaluarWhere(operacionesWhere,tiposDeDatoUsuarioProducto());
-				where+="WHERE "+operacionesWhere.getNombre();
+				where+=" "+operacionesWhere.getNombre();
 			}
 		//Verifica having
 		if(operacionesHaving!=null)
@@ -1163,7 +1185,9 @@ public class DAOTablaCriterio {
 		PreparedStatement prep =conn.prepareStatement(sql);
 		recursos.add(prep);
 		System.out.println(sql);
+		double time =System.currentTimeMillis();
 		ResultSet r =prep.executeQuery();
+		System.out.println(System.currentTimeMillis()-time);
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
 	}
@@ -1188,10 +1212,9 @@ public class DAOTablaCriterio {
 		List<Criterio> c=new ArrayList<>();
 		while (rs.next()) {
 			String name2 = rs.getString("COLUMN_NAME");
-			if(name2.equals("IDUSUARIO")||name2.equals("NOMBRE_CATEGORIA")||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
+			if(name2.equals("NOMBRE") ||name2.equals("NOMBRE_CATEGORIA")||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
 			c.add(new Criterio(name2));
 		}
-		c.add(new Criterio("CATEGORIA_PRODUCTO"));
 		return c;
 	}
 	/**
@@ -1215,11 +1238,6 @@ public class DAOTablaCriterio {
 		if (rs.next()) {
 			String name2 = rs.getString("COLUMN_NAME");
 			c=new Criterio(name2);
-		}
-		if(c==null)
-		{
-			if(name.equals("CATEGORIA_PRODUCTO"))
-				c=new Criterio(name);
 		}
 		return c;
 	}
@@ -1276,8 +1294,12 @@ public class DAOTablaCriterio {
 		if(criteriosOrganizacion!=null)
 		for(CriterioOrden c: criteriosOrganizacion)
 		{
+			
 			if(existentesOrd.indexOf(c)>=0) continue;
-			if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+			if(c.getAgregacion()==null)
+			{
+				if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+			}
 			existentesOrd.add(c);
 		}
 		if(agregacionesSeleccion!=null)
@@ -1289,18 +1311,15 @@ public class DAOTablaCriterio {
 		String es="";
 		if(!esDelRestaurante) es="NOT";
 		//Empieza la creación de los datos del query
-		String from ="FROM (SELECT * FROM ("
-				+ "                    SELECT PEDIDO_MENU.CANTIDAD, CUENTA.FECHA, CUENTA.VALOR,PEDIDO_MENU.ENTREGADO, CUENTA.IDUSUARIO,USUARIO.NOMBRE,CORREO, PEDIDO_MENU.NOMBRE_RESTAURANTE, PEDIDO_MENU.NOMBRE_MENU, MENU.PRECIO,MENU.COSTO, MESA, NUMEROCUENTA, PAGADA, CATEGORIA_MENU.NOMBRE_CATEGORIA AS CATEGORIA_PRODUCTO"
-				+ "                    FROM PEDIDO_MENU,MENU,CUENTA,USUARIO, CATEGORIA_MENU"
-				+ "                    WHERE CATEGORIA_MENU.NOMBRE_MENU= MENU.NOMBRE AND USUARIO.ID=CUENTA.IDUSUARIO AND CUENTA.NUMEROCUENTA=PEDIDO_MENU.NUMERO_CUENTA "
-				+ "                    AND MENU.NOMBRE_RESTAURANTE=PEDIDO_MENU.NOMBRE_RESTAURANTE AND MENU.NOMBRE=PEDIDO_MENU.NOMBRE_MENU "
-				+ "                    AND PEDIDO_MENU.NOMBRE_RESTAURANTE "+es+" LIKE '"+nombreRestaurante+"' AND CUENTA.FECHA<="+toDate(limite.getFechaFinal())+" AND CUENTA.FECHA>="+toDate(limite.getFechaInicial())
-				+ "             ) NATURAL LEFT OUTER JOIN( PREFERENCIA NATURAL FULL OUTER JOIN PREFERENCIACATEGORIA NATURAL FULL OUTER JOIN PREFERENCIAZONA))";
-
+		String from =" FROM  PEDIDO_MENU NATURAL INNER JOIN MENU NATURAL INNER JOIN CATEGORIA_MENU,"
+				+ "USUARIO, CUENTA NATURAL LEFT OUTER JOIN"
+				+ "( PREFERENCIA NATURAL FULL OUTER JOIN PREFERENCIACATEGORIA "
+				+ "NATURAL FULL OUTER JOIN PREFERENCIAZONA)";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where=""; 
+		String where=" WHERE USUARIO.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA "
+				+ "AND NOMBRE_RESTAURANTE "+es+" LIKE '"+nombreRestaurante+"' AND FECHA<="+toDate(limite.getFechaFinal())+ " AND FECHA>="+toDate(limite.getFechaInicial()); 
 		String having="";
 		String temp="";
 		//Verifica agrupaciones
@@ -1341,16 +1360,34 @@ public class DAOTablaCriterio {
 		//Verifica órdenes
 		if(existentesOrd.size()>0)
 		{
-			temp=simplificarOrden(existentesOrd.get(0).getNombre());
-			if(!temp.equals("") && buscarCriteriosUsuarioPorMenu(temp)==null) 
-				throw new Exception("Uno de los criterios no existe");
+			if(existentesOrd.get(0).getAgregacion()==null)
+			{
+				temp=simplificarOrden(existentesOrd.get(0).getNombre());
+				if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(simplificarOrden(existentesOrd.get(0).getNombre()))==null) 
+					throw new Exception("Uno de los criterios no existe "+temp+".");
+			}
+			else
+			{
+				temp=simplificarAgrupacion(existentesOrd.get(0).getAgregacion().getNombre());
+				if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(temp)==null) 
+					throw new Exception("Uno de los criterios no existe "+temp+".");
+			}
 			orderBy+="ORDER BY "+existentesOrd.get(0).getNombre();
 			existentesOrd.remove(0);
 			for(CriterioOrden c: existentesOrd)
 			{
-				temp=simplificarOrden(c.getNombre());
-				if(!temp.equals("") && buscarCriteriosUsuarioPorMenu(simplificarOrden(c.getNombre()))==null) 
-					throw new Exception("Uno de los criterios no existe");
+				if(c.getAgregacion()==null)
+				{
+					temp=simplificarOrden(c.getNombre());
+					if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(simplificarOrden(c.getNombre()))==null) 
+						throw new Exception("Uno de los criterios no existe");
+				}
+				else
+				{
+					temp=simplificarAgrupacion(c.getAgregacion().getNombre());
+					if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(temp)==null) 
+						throw new Exception("Uno de los criterios no existe "+temp+".");
+				}
 				orderBy+=", "+c.getNombre();
 			}
 		}
@@ -1358,6 +1395,7 @@ public class DAOTablaCriterio {
 		//Verifica where
 		if(operacionesWhere!=null)
 			{
+				where+=" AND";
 				for(Criterio c:operacionesWhere.getCriterios())
 				{
 					operaciones=simplificar(c.getNombre());
@@ -1366,7 +1404,7 @@ public class DAOTablaCriterio {
 						throw new Exception("El criterio no existe en la base");
 				}
 				evaluarWhere(operacionesWhere,tiposDeDatoUsuarioMenu());
-				where+="WHERE "+operacionesWhere.getNombre();
+				where+=" "+operacionesWhere.getNombre();
 			}
 		//Verifica having
 		if(operacionesHaving!=null)
@@ -1385,7 +1423,9 @@ public class DAOTablaCriterio {
 		PreparedStatement prep =conn.prepareStatement(sql);
 		recursos.add(prep);
 		System.out.println(sql);
+		double time =System.currentTimeMillis();
 		ResultSet r =prep.executeQuery();
+		System.out.println(System.currentTimeMillis()-time);
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
 	}
