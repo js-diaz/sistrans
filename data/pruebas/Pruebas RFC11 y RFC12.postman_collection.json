@@ -1,0 +1,134 @@
+{
+	"info": {
+		"name": "Pruebas RFC11 y RFC12",
+		"_postman_id": "5c3dde28-114f-4c72-9839-4dc4867ddb59",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RFC12",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/usuarios/buenos-clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"usuarios",
+						"buenos-clientes"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "RFC11 Parte 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/productos/mas-vendidos-dia/LUNES",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"productos",
+						"mas-vendidos-dia",
+						"LUNES"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "RFC11 Parte 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/productos/menos-vendidos-dia/LUNES",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"productos",
+						"menos-vendidos-dia",
+						"LUNES"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "RFC11 Parte 3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/mas-frecuentados/LUNES",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"restaurantes",
+						"mas-frecuentados",
+						"LUNES"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "RFC11 Parte 4",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/menos-frecuentados/LUNES",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"restaurantes",
+						"menos-frecuentados",
+						"LUNES"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

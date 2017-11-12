@@ -608,13 +608,13 @@ public class DAOTablaUsuario {
 	}
 	
 	/**
-	 * Metodo que, usando la conexiÃ³n a la base de datos, saca todos los usuarios de la base de datos
-	 * @return Arraylist con los usuarios de la base de datos.
+	 * Metodo que, usando la conexiÃ³n a la base de datos, consulta los buenos clientes de la base de datos
+	 * @return List con los usuarios de la base de datos.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
-	public ArrayList<Usuario> darBuenosClientes() throws SQLException, Exception {
-		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+	public List<Usuario> darBuenosClientes() throws SQLException, Exception {
+		List<Usuario> usuarios = new ArrayList<>();
 
 		DAOTablaPreferencia pref = new DAOTablaPreferencia();
 		DAOTablaCuenta hist = new DAOTablaCuenta();

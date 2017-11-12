@@ -337,6 +337,48 @@ public class ProductoServices {
 		}
 		return Response.status(200).entity(productos).build();
 	}
+	
+	/**
+	 * Metodo que expone servicio REST usando GET que da los productos más vendidos en un dia particular.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-vendidos/dia
+	 * @return Json con todos los productos de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path("mas-vendidos-dia/{dia}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getProductosMasVendidosPorDia(@PathParam("dia") String dia) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<Producto> productos;
+		try {
+			productos = tm.productoDarProductosMasVendidosPorDiaDeLaSemana(dia);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(productos).build();
+	}
+	
+	/**
+	 * Metodo que expone servicio REST usando GET que da los productos más vendidos en un dia particular.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/menos-vendidos/dia
+	 * @return Json con todos los productos de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path("menos-vendidos-dia/{dia}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getProductosMenosVendidosPorDia(@PathParam("dia") String dia) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<Producto> productos;
+		try {
+			productos = tm.productoDarProductosMenosVendidosPorDiaDeLaSemana(dia);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(productos).build();
+	}
+
+
 
 
 }
