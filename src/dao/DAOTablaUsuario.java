@@ -607,7 +607,53 @@ public class DAOTablaUsuario {
 
 	}
 	
-	
+	/**
+	 * Metodo que, usando la conexiÃ³n a la base de datos, saca todos los usuarios de la base de datos
+	 * @return Arraylist con los usuarios de la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public ArrayList<Usuario> darBuenosClientes() throws SQLException, Exception {
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+
+		DAOTablaPreferencia pref = new DAOTablaPreferencia();
+		DAOTablaCuenta hist = new DAOTablaCuenta();
+		DAOTablaRestaurante rest = new DAOTablaRestaurante();
+		pref.setConn(this.conn);
+		hist.setConn(this.conn);
+		rest.setConn(this.conn);
+		
+		int smlv = 1000;
+		int weeks = 10;
+		String sqlMenus = "SELECT UNIQUE USUARIO.* FROM USUARIO JOIN CUENTA ON (IDUSUARIO = ID) " + 
+				"LEFT OUTER JOIN PEDIDO_MENU ON (NUMEROCUENTA = NUMERO_CUENTA) WHERE NOMBRE_MENU IS NULL";
+		String sqlProductos = "SELECT USUARIO.* FROM USUARIO JOIN CUENTA ON (IDUSUARIO = ID) " + 
+				"JOIN PEDIDO_PROD ON (NUMEROCUENTA = NUMERO_CUENTA) JOIN INFO_PROD_REST USING (ID_PRODUCTO, NOMBRE_RESTAURANTE) " + 
+				"GROUP BY ID, CORREO, NOMBRE, ROL HAVING MIN(PRECIO) > " + 1.5*smlv;
+		String sqlFechas = "SELECT USUARIO.* FROM USUARIO JOIN CUENTA ON (IDUSUARIO = ID) GROUP BY ID, CORREO, NOMBRE, ROL "
+				+ "HAVING COUNT(DISTINCT TO_CHAR(FECHA, 'WW YYYY')) > " + weeks;
+		
+		String sql = sqlFechas + " UNION " + sqlProductos + " UNION " + sqlMenus;
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while (rs.next()) {
+			String name = rs.getString("NOMBRE");
+			Long id = rs.getLong("ID");
+			String correo = rs.getString("CORREO");
+			Rol r = convertirARol(rs.getString("ROL"));
+			Preferencia p = pref.buscarPreferenciaPorId(id);
+			ArrayList<CuentaMinimum> historial=hist.buscarCuentasPorId(id);
+			RestauranteMinimum restaurante = rest.darRestauranteDeUsuario(id);
+			usuarios.add(new Usuario(name,id,correo,r,p,historial,restaurante));
+		}
+		rest.cerrarRecursos();
+		hist.cerrarRecursos();
+		pref.cerrarRecursos();
+		return usuarios;
+	}
 
 }
 
