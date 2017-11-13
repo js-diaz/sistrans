@@ -591,12 +591,16 @@ public class DAOTablaCriterio {
 		String[] datos=select.split(",");
 		ContenedoraInformacion c=null;
 		List<ContenedoraInformacion> lista= new ArrayList<>();
+		String temp="";
 		while(r.next())
 		{
 			c=new ContenedoraInformacion(datos);
 			for(int i=0;i<datos.length;i++)
 			{
-				c.modificarInformacion(i, r.getString(datos[i].trim()));
+				temp=datos[i];
+				if(temp.contains("AS")) temp = temp.split("AS")[1];
+				if(temp.contains(".")) temp=temp.split("\\.")[1];
+				c.modificarInformacion(i, r.getString(temp.trim()));
 			}
 			lista.add(c);
 		}
@@ -967,6 +971,9 @@ public class DAOTablaCriterio {
 			if(name2.equals("NOMBRE")||name2.equals("NOMBRE_CATEGORIA")||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
 			c.add(new Criterio(name2));
 		}
+		c.add(new Criterio("U.NOMBRE"));
+		c.add(new Criterio("P.NOMBRE AS NOMBRE_PRODUCTO"));
+
 		return c;
 	}
 	/**
@@ -977,6 +984,9 @@ public class DAOTablaCriterio {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public Criterio buscarCriteriosUsuarioPorProducto(String name) throws SQLException, Exception {
+		if(name.equals("U.NOMBRE")) return new Criterio("U.NOMBRE");
+		if(name.equals("P.NOMBRE AS NOMBRE_PRODUCTO")) return new Criterio(name);
+		
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
 				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA' OR "
 				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA' OR TABLE_NAME LIKE 'NOMBRE_CATEGORIA'))";
@@ -1019,6 +1029,7 @@ public class DAOTablaCriterio {
 			String name=rs.getString("COLUMN_NAME");
 			lista.agregarInformacion(name, rs.getString("DATA_TYPE"));
 		}
+		lista.agregarInformacion("U.NOMBRE", "VARCHAR2");
 		lista.agregarInformacion("CATEGORIA_PRODUCTO", "VARCHAR2");
 		lista.agregarInformacion("NOMBRE_PRODUCTO", "VARCHAR2");
 		return lista;
@@ -1044,23 +1055,59 @@ public class DAOTablaCriterio {
 		List<Criterio> existentesAgrup= new ArrayList<>();
 		List<CriterioAgregacion> agreSelec=new ArrayList<>();
 		if(criteriosAgrupamiento!=null)
-		for(Criterio c: criteriosAgrupamiento)
 		{
-			if(existentesAgrup.indexOf(c)>=0) continue;
-			existentesAgrup.add(c);
-		}
-		if(criteriosOrganizacion!=null)
-		for(CriterioOrden c: criteriosOrganizacion)
-		{
-			if(existentesOrd.indexOf(c)>=0) continue;
-			if(c.getAgregacion()==null)
+			if(criteriosAgrupamiento.contains(new Criterio("NOMBRE")))
 			{
-				if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+				criteriosAgrupamiento.remove(new Criterio("NOMBRE"));
+				criteriosAgrupamiento.add(new CriterioAgregacion("U.NOMBRE", null, false));
 			}
-			existentesOrd.add(c);
+			if(criteriosAgrupamiento.contains(new Criterio("NOMBRE_PRODUCTO")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("NOMBRE_PRODUCTO"));
+				criteriosAgrupamiento.add(new CriterioAgregacion("P.NOMBRE AS NOMBRE_PRODUCTO", null, false));
+			}
+			for(Criterio c: criteriosAgrupamiento)
+			{
+				if(existentesAgrup.indexOf(c)>=0) continue;
+				existentesAgrup.add(c);
+			}
 		}
+		
+		if(criteriosOrganizacion!=null)
+		{
+			if(criteriosOrganizacion.contains(new Criterio("NOMBRE")))
+			{
+				criteriosOrganizacion.remove(new Criterio("NOMBRE"));
+				criteriosOrganizacion.add(new CriterioOrden(null,"U.NOMBRE", false));
+			}
+			if(criteriosOrganizacion.contains(new Criterio("NOMBRE_PRODUCTO")))
+			{
+				criteriosOrganizacion.remove(new Criterio("NOMBRE_PRODUCTO"));
+				criteriosOrganizacion.add(new CriterioOrden(null,"P.NOMBRE AS NOMBRE_PRODUCTO", false));
+			}
+			for(CriterioOrden c: criteriosOrganizacion)
+			{
+				if(existentesOrd.indexOf(c)>=0) continue;
+				if(c.getAgregacion()==null)
+				{
+					if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+				}
+				existentesOrd.add(c);
+			}
+		}
+		
 		if(agregacionesSeleccion!=null)
 		{
+			if(agregacionesSeleccion.contains(new Criterio("NOMBRE")))
+			{
+				agregacionesSeleccion.remove(new Criterio("NOMBRE"));
+				agregacionesSeleccion.add(new CriterioAgregacion("U.NOMBRE", null, false));
+			}
+			if(agregacionesSeleccion.contains(new Criterio("NOMBRE_PRODUCTO")))
+			{
+				agregacionesSeleccion.remove(new Criterio("NOMBRE_PRODUCTO"));
+				agregacionesSeleccion.add(new CriterioAgregacion("P.NOMBRE AS NOMBRE_PRODUCTO", null, false));
+			}
 			for(CriterioAgregacion a: agregacionesSeleccion)
 			{
 				if(agreSelec.indexOf(a)>=0) continue;
@@ -1070,16 +1117,15 @@ public class DAOTablaCriterio {
 		String es="";
 		if(!esDelRestaurante) es="NOT";
 		//Empieza la creación de los datos del query
-		String from =" FROM (PEDIDO_PROD NATURAL INNER JOIN INFO_PROD_REST)NATURAL INNER JOIN CATEGORIA_PRODUCTO, PRODUCTO,USUARIO, "
+		String from =" FROM (PEDIDO_PROD NATURAL INNER JOIN INFO_PROD_REST)NATURAL INNER JOIN CATEGORIA_PRODUCTO, PRODUCTO P,USUARIO U, "
 				+ " CUENTA NATURAL LEFT OUTER JOIN"
 				+ "( PREFERENCIA NATURAL FULL OUTER JOIN PREFERENCIACATEGORIA "
 				+ "NATURAL FULL OUTER JOIN PREFERENCIAZONA)";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where="WHERE ID_PRODUCTO=PRODUCTO.ID "
-				+ "AND USUARIO.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA "
-				+ "AND ID_PRODUCTO=PRODUCTO.ID  "
+		String where="WHERE ID_PRODUCTO=P.ID "
+				+ "AND U.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA "
 				+ " AND NOMBRE_RESTAURANTE "+es+" LIKE '"+nombreRestaurante+"' "
 				+ "AND FECHA<="+toDate(limite.getFechaFinal())+" AND FECHA>="+toDate(limite.getFechaInicial());
 		String having="";
@@ -1215,6 +1261,7 @@ public class DAOTablaCriterio {
 			if(name2.equals("NOMBRE") ||name2.equals("NOMBRE_CATEGORIA")||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
 			c.add(new Criterio(name2));
 		}
+		c.add(new Criterio("U.NOMBRE"));
 		return c;
 	}
 	/**
@@ -1225,6 +1272,8 @@ public class DAOTablaCriterio {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public Criterio buscarCriteriosUsuarioPorMenu(String name) throws SQLException, Exception {
+		if(name.equals("U.NOMBRE")) return new Criterio("U.NOMBRE");
+		
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'MENU' OR TABLE_NAME "
 				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR "
 				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA'))";
@@ -1262,6 +1311,7 @@ public class DAOTablaCriterio {
 			String name=rs.getString("COLUMN_NAME");
 			lista.agregarInformacion(name, rs.getString("DATA_TYPE"));
 		}
+		lista.agregarInformacion("U.NOMBRE", "VARCHAR2");
 		lista.agregarInformacion("CATEGORIA_PRODUCTO", "VARCHAR2");
 		return lista;
 	}
@@ -1286,39 +1336,62 @@ public class DAOTablaCriterio {
 		List<Criterio> existentesAgrup= new ArrayList<>();
 		List<CriterioAgregacion> agreSelec=new ArrayList<>();
 		if(criteriosAgrupamiento!=null)
-		for(Criterio c: criteriosAgrupamiento)
 		{
-			if(existentesAgrup.indexOf(c)>=0) continue;
-			existentesAgrup.add(c);
+			if(criteriosAgrupamiento.contains(new Criterio("NOMBRE")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("NOMBRE"));
+				criteriosAgrupamiento.add(new CriterioAgregacion("U.NOMBRE", null, false));
+			}
+			for(Criterio c: criteriosAgrupamiento)
+			{
+				if(existentesAgrup.indexOf(c)>=0) continue;
+				existentesAgrup.add(c);
+			}
 		}
 		if(criteriosOrganizacion!=null)
-		for(CriterioOrden c: criteriosOrganizacion)
 		{
-			
-			if(existentesOrd.indexOf(c)>=0) continue;
-			if(c.getAgregacion()==null)
+			if(criteriosOrganizacion.contains(new Criterio("NOMBRE")))
 			{
-				if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+				criteriosOrganizacion.remove(new Criterio("NOMBRE"));
+				criteriosOrganizacion.add(new CriterioOrden(null, "U.NOMBRE", false));
 			}
-			existentesOrd.add(c);
+			for(CriterioOrden c: criteriosOrganizacion)
+			{
+				
+				if(existentesOrd.indexOf(c)>=0) continue;
+				if(c.getAgregacion()==null)
+				{
+					if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+				}
+				existentesOrd.add(c);
+			}
 		}
+		
 		if(agregacionesSeleccion!=null)
-		for(CriterioAgregacion a: agregacionesSeleccion)
 		{
-			if(agreSelec.indexOf(a)>=0) continue;
-			agreSelec.add(a);
+			if(agregacionesSeleccion.contains(new Criterio("NOMBRE")))
+			{
+				agregacionesSeleccion.remove(new Criterio("NOMBRE"));
+				agregacionesSeleccion.add(new CriterioAgregacion("U.NOMBRE", null, false));
+			}
+			for(CriterioAgregacion a: agregacionesSeleccion)
+			{
+				if(agreSelec.indexOf(a)>=0) continue;
+				agreSelec.add(a);
+			}
 		}
+		
 		String es="";
 		if(!esDelRestaurante) es="NOT";
 		//Empieza la creación de los datos del query
 		String from =" FROM  PEDIDO_MENU NATURAL INNER JOIN MENU NATURAL INNER JOIN CATEGORIA_MENU,"
-				+ "USUARIO, CUENTA NATURAL LEFT OUTER JOIN"
+				+ "USUARIO U, CUENTA NATURAL LEFT OUTER JOIN"
 				+ "( PREFERENCIA NATURAL FULL OUTER JOIN PREFERENCIACATEGORIA "
 				+ "NATURAL FULL OUTER JOIN PREFERENCIAZONA)";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where=" WHERE USUARIO.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA "
+		String where=" WHERE U.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA "
 				+ "AND NOMBRE_RESTAURANTE "+es+" LIKE '"+nombreRestaurante+"' AND FECHA<="+toDate(limite.getFechaFinal())+ " AND FECHA>="+toDate(limite.getFechaInicial()); 
 		String having="";
 		String temp="";
@@ -1363,13 +1436,13 @@ public class DAOTablaCriterio {
 			if(existentesOrd.get(0).getAgregacion()==null)
 			{
 				temp=simplificarOrden(existentesOrd.get(0).getNombre());
-				if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(simplificarOrden(existentesOrd.get(0).getNombre()))==null) 
+				if(!temp.equals("") && buscarCriteriosUsuarioPorMenu(simplificarOrden(existentesOrd.get(0).getNombre()))==null) 
 					throw new Exception("Uno de los criterios no existe "+temp+".");
 			}
 			else
 			{
 				temp=simplificarAgrupacion(existentesOrd.get(0).getAgregacion().getNombre());
-				if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(temp)==null) 
+				if(!temp.equals("") && buscarCriteriosUsuarioPorMenu(temp)==null) 
 					throw new Exception("Uno de los criterios no existe "+temp+".");
 			}
 			orderBy+="ORDER BY "+existentesOrd.get(0).getNombre();
@@ -1379,13 +1452,13 @@ public class DAOTablaCriterio {
 				if(c.getAgregacion()==null)
 				{
 					temp=simplificarOrden(c.getNombre());
-					if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(simplificarOrden(c.getNombre()))==null) 
+					if(!temp.equals("") && buscarCriteriosUsuarioPorMenu(simplificarOrden(c.getNombre()))==null) 
 						throw new Exception("Uno de los criterios no existe");
 				}
 				else
 				{
 					temp=simplificarAgrupacion(c.getAgregacion().getNombre());
-					if(!temp.equals("") && buscarCriteriosUsuarioPorProducto(temp)==null) 
+					if(!temp.equals("") && buscarCriteriosUsuarioPorMenu(temp)==null) 
 						throw new Exception("Uno de los criterios no existe "+temp+".");
 				}
 				orderBy+=", "+c.getNombre();

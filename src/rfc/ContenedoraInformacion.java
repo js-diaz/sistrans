@@ -24,7 +24,11 @@ public class ContenedoraInformacion {
 	{
 		informacion=new ArrayList<>();
 		for(String v:nombres)
+		{
+			if(v.contains("AS")) v = v.split("AS")[1];
+			if(v.contains(".")) v=v.split("\\.")[1];
 			informacion.add(new Informacion(v,""));
+		}
 	}
 	/**
 	 * Crea una contenedora vacía.

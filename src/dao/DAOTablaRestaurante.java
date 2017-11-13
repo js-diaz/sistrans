@@ -8,6 +8,7 @@ import bsh.EvalError;
 import bsh.Interpreter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -547,29 +548,23 @@ public class DAOTablaRestaurante {
 		return sql;
 	}
 	
-	public static void main(String[] args) throws EvalError {
+	public  void prueba() throws Exception {
+		String sql="SELECT U.NOMBRE AS NOMBRE_USUARIO  FROM  PEDIDO_MENU NATURAL INNER JOIN MENU NATURAL INNER JOIN CATEGORIA_MENU,USUARIO U, CUENTA NATURAL LEFT OUTER JOIN( PREFERENCIA NATURAL FULL OUTER JOIN PREFERENCIACATEGORIA NATURAL FULL OUTER JOIN PREFERENCIAZONA)  WHERE U.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA AND NOMBRE_RESTAURANTE  LIKE 'Nlounge' AND FECHA<=TO_DATE('2017-08-30 07:00:00', 'yyyy-MM-dd hh24:mi:ss') AND FECHA>=TO_DATE('2017-08-07 07:00:00', 'yyyy-MM-dd hh24:mi:ss')   ORDER BY NOMBRECATEGORIA DESC";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		recursos.add(ps);
+		ResultSet rs=ps.executeQuery();
+		 
+		 
+		 ResultSetMetaData rsmd = rs.getMetaData();
+		 System.out.println(rsmd.getColumnName(1));
+		 if(rs.next())
+		 System.out.println(rs.getString("NOMBRE_USUARIO"));
+		 System.out.println(rs.getString("U.NOMBRE"));
 
-		Interpreter i = new Interpreter();  // Construct an interpreter
-		i.set("foo", 5);                    // Set variables
-		i.set("date", new Date() ); 
-		
-		
-		int[] a = new int[]{1,2,3};
-		int[]b=new int[]{3,2,1};
-		for(int j=0;j<3;j++)
-		{
-			i.set("a", a[j]);
-			i.set("b", b[j]);
-			i.eval("bar= a==b");
-			System.out.println(i.get("bar"));
-		}
-		Date date = (Date)i.get("date");    // retrieve a variable
-		
-		
 	}
 	
 	/**
-	 * Da el mayor número de ventas que ha tenido un restaurante en la BD.
+	 * Da el mayor nï¿½mero de ventas que ha tenido un restaurante en la BD.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
@@ -615,7 +610,7 @@ public class DAOTablaRestaurante {
 
 
 	/**
-	 * Da el mayor número de ventas que ha tenido un restaurante en la BD.
+	 * Da el mayor nï¿½mero de ventas que ha tenido un restaurante en la BD.
 	 * @throws SQLException - Cualquier error que la base de datos arroje.
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
@@ -658,6 +653,7 @@ public class DAOTablaRestaurante {
 			restaurantes.add(darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE")));				
 		return restaurantes;
 	}
+	
 
 
 }

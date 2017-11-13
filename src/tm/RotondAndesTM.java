@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7119,6 +7121,17 @@ public class RotondAndesTM {
 				throw exception;
 			}
 		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		String x="U.NOMBRE";
+		System.out.println(x.contains("."));
+		System.out.println(x.split("\\.")[0]);
+		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData/");
+		DAOTablaRestaurante r = new DAOTablaRestaurante();
+		r.setConn(tm.darConexion());
+		r.prueba();
+		
 	}
 
 }
