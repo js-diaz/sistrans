@@ -29,6 +29,7 @@ import rfc.CriterioVerdadHaving;
 import rfc.LimiteFechas;
 import rfc.PendientesOrden;
 import rfc.UsuarioCompleto;
+import test.PruebasJavaContraSQL;
 import vos.UsuarioMinimum;
 import vos.CondicionTecnica;
 import vos.Cuenta;
@@ -7128,9 +7129,10 @@ public class RotondAndesTM {
 		System.out.println(x.contains("."));
 		System.out.println(x.split("\\.")[0]);
 		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData/");
-		DAOTablaRestaurante r = new DAOTablaRestaurante();
+		PruebasJavaContraSQL r = new PruebasJavaContraSQL();
 		r.setConn(tm.darConexion());
-		r.prueba();
+		r.pruebas();
+		r.cerrarRecursos();
 		
 	}
 
