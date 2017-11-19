@@ -959,8 +959,7 @@ public class DAOTablaCriterio {
 	public List<Criterio> darCriteriosBasicosUsuarioDeProducto() throws SQLException, Exception
 	{
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA' OR "
-				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA'))";
+				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA')) ";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -968,7 +967,7 @@ public class DAOTablaCriterio {
 		List<Criterio> c=new ArrayList<>();
 		while (rs.next()) {
 			String name2 = rs.getString("COLUMN_NAME");
-			if(name2.equals("NOMBRE")||name2.equals("NOMBRE_CATEGORIA")||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
+			if(name2.equals("NOMBRE")||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
 			c.add(new Criterio(name2));
 		}
 		c.add(new Criterio("U.NOMBRE"));
@@ -988,8 +987,7 @@ public class DAOTablaCriterio {
 		if(name.equals("P.NOMBRE AS NOMBRE_PRODUCTO")) return new Criterio(name);
 		
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA' OR "
-				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA' OR TABLE_NAME LIKE 'NOMBRE_CATEGORIA'))";
+				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_PRODUCTO')) ";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -1018,8 +1016,7 @@ public class DAOTablaCriterio {
 	{
 		ContenedoraInformacion lista= new ContenedoraInformacion();
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA' OR "
-				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA'))";
+				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_PRODUCTO'))";
 		String sql = "SELECT COLUMN_NAME, DATA_TYPE FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -1030,7 +1027,6 @@ public class DAOTablaCriterio {
 			lista.agregarInformacion(name, rs.getString("DATA_TYPE"));
 		}
 		lista.agregarInformacion("U.NOMBRE", "VARCHAR2");
-		lista.agregarInformacion("CATEGORIA_PRODUCTO", "VARCHAR2");
 		lista.agregarInformacion("NOMBRE_PRODUCTO", "VARCHAR2");
 		return lista;
 	}
@@ -1046,7 +1042,7 @@ public class DAOTablaCriterio {
 	 * @throws SQLException Si hay un error con la base de datos.<br>
 	 * @throws Exception Si hay cualquier otro error.
 	 */
-	public List<ContenedoraInformacion> generarListaFiltradaUsuarioProductos(
+	public List<Object> generarListaFiltradaUsuarioProductos(
 			List<CriterioOrden> criteriosOrganizacion,List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregacionesSeleccion, CriterioVerdad operacionesWhere, 
 			CriterioVerdadHaving operacionesHaving, String nombreRestaurante, boolean esDelRestaurante,LimiteFechas limite) throws SQLException, Exception {
@@ -1118,9 +1114,7 @@ public class DAOTablaCriterio {
 		if(!esDelRestaurante) es="NOT";
 		//Empieza la creación de los datos del query
 		String from =" FROM (PEDIDO_PROD NATURAL INNER JOIN INFO_PROD_REST)NATURAL INNER JOIN CATEGORIA_PRODUCTO, PRODUCTO P,USUARIO U, "
-				+ " CUENTA NATURAL LEFT OUTER JOIN"
-				+ "( PREFERENCIA NATURAL FULL OUTER JOIN PREFERENCIACATEGORIA "
-				+ "NATURAL FULL OUTER JOIN PREFERENCIAZONA)";
+				+ " CUENTA";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
@@ -1233,9 +1227,13 @@ public class DAOTablaCriterio {
 		System.out.println(sql);
 		double time =System.currentTimeMillis();
 		ResultSet r =prep.executeQuery();
-		System.out.println(System.currentTimeMillis()-time);
+		time=System.currentTimeMillis()-time;
+		System.out.println(time);
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
-		return cont;
+		List<Object> rta= new ArrayList<>();
+		rta.add(cont);
+		rta.add(time);
+		return rta;
 	}
 	
 	/**
@@ -1247,8 +1245,7 @@ public class DAOTablaCriterio {
 	public List<Criterio> darCriteriosBasicosUsuarioDeMenu() throws SQLException, Exception
 	{
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'MENU' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR "
-				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA'))";
+				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_MENU'))";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -1258,7 +1255,7 @@ public class DAOTablaCriterio {
 		List<Criterio> c=new ArrayList<>();
 		while (rs.next()) {
 			String name2 = rs.getString("COLUMN_NAME");
-			if(name2.equals("NOMBRE") ||name2.equals("NOMBRE_CATEGORIA")||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
+			if(name2.equals("NOMBRE") ||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
 			c.add(new Criterio(name2));
 		}
 		c.add(new Criterio("U.NOMBRE"));
@@ -1275,8 +1272,7 @@ public class DAOTablaCriterio {
 		if(name.equals("U.NOMBRE")) return new Criterio("U.NOMBRE");
 		
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'MENU' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR "
-				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA'))";
+				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_MENU'))";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -1300,8 +1296,7 @@ public class DAOTablaCriterio {
 	{
 		ContenedoraInformacion lista= new ContenedoraInformacion();
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'MENU' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR "
-				+ "TABLE_NAME LIKE 'PREFERENCIA' OR TABLE_NAME LIKE 'PREFERENCIAZONA' OR TABLE_NAME LIKE 'PREFERENCIACATEGORIA'))";
+				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_MENU'))";
 		String sql = "SELECT COLUMN_NAME, DATA_TYPE FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -1312,7 +1307,6 @@ public class DAOTablaCriterio {
 			lista.agregarInformacion(name, rs.getString("DATA_TYPE"));
 		}
 		lista.agregarInformacion("U.NOMBRE", "VARCHAR2");
-		lista.agregarInformacion("CATEGORIA_PRODUCTO", "VARCHAR2");
 		return lista;
 	}
 	
@@ -1327,7 +1321,7 @@ public class DAOTablaCriterio {
 	 * @throws SQLException Si hay un error con la base de datos.<br>
 	 * @throws Exception Si hay cualquier otro error.
 	 */
-	public List<ContenedoraInformacion> generarListaFiltradaUsuarioMenus(
+	public List<Object> generarListaFiltradaUsuarioMenus(
 			List<CriterioOrden> criteriosOrganizacion,List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregacionesSeleccion, CriterioVerdad operacionesWhere, 
 			CriterioVerdadHaving operacionesHaving, String nombreRestaurante, boolean esDelRestaurante,LimiteFechas limite) throws SQLException, Exception {
@@ -1386,9 +1380,7 @@ public class DAOTablaCriterio {
 		//Empieza la creación de los datos del query
 		String from =" FROM  (SELECT PM.*, M.PRECIO, M.COSTO FROM MENU M,PEDIDO_MENU PM WHERE M.NOMBRE=PM.NOMBRE_MENU AND M.NOMBRE_RESTAURANTE=PM.NOMBRE_RESTAURANTE) "
 				+ "NATURAL INNER JOIN CATEGORIA_MENU,"
-				+ "USUARIO U, CUENTA NATURAL LEFT OUTER JOIN"
-				+ "( PREFERENCIA NATURAL FULL OUTER JOIN PREFERENCIACATEGORIA "
-				+ "NATURAL FULL OUTER JOIN PREFERENCIAZONA)";
+				+ "USUARIO U, CUENTA ";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
@@ -1499,9 +1491,13 @@ public class DAOTablaCriterio {
 		System.out.println(sql);
 		double time =System.currentTimeMillis();
 		ResultSet r =prep.executeQuery();
-		System.out.println(System.currentTimeMillis()-time);
+		time=System.currentTimeMillis()-time;
+		System.out.println(time);
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
-		return cont;
+		List<Object> rta= new ArrayList<>();
+		rta.add(cont);
+		rta.add(time);
+		return rta;
 	}
 	
 	private String toDate(Date fecha) {

@@ -781,7 +781,8 @@ public class RestauranteServices {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		
 		if(es==null) es=false;
-		List<ContenedoraInformacion> zonas;
+		List<ContenedoraInformacion> list;
+		List<Object> obj=null;
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId(usuarioId);
 			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(nombreRestaurante))))
@@ -790,11 +791,14 @@ public class RestauranteServices {
 				throw new Exception("Nombre del restaurante no valido");
 			ContenedoraCriterios c= contenedora.getContenedoraCriterios();
 			LimiteFechas limite=contenedora.getLimiteFechas();
-			zonas = tm.criteriosFiltrarClientesProductos(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving(),limite,nombreRestaurante,es);
+			obj = tm.criteriosFiltrarClientesProductos(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving(),limite,nombreRestaurante,es);
+			list=(List<ContenedoraInformacion>)obj.get(0);
+			Double time=(Double)obj.get(1);
+			if(time>800) throw new Exception("Ha vencido el tiempo límite de la consulta con "+time);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(zonas).build();
+		return Response.status(200).entity(list).build();
 	}
 	//RFC9-RFC10 MENÚS
 	/**
@@ -810,9 +814,9 @@ public class RestauranteServices {
 	public Response pruebaFiltrosMenu( @HeaderParam("usuarioId") Long usuarioId, @HeaderParam("es") Boolean es, ContenedoraCriteriosConLimiteFecha contenedora,@PathParam("nombre")String nombreRestaurante) {
 		nombreRestaurante=nombreRestaurante.replaceAll(RotondAndesTM.SPACE, " ");
 		RotondAndesTM tm = new RotondAndesTM(getPath());
-		
+		List<Object> obj=null;
 		if(es==null) es=false;
-		List<ContenedoraInformacion> zonas;
+		List<ContenedoraInformacion> list;
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId(usuarioId);
 			if(!(u.getRol().equals(Rol.OPERADOR) || (u.getRol().equals(Rol.LOCAL) && u.getRestaurante().getNombre().equals(nombreRestaurante))))
@@ -821,10 +825,13 @@ public class RestauranteServices {
 				throw new Exception("Nombre del restaurante no valido");
 			ContenedoraCriterios c= contenedora.getContenedoraCriterios();
 			LimiteFechas limite=contenedora.getLimiteFechas();
-			zonas = tm.criteriosFiltrarClientesMenus(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving(),limite,nombreRestaurante,es);
+			obj = tm.criteriosFiltrarClientesMenus(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving(),limite,nombreRestaurante,es);
+			list=(List<ContenedoraInformacion>) obj.get(0);
+			Double time=(Double)obj.get(1);
+			if(time>800) throw new Exception("EL tiempo límite se ha excedido con "+time);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(zonas).build();
+		return Response.status(200).entity(list).build();
 	}
 }

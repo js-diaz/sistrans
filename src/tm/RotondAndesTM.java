@@ -4295,10 +4295,10 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
 	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
 	 */
-	public List<ContenedoraInformacion> criteriosFiltrarClientesProductos(
+	public List<Object> criteriosFiltrarClientesProductos(
 			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having,LimiteFechas limite, String nombreRestaurante, Boolean es) throws Exception {
-		List<ContenedoraInformacion> informacion=null;
+		List<Object> informacion=null;
 		DAOTablaCriterio dao=null;
 		try 
 		{
@@ -4332,10 +4332,10 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
 	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
 	 */
-	public List<ContenedoraInformacion> criteriosFiltrarClientesMenus(
+	public List<Object> criteriosFiltrarClientesMenus(
 			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having,LimiteFechas limite, String nombreRestaurante, Boolean es) throws Exception {
-		List<ContenedoraInformacion> informacion=null;
+		List<Object> informacion=null;
 		DAOTablaCriterio dao=null;
 		try 
 		{
