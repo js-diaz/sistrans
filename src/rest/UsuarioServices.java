@@ -453,6 +453,27 @@ public class UsuarioServices {
 		}
 		return Response.status(200).entity("reserva eliminado correctamente").build();
 	}
+	
+	/**
+	 * Metodo que expone servicio REST usando GET que da los buenos clientes de la base de datos.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/UsuarioAndes/rest/usuarios/buenos-clientes
+	 * @return Json con los buenos clientes de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path("buenos-clientes")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getBuenosClientes() {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<Usuario> usuarios;
+		try {
+			usuarios = tm.usuarioDarBuenosClientes();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(usuarios).build();
+	}
+
 
 
 }

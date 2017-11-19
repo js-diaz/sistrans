@@ -28,8 +28,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import rfc.ContenedoraCriterios;
 import rfc.ContenedoraInformacion;
 import tm.RotondAndesTM;
@@ -337,6 +335,25 @@ public class ProductoServices {
 		}
 		return Response.status(200).entity(productos).build();
 	}
-
+	
+	/**
+	 * Metodo que expone servicio REST usando GET que da los productos más vendidos en un dia particular.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/productos/mas-vendidos/dia
+	 * @return Json con todos los productos de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path("vendidos-dia/{dia}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getProductosMasVendidosPorDia(@PathParam("dia") String dia) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<Producto> productos;
+		try {
+			productos = tm.productoDarProductosMasYMenosVendidosPorDiaDeLaSemana(dia);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(productos).build();
+	}
 
 }
