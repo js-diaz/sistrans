@@ -154,13 +154,17 @@
 									{
 										"key": "Content-Type",
 										"value": "application/json"
+									},
+									{
+										"key": "es",
+										"value": "true"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t},{\n\t\t\t\"nombre\":\"MESA\",\n\t\t\t\"ascendente\":true\n\t\t},{\n\t\t\t\"nombre\":\"TIEMPO\",\n\t\t\t\"ascendente\":\"true\"\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"FECHA_FIN\"\n\t\t},\n\t\t\"operacion1\":\"<\",\n\t\t\"valorComparacion1\":\"2017-11-25\",\n\t\t\"afirmativo1\":true\n\t}\n},\n\t\"limiteFechas\":{\n\t\t\n\t\t\"fechaInicial\":\"2016-08-31\",\n\t\t\"fechaFinal\":\"2017-02-31\"\n\n\t}\n\n\n}\n"
+									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t},{\n\t\t\t\"nombre\":\"MESA\",\n\t\t\t\"ascendente\":true\n\t\t},{\n\t\t\t\"nombre\":\"TIEMPO\",\n\t\t\t\"ascendente\":\"true\"\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"FECHA_FIN\"\n\t\t},\n\t\t\"operacion1\":\"<\",\n\t\t\"valorComparacion1\":\"2017-11-25\",\n\t\t\"afirmativo1\":true\n\t}\n},\n\t\"limiteFechas\":{\n\t\t\n\t\t\"fechaInicial\":\"2016-08-30\",\n\t\t\"fechaFinal\":\"2017-03-02\"\n\n\t}\n\n\n}\n"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Wikibox/clientesPorProducto",
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto",
 								"description": null
 							},
 							"response": []
@@ -384,7 +388,7 @@
 							"response": []
 						},
 						{
-							"name": "Consulta menus pedidos en la mesa 1",
+							"name": "Consulta menus pedidos en la mesa 10",
 							"event": [
 								{
 									"listen": "test",
@@ -407,13 +411,17 @@
 									{
 										"key": "Content-Type",
 										"value": "application/json"
+									},
+									{
+										"key": "es",
+										"value": "true"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"contenedoraCriterios\":{\n  \"orden\":[\n    {\n      \"nombre\":\"NOMBRE_MENU\",\n      \"ascendente\":false\n    }\n    ],\n  \"where\":{\n    \"valorAnterior1\":{\n      \"nombre\":\"MESA\"\n    },\n    \"operacion1\":\"=\",\n    \"valorComparacion1\":\"1\",\n    \"afirmativo1\":true\n  }\n},\n  \"limiteFechas\":{\n    \n    \"fechaInicial\":\"2016-08-31\",\n    \"fechaFinal\":\"2017-08-31\"\n\n  }\n\n\n}\n"
+									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_MENU\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"MESA\"\n\t\t},\n\t\t\"operacion1\":\"=\",\n\t\t\"valorComparacion1\":\"10\",\n\t\t\"afirmativo1\":true\n\t}\n},\n\t\"limiteFechas\":{\n\t\t\n\t\t\"fechaInicial\":\"2016-08-31\",\n\t\t\"fechaFinal\":\"2018-08-31\"\n\n\t}\n\n\n}\n"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Wikibox/clientesPorMenu",
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorMenu",
 								"description": null
 							},
 							"response": []
