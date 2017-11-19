@@ -42,7 +42,7 @@
 			"response": []
 		},
 		{
-			"name": "RFC11 Parte 1",
+			"name": "RFC11 Parte 1 Caso 1",
 			"event": [
 				{
 					"listen": "test",
@@ -59,7 +59,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/VideoAndes/rest/productos/mas-vendidos-dia/LUNES",
+					"raw": "http://localhost:8080/VideoAndes/rest/productos/vendidos-dia/LUNES",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -69,7 +69,7 @@
 						"VideoAndes",
 						"rest",
 						"productos",
-						"mas-vendidos-dia",
+						"vendidos-dia",
 						"LUNES"
 					]
 				},
@@ -78,7 +78,7 @@
 			"response": []
 		},
 		{
-			"name": "RFC11 Parte 2",
+			"name": "RFC11 Parte 1 Caso 2",
 			"event": [
 				{
 					"listen": "test",
@@ -95,7 +95,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/VideoAndes/rest/productos/menos-vendidos-dia/LUNES",
+					"raw": "http://localhost:8080/VideoAndes/rest/productos/vendidos-dia/JUEVES",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -105,8 +105,8 @@
 						"VideoAndes",
 						"rest",
 						"productos",
-						"menos-vendidos-dia",
-						"LUNES"
+						"vendidos-dia",
+						"JUEVES"
 					]
 				},
 				"description": ""
@@ -114,7 +114,7 @@
 			"response": []
 		},
 		{
-			"name": "RFC11 Parte 3",
+			"name": "RFC11 Parte 2 Caso 1",
 			"event": [
 				{
 					"listen": "test",
@@ -131,7 +131,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/mas-frecuentados/LUNES",
+					"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/frecuentados/LUNES",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -141,7 +141,7 @@
 						"VideoAndes",
 						"rest",
 						"restaurantes",
-						"mas-frecuentados",
+						"frecuentados",
 						"LUNES"
 					]
 				},
@@ -150,7 +150,7 @@
 			"response": []
 		},
 		{
-			"name": "RFC11 Parte 4",
+			"name": "RFC11 Parte 2 Caso 2",
 			"event": [
 				{
 					"listen": "test",
@@ -167,7 +167,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/menos-frecuentados/LUNES",
+					"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/frecuentados/JUEVES",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -177,8 +177,8 @@
 						"VideoAndes",
 						"rest",
 						"restaurantes",
-						"menos-frecuentados",
-						"LUNES"
+						"frecuentados",
+						"JUEVES"
 					]
 				},
 				"description": ""

@@ -3070,15 +3070,17 @@ public class RotondAndesTM {
 	 * @return Productos en lista.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<Producto> productoDarProductosMasVendidosPorDiaDeLaSemana(String dia) throws Exception
+	public List<Producto> productoDarProductosMasYMenosVendidosPorDiaDeLaSemana(String dia) throws Exception
 	{
+		while(dia.length() < 9)
+			dia += " ";
 		List<Producto> list =null;
 		DAOTablaProducto dao = new DAOTablaProducto();
 		try
 		{
 			this.conn=darConexion();
-			dao.setConn(conn);
-			list=dao.darProductosMasVendidosPorDiaDeLaSemana(dia);
+			dao.setConn(conn);			
+			list=dao.darProductosMasYMenosVendidosPorDiaDeLaSemana(dia);
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -3107,51 +3109,6 @@ public class RotondAndesTM {
 		return list;
 	}
 	
-	/**
-	 * Da los productos menos vendidos en un dia particular.<br>
-	 * @param dia nombre del dia a revisar.
-	 * @return Productos en lista.<br>
-	 * @throws Exception Si existe algún tipo de error
-	 */
-	public List<Producto> productoDarProductosMenosVendidosPorDiaDeLaSemana(String dia) throws Exception
-	{
-		List<Producto> list =null;
-		DAOTablaProducto dao = new DAOTablaProducto();
-		try
-		{
-			this.conn=darConexion();
-			dao.setConn(conn);
-			list=dao.darProductosMenosVendidosPorDiaDeLaSemana(dia);
-		}
-		catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} 
-		catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		}
-		finally
-		{
-			try
-			{
-				dao.cerrarRecursos();
-				if(this.conn!=null) this.conn.close();
-			}
-			catch(SQLException exception)
-			{
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return list;
-	}
-
-
-
 	//Rol
 	/**
 	 * Da los roles en el sistema.<br>
@@ -4813,58 +4770,17 @@ public class RotondAndesTM {
 	 * @return Restaurantes en lista.<br>
 	 * @throws Exception Si existe algún tipo de error
 	 */
-	public List<Restaurante> restauranteDarRestaurantesMasVisitadosPorDiaDeLaSemana(String dia) throws Exception
+	public List<Restaurante> restauranteDarRestaurantesMasYMenosVisitadosPorDiaDeLaSemana(String dia) throws Exception
 	{
+		while(dia.length() < 9)
+			dia += " ";
 		List<Restaurante> list =null;
 		DAOTablaRestaurante dao = new DAOTablaRestaurante();
 		try
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
-			list=dao.darRestaurantesMasFrecuentadosPorDiaDeLaSemana(dia);
-		}
-		catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} 
-		catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		}
-		finally
-		{
-			try
-			{
-				dao.cerrarRecursos();
-				if(this.conn!=null) this.conn.close();
-			}
-			catch(SQLException exception)
-			{
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return list;
-	}
-
-	/**
-	 * Da los restaurantes menos visitados en un dia particular.<br>
-	 * @param dia nombre del dia a revisar.
-	 * @return Restaurantes en lista.<br>
-	 * @throws Exception Si existe algún tipo de error
-	 */
-	public List<Restaurante> restauranteDarRestaurantesMenosVisitadosPorDiaDeLaSemana(String dia) throws Exception
-	{
-		List<Restaurante> list =null;
-		DAOTablaRestaurante dao = new DAOTablaRestaurante();
-		try
-		{
-			this.conn=darConexion();
-			dao.setConn(conn);
-			list=dao.darRestaurantesMenosFrecuentadosPorDiaDeLaSemana(dia);
+			list=dao.darRestaurantesMasYMenosFrecuentadosPorDiaDeLaSemana(dia);
 		}
 		catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
