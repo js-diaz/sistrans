@@ -34,8 +34,6 @@ public class Criterio {
 	{
 		this.nombre=nombre;
 	}
-	
-	
 	/**
 	 * Retorna el nombre.<br>
 	 * @return nombre

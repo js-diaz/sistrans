@@ -52,7 +52,7 @@ public class ContenedoraCriterios {
 		this.orden = orden;
 		this.agrupacion = agrupacion;
 		if(agregacion!=null && agregacion.size()>0)
-		this.agregacion = agregacion;
+			this.agregacion = agregacion;
 		else
 		{
 			this.agregacion=new ArrayList<CriterioAgregacion>();

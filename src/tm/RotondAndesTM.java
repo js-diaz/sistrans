@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +29,7 @@ import rfc.CriterioVerdadHaving;
 import rfc.LimiteFechas;
 import rfc.PendientesOrden;
 import rfc.UsuarioCompleto;
+import test.PruebasJavaContraSQL;
 import vos.UsuarioMinimum;
 import vos.CondicionTecnica;
 import vos.Cuenta;
@@ -4379,10 +4382,10 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
 	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
 	 */
-	public List<ContenedoraInformacion> criteriosFiltrarClientesProductos(
+	public List<Object> criteriosFiltrarClientesProductos(
 			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having,LimiteFechas limite, String nombreRestaurante, Boolean es) throws Exception {
-		List<ContenedoraInformacion> informacion=null;
+		List<Object> informacion=null;
 		DAOTablaCriterio dao=null;
 		try 
 		{
@@ -4416,10 +4419,10 @@ public class RotondAndesTM {
 	 * Metodo que modela la transaccion que retorna productos organizados por ciertos criterios.
 	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
 	 */
-	public List<ContenedoraInformacion> criteriosFiltrarClientesMenus(
+	public List<Object> criteriosFiltrarClientesMenus(
 			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
 			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having,LimiteFechas limite, String nombreRestaurante, Boolean es) throws Exception {
-		List<ContenedoraInformacion> informacion=null;
+		List<Object> informacion=null;
 		DAOTablaCriterio dao=null;
 		try 
 		{
@@ -7252,6 +7255,18 @@ public class RotondAndesTM {
 				throw exception;
 			}
 		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		String x="U.NOMBRE";
+		System.out.println(x.contains("."));
+		System.out.println(x.split("\\.")[0]);
+		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData/");
+		PruebasJavaContraSQL r = new PruebasJavaContraSQL();
+		r.setConn(tm.darConexion());
+		r.pruebas();
+		r.cerrarRecursos();
+		
 	}
 
 }

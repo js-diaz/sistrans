@@ -12,15 +12,16 @@ package dao;
 
 
 import java.sql.Connection; 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
 import vos.*;
 import vos.Producto.TiposDePlato;
+
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicaciÃ³n
