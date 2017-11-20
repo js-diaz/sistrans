@@ -4232,54 +4232,16 @@ public class RotondAndesTM {
 	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
 	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
 	 */
-	public List<ContenedoraInformacion> criteriosOrganizarPorZonaUniversal(String nombreZona,
+	public List<ContenedoraInformacion> criteriosOrganizarPorZonasComoSeQuiera(String nombreZona,
 			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
-			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having) throws Exception {
-		List<ContenedoraInformacion> informacion=null;
-		DAOTablaCriterio dao=null;
-		try 
-		{
-			//////transaccion
-			dao=new DAOTablaCriterio();
-			dao.setConn(darConexion());
-			informacion = dao.generarListaFiltradaZonaEspecifica(nombreZona,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
-
-		} catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} finally {
-			try {
-				dao.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return informacion;
-	}
-	/**
-	 * Metodo que modela la transaccion que retorna todos los videos de la base de datos.
-	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la busqueda
-	 * @throws Exception Si existe algún tipo de error -  cualquier error que se genere durante la transaccion
-	 */
-	public List<ContenedoraInformacion> criteriosOrganizarPorZonasComoSeQuiera(
-			List<CriterioOrden> criteriosOrganizacion, List<Criterio> criteriosAgrupamiento,
-			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having) throws Exception {
+			List<CriterioAgregacion> agregaciones,CriterioVerdad where, CriterioVerdadHaving having,boolean esProd) throws Exception {
 		List<ContenedoraInformacion> informacion=null;
 		DAOTablaCriterio dao=null;
 		try 
 		{
 			dao=new DAOTablaCriterio();
 			dao.setConn(darConexion());
-			informacion = dao.generarListaFiltradaZonas(criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having);
+			informacion = dao.generarListaFiltradaZonas(nombreZona,criteriosOrganizacion,criteriosAgrupamiento, agregaciones, where, having,esProd);
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
