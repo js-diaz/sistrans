@@ -607,7 +607,46 @@ public class DAOTablaUsuario {
 
 	}
 	
-	
+	/**
+	 * Metodo que, usando la conexiÃ³n a la base de datos, consulta los buenos clientes de la base de datos
+	 * @return List con los usuarios de la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje.
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public List<Usuario> darBuenosClientes() throws SQLException, Exception {
+		List<Usuario> usuarios = new ArrayList<>();
+
+		DAOTablaPreferencia pref = new DAOTablaPreferencia();
+		DAOTablaCuenta hist = new DAOTablaCuenta();
+		DAOTablaRestaurante rest = new DAOTablaRestaurante();
+		pref.setConn(this.conn);
+		hist.setConn(this.conn);
+		rest.setConn(this.conn);
+		
+		String sql = "SELECT * FROM USUARIO WHERE ID IN (SELECT IDUSUARIO FROM CUENTA MINUS " + 
+				"SELECT IDUSUARIO FROM CUENTA WHERE NUMEROCUENTA IN (SELECT NUMERO_CUENTA FROM PEDIDO_MENU INTERSECT " + 
+				"SELECT NUMERO_CUENTA FROM PEDIDO_PROD JOIN INFO_PROD_REST USING (ID_PRODUCTO, NOMBRE_RESTAURANTE) WHERE PRECIO < 1106) UNION ALL " + 
+				"SELECT IDUSUARIO FROM CUENTA GROUP BY IDUSUARIO HAVING COUNT(DISTINCT TO_CHAR(FECHA, 'WW YYYY')) = 105)";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while (rs.next()) {
+			String name = rs.getString("NOMBRE");
+			Long id = rs.getLong("ID");
+			String correo = rs.getString("CORREO");
+			Rol r = convertirARol(rs.getString("ROL"));
+			Preferencia p = pref.buscarPreferenciaPorId(id);
+			ArrayList<CuentaMinimum> historial=hist.buscarCuentasPorId(id);
+			RestauranteMinimum restaurante = rest.darRestauranteDeUsuario(id);
+			usuarios.add(new Usuario(name,id,correo,r,p,historial,restaurante));
+		}
+		rest.cerrarRecursos();
+		hist.cerrarRecursos();
+		pref.cerrarRecursos();
+		return usuarios;
+	}
 
 }
 

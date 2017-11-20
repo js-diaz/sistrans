@@ -28,6 +28,7 @@ import tm.RotondAndesTM;
 import vos.InfoIngRest;
 import vos.InfoProdRest;
 import vos.Menu;
+import vos.Producto;
 import vos.Restaurante;
 import vos.RestauranteMinimum;
 import vos.Usuario;
@@ -834,4 +835,25 @@ public class RestauranteServices {
 		}
 		return Response.status(200).entity(list).build();
 	}
+	
+	/**
+	 * Metodo que expone servicio REST usando GET que da los restaurantes más frecuentados en un dia particular.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/restaurantes/mas-frecuentados/dia
+	 * @return Json con los restaurantes buscados o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path("frecuentados/{dia}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getRestaurantesMasFrecuentadosPorDia(@PathParam("dia") String dia) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<Restaurante> restaurantes;
+		try {
+			restaurantes = tm.restauranteDarRestaurantesMasYMenosVisitadosPorDiaDeLaSemana(dia);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(restaurantes).build();
+	}
+
 }

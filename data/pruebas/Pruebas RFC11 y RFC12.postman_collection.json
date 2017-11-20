@@ -1,0 +1,189 @@
+{
+	"info": {
+		"name": "Pruebas RFC11 y RFC12",
+		"_postman_id": "5c3dde28-114f-4c72-9839-4dc4867ddb59",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RFC12",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/usuarios/buenos-clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"usuarios",
+						"buenos-clientes"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "RFC11 Parte 1 Caso 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/productos/vendidos-dia/LUNES",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"productos",
+						"vendidos-dia",
+						"LUNES"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "RFC11 Parte 1 Caso 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/productos/vendidos-dia/JUEVES",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"productos",
+						"vendidos-dia",
+						"JUEVES"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "RFC11 Parte 2 Caso 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/frecuentados/LUNES",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"restaurantes",
+						"frecuentados",
+						"LUNES"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "RFC11 Parte 2 Caso 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/frecuentados/JUEVES",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"VideoAndes",
+						"rest",
+						"restaurantes",
+						"frecuentados",
+						"JUEVES"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
