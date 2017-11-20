@@ -469,15 +469,19 @@ public class DAOTablaProducto {
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
 		
+		double time =System.currentTimeMillis();
+		ResultSet rs =prepStmt.executeQuery();
+		time=System.currentTimeMillis()-time;
+		System.out.println(sql);
+		System.out.println(time);
+		if(time>800) throw new Exception("EL tiempo excede a los 0.8 con "+time);		Long idActual=null;
 		while(rs.next()) 
 			productos.add(buscarProductoPorId(rs.getLong("ID_PLATO")));
 				
 		return productos;
 	}
 	
-	//RFC6
 		/**
 		 * Da el mayor número de ventas que ha tenido un producto en la BD.
 		 * @throws SQLException - Cualquier error que la base de datos arroje.
@@ -495,7 +499,7 @@ public class DAOTablaProducto {
 			return rs.getInt("MAX");
 			else return -1;
 		}
-		
+		//RFC6
 		/**
 		 * Retorna la lista con los productos que hayan sido vendidos la mayor cantidad de veces.
 		 * @return Arraylist con los productos que cumplen la conidicion dada.
@@ -514,8 +518,13 @@ public class DAOTablaProducto {
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
-			ResultSet rs = prepStmt.executeQuery();
-			
+
+			double time =System.currentTimeMillis();
+			ResultSet rs =prepStmt.executeQuery();
+			time=System.currentTimeMillis()-time;
+			System.out.println(sql);
+			System.out.println(time);
+			if(time>800) throw new Exception("EL tiempo excede a los 0.8 con "+time);		Long idActual=null;
 			while(rs.next()) 
 				productos.add(buscarProductoPorId(rs.getLong("ID_PRODUCTO")));
 					

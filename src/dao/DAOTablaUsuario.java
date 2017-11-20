@@ -446,6 +446,7 @@ public class DAOTablaUsuario {
 	 * @throws Exception Si sucede cualquier error.<br>
 	 * @throws SQLException Si hay un error de BD.
 	 */
+	//¿Cómo calculo el tiempo?
 	public UsuarioCompleto darTodaLaInfoDeUnCliente(Long id) throws SQLException, Exception
 	{
 		
@@ -460,7 +461,11 @@ public class DAOTablaUsuario {
 		UsuarioCompleto usuario=null;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
-		ResultSet rs = prepStmt.executeQuery();
+		double time =System.currentTimeMillis();
+		ResultSet rs =prepStmt.executeQuery();
+		time=System.currentTimeMillis()-time;
+		System.out.println(time);
+		if(time>800) throw new Exception("EL tiempo excede a los 0.8 con "+time);		Long idActual=null;
 		if (rs.next()) {
 			String name = rs.getString("NOMBRE");
 			Long id2 = rs.getLong("ID");
@@ -534,8 +539,12 @@ public class DAOTablaUsuario {
 				+ "PRODUCTO.DESCRIPCION, PRODUCTO.TRADUCCION, PRODUCTO.TIPO, MENU.NOMBRE_RESTAURANTE) "
 				+ "ORDER BY CLIENTE,TIENEMESA,NOMBRE_MENU";
 		PreparedStatement prep=conn.prepareStatement(sql);
+		System.out.println(sql);
+		double time=System.currentTimeMillis();
 		ResultSet rs=prep.executeQuery();
-		Long idActual=null;
+		time=System.currentTimeMillis()-time;
+		System.out.println(time);
+		if(time>800) throw new Exception("EL tiempo excede a los 0.8 con "+time);		Long idActual=null;
 		String menuActual="";
 		Long nuevaId=null;
 		String menu="";

@@ -264,7 +264,12 @@ public class DAOTablaZona {
 		System.out.println(sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
-		ResultSet rs= prepStmt.executeQuery();
+		
+		double time =System.currentTimeMillis();
+		ResultSet rs =prepStmt.executeQuery();
+		time=System.currentTimeMillis()-time;
+		System.out.println(time);
+		if(time>800) throw new Exception("EL tiempo excede a los 0.8 con "+time);		Long idActual=null;
 		c= new ContenedoraZonaCategoriaProducto();
 		while(rs.next())
 		{

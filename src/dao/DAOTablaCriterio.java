@@ -297,7 +297,10 @@ public class DAOTablaCriterio {
 		PreparedStatement prep =conn.prepareStatement(sql);
 		recursos.add(prep);
 		System.out.println(sql);
+		double time =System.currentTimeMillis();
 		ResultSet r =prep.executeQuery();
+		time=System.currentTimeMillis()-time;
+		System.out.println(time);
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
 	}
@@ -435,7 +438,10 @@ public class DAOTablaCriterio {
 		PreparedStatement prep =conn.prepareStatement(sql);
 		recursos.add(prep);
 		System.out.println(sql);
+		double time =System.currentTimeMillis();
 		ResultSet r =prep.executeQuery();
+		time=System.currentTimeMillis()-time;
+		System.out.println(time);
 		
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
@@ -625,10 +631,11 @@ public class DAOTablaCriterio {
 		List<Criterio> c=new ArrayList<>();
 		while (rs.next()) {
 			String name2 = rs.getString("COLUMN_NAME");
-			if(name2.equals("ID")) continue;
+			if(name2.equals("ID") || name2.equals("NOMBRE") || name2.equals("ID_PRODUCTO")) continue;
 			c.add(new Criterio(name2));
 		}
-
+		c.add(new Criterio("P.NOMBRE"));
+		c.add(new Criterio("I.ID_PRODUCTO"));
 		return c;
 	}
 	/**
@@ -642,7 +649,7 @@ public class DAOTablaCriterio {
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
 				+ "LIKE 'INGREDIENTE' OR  TABLE_NAME LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'CATEGORIA_PRODUCTO' OR TABLE_NAME LIKE 'INFO_PROD_REST'))";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
-
+		if(name.equals("NOMBRE")||name.equals("ID_PRODUCTO")) return new Criterio(name);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
@@ -675,6 +682,8 @@ public class DAOTablaCriterio {
 			String name=rs.getString("COLUMN_NAME");
 			lista.agregarInformacion(name, rs.getString("DATA_TYPE"));
 		}
+		lista.agregarInformacion("NOMBRE_PRODUCTO", "VARCHAR2");
+
 		return lista;
 	}
 	
@@ -718,11 +727,13 @@ public class DAOTablaCriterio {
 		}
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
-		String from ="FROM (SELECT PRODUCTO.NOMBRE, PRODUCTO.TIPO, PRODUCTO.PERSONALIZABLE, PRODUCTO.TRADUCCION, PRODUCTO.DESCRIPCION, PRODUCTO.TIEMPO, INFO_PROD_REST.*, RESTAURANTE.PAG_WEB, RESTAURANTE.NOMBRE_ZONA, RESTAURANTE.ID_REPRESENTANTE, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA FROM PRODUCTO, RESTAURANTE,  INFO_PROD_REST, CATEGORIA_PRODUCTO WHERE PRODUCTO.ID = CATEGORIA_PRODUCTO.ID_PRODUCTO AND PRODUCTO.ID = INFO_PROD_REST.ID_PRODUCTO AND RESTAURANTE.NOMBRE = INFO_PROD_REST.NOMBRE_RESTAURANTE)   ";
+		String from ="FROM PRODUCTO P, RESTAURANTE,  INFO_PROD_REST I, CATEGORIA_PRODUCTO   ";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where=""; 
+		String where="WHERE P.ID = CATEGORIA_PRODUCTO.ID_PRODUCTO AND "
+				+ "P.ID = I.ID_PRODUCTO AND "
+				+ " RESTAURANTE.NOMBRE = I.NOMBRE_RESTAURANTE"; 
 		String having="";
 		String temp="";
 		//Verifica agrupaciones
@@ -788,7 +799,7 @@ public class DAOTablaCriterio {
 						throw new Exception("El criterio no existe en la base");
 				}
 				evaluarWhere(operacionesWhere,tiposDeDatoProducto());
-				where+="WHERE "+operacionesWhere.getNombre();
+				where+=" AND "+operacionesWhere.getNombre();
 			}
 		//Verifica having
 		if(operacionesHaving!=null)
@@ -807,7 +818,10 @@ public class DAOTablaCriterio {
 		PreparedStatement prep =conn.prepareStatement(sql);
 		recursos.add(prep);
 		System.out.println(sql);
+		double time =System.currentTimeMillis();
 		ResultSet r =prep.executeQuery();
+		time=System.currentTimeMillis()-time;
+		System.out.println(time);
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
 	}
@@ -853,13 +867,15 @@ public class DAOTablaCriterio {
 		}
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
-		String from ="FROM (SELECT PRODUCTO.NOMBRE, PRODUCTO.TIPO, PRODUCTO.PERSONALIZABLE, PRODUCTO.TRADUCCION, PRODUCTO.DESCRIPCION, PRODUCTO.TIEMPO, INFO_PROD_REST.*, RESTAURANTE.PAG_WEB, RESTAURANTE.NOMBRE_ZONA, RESTAURANTE.ID_REPRESENTANTE, CATEGORIA_PRODUCTO.NOMBRE_CATEGORIA FROM PRODUCTO, RESTAURANTE,  INFO_PROD_REST, CATEGORIA_PRODUCTO WHERE PRODUCTO.ID = CATEGORIA_PRODUCTO.ID_PRODUCTO AND PRODUCTO.ID = INFO_PROD_REST.ID_PRODUCTO AND RESTAURANTE.NOMBRE = INFO_PROD_REST.NOMBRE_RESTAURANTE)   ";
+		String from ="FROM PRODUCTO P, RESTAURANTE,  INFO_PROD_REST I, CATEGORIA_PRODUCTO   ";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where="WHERE NOMBRE LIKE '"+nombreProducto+"'";
+		String where="WHERE P.ID = CATEGORIA_PRODUCTO.ID_PRODUCTO AND "
+				+ "P.ID = I.ID_PRODUCTO AND P.NOMBRE LIKE '"+nombreProducto+"'"
+				+ " RESTAURANTE.NOMBRE = I.NOMBRE_RESTAURANTE"; 
 		String having="";
-		String temp="";
+		String temp="";	
 		//Verifica agrupaciones
 		if(existentesAgrup.size()>0)
 		{
@@ -942,7 +958,10 @@ public class DAOTablaCriterio {
 		PreparedStatement prep =conn.prepareStatement(sql);
 		recursos.add(prep);
 		System.out.println(sql);
+		double time =System.currentTimeMillis();
 		ResultSet r =prep.executeQuery();
+		time=System.currentTimeMillis()-time;
+		System.out.println(time);
 		
 		List<ContenedoraInformacion> cont=crearContenedora(r,select);
 		return cont;
