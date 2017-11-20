@@ -7125,13 +7125,10 @@ public class RotondAndesTM {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String x="U.NOMBRE";
-		System.out.println(x.contains("."));
-		System.out.println(x.split("\\.")[0]);
 		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData/");
 		PruebasJavaContraSQL r = new PruebasJavaContraSQL();
 		r.setConn(tm.darConexion());
-		r.pruebas();
+		r.test();
 		r.cerrarRecursos();
 		
 	}

@@ -1,0 +1,418 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RF9YRF10",
+		"_postman_id": "69c411a1-ec77-fe2d-442a-78f812077b96",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CREA UNA NUEVA CUENTA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\"}"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas"
+			},
+			"response": []
+		},
+		{
+			"name": "Agrega un nuevo producto sin pagar con falta de disponibilidad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 500\"]= responseCode.code===500"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"cantidad\": 8000,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos"
+			},
+			"response": []
+		},
+		{
+			"name": "Agrega un nuevo menú con falta de disponibilidad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 500\"]= responseCode.code===500"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n            \"cantidad\": 40000,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        }"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas/1/menus"
+			},
+			"response": []
+		},
+		{
+			"name": "Agrega un nuevo producto sin pagar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"cantidad\": 8,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos"
+			},
+			"response": []
+		},
+		{
+			"name": "Agrega un nuevo menú",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        }"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas/1/menus"
+			},
+			"response": []
+		},
+		{
+			"name": "REGISTRO DE UN PEDIDO SIN SER EL RESTAURANTE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 500\"]= responseCode.code===500"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "1"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"cantidad\": 800000,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": true\n        }"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos/Skinte/8"
+			},
+			"response": []
+		},
+		{
+			"name": "Intenta registrar más allá de la disponibilidad actual",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 500\"]= responseCode.code===500"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "8"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"cantidad\": 800000,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": true\n        }"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos/Skinte/8"
+			},
+			"response": []
+		},
+		{
+			"name": "Intentar registrar más allá de la disponibilidad actual de un menú en el caso hipotético de que estuviera algo de esa cantidad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 500\"]= responseCode.code===500"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "20"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n            \"cantidad\": 400000,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": true\n        }"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas/1/menus/Voonyx/Matsoft"
+			},
+			"response": []
+		},
+		{
+			"name": "Restaurante registra servicio de un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "8"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"plato\": {\n                \"costo\": 1.64,\n                \"precio\": 1.79,\n                \"disponibilidad\": 6020,\n                \"fechaInicio\": \"2017-07-15\",\n                \"fechaFin\": \"2018-01-27\",\n                \"producto\": {\n                    \"personalizable\": true,\n                    \"nombre\": \"Tomatoes Tear Drop Yellow\",\n                    \"tipo\": \"ACOMPANAMIENTO\",\n                    \"descripcion\": null,\n                    \"traduccion\": null,\n                    \"tiempo\": 0,\n                    \"id\": 8,\n                    \"ingredientes\": [\n                        {\n                            \"nombre\": \"Bread - 10 Grain\",\n                            \"descripcion\": \"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\",\n                            \"traduccion\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.\",\n                            \"id\": 18\n                        }\n                    ],\n                    \"categorias\": [\n                        {\n                            \"nombre\": \"Filipino\"\n                        }\n                    ]\n                },\n                \"restaurante\": {\n                    \"nombre\": \"Skinte\",\n                    \"pagWeb\": \"http://zdnet.com\"\n                }\n            },\n            \"entregado\": false\n        }"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas/1/productos/Skinte/8"
+			},
+			"response": []
+		},
+		{
+			"name": "Restaurante registra servicio de un menú",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "67"
+					},
+					{
+						"key": "preferencia",
+						"value": "123"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n            \"cantidad\": 4,\n            \"cuenta\": {\n                \"valor\": 58.15,\n                \"numeroCuenta\": \"1\",\n                \"fecha\": \"2017-01-18\"\n            },\n            \"menu\": {\n                \"nombre\": \"Matsoft\",\n                \"precio\": 5.97,\n                \"costo\": 10.14,\n                \"restaurante\": {\n                    \"nombre\": \"Voonyx\",\n                    \"pagWeb\": \"https://creativecommons.org\"\n                }\n            },\n            \"entregado\": false\n        }"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas/1/menus/Voonyx/Matsoft"
+			},
+			"response": []
+		},
+		{
+			"name": "Borra la cuenta agregada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"]= responseCode.code===200"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "usuarioId",
+						"value": "0"
+					},
+					{
+						"key": "preferencia",
+						"value": "200"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"pedidoProd\": [],\n    \"pedidoMenu\": [],\n    \"valor\": 100.00,\n    \"numeroCuenta\": \"1\",\n    \"fecha\": \"2018-10-31\"}"
+				},
+				"url": "localhost:8080/VideoAndes/rest/cuentas"
+			},
+			"response": []
+		}
+	]
+}

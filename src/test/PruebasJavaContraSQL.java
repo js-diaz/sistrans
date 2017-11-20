@@ -1,6 +1,8 @@
 package test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
 
 import dao.DAOTablaRestaurante;
 import tm.RotondAndesTM;
@@ -324,7 +327,10 @@ public class PruebasJavaContraSQL {
 		fw.close();
 		 cerrarRecursos();
 	}
-	
+	/**
+	 * Prueba general sobre los datos pequeños combinando selects,joins y proyecciones.<br>
+	 * @throws Exception Si hay algún error
+	 */
 	public void generalPequenho() throws Exception
 	{
 		String lineaAImprimir="";
@@ -400,6 +406,36 @@ public class PruebasJavaContraSQL {
 		 cerrarRecursos();
 	}
 	
+	public void test() throws Exception
+	{
+		String sql="";
+		BufferedReader br= new BufferedReader(new FileReader(new File("./data/testescrita.csv")));
+		String line=br.readLine();
+		ArrayList<String> list= new ArrayList<>();
+		while(line!=null)
+		{
+			list.add(line);
+			line=br.readLine();
+		}
+		br.close();
+		File f = new File("./docs/distribucionCuentas.csv");
+		FileWriter fw= new FileWriter(f);
+		String[] datos=null;
+		for(String s:list)
+		{
+			datos=s.split("---");
+			sql=datos[2];
+			PreparedStatement ps = conn.prepareStatement(sql);
+			recursos.add(ps);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next())
+				sql=rs.getInt("COUNT(*)")+"";
+			else throw new Exception("NO HAY CONTEO");
+			fw.write(datos[0]+","+datos[1]+","+sql+"\n");
+			
+		}
+		fw.close();
+	}
 	/**
 	 * Método que llama el TransactionManager para guardar la información en archivos csv.<br>
 	 * @throws Exception Si hay alguna excepción.
