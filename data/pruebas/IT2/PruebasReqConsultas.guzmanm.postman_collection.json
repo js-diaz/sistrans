@@ -2,14 +2,13 @@
 	"variables": [],
 	"info": {
 		"name": "PruebasReqConsultas.guzmanm",
-		"_postman_id": "662f8078-2829-ad02-15e6-ee205c609b0a",
+		"_postman_id": "476e8065-4f5a-1c4f-58c2-2ad15299f8a4",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "RFC5",
-			"description": "",
 			"item": [
 				{
 					"name": "Obtener rentabilidad de un solo restaurante",
@@ -25,31 +24,27 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/rentabilidad",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "41",
-								"description": ""
+								"value": "41"
 							},
 							{
 								"key": "preferencia",
 								"value": "200",
-								"description": "",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"fechaInicial\":\"2015-10-31\",\n\t\"fechaFinal\":\"2019-10-31\"\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/rentabilidad"
 					},
 					"response": []
 				},
@@ -67,30 +62,26 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/rentabilidad",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "preferencia",
-								"value": "200",
-								"description": ""
+								"value": "200"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"fechaInicial\":\"2016-10-31\",\n\t\"fechaFinal\":\"2018-10-31\"\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/rentabilidad"
 					},
 					"response": []
 				},
@@ -108,30 +99,26 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/rentabilidad",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "preferencia",
-								"value": "200",
-								"description": ""
+								"value": "200"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"fechaInicial\":\"2019-10-31\",\n\t\"fechaFinal\":\"2018-10-31\"\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/rentabilidad"
 					},
 					"response": []
 				},
@@ -149,31 +136,27 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/rentabilidad",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "141",
-								"description": ""
+								"value": "141"
 							},
 							{
 								"key": "preferencia",
 								"value": "200",
-								"description": "",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"fechaInicial\":\"2015-10-31\",\n\t\"fechaFinal\":\"2019-10-31\"\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/rentabilidad"
 					},
 					"response": []
 				}
@@ -181,7 +164,6 @@
 		},
 		{
 			"name": "RFC3",
-			"description": "",
 			"item": [
 				{
 					"name": "Obtiene la representación completa de un usuario",
@@ -197,31 +179,27 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/usuarios/completo/106",
 						"method": "GET",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "preferencia",
 								"value": "200",
-								"description": "",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"fechaInicial\":\"2015-10-31\",\n\t\"fechaFinal\":\"2019-10-31\"\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/usuarios/completo/106"
 					},
 					"response": []
 				},
@@ -239,31 +217,27 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/usuarios/completo/1",
 						"method": "GET",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "preferencia",
 								"value": "200",
-								"description": "",
 								"disabled": true
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"fechaInicial\":\"2015-10-31\",\n\t\"fechaFinal\":\"2019-10-31\"\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/usuarios/completo/1"
 					},
 					"response": []
 				}
@@ -271,7 +245,6 @@
 		},
 		{
 			"name": "RFC2",
-			"description": "",
 			"item": [
 				{
 					"name": "Json ordenado solo ordenamiento",
@@ -287,25 +260,26 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
+							},
+							{
+								"key": "esProd",
+								"value": "true"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t]\n\t\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo"
 					},
 					"response": []
 				},
@@ -323,25 +297,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_MENU\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t]\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo"
 					},
 					"response": []
 				},
@@ -359,25 +330,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"NUMERO_CUENTA\"\n\t\t},\n\t\t\"valorComparacion1\":\"1%\",\n\t\t\"afirmativo1\":true\n\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo"
 					},
 					"response": []
 				},
@@ -395,25 +363,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"FECHA\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"NUMERO_CUENTA\"\n\t\t},\n\t\t\"valorComparacion1\":\"1%\",\n\t\t\"afirmativo1\":true\n\t},\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"NOMBRE\",\n\t\t\t\"agregacion\":\"COUNT\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t\"operacion1\":\"<\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo"
 					},
 					"response": []
 				},
@@ -431,25 +396,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"INGRESOESPECIAL\"\n\t\t}\n\t\t],\n\t\"agregacion\":[\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t\t},\n\t\t\t\"valores\":[\"98\",\"96\"],\n\t\t\t\"afirmativo1\":true\n\t\t},\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valores\":[\"1\",\"2\"],\n\t\t\t\"afirmativo1\":false\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo"
 					},
 					"response": []
 				},
@@ -467,25 +429,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"ID_REPRESENTANTE\"\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"IDUSUARIO\"\n\t\t\t},\n\t\t\t\"operacion1\":\"=\",\n\t\t\t\"afirmativo1\":true\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo"
 					},
 					"response": []
 				},
@@ -503,25 +462,22 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"INGRESOESPECIAL\"\n\t\t}\n\t\t],\n\t\"agregacion\":[\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"nombre\":\"CAPACIDADOCUPADA\"\n\t\t\t},\n\t\t\t\"operacion1\":\"=\",\n\t\t\t\"afirmativo1\":false\n\t\t},\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"valorComparacion2\":\n\t\t\t{\n\t\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\t\"distinto\":false\n\t\t\t},\n\t\t\t\"operacion1\":\">\",\n\t\t\t\"afirmativo1\":true\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo"
 					},
 					"response": []
 				},
@@ -539,50 +495,54 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
+							},
+							{
+								"key": "esProd",
+								"value": "true",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"INGRESOESPECIAL\"\n\t\t}\n\t\t],\n\t\"agregacion\":[\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDAD\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion2\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDADOCUPADA\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"=\",\n\t\t\t\t\"afirmativo1\":false\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion2\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDADOCUPADA\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"=\",\n\t\t\t\t\"afirmativo1\":false\n\t\t\t},\n\t\t\t\"conjuncion\":true,\n\t\t\t\"afirmativo1\":true\n\t\t\t\n\t\t},\n\t\t\"having\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"valorComparacion2\":\n\t\t\t\t{\n\t\t\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"=\",\n\t\t\t\t\"afirmativo1\":true\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"valorComparacion2\":\n\t\t\t\t{\n\t\t\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"=\",\n\t\t\t\t\"afirmativo1\":false\n\t\t\t},\n\t\t\t\"conjuncion\":false,\n\t\t\t\"afirmativo1\":true\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo"
 					},
 					"response": []
 				},
 				{
 					"name": "Consulta de ocupada menor que capacidad, y si es de ingreso especial",
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
+							},
+							{
+								"key": "esProd",
+								"value": "true",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"FECHA\",\n\t\t\t\"ascendente\":true\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\",\n\t\t\t\"ascendente\":true\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion2\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"CAPACIDADOCUPADA\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\">\",\n\t\t\t\t\"afirmativo1\":true\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"INGRESOESPECIAL\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"=\",\n\t\t\t\t\"afirmativo1\":true,\n\t\t\t\t\"valorComparacion1\":1\n\t\t\t\t\n\t\t\t\t\n\t\t\t},\n\t\t\t\"conjuncion\":true,\n\t\t\t\"afirmativo1\":true\n\t\t\t\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo"
 					},
 					"response": []
 				},
@@ -601,25 +561,26 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
+							},
+							{
+								"key": "esProd",
+								"value": "true"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"FECHA\",\n\t\t\t\"ascendente\":true\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\",\n\t\t\t\"ascendente\":true\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion1\":\"2017-04-08\",\n\t\t\t\t\"operacion1\":\">=\",\n\t\t\t\t\"afirmativo1\":true\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"<=\",\n\t\t\t\t\"afirmativo1\":true,\n\t\t\t\t\"valorComparacion1\":\"2018-01-01\"\n\t\t\t\t\n\t\t\t\t\n\t\t\t},\n\t\t\t\"conjuncion\":true,\n\t\t\t\"afirmativo1\":true\n\t\t\t\n\t\t}\n}"
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"FECHA\",\n\t\t\t\"ascendente\":true\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_RESTAURANTE\",\n\t\t\t\"ascendente\":true\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion1\":\"2016-8-08\",\n\t\t\t\t\"operacion1\":\">=\",\n\t\t\t\t\"afirmativo1\":true\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"<=\",\n\t\t\t\t\"afirmativo1\":true,\n\t\t\t\t\"valorComparacion1\":\"2017-07-31\"\n\t\t\t\t\n\t\t\t\t\n\t\t\t},\n\t\t\t\"conjuncion\":true,\n\t\t\t\"afirmativo1\":true\n\t\t\t\n\t\t}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo/Sports"
 					},
 					"response": []
 				},
@@ -638,25 +599,27 @@
 						}
 					],
 					"request": {
-						"url": "localhost:8080/VideoAndes/rest/zonas/completo/Sports",
 						"method": "POST",
 						"header": [
 							{
 								"key": "usuarioId",
-								"value": "0",
-								"description": ""
+								"value": "0"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
+							},
+							{
+								"key": "esMenu",
+								"value": "true",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"NUMERO_CUENTA\"\n\t\t},\n\t\t\"valorComparacion1\":\"1%\",\n\t\t\"afirmativo1\":true\n\t},\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"NOMBRE\",\n\t\t\t\"agregacion\":\"COUNT\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t\"operacion1\":\"<\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t}\n}\n"
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"agrupacion\":[\n\t\t{\n\t\t\t\"nombre\":\"CAPACIDAD\"\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE\"\n\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"CAPACIDADOCUPADA\",\n\t\t\t\"agregacion\":\"MIN\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t{\n\t\t\t\"valorAgrupacion\":\"ABIERTAACTUALMENTE\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t}\n\t\t],\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"Z.NOMBRE\",\n\t\t\t\"agregacion\":\"COUNT\",\n\t\t\t\"distinto\":true\n\t\t},\n\t\t\"operacion1\":\"<\",\n\t\t\"valorComparacion1\":\"1\",\n\t\t\"afirmativo1\":false\n\t}\n}\n"
 						},
-						"description": ""
+						"url": "localhost:8080/VideoAndes/rest/zonas/completo/Sports"
 					},
 					"response": []
 				}

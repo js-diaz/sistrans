@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "PruebasReqConsultas.diaz",
-		"_postman_id": "b35bcea8-5bab-168c-d3e8-db31471bab00",
+		"_postman_id": "b3920371-fb49-e5d1-9f5e-7a5ad5f9fa1b",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -269,7 +269,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"FECHA_FIN\",\n\t\t\t\"ascendente\":true\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA_INICIO\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion1\":\"2017-04-08\",\n\t\t\t\t\"operacion1\":\">=\",\n\t\t\t\t\"afirmativo1\":true\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA_INICIO\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"<=\",\n\t\t\t\t\"afirmativo1\":true,\n\t\t\t\t\"valorComparacion1\":\"2018-01-01\"\n\t\t\t\t\n\t\t\t\t\n\t\t\t},\n\t\t\t\"conjuncion\":true,\n\t\t\t\"afirmativo1\":true\n\t\t\t\n\t\t}\n}"
+							"raw": "{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t},\n\t\t{\n\t\t\t\"nombre\":\"FECHA_FIN\",\n\t\t\t\"ascendente\":true\n\t\t}\n\t\t],\n\t\t\"where\":{\n\t\t\t\"c1\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA_INICIO\"\n\t\t\t\t},\n\t\t\t\t\"valorComparacion1\":\"2017-04-08\",\n\t\t\t\t\"operacion1\":\">=\",\n\t\t\t\t\"afirmativo1\":true\n\t\t\t},\n\t\t\t\"c2\":{\n\t\t\t\t\"valorAnterior1\":\n\t\t\t\t{\n\t\t\t\t\t\"nombre\":\"FECHA_INICIO\"\n\t\t\t\t},\n\t\t\t\t\"operacion1\":\"<=\",\n\t\t\t\t\"afirmativo1\":true,\n\t\t\t\t\"valorComparacion1\":\"2017-04-15\"\n\t\t\t\t\n\t\t\t\t\n\t\t\t},\n\t\t\t\"conjuncion\":true,\n\t\t\t\"afirmativo1\":true\n\t\t\t\n\t\t}\n}"
 						},
 						"url": "localhost:8080/VideoAndes/rest/productos/completo"
 					},

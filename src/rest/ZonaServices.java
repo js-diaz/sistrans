@@ -188,6 +188,26 @@ public class ZonaServices {
 	 * @return Json con la información deseada.
 	 */
 	@POST
+	@Path("completo")
+	@HeaderParam("esProd")
+	@Consumes (MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pruebaFiltrosMultiples( ContenedoraCriterios c,@HeaderParam("esProd")boolean esProd) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		List<ContenedoraInformacion> zonas;
+		try {
+			zonas = tm.criteriosOrganizarPorZonasComoSeQuiera(null,c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving(),esProd);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(zonas).build();
+	}
+	/**
+	 * Genera un filtro por todas las zonas con las características que prefiere el usuario.<br>
+	 * @param c Criterios del usuario.<br>
+	 * @return Json con la información deseada.
+	 */
+	@POST
 	@Path("completo/{nombreZona}")
 	@HeaderParam("esProd")
 	@Consumes (MediaType.APPLICATION_JSON)

@@ -266,23 +266,27 @@ public class DAOTablaCriterio {
 		List<Criterio> existentesAgrup= new ArrayList<>();
 		List<CriterioAgregacion> agreSelec=new ArrayList<>();
 		if(criteriosAgrupamiento!=null)
+		{
+			if(criteriosAgrupamiento.contains(new Criterio("NOMBRE")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("NOMBRE"));
+				criteriosAgrupamiento.add(new Criterio("Z.NOMBRE"));
+			}
+			else if (criteriosAgrupamiento.contains(new Criterio("ID_PRODUCTO")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("ID_PRODUCTO"));
+				criteriosAgrupamiento.add(new Criterio("P.ID_PRODUCTO"));
+			}
 			for(Criterio c: criteriosAgrupamiento)
 			{
-				if(criteriosAgrupamiento.contains(new Criterio("NOMBRE")))
-				{
-					criteriosAgrupamiento.remove(new Criterio("NOMBRE"));
-					criteriosAgrupamiento.add(new CriterioOrden(null, "Z.NOMBRE", false));
-				}
-				else if (criteriosAgrupamiento.contains(new Criterio("ID_PRODUCTO")))
-				{
-					criteriosAgrupamiento.remove(new Criterio("ID_PRODUCTO"));
-					criteriosAgrupamiento.add(new CriterioOrden(null, "P.ID_PRODUCTO", false));
-				}
+				
 				if(existentesAgrup.indexOf(c)>=0) continue;
 				existentesAgrup.add(c);
 			}
+		}
+			
+			
 			if(criteriosOrganizacion!=null)
-			for(CriterioOrden c: criteriosOrganizacion)
 			{
 				if(criteriosOrganizacion.contains(new Criterio("NOMBRE")))
 				{
@@ -294,12 +298,16 @@ public class DAOTablaCriterio {
 					criteriosOrganizacion.remove(new Criterio("ID_PRODUCTO"));
 					criteriosOrganizacion.add(new CriterioOrden(null, "P.ID_PRODUCTO", false));
 				}
-				if(existentesOrd.indexOf(c)>=0) continue;
-				if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
-				existentesOrd.add(c);
+				for(CriterioOrden c: criteriosOrganizacion)
+				{
+					
+					if(existentesOrd.indexOf(c)>=0) continue;
+					if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+					existentesOrd.add(c);
+				}
 			}
+			
 			if(agregacionesSeleccion!=null)
-			for(CriterioAgregacion a: agregacionesSeleccion)
 			{
 				if(agregacionesSeleccion.contains(new Criterio("NOMBRE")))
 				{
@@ -311,18 +319,24 @@ public class DAOTablaCriterio {
 					agregacionesSeleccion.remove(new Criterio("ID_PRODUCTO"));
 					agregacionesSeleccion.add(new CriterioAgregacion("P.ID_PRODUCTO",null, false));
 				}
-				if(agreSelec.indexOf(a)>=0) continue;
-				agreSelec.add(a);
+				for(CriterioAgregacion a: agregacionesSeleccion)
+				{
+					
+					if(agreSelec.indexOf(a)>=0) continue;
+					agreSelec.add(a);
+				}
 			}
+			
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
 			if(nombreZona!=null)
 				nombreZona=" AND Z.NOMBRE LIKE '"+nombreZona+"'";
+			else nombreZona="";
 			String from=" FROM ZONA Z, RESTAURANTE R, CUENTA, PEDIDO_PROD P  ";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where=" WHERE R.NOMBRE_ZONA=Z.NOMBRE AND NUMEROCUENTA=P.NUMERO_CUENTA AND R.NOMBRE=P.NOMBRE_RESTAURANTE "; 
+		String where=" WHERE R.NOMBRE_ZONA=Z.NOMBRE AND NUMEROCUENTA=P.NUMERO_CUENTA AND R.NOMBRE=P.NOMBRE_RESTAURANTE "+nombreZona+" "; 
 		String having="";
 		String temp="";
 		//Verifica agrupaciones
@@ -436,23 +450,26 @@ public class DAOTablaCriterio {
 		List<Criterio> existentesSelec= new ArrayList<>();
 		List<CriterioAgregacion> agreSelec=new ArrayList<>();
 		if(criteriosAgrupamiento!=null)
+		{
+			if(criteriosAgrupamiento.contains(new Criterio("NOMBRE")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("NOMBRE"));
+				criteriosAgrupamiento.add(new Criterio("Z.NOMBRE"));
+			}
+			else if (criteriosAgrupamiento.contains(new Criterio("NOMBRE_MENU")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("NOMBRE_MENU"));
+				criteriosAgrupamiento.add(new Criterio("P.NOMBRE_MENU"));
+			}
 			for(Criterio c: criteriosAgrupamiento)
 			{
-				if(criteriosAgrupamiento.contains(new Criterio("NOMBRE")))
-				{
-					criteriosAgrupamiento.remove(new Criterio("NOMBRE"));
-					criteriosAgrupamiento.add(new CriterioOrden(null, "Z.NOMBRE", false));
-				}
-				else if (criteriosAgrupamiento.contains(new Criterio("NOMBRE_MENU")))
-				{
-					criteriosAgrupamiento.remove(new Criterio("NOMBRE_MENU"));
-					criteriosAgrupamiento.add(new CriterioAgregacion("P.NOMBRE_MENU",null, false));
-				}
+				
 				if(existentesAgrup.indexOf(c)>=0) continue;
 				existentesAgrup.add(c);
 			}
+		}
+			
 			if(criteriosOrganizacion!=null)
-			for(CriterioOrden c: criteriosOrganizacion)
 			{
 				if(criteriosOrganizacion.contains(new Criterio("NOMBRE")))
 				{
@@ -464,12 +481,16 @@ public class DAOTablaCriterio {
 					criteriosOrganizacion.remove(new Criterio("NOMBRE_MENU"));
 					criteriosOrganizacion.add(new CriterioOrden(null,"P.NOMBRE_MENU", false));
 				}
-				if(existentesOrd.indexOf(c)>=0) continue;
-				if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
-				existentesOrd.add(c);
+				for(CriterioOrden c: criteriosOrganizacion)
+				{
+					
+					if(existentesOrd.indexOf(c)>=0) continue;
+					if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+					existentesOrd.add(c);
+				}
 			}
+			
 			if(agregacionesSeleccion!=null)
-			for(CriterioAgregacion a: agregacionesSeleccion)
 			{
 				if(agregacionesSeleccion.contains(new Criterio("NOMBRE")))
 				{
@@ -481,18 +502,24 @@ public class DAOTablaCriterio {
 					agregacionesSeleccion.remove(new Criterio("NOMBRE_MENU"));
 					agregacionesSeleccion.add(new CriterioAgregacion("P.NOMBRE_MENU",null, false));
 				}
-				if(agreSelec.indexOf(a)>=0) continue;
-				agreSelec.add(a);
+				for(CriterioAgregacion a: agregacionesSeleccion)
+				{
+					
+					if(agreSelec.indexOf(a)>=0) continue;
+					agreSelec.add(a);
+				}
 			}
+			
 		//Empieza la creación de los datos del query
 			if(nombreZona!=null)
 				nombreZona=" AND Z.NOMBRE LIKE '"+nombreZona+"'";
+			else nombreZona="";
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
 			String from=" FROM ZONA Z, RESTAURANTE R, CUENTA, PEDIDO_MENU P ";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where=" WHERE R.NOMBRE_ZONA=Z.NOMBRE AND NUMEROCUENTA=P.NUMERO_CUENTA AND R.NOMBRE=P.NOMBRE_RESTAURANTE "; 
+		String where=" WHERE R.NOMBRE_ZONA=Z.NOMBRE AND NUMEROCUENTA=P.NUMERO_CUENTA AND R.NOMBRE=P.NOMBRE_RESTAURANTE "+nombreZona+" "; 
 		String having="";
 		String temp="";
 		//Verifica agrupaciones
@@ -788,7 +815,7 @@ public class DAOTablaCriterio {
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
 				+ "LIKE 'INGREDIENTE' OR  TABLE_NAME LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'CATEGORIA_PRODUCTO' OR TABLE_NAME LIKE 'INFO_PROD_REST'))";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
-		if(name.equals("NOMBRE")||name.equals("ID_PRODUCTO")) return new Criterio(name);
+		if(name.equals("P.NOMBRE")||name.equals("I.ID_PRODUCTO")) return new Criterio(name);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
@@ -847,23 +874,26 @@ public class DAOTablaCriterio {
 		List<Criterio> existentesAgrup= new ArrayList<>();
 		List<CriterioAgregacion> agreSelec=new ArrayList<>();
 		if(criteriosAgrupamiento!=null)
-		for(Criterio c: criteriosAgrupamiento)
 		{
 			if(criteriosAgrupamiento.contains(new Criterio("NOMBRE")))
 			{
 				criteriosAgrupamiento.remove(new Criterio("NOMBRE"));
-				criteriosAgrupamiento.add(new CriterioOrden(null, "P.NOMBRE", false));
+				criteriosAgrupamiento.add(new Criterio("P.NOMBRE"));
 			}
 			else if (criteriosAgrupamiento.contains(new Criterio("ID_PRODUCTO")))
 			{
 				criteriosAgrupamiento.remove(new Criterio("ID_PRODUCTO"));
-				criteriosAgrupamiento.add(new CriterioOrden(null, "I.ID_PRODUCTO", false));
+				criteriosAgrupamiento.add(new Criterio("I.ID_PRODUCTO"));
 			}
-			if(existentesAgrup.indexOf(c)>=0) continue;
-			existentesAgrup.add(c);
+			for(Criterio c: criteriosAgrupamiento)
+			{
+				
+				if(existentesAgrup.indexOf(c)>=0) continue;
+				existentesAgrup.add(c);
+			}
 		}
+		
 		if(criteriosOrganizacion!=null)
-		for(CriterioOrden c: criteriosOrganizacion)
 		{
 			if(criteriosOrganizacion.contains(new Criterio("NOMBRE")))
 			{
@@ -875,12 +905,16 @@ public class DAOTablaCriterio {
 				criteriosOrganizacion.remove(new Criterio("ID_PRODUCTO"));
 				criteriosOrganizacion.add(new CriterioOrden(null, "I.ID_PRODUCTO", false));
 			}
-			if(existentesOrd.indexOf(c)>=0) continue;
-			if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
-			existentesOrd.add(c);
+			for(CriterioOrden c: criteriosOrganizacion)
+			{
+				
+				if(existentesOrd.indexOf(c)>=0) continue;
+				if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+				existentesOrd.add(c);
+			}
 		}
+		
 		if(agregacionesSeleccion!=null)
-		for(CriterioAgregacion a: agregacionesSeleccion)
 		{
 			if(agregacionesSeleccion.contains(new Criterio("NOMBRE")))
 			{
@@ -892,9 +926,14 @@ public class DAOTablaCriterio {
 				agregacionesSeleccion.remove(new Criterio("ID_PRODUCTO"));
 				agregacionesSeleccion.add(new CriterioAgregacion("I.ID_PRODUCTO",null, false));
 			}
-			if(agreSelec.indexOf(a)>=0) continue;
-			agreSelec.add(a);
+			for(CriterioAgregacion a: agregacionesSeleccion)
+			{
+				
+				if(agreSelec.indexOf(a)>=0) continue;
+				agreSelec.add(a);
+			}
 		}
+		
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
 		String from ="FROM PRODUCTO P, RESTAURANTE,  INFO_PROD_REST I, CATEGORIA_PRODUCTO   ";
@@ -1017,23 +1056,64 @@ public class DAOTablaCriterio {
 		List<Criterio> existentesSelec= new ArrayList<>();
 		List<CriterioAgregacion> agreSelec=new ArrayList<>();
 		if(criteriosAgrupamiento!=null)
-		for(Criterio c: criteriosAgrupamiento)
 		{
-			if(existentesAgrup.indexOf(c)>=0) continue;
-			existentesAgrup.add(c);
+			if(criteriosAgrupamiento.contains(new Criterio("NOMBRE")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("NOMBRE"));
+				criteriosAgrupamiento.add(new Criterio("P.NOMBRE"));
+			}
+			else if (criteriosAgrupamiento.contains(new Criterio("ID_PRODUCTO")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("ID_PRODUCTO"));
+				criteriosAgrupamiento.add(new Criterio("I.ID_PRODUCTO"));
+			}
+			for(Criterio c: criteriosAgrupamiento)
+			{
+				
+				if(existentesAgrup.indexOf(c)>=0) continue;
+				existentesAgrup.add(c);
+			}
 		}
+		
 		if(criteriosOrganizacion!=null)
-		for(CriterioOrden c: criteriosOrganizacion)
 		{
-			if(existentesOrd.indexOf(c)>=0) continue;
-			if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
-			existentesOrd.add(c);
+			if(criteriosOrganizacion.contains(new Criterio("NOMBRE")))
+			{
+				criteriosOrganizacion.remove(new Criterio("NOMBRE"));
+				criteriosOrganizacion.add(new CriterioOrden(null, "P.NOMBRE", false));
+			}
+			else if (criteriosOrganizacion.contains(new Criterio("ID_PRODUCTO")))
+			{
+				criteriosOrganizacion.remove(new Criterio("ID_PRODUCTO"));
+				criteriosOrganizacion.add(new CriterioOrden(null, "I.ID_PRODUCTO", false));
+			}
+			for(CriterioOrden c: criteriosOrganizacion)
+			{
+				
+				if(existentesOrd.indexOf(c)>=0) continue;
+				if(existentesAgrup!=null && existentesAgrup.size()>0&& existentesAgrup.indexOf(c)<0) throw new Exception("Los criterios no hacen parte del agrupamiento establecido");
+				existentesOrd.add(c);
+			}
 		}
+		
 		if(agregacionesSeleccion!=null)
-		for(CriterioAgregacion a: agregacionesSeleccion)
 		{
-			if(agreSelec.indexOf(a)>=0) continue;
-			agreSelec.add(a);
+			if(agregacionesSeleccion.contains(new Criterio("NOMBRE")))
+			{
+				agregacionesSeleccion.remove(new Criterio("NOMBRE"));
+				agregacionesSeleccion.add(new CriterioAgregacion("P.NOMBRE",null, false));
+			}
+			else if (agregacionesSeleccion.contains(new Criterio("ID_PRODUCTO")))
+			{
+				agregacionesSeleccion.remove(new Criterio("ID_PRODUCTO"));
+				agregacionesSeleccion.add(new CriterioAgregacion("I.ID_PRODUCTO",null, false));
+			}
+			for(CriterioAgregacion a: agregacionesSeleccion)
+			{
+				
+				if(agreSelec.indexOf(a)>=0) continue;
+				agreSelec.add(a);
+			}
 		}
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
