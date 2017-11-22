@@ -1254,7 +1254,7 @@ public class DAOTablaCriterio {
 		if(name.equals("P.NOMBRE AS NOMBRE_PRODUCTO")) return new Criterio(name);
 		
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_PRODUCTO')) ";
+				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA')) ";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -1283,7 +1283,7 @@ public class DAOTablaCriterio {
 	{
 		ContenedoraInformacion lista= new ContenedoraInformacion();
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_PRODUCTO'))";
+				+ "LIKE 'PEDIDO_PROD' OR  TABLE_NAME LIKE 'INFO_PROD_REST' OR TABLE_NAME LIKE 'CUENTA'))";
 		String sql = "SELECT COLUMN_NAME, DATA_TYPE FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -1378,16 +1378,17 @@ public class DAOTablaCriterio {
 			}
 		}
 		String es="";
-		if(!esDelRestaurante) es="NOT";
+		if(!esDelRestaurante) es="NOMBRE_RESTAURANTE<'"+nombreRestaurante+"' AND NOMBRE_RESTAURANTE>'"+nombreRestaurante+"' ";
+		else es="NOMBRE_RESTAURANTE = '"+nombreRestaurante+"'";
 		//Empieza la creación de los datos del query
-		String from =" FROM (PEDIDO_PROD NATURAL INNER JOIN INFO_PROD_REST)NATURAL INNER JOIN CATEGORIA_PRODUCTO, PRODUCTO P,USUARIO U, "
+		String from =" FROM (PEDIDO_PROD NATURAL INNER JOIN INFO_PROD_REST), PRODUCTO P,USUARIO U, "
 				+ " CUENTA";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
 		String where="WHERE ID_PRODUCTO=P.ID "
 				+ "AND U.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA "
-				+ " AND NOMBRE_RESTAURANTE "+es+" LIKE '"+nombreRestaurante+"' "
+				+ " AND "+es
 				+ "AND FECHA<="+toDate(limite.getFechaFinal())+" AND FECHA>="+toDate(limite.getFechaInicial());
 		String having="";
 		String temp="";
@@ -1512,7 +1513,7 @@ public class DAOTablaCriterio {
 	public List<Criterio> darCriteriosBasicosUsuarioDeMenu() throws SQLException, Exception
 	{
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'MENU' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_MENU'))";
+				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA'))";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -1522,7 +1523,7 @@ public class DAOTablaCriterio {
 		List<Criterio> c=new ArrayList<>();
 		while (rs.next()) {
 			String name2 = rs.getString("COLUMN_NAME");
-			if(name2.equals("NOMBRE") ||name2.equals("NUMERO_CUENTA")||name2.equals("ID")) continue;
+			if(name2.equals("NOMBRE") ||name2.equals("NUMERO_CUENTA")||name2.equals("ID")||name2.equals("NOMBRE_RESTAURANTE")) continue;
 			c.add(new Criterio(name2));
 		}
 		c.add(new Criterio("U.NOMBRE"));
@@ -1539,7 +1540,7 @@ public class DAOTablaCriterio {
 		if(name.equals("U.NOMBRE")) return new Criterio("U.NOMBRE");
 		
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'MENU' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_MENU'))";
+				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA'))";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -1563,7 +1564,7 @@ public class DAOTablaCriterio {
 	{
 		ContenedoraInformacion lista= new ContenedoraInformacion();
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'MENU' OR TABLE_NAME "
-				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA' OR TABLE_NAME LIKE 'CATEGORIA_MENU'))";
+				+ "LIKE 'PEDIDO_MENU' OR TABLE_NAME LIKE 'CUENTA'))";
 		String sql = "SELECT COLUMN_NAME, DATA_TYPE FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -1643,16 +1644,15 @@ public class DAOTablaCriterio {
 		}
 		
 		String es="";
-		if(!esDelRestaurante) es="NOT";
+		if(!esDelRestaurante) es="PM.NOMBRE_RESTAURANTE<'"+nombreRestaurante+"' AND PM.NOMBRE_RESTAURANTE>'"+nombreRestaurante+"' ";
+		else es="PM.NOMBRE_RESTAURANTE = '"+nombreRestaurante+"'";
 		//Empieza la creación de los datos del query
-		String from =" FROM  (SELECT PM.*, M.PRECIO, M.COSTO FROM MENU M,PEDIDO_MENU PM WHERE M.NOMBRE=PM.NOMBRE_MENU AND M.NOMBRE_RESTAURANTE=PM.NOMBRE_RESTAURANTE) "
-				+ "NATURAL INNER JOIN CATEGORIA_MENU,"
-				+ "USUARIO U, CUENTA ";
+		String from =" FROM  PEDIDO_MENU PM, MENU M ,USUARIO U, CUENTA ";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where=" WHERE U.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA "
-				+ "AND NOMBRE_RESTAURANTE "+es+" LIKE '"+nombreRestaurante+"' AND FECHA<="+toDate(limite.getFechaFinal())+ " AND FECHA>="+toDate(limite.getFechaInicial()); 
+		String where=" WHERE M.NOMBRE=PM.NOMBRE_MENU AND M.NOMBRE_RESTAURANTE=PM.NOMBRE_RESTAURANTE AND U.ID=IDUSUARIO AND NUMEROCUENTA=NUMERO_CUENTA "
+				+ "AND "+es+" AND FECHA<="+toDate(limite.getFechaFinal())+ " AND FECHA>="+toDate(limite.getFechaInicial()); 
 		String having="";
 		String temp="";
 		//Verifica agrupaciones

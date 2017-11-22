@@ -2,134 +2,17 @@
 	"variables": [],
 	"info": {
 		"name": "PruebasReqConsultaIT4s.guzmanm",
-		"_postman_id": "201a49e2-4c28-5d7b-7b17-52880f5de3e6",
+		"_postman_id": "baa5e9b1-289f-bf9f-0760-5fecb1a71eda",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Producto",
-			"description": "",
 			"item": [
 				{
 					"name": "RFC9",
-					"description": null,
 					"item": [
-						{
-							"name": "Asumir consultas en un rango de fechas de una semana libre",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"type": "text/javascript",
-										"exec": [
-											"tests[\"Status code is 200\"]= responseCode.code===200"
-										]
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "usuarioId",
-										"value": "0"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "es",
-										"value": "true"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"contenedoraCriterios\":{\n  \"orden\":[\n    {\n      \"nombre\":\"PRECIO\",\n      \"ascendente\":false\n    }\n  ]\n  },\n  \"limiteFechas\":{\n    \n    \"fechaInicial\":\"2016-10-24\",\n    \"fechaFinal\":\"2016-10-31\"\n\n  }\n\n}\n"
-								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Wikibox/clientesPorProducto",
-								"description": null
-							},
-							"response": []
-						},
-						{
-							"name": "Asumir consultas en un par de días concurridos (Orden de 1542 datos)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"type": "text/javascript",
-										"exec": [
-											"tests[\"Status code is 200\"]= responseCode.code===200"
-										]
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "usuarioId",
-										"value": "0"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "es",
-										"value": "true"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t]\n\t\n\t},\n\t\"limiteFechas\":{\n\t\t\n\t\t\"fechaInicial\":\"2017-08-09\",\n\t\t\"fechaFinal\":\"2017-08-10\"\n\n\t}\n\n}\n"
-								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto",
-								"description": null
-							},
-							"response": []
-						},
-						{
-							"name": "Dar los productos más caros consumidos en el restaurante",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"type": "text/javascript",
-										"exec": [
-											"tests[\"Status code is 200\"]= responseCode.code===200",
-											""
-										]
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "usuarioId",
-										"value": "0"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "es",
-										"value": "true"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t},{\n\t\t\t\"nombre\":\"COSTO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t]\n\t\t\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2016-8-08\",\n\t\t\"fechaFinal\":\"2017-08-31\"\n\t}\n}"
-								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Wikibox/clientesPorProducto",
-								"description": null
-							},
-							"response": []
-						},
 						{
 							"name": "CONSULTAR PRODUCTOS QUE SE VENDÍAN ANTES DE UNA FECHA EN UN MARGEN DE CONSUMO",
 							"event": [
@@ -164,8 +47,81 @@
 									"mode": "raw",
 									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"ID_PRODUCTO\",\n\t\t\t\"ascendente\":false\n\t\t},{\n\t\t\t\"nombre\":\"MESA\",\n\t\t\t\"ascendente\":true\n\t\t},{\n\t\t\t\"nombre\":\"TIEMPO\",\n\t\t\t\"ascendente\":\"true\"\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"FECHA_FIN\"\n\t\t},\n\t\t\"operacion1\":\"<\",\n\t\t\"valorComparacion1\":\"2017-11-25\",\n\t\t\"afirmativo1\":true\n\t}\n},\n\t\"limiteFechas\":{\n\t\t\n\t\t\"fechaInicial\":\"2016-08-30\",\n\t\t\"fechaFinal\":\"2017-03-02\"\n\n\t}\n\n\n}\n"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto"
+							},
+							"response": []
+						},
+						{
+							"name": "Asumir consultas en un rango de fechas de una semana libre",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "es",
+										"value": "true"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contenedoraCriterios\":{\n  \"orden\":[\n    {\n      \"nombre\":\"PRECIO\",\n      \"ascendente\":false\n    }\n  ]\n  },\n  \"limiteFechas\":{\n    \n    \"fechaInicial\":\"2016-10-24\",\n    \"fechaFinal\":\"2016-10-31\"\n\n  }\n\n}\n"
+								},
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Wikibox/clientesPorProducto"
+							},
+							"response": []
+						},
+						{
+							"name": "Asumir consultas en un par de días concurridos (Orden de 1542 datos)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"Status code is 200\"]= responseCode.code===200"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "usuarioId",
+										"value": "0"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "es",
+										"value": "true"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"PRECIO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t]\n\t\n\t},\n\t\"limiteFechas\":{\n\t\t\n\t\t\"fechaInicial\":\"2017-08-13\",\n\t\t\"fechaFinal\":\"2017-08-14\"\n\n\t}\n\n}\n"
+								},
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto"
 							},
 							"response": []
 						}
@@ -174,7 +130,6 @@
 				},
 				{
 					"name": "RFC10",
-					"description": null,
 					"item": [
 						{
 							"name": "Dar el tipo de producto con más órdenes en un rango de fechas para el restaurante WikiBox",
@@ -211,13 +166,12 @@
 									"mode": "raw",
 									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\n\t\t\t\"nombre\":\"TIPO\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\"nombre\":\"TIPO\"\n\t\t\t}\n\t\t\t\n\t\t],\n\t\t\"having\":{\n\t\t\t\"valorAnterior1\":{\n\t\t\t\"agregacion\":\"COUNT\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t\"operacion1\":\">\",\n\t\t\"valorComparacion1\":\"10\",\n\t\t\"afirmativo1\":true\n\t\t}\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2017-06-09\",\n\t\t\"fechaFinal\":\"2017-07-31\"\n\t}\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto"
 							},
 							"response": []
 						},
 						{
-							"name": "Usuario más fiel por categoría",
+							"name": "Usuario más fiel por tipo",
 							"event": [
 								{
 									"listen": "test",
@@ -249,10 +203,9 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\t\"orden\":[\n\t\t\t\n\t\t\t{\n\t\t\t\t\"agregacion\":{\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"ascendente\":false\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"nombre\":\"IDUSUARIO\",\n\t\t\t\t\"ascendente\":true\n\t\t\t}\n\t\t\t],\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\t\"nombre\":\"NOMBRE_CATEGORIA\"\n\t\t\t},\n\t\t\t{\n\t\t\t\"nombre\":\"IDUSUARIO\"\n\t\t\t}\n\t\t\t\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t}\n\t\t]\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2016-8-08\",\n\t\t\"fechaFinal\":\"2017-7-31\"\n\t}\n}"
+									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\t\"orden\":[\n\t\t\t\n\t\t\t{\n\t\t\t\t\"agregacion\":{\n\t\t\t\t\t\"distinto\":false\n\t\t\t\t},\n\t\t\t\t\"ascendente\":false\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"nombre\":\"IDUSUARIO\",\n\t\t\t\t\"ascendente\":true\n\t\t\t}\n\t\t\t],\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\t\"nombre\":\"TIPO\"\n\t\t\t},\n\t\t\t{\n\t\t\t\"nombre\":\"IDUSUARIO\"\n\t\t\t}\n\t\t\t\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t}\n\t\t]\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2016-8-08\",\n\t\t\"fechaFinal\":\"2017-7-31\"\n\t}\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto"
 							},
 							"response": []
 						},
@@ -289,10 +242,9 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\"nombre\":\"IDUSUARIO\"\n\t\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false,\n\t\t\t\"valorAgrupacion\":\"VALOR\",\n\t\t\t\"agregacion\":\"AVG\"\n\t\t}\n\t\t],\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"VALOR\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t\"operacion1\":\"<=\",\n\t\t\"valorComparacion1\":\"1000\",\n\t\t\"afirmativo1\":true}\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2017-07-10\",\n\t\t\"fechaFinal\":\"2017-08-08\"\n\t}\n}"
+									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\"nombre\":\"IDUSUARIO\"\n\t\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false,\n\t\t\t\"valorAgrupacion\":\"VALOR\",\n\t\t\t\"agregacion\":\"AVG\"\n\t\t}\n\t\t],\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"VALOR\",\n\t\t\t\"agregacion\":\"AVG\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t\"operacion1\":\"<=\",\n\t\t\"valorComparacion1\":\"1000\",\n\t\t\"afirmativo1\":true}\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2017-08-06\",\n\t\t\"fechaFinal\":\"2017-08-08\"\n\t}\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Wikibox/clientesPorProducto",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorProducto"
 							},
 							"response": []
 						}
@@ -303,51 +255,10 @@
 		},
 		{
 			"name": "Menu",
-			"description": "",
 			"item": [
 				{
 					"name": "RFC9",
-					"description": null,
 					"item": [
-						{
-							"name": "Buscar las categorías preferidas por usuarios que consumen menús en Wikibox",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"type": "text/javascript",
-										"exec": [
-											"tests[\"Status code is 200\"]= responseCode.code===200",
-											""
-										]
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "usuarioId",
-										"value": "0"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "es",
-										"value": "true"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\n\t\t\t\"nombre\":\"NOMBRE_CATEGORIA\",\n\t\t\t\"ascendente\":true\n\t\t}\n\t\t],\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\t\"nombre\":\"NOMBRE_CATEGORIA\"\n\t\t\t}\n\t\t\t\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t}\n\t\t]\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2017-08-08\",\n\t\t\"fechaFinal\":\"2017-08-31\"\n\t}\n}"
-								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorMenu",
-								"description": null
-							},
-							"response": []
-						},
 						{
 							"name": "Usuario más fiel",
 							"event": [
@@ -380,10 +291,9 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\t\"orden\":[\n\t\t\t{\n\t\t\t\t\"nombre\":\"IDUSUARIO\",\n\t\t\t\t\"ascendente\":true\n\t\t\t}\n\t\t\t],\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\"nombre\":\"IDUSUARIO\"\n\t\t\t}\n\t\t\t\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t}\n\t\t]\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2016-8-08\",\n\t\t\"fechaFinal\":\"2017-07-31\"\n\t}\n}"
+									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\t\"orden\":[\n\t\t\t{\n\t\t\t\t\"nombre\":\"IDUSUARIO\",\n\t\t\t\t\"ascendente\":true\n\t\t\t}\n\t\t\t],\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\"nombre\":\"IDUSUARIO\"\n\t\t\t}\n\t\t\t\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t}\n\t\t]\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2016-8-08\",\n\t\t\"fechaFinal\":\"2017-06-31\"\n\t}\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorMenu",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorMenu"
 							},
 							"response": []
 						},
@@ -419,10 +329,9 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_MENU\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"MESA\"\n\t\t},\n\t\t\"operacion1\":\"=\",\n\t\t\"valorComparacion1\":\"10\",\n\t\t\"afirmativo1\":true\n\t}\n},\n\t\"limiteFechas\":{\n\t\t\n\t\t\"fechaInicial\":\"2016-08-31\",\n\t\t\"fechaFinal\":\"2018-08-31\"\n\n\t}\n\n\n}\n"
+									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"NOMBRE_MENU\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t\t],\n\t\"where\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"nombre\":\"MESA\"\n\t\t},\n\t\t\"operacion1\":\"=\",\n\t\t\"valorComparacion1\":\"10\",\n\t\t\"afirmativo1\":true\n\t}\n},\n\t\"limiteFechas\":{\n\t\t\n\t\t\"fechaInicial\":\"2016-08-31\",\n\t\t\"fechaFinal\":\"2017-08-31\"\n\n\t}\n\n\n}\n"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorMenu",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorMenu"
 							},
 							"response": []
 						}
@@ -431,48 +340,7 @@
 				},
 				{
 					"name": "RFC10",
-					"description": null,
 					"item": [
-						{
-							"name": "Obtener la mesa más frecuentada por fuera",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"type": "text/javascript",
-										"exec": [
-											"tests[\"Status code is 200\"]= responseCode.code===200",
-											""
-										]
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "usuarioId",
-										"value": "0"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "es",
-										"value": "true",
-										"disabled": true
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"contenedoraCriterios\":{\n    \"orden\":[\n      {\n        \"nombre\":\"MESA\"\n      }\n      ,\n      {\n        \"agregacion\":{\n          \"distinto\":false\n        }\n      }\n      ],\n    \"agrupacion\":[\n      {\n      \"nombre\":\"MESA\"\n      }\n      \n    ],\n    \"agregacion\":[\n    {\n      \"distinto\":false\n    }\n    ]\n  },\n  \"limiteFechas\":{\n    \"fechaInicial\":\"2016-8-08\",\n    \"fechaFinal\":\"2017-10-31\"\n  }\n}"
-								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Wikibox/clientesPorMenu",
-								"description": null
-							},
-							"response": []
-						},
 						{
 							"name": "Consulta de rangos en una semana por fuera del restaurante",
 							"event": [
@@ -507,8 +375,7 @@
 									"mode": "raw",
 									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\"orden\":[\n\t\t{\n\t\t\t\"nombre\":\"VALOR\",\n\t\t\t\"ascendente\":false\n\t\t}\n\t],\n\t\"agrupacion\":[{\n\t\t\"nombre\":\"VALOR\"\n\t}],\n\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false\n\t\t}\n\t]\n\t},\n\t\n\t\"limiteFechas\":{\n\t\t\n\t\t\"fechaInicial\":\"2017-07-27\",\n\t\t\"fechaFinal\":\"2017-08-03\"\n\n\t}\n\n}\n"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Wikibox/clientesPorMenu",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Wikibox/clientesPorMenu"
 							},
 							"response": []
 						},
@@ -545,10 +412,9 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\"nombre\":\"IDUSUARIO\"\n\t\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false,\n\t\t\t\"valorAgrupacion\":\"VALOR\",\n\t\t\t\"agregacion\":\"MAX\"\n\t\t}\n\t\t],\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"VALOR\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t\"operacion1\":\"<=\",\n\t\t\"valorComparacion1\":\"500\",\n\t\t\"afirmativo1\":false}\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2016-8-08\",\n\t\t\"fechaFinal\":\"2018-10-31\"\n\t}\n}"
+									"raw": "{\n\t\"contenedoraCriterios\":{\n\t\n\t\t\"agrupacion\":[\n\t\t\t{\n\t\t\t\"nombre\":\"IDUSUARIO\"\n\t\t\t}\n\t\t],\n\t\t\"agregacion\":[\n\t\t{\n\t\t\t\"distinto\":false,\n\t\t\t\"valorAgrupacion\":\"VALOR\",\n\t\t\t\"agregacion\":\"MAX\"\n\t\t}\n\t\t],\n\t\"having\":{\n\t\t\"valorAnterior1\":{\n\t\t\t\"valorAgrupacion\":\"VALOR\",\n\t\t\t\"agregacion\":\"MAX\",\n\t\t\t\"distinto\":false\n\t\t},\n\t\t\"operacion1\":\"<=\",\n\t\t\"valorComparacion1\":\"500\",\n\t\t\"afirmativo1\":false}\n\t},\n\t\"limiteFechas\":{\n\t\t\"fechaInicial\":\"2017-8-08\",\n\t\t\"fechaFinal\":\"2017-8-31\"\n\t}\n}"
 								},
-								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorMenu",
-								"description": null
+								"url": "localhost:8080/VideoAndes/rest/restaurantes/Nlounge/clientesPorMenu"
 							},
 							"response": []
 						}
