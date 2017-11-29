@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Properties;
 
 import dao.*;
+import dtm.VideoAndesDistributed;
+import jms.NonReplyException;
 import rfc.ContenedoraClienteProductos;
 import rfc.ContenedoraInformacion;
 import rfc.ContenedoraRestauranteInfoFinanciera;
@@ -31,12 +33,14 @@ import rfc.PendientesOrden;
 import rfc.UsuarioCompleto;
 import test.PruebasJavaContraSQL;
 import vos.UsuarioMinimum;
+import vos.Video;
 import vos.CondicionTecnica;
 import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.InfoIngRest;
 import vos.InfoProdRest;
 import vos.Ingrediente;
+import vos.ListaVideos;
 import vos.Menu;
 import vos.MenuMinimum;
 import vos.Mesa;
@@ -103,6 +107,9 @@ public class RotondAndesTM {
 	 * conexion a la base de datos
 	 */
 	private Connection conn;
+	
+	private VideoAndesDistributed dtm;
+
 
 
 	/**
@@ -115,6 +122,9 @@ public class RotondAndesTM {
 	public RotondAndesTM(String contextPathP) {
 		connectionDataPath = contextPathP + CONNECTION_DATA_FILE_NAME_REMOTE;
 		initConnectionData();
+		System.out.println("Instancing DTM...");
+		dtm = VideoAndesDistributed.getInstance(this);
+		System.out.println("Done!");
 	}
 
 	/**
@@ -7218,6 +7228,69 @@ public class RotondAndesTM {
 			}
 		}
 	}
+	//Ejemplo de métodos distribuidos
+
+	public ListaVideos darVideosLocal() throws Exception {
+		ArrayList<Video> videos;
+		DAOTablaVideos daoVideos = new DAOTablaVideos();
+		try 
+		{
+			//////Transacción
+			this.conn = darConexion();
+			daoVideos.setConn(conn);
+			videos = daoVideos.darVideos();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoVideos.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return new ListaVideos(videos);
+	}
+	/**
+	 * Método que modela la transacción que retorna todos los videos de la base de datos.
+	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la búsqueda
+	 * @throws Exception -  cualquier error que se genere durante la transacción
+	 */
+	public ListaVideos darVideos() throws Exception {
+		ListaVideos remL = darVideosLocal();
+		try
+		{
+			ListaVideos resp = dtm.getRemoteVideos();
+			System.out.println(resp.getVideos().size());
+			remL.getVideos().addAll(resp.getVideos());
+		}
+		catch(NonReplyException e)
+		{
+			
+		}
+		return remL;
+	}
+	//RF18
+	//Llama al método de pedir por nombre usando mesa
+	
+	//RF19
+	//Llama al método de retirar restaurante de la rotonda
+	
+	//RFC13
+	//Llama al método RFC1
+	
+	//RFC14
+	//Llama al método RFC5
 	
 	public static void main(String[] args) throws Exception {
 		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData/");

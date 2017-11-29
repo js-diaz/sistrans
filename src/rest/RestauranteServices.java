@@ -795,7 +795,7 @@ public class RestauranteServices {
 			obj = tm.criteriosFiltrarClientesProductos(c.getOrden(), c.getAgrupacion(), c.getAgregacion(), c.getWhere(), c.getHaving(),limite,nombreRestaurante,es);
 			list=(List<ContenedoraInformacion>)obj.get(0);
 			Double time=(Double)obj.get(1);
-			if(time>800) throw new Exception("Ha vencido el tiempo límite de la consulta con "+time);
+			//if(time>800) throw new Exception("Ha vencido el tiempo límite de la consulta con "+time);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -837,7 +837,7 @@ public class RestauranteServices {
 	}
 	
 	/**
-	 * Metodo que expone servicio REST usando GET que da los restaurantes m�s frecuentados en un dia particular.
+	 * Metodo que expone servicio REST usando GET que da los restaurantes m�s frecuentados en un dia particular.
 	 * <b>URL: </b> http://"ip o nombre de host":8080/ProductoAndes/rest/restaurantes/mas-frecuentados/dia
 	 * @return Json con los restaurantes buscados o json con 
      * el error que se produjo
