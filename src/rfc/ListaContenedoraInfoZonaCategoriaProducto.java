@@ -4,23 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import jms.ListaContenedoraInfoZonaCategoriaProducto;
 /**
  * Clase usada para contener información.<br>
  * @author jc161
  *
  */
-public class ListaContenedoraRestauranteInfoFinanciera {
+public class ListaContenedoraInfoZonaCategoriaProducto {
 	/**
 	 * Información utilizada.
 	 */
 	@JsonProperty(value="informacion")
-	private List<ContenedoraRestauranteInfoFinanciera> informacion;
+	private List<ContenedoraZonaCategoriaProducto> informacion;
 	
 	/**
 	 * Constructor de una nueva conteendora.<br>
 	 * @param list Información de la contenedora.
 	 */
-	public ListaContenedoraRestauranteInfoFinanciera(List<ContenedoraRestauranteInfoFinanciera>list)
+	public ListaContenedoraInfoZonaCategoriaProducto(List<ContenedoraZonaCategoriaProducto>list)
 	{
 		informacion=list;
 	}
@@ -29,14 +31,14 @@ public class ListaContenedoraRestauranteInfoFinanciera {
 	 * Obtiene información del sistema.<br>
 	 * @return informacion
 	 */
-	public List<ContenedoraRestauranteInfoFinanciera> getInformacion() {
+	public List<ContenedoraZonaCategoriaProducto> getInformacion() {
 		return informacion;
 	}
 	/**
 	 * Modifica la información al valor dado por parámetro.<br>
 	 * @param informacion
 	 */
-	public void setInformacion(List<ContenedoraRestauranteInfoFinanciera> informacion) {
+	public void setInformacion(List<ContenedoraZonaCategoriaProducto> informacion) {
 		this.informacion = informacion;
 	}
 

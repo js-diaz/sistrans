@@ -1,6 +1,7 @@
 package jms;
 
 import java.io.IOException;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ import com.rabbitmq.jms.admin.RMQDestination;
 
 import dtm.VideoAndesDistributed;
 import rfc.ContenedoraRestauranteInfoFinanciera;
-import rfc.ListaContenedoraRestauranteInfoFinanciera;
+import rfc.ContenedoraZonaCategoriaProducto;
+import rfc.ListaContenedoraInfoZonaCategoriaProducto;
 import vos.ExchangeMsg;
 import vos.ListaVideos;
 import vos.Video;
@@ -49,10 +51,10 @@ import vos.Video;
 public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListener 
 {
 	public final static int TIME_OUT = 5;
-	private final static String APP = "app1";
+	private final static String APP = "A-05";
 	
-	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQTopicAllVideos";
-	private final static String LOCAL_TOPIC_NAME = "java:global/RMQAllVideosLocal";
+	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQConsultarRentabilidadGlobal";
+	private final static String LOCAL_TOPIC_NAME = "java:global/RMQConsultarRentabilidadLocal";
 	
 	private final static String REQUEST = "REQUEST";
 	private final static String REQUEST_ANSWER = "REQUEST_ANSWER";
@@ -62,7 +64,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 	private Topic globalTopic;
 	private Topic localTopic;
 	
-	private List<ContenedoraRestauranteInfoFinanciera> answer = new ArrayList<ContenedoraRestauranteInfoFinanciera>();
+	private List<ContenedoraZonaCategoriaProducto> answer = new ArrayList<ContenedoraZonaCategoriaProducto>();
 	
 	public ConsultarRentabilidadMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
@@ -88,7 +90,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 		topicConnection.close();
 	}
 	
-	public List<ContenedoraRestauranteInfoFinanciera> consultarRentabilidadDeRestaurante() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
+	public List<ContenedoraZonaCategoriaProducto> consultarRentabilidadZona() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		answer.clear();
 		String id = APP+""+System.currentTimeMillis();
@@ -122,7 +124,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(id);
-		ExchangeMsg msg = new ExchangeMsg("videos.general.app1", APP, payload, status, id);
+		ExchangeMsg msg = new ExchangeMsg("consulta.rentabilidad.global.A-05", APP, payload, status, id);
 		TopicPublisher topicPublisher = topicSession.createPublisher(dest);
 		topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 		TextMessage txtMsg = topicSession.createTextMessage();
@@ -158,7 +160,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
-					List<ContenedoraRestauranteInfoFinanciera> v = mapper.readValue(ex.getPayload(), ListaContenedoraRestauranteInfoFinanciera.class).getInformacion();
+					List<ContenedoraZonaCategoriaProducto> v = mapper.readValue(ex.getPayload(), ListaContenedoraInfoZonaCategoriaProducto.class).getInformacion();
 					answer.addAll(v);
 				}
 			}

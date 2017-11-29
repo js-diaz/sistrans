@@ -3,6 +3,7 @@ package dtm;
 import java.io.IOException;
 
 
+
 import java.security.NoSuchAlgorithmException;
 
 import javax.jms.JMSException;
@@ -24,7 +25,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import com.rabbitmq.jms.admin.RMQConnectionFactory;
 import com.rabbitmq.jms.admin.RMQDestination;
 
-import jms.AllVideosMDB;
+import jms.*;
 import jms.NonReplyException;
 import tm.VideoAndesMaster;
 import vos.ListaVideos;
@@ -43,6 +44,7 @@ public class VideoAndesDistributed
 	private TopicConnectionFactory factory;
 	
 	private AllVideosMDB allVideosMQ;
+	
 	
 	private static String path;
 

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Properties;
 
 import dao.*;
+import dtm.RotondAndesDistributed;
 import dtm.VideoAndesDistributed;
 import jms.NonReplyException;
 import rfc.ContenedoraClienteProductos;
@@ -108,7 +109,7 @@ public class RotondAndesTM {
 	 */
 	private Connection conn;
 	
-	private VideoAndesDistributed dtm;
+	private RotondAndesDistributed dtm;
 
 
 
@@ -123,7 +124,7 @@ public class RotondAndesTM {
 		connectionDataPath = contextPathP + CONNECTION_DATA_FILE_NAME_REMOTE;
 		initConnectionData();
 		System.out.println("Instancing DTM...");
-		dtm = VideoAndesDistributed.getInstance(this);
+		dtm = RotondAndesDistributed.getInstance(this);
 		System.out.println("Done!");
 	}
 
@@ -7282,16 +7283,65 @@ public class RotondAndesTM {
 	}
 	//RF18
 	//Llama al método de pedir por nombre usando mesa
+	public void registrarPedidoProdMesa() throws Exception{
+		//Llama al método local
+		
+		//Llama al método global
+		
+	}
 	
+	public void registrarPedidoMenuMesa() throws Exception{
+		//Llama al método local
+		
+		//Llama al método global
+		
+	}
 	//RF19
 	//Llama al método de retirar restaurante de la rotonda
-	
+	public void retirarRestaurante(String nombreRestaurante) throws Exception{
+		//Restaurante a retirar de forma local
+		
+		//Restaurante a retirar de forma global
+		
+	}
 	//RFC13
 	//Llama al método RFC1
+	public List<Object> consultarProductos(/*Json de ramos y mauricio*/) throws Exception
+	{
+		//Método local. Falta parsearlo a como lo tienen ramos y mauricio
+		//List<Object> list=criteriosOrganizarPorProductosComoSeQuiera(criteriosOrganizacion, criteriosAgrupamiento, agregaciones, where, having)
+		//Método global que mandaría el json de mauricio y ramos
+		try
+		{
+			//List<Object> other=dtm.consultarProductos(restaurante, esProd)
+			//Agregar los archivos a la lista local
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return null;
+	}
 	
 	//RFC14
 	//Llama al método RFC5
-	
+	public List<Object> consultarRentabilidadZona() throws Exception
+	{
+		//Método local. Falta parsealo a como lo tienen ramos y mauricio
+		//List<Object> list=zonaDarProductosTotalesPorZonaYCategoria(fechaInicial, fechaFinal, nombreRestaurante)
+		//Método gloval que mandaría el json de mauricio y ramos
+		try
+		{
+			//Falta parsearlo con el json de ramos y mauricio
+			//List<Object>other=dtm.consultarRentabilidadZonaGlobal();
+			
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return null;
+	}
 	public static void main(String[] args) throws Exception {
 		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData/");
 		PruebasJavaContraSQL r = new PruebasJavaContraSQL();
