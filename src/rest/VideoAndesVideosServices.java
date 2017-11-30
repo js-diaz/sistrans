@@ -11,6 +11,9 @@
 package rest;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -28,6 +31,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import tm.VideoAndesMaster;
 import vos.Video;
 import vos.ListaVideos;
+import vos.UsuarioMinimum;
+import vos.UsuarioMinimum.Rol;
 
 /**
  * Clase que expone servicios REST con ruta base: http://"ip o nombre de host":8080/VideoAndes/rest/videos/...
@@ -68,14 +73,16 @@ public class VideoAndesVideosServices {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getVideos() {
-		VideoAndesMaster tm = new VideoAndesMaster(getPath());
-		ListaVideos videos;
-		try {
-			videos = tm.darVideos();
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(videos).build();
+		List<Object> vid= new ArrayList<>();
+		Rol r=Rol.OPERADOR;
+		UsuarioMinimum u = new UsuarioMinimum("NOMBRE",1l,"HOLA",Rol.OPERADOR);
+		Object o1=(Object)r;
+		Object o2=(Object)u;
+		vid.add(r);
+		vid.add(u);
+		vid.add(o1);
+		vid.add(o2);
+		return Response.status(200).entity(vid).build();
 	}
 
 

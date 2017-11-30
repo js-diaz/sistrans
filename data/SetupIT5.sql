@@ -1,0 +1,3 @@
+
+
+INSERT INTO USUARIO (ID,CORREO,NOMBRE,ROL) VALUES (IDUSUARIO.NEXT_VAL,'s.guzmanm@uniandes.edu.co','Sergio Guzmán','CLIENTE');
