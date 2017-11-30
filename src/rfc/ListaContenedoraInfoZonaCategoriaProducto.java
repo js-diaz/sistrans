@@ -1,11 +1,11 @@
 package rfc;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import jms.ListaContenedoraInfoZonaCategoriaProducto;
 /**
  * Clase usada para contener información.<br>
  * @author jc161

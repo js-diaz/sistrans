@@ -30,6 +30,7 @@ import rfc.CriterioOrden;
 import rfc.CriterioVerdad;
 import rfc.CriterioVerdadHaving;
 import rfc.LimiteFechas;
+import rfc.ListaObjetos;
 import rfc.PendientesOrden;
 import rfc.UsuarioCompleto;
 import test.PruebasJavaContraSQL;
@@ -7281,6 +7282,9 @@ public class RotondAndesTM {
 		}
 		return remL;
 	}
+	//---------------------------
+	//ITERACIÓN 5
+	//---------------------------
 	//RF18
 	//Llama al método de pedir por nombre usando mesa
 	public void registrarPedidoProdMesa() throws Exception{
@@ -7306,7 +7310,7 @@ public class RotondAndesTM {
 	}
 	//RFC13
 	//Llama al método RFC1
-	public List<Object> consultarProductos(/*Json de ramos y mauricio*/) throws Exception
+	public List<ListaObjetos> consultarProductos(/*Json de ramos y mauricio*/) throws Exception
 	{
 		//Método local. Falta parsearlo a como lo tienen ramos y mauricio
 		//List<Object> list=criteriosOrganizarPorProductosComoSeQuiera(criteriosOrganizacion, criteriosAgrupamiento, agregaciones, where, having)
@@ -7325,11 +7329,11 @@ public class RotondAndesTM {
 	
 	//RFC14
 	//Llama al método RFC5
-	public List<Object> consultarRentabilidadZona() throws Exception
+	public List<ListaObjetos> consultarRentabilidadZona() throws Exception
 	{
 		//Método local. Falta parsealo a como lo tienen ramos y mauricio
 		//List<Object> list=zonaDarProductosTotalesPorZonaYCategoria(fechaInicial, fechaFinal, nombreRestaurante)
-		//Método gloval que mandaría el json de mauricio y ramos
+		//Método global que mandaría el json de mauricio y ramos
 		try
 		{
 			//Falta parsearlo con el json de ramos y mauricio

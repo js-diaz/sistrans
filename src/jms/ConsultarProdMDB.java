@@ -42,6 +42,7 @@ import com.rabbitmq.jms.admin.RMQDestination;
 import dtm.VideoAndesDistributed;
 import rfc.ContenedoraInformacion;
 import rfc.ListContenedoraInformacion;
+import rfc.ListaObjetos;
 import vos.ExchangeMsg;
 import vos.ListaVideos;
 import vos.Video;
@@ -50,7 +51,7 @@ import vos.Video;
 public class ConsultarProdMDB implements MessageListener, ExceptionListener 
 {
 	public final static int TIME_OUT = 5;
-	private final static String APP = "app1";
+	private final static String APP = "A-05";
 	
 	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQTopicAllVideos";
 	private final static String LOCAL_TOPIC_NAME = "java:global/RMQAllVideosLocal";
@@ -63,7 +64,7 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 	private Topic globalTopic;
 	private Topic localTopic;
 	
-	private List<ContenedoraInformacion> answer = new ArrayList<ContenedoraInformacion>();
+	private ArrayList<ListaObjetos> answer = new ArrayList<ListaObjetos>();
 	
 	public ConsultarProdMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
@@ -89,7 +90,7 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 		topicConnection.close();
 	}
 	
-	public List<ContenedoraInformacion> consultarProductos() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
+	public List<ListaObjetos> consultarProductos() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		answer.clear();
 		String id = APP+""+System.currentTimeMillis();
@@ -115,7 +116,8 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 		
 		if(answer.isEmpty())
 			throw new NonReplyException("Non Response");
-		List<ContenedoraInformacion> res = new ArrayList<>(answer);
+		ArrayList<ListaObjetos> res= new ArrayList<>();
+		res.addAll(answer);
         return res;
 	}
 	
@@ -160,8 +162,8 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
-					List<ContenedoraInformacion> v = mapper.readValue(ex.getPayload(), ListContenedoraInformacion.class).getInformacion();
-					answer.addAll(v);
+					ListaObjetos v = mapper.readValue(ex.getPayload(), ListaObjetos.class);
+					answer.add(v);
 				}
 			}
 			

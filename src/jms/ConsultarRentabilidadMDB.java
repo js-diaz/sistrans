@@ -43,6 +43,7 @@ import dtm.VideoAndesDistributed;
 import rfc.ContenedoraRestauranteInfoFinanciera;
 import rfc.ContenedoraZonaCategoriaProducto;
 import rfc.ListaContenedoraInfoZonaCategoriaProducto;
+import rfc.ListaObjetos;
 import vos.ExchangeMsg;
 import vos.ListaVideos;
 import vos.Video;
@@ -64,7 +65,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 	private Topic globalTopic;
 	private Topic localTopic;
 	
-	private List<ContenedoraZonaCategoriaProducto> answer = new ArrayList<ContenedoraZonaCategoriaProducto>();
+	private ArrayList<ListaObjetos> answer = new ArrayList<ListaObjetos>();
 	
 	public ConsultarRentabilidadMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
@@ -90,7 +91,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 		topicConnection.close();
 	}
 	
-	public List<ContenedoraZonaCategoriaProducto> consultarRentabilidadZona() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
+	public List<ListaObjetos> consultarRentabilidadZona() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		answer.clear();
 		String id = APP+""+System.currentTimeMillis();
@@ -116,7 +117,9 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 		
 		if(answer.isEmpty())
 			throw new NonReplyException("Non Response");
-        return answer;
+		ArrayList<ListaObjetos> list = new ArrayList<>();
+		list.addAll(answer);
+        return list;
 	}
 	
 	
@@ -160,8 +163,8 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
-					List<ContenedoraZonaCategoriaProducto> v = mapper.readValue(ex.getPayload(), ListaContenedoraInfoZonaCategoriaProducto.class).getInformacion();
-					answer.addAll(v);
+					ListaObjetos v = mapper.readValue(ex.getPayload(), ListaObjetos.class);
+					answer.add(v);
 				}
 			}
 			
