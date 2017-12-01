@@ -154,7 +154,7 @@ public class RotondAndesDistributed
 		return allVideosMQ.getRemoteVideos();
 	}
 	//Para RFC13 usando RFC1
-	public List<ListaObjetos> consultarProductos(String restaurante, boolean esProd) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
+	public List<Object> consultarProductos(String restaurante, boolean esProd) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		return consultarProdMQ.consultarProductos();
 	}
@@ -166,7 +166,7 @@ public class RotondAndesDistributed
 		return null;
 	}
 	//Para RFC14 usando RFC5
-	public List<ListaObjetos> consultarRentabilidadZonaGlobal() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
+	public List<Object> consultarRentabilidadZonaGlobal() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		return consultarRentabilidadMQ.consultarRentabilidadZona();
 	}

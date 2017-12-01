@@ -65,7 +65,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 	private Topic globalTopic;
 	private Topic localTopic;
 	
-	private ArrayList<ListaObjetos> answer = new ArrayList<ListaObjetos>();
+	private ArrayList<Object> answer = new ArrayList<Object>();
 	
 	public ConsultarRentabilidadMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
@@ -91,7 +91,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 		topicConnection.close();
 	}
 	
-	public List<ListaObjetos> consultarRentabilidadZona() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
+	public List<Object> consultarRentabilidadZona() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		answer.clear();
 		String id = APP+""+System.currentTimeMillis();
@@ -117,7 +117,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 		
 		if(answer.isEmpty())
 			throw new NonReplyException("Non Response");
-		ArrayList<ListaObjetos> list = new ArrayList<>();
+		ArrayList<Object> list = new ArrayList<>();
 		list.addAll(answer);
         return list;
 	}
@@ -163,7 +163,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
-					ListaObjetos v = mapper.readValue(ex.getPayload(), ListaObjetos.class);
+					Object v = mapper.readValue(ex.getPayload(), Object.class);
 					answer.add(v);
 				}
 			}
