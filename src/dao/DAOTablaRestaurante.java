@@ -149,6 +149,7 @@ public class DAOTablaRestaurante {
 		sql += "'" + restaurante.getPagWeb() + "', ";
 		sql += restaurante.getRepresentante().getId() + ", ";
 		sql += "'" + restaurante.getZona().getNombre() + "')";
+		sql += restaurante.getActivo()? "'1', " : "'0', ";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -278,9 +279,10 @@ public class DAOTablaRestaurante {
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			String pagWeb = rs.getString("PAG_WEB");
+			Boolean activo = rs.getString("ACTIVO").equals("1");
 			UsuarioMinimum representante = daoUsuario.buscarUsuarioMinimumPorId(rs.getLong("ID_REPRESENTANTE"));
 			ZonaMinimum zona = daoZona.buscarZonasMinimumPorName(rs.getString("NOMBRE_ZONA"));
-			restaurantes.add(new Restaurante(nombre, pagWeb, zona, daoCat.consultarPorRestaurante(nombre), representante,
+			restaurantes.add(new Restaurante(nombre, pagWeb, activo, zona, daoCat.consultarPorRestaurante(nombre), representante,
 					daoProd.darInfoProdRestsPorRestaurante(nombre), daoIng.darInfoIngRestsPorRestaurante(nombre), daoMenu.darMenusMinimumPorRestaurante(nombre)));
 		}
 		daoUsuario.cerrarRecursos();
@@ -305,7 +307,8 @@ public class DAOTablaRestaurante {
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			String pagWeb = rs.getString("PAG_WEB");
-			restaurantes.add(new RestauranteMinimum(nombre, pagWeb));
+			Boolean activo = rs.getString("ACTIVO").equals("1");
+			restaurantes.add(new RestauranteMinimum(nombre, pagWeb, activo));
 		}
 		return restaurantes;
 	}
