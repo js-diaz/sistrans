@@ -46,11 +46,11 @@ public class Restaurante extends RestauranteMinimum
 	@JsonProperty(value="menus")
 	private List<MenuMinimum> menus;
 
-	public Restaurante(@JsonProperty(value="nombre")String nombre, @JsonProperty(value="pagWeb")String pagWeb,
+	public Restaurante(@JsonProperty(value="nombre")String nombre, @JsonProperty(value="pagWeb")String pagWeb, @JsonProperty(value="activo") Boolean activo,
 			@JsonProperty(value="zona") ZonaMinimum zona, @JsonProperty(value="categorias") List<Categoria> categorias,
 			@JsonProperty(value="representante") UsuarioMinimum representante, @JsonProperty(value="infoProductos") List<InfoProdRest> infoProductos,
 			@JsonProperty(value="infoIngredientes") List<InfoIngRest> infoIngredientes, @JsonProperty(value="menus") List<MenuMinimum> menus) {
-		super(nombre, pagWeb);
+		super(nombre, pagWeb, activo);
 		this.zona = zona;
 		this.categorias = categorias;
 		this.representante = representante;
