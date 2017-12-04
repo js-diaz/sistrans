@@ -10,7 +10,176 @@
 		{
 			"name": "RF18",
 			"description": "",
-			"item": []
+			"item": [
+				{
+					"name": "Agrega productos por nombre con correo existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "correo",
+								"value": "s.guzmanm@uniandes.edu.co"
+							},
+							{
+								"key": "mesa",
+								"value": "1_A-17_ZonaX"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "esProducto",
+								"value": "true"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t\"El Corral-BBC Porter\",\n\t\"El Corral-Ensalada César\"\n]"
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pedido con usuario que no existía originalmente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "correo",
+								"value": "nuevo@uniandes.edu.co"
+							},
+							{
+								"key": "mesa",
+								"value": "1_A-17_ZonaX"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "esProducto",
+								"value": "true"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t\"El Corral-BBC Porter\",\n\t\"El Corral-Ensalada César\"\n]"
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Agrega el pedido de dos menús por nombre",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "correo",
+								"value": "s.guzmanm@uniandes.edu.co"
+							},
+							{
+								"key": "mesa",
+								"value": "1_A-17_ZonaX"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "esProducto",
+								"value": "true"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t\"Domino´s-Para compartir\"\n]"
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Agrega el pedido de dos productos por nombre. Uno de los cuales no se encuentra disponible",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "correo",
+								"value": "s.guzmanm@uniandes.edu.co"
+							},
+							{
+								"key": "mesa",
+								"value": "1_A-17_ZonaX"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "esProducto",
+								"value": "true"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t\"El Corral-BBC Porter\",\n\t\"El Corral-Ensalada\"\n]"
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "RF19",
@@ -312,82 +481,31 @@
 						"header": [
 							{
 								"key": "fechaInicio",
-								"value": "08/08/2016 01:12:55"
+								"value": ""
 							},
 							{
 								"key": "fechaFinal",
-								"value": "08/09/2019 01:12:55"
+								"value": ""
 							},
 							{
 								"key": "nombreRestaurante",
-								"value": "El Corral"
+								"value": ""
 							},
 							{
 								"key": "catProd",
-								"value": "PLATO_FUERTE"
+								"value": ""
 							},
 							{
 								"key": "precioMin",
-								"value": "0"
+								"value": ""
 							},
 							{
 								"key": "precioMax",
-								"value": "1000000"
+								"value": ""
 							},
 							{
 								"key": "usuarioId",
-								"value": "0"
-							}
-						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/RFC13",
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Caso de agrupar por categoría de producto",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 200\"]=responseCode.code===200;"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "fechaInicio",
-								"value": "08/08/2016 01:12:55"
-							},
-							{
-								"key": "fechaFinal",
-								"value": "08/09/2019 01:12:55"
-							},
-							{
-								"key": "nombreRestaurante",
-								"value": "El Corral"
-							},
-							{
-								"key": "catProd",
-								"value": "PLATO_FUERTE"
-							},
-							{
-								"key": "precioMin",
-								"value": "0"
-							},
-							{
-								"key": "precioMax",
-								"value": "1000000"
-							},
-							{
-								"key": "usuarioId",
-								"value": "0"
+								"value": ""
 							}
 						],
 						"body": {},
