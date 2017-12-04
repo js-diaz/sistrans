@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import vos.Cuenta;
 import vos.CuentaMinimum;
 import vos.InfoProdRest;
 import vos.PedidoProd;
+import vos.Producto;
+import vos.RestauranteMinimum;
 
 public class DAOTablaPedidoProducto {
 
@@ -122,6 +125,8 @@ public class DAOTablaPedidoProducto {
 	 */
 	public void addPedidoProd(PedidoProd pedidoProd) throws SQLException, Exception {
 
+		if(!pedidoProd.getPlato().getRestaurante().getActivo()) throw new Exception("El restaurante está por fuera del negocio");
+
 		verificarDisponibilidad(pedidoProd.getPlato(),pedidoProd.getCantidad());
 		String sql = "INSERT INTO PEDIDO_PROD VALUES (";
 		sql += "'" + pedidoProd.getCuenta().getNumeroCuenta() + "', ";
@@ -137,6 +142,56 @@ public class DAOTablaPedidoProducto {
 	}
 	
 	/**
+	 * Metodo que agrega la pedidoProd que entra como parametro a la base de datos.
+	 * @param pedidoProd - la pedidoProd a agregar. pedidoProd !=  null
+	 * <b> post: </b> se ha agregado la pedidoProd a la base de datos en la transaction actual. pendiente que la master
+	 * haga commit para que la pedidoProd baje  a la base de datos.
+	 * @throws SQLException - Cualquier error que la base de datos arroje. No pudo agregar la pedidoProd a la base de datos
+	 * @throws Exception - Cualquier error que no corresponda a la base de datos
+	 */
+	public void addPedidoProdPorNombre(String numeroCuenta,String nombreRestaurante, String nombreProducto) throws SQLException, Exception {
+
+		InfoProdRest plato=verificarProductosPorNombre(nombreProducto,nombreRestaurante);
+		if(plato==null) throw new Exception("El restaurante se ha retirado del negocio");
+		String sql = "INSERT INTO PEDIDO_PROD VALUES (";
+		sql += "'" + numeroCuenta + "', ";
+		sql +=  +plato.getProducto().getId()+ ", ";
+		sql += "'" + nombreRestaurante + "', ";
+		sql += 1 + ", ";
+		sql += "'0')";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		modificarPrecioCuentaConCerteza(numeroCuenta,plato.getCosto());
+	}
+	
+	private InfoProdRest verificarProductosPorNombre(String nombreProducto, String nombreRestaurante) throws Exception {
+		
+		//Aquí iría la cantidad si conociera alguna
+		String sql="SELECT * FROM INFO_PROD_REST, PRODUCTO WHERE NOMBRE='"+nombreProducto+"' AND ID=ID_PRODUCTO AND NOMBRE_RESTAURANTE='"+nombreRestaurante+"'"
+				+ "AND CANTIDAD>1 AND DISPONIBILIDAD='1'";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs=prepStmt.executeQuery();
+		DAOTablaProducto daoProd=new DAOTablaProducto();
+		daoProd.setConn(conn);
+		InfoProdRest rta=null;
+		if(rs.next())
+		{
+			double precio = rs.getDouble("PRECIO");
+			double costo = rs.getDouble("COSTO");
+			int disponibilidad = rs.getInt("DISPONIBILIDAD");
+			Date fechaInicio = rs.getDate("FECHA_INICIO");
+			Date fechaFin = rs.getDate("FECHA_FIN");
+			Integer cantidadMaxima = rs.getInt("CANTIDAD_MAXIMA");
+			Producto producto = daoProd.buscarProductoPorId(rs.getLong("ID_PRODUCTO"));
+			rta=(new InfoProdRest(costo, precio, disponibilidad, fechaInicio, fechaFin, producto, null, cantidadMaxima, null));
+		}
+		return rta;
+	}
+
+	/**
 	 * Modifica el precio de la cuenta.<br>
 	 * @param cuenta Cuenta Minimum.<br>
 	 * @param d Precio a agregar.<br>
@@ -147,6 +202,21 @@ public class DAOTablaPedidoProducto {
 		DAOTablaCuenta dao = new DAOTablaCuenta();
 		dao.setConn(conn);
 		Cuenta c= dao.buscarCuentasPorNumeroDeCuenta(cuenta.getNumeroCuenta());
+		c.setValor(c.getValor()+d);
+		dao.updateCuenta(c);
+		dao.cerrarRecursos();
+	}
+	/**
+	 * Modifica el precio de la cuenta.<br>
+	 * @param cuenta Cuenta Minimum.<br>
+	 * @param d Precio a agregar.<br>
+	 * @throws SQLException Si hay errores en la BD.<br>
+	 * @throws Exception Si hay errores.
+	 */
+	public void modificarPrecioCuentaConCerteza(String cuenta, double d) throws SQLException, Exception {
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		dao.setConn(conn);
+		Cuenta c= dao.buscarCuentasPorNumeroDeCuenta(cuenta);
 		c.setValor(c.getValor()+d);
 		dao.updateCuenta(c);
 		dao.cerrarRecursos();
@@ -174,6 +244,8 @@ public class DAOTablaPedidoProducto {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void updatePedidoProd(PedidoProd pedidoProd) throws SQLException, Exception {
+
+		if(!pedidoProd.getPlato().getRestaurante().getActivo()) throw new Exception("El restaurante está por fuera del negocio");
 
 		boolean mod=false;
 		if(pedidoProd.getCuenta().getPagada()) throw new Exception("Su cuenta ya está pagada");

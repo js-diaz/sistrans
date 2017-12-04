@@ -564,7 +564,28 @@ public class DAOTablaRestaurante {
 		 System.out.println(rs.getString("U.NOMBRE"));
 
 	}
+	
+	public void sacarRestaurante(String nombreRestaurante) throws SQLException,Exception
+	{
+		String sql = "UPDATE RESTAURANTE SET ";
+		sql += "DISPONIBILIDAD='0'";
+		sql += " WHERE NOMBRE LIKE '" + nombreRestaurante + "'";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+
+	}
   
+	public void restituirRestaurante(String nombreRestaurante) throws SQLException,Exception
+	{
+		String sql = "UPDATE RESTAURANTE SET ";
+		sql += "DISPONIBILIDAD='1'";
+		sql += " WHERE NOMBRE LIKE '" + nombreRestaurante + "'";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+
+	}
 	/**
 	 * Retorna la lista con los restaurantes que hayan tenida la mayor cantidad de ventas.
 	 * @return Arraylist con los restaurantes que cumplen la conidicion dada.
@@ -592,6 +613,7 @@ public class DAOTablaRestaurante {
 			restaurantes.add(darRestaurantePorNombre(rs.getString("NOMBRE_RESTAURANTE")));
 		return restaurantes;
 	}
+	
 	
 
 }

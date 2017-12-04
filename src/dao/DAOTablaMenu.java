@@ -158,6 +158,8 @@ public class DAOTablaMenu {
 	 */
 	public void addMenu(Menu menu) throws SQLException, Exception {
 
+		if(!menu.getRestaurante().getActivo()) throw new Exception("El restaurante está por fuera del negocio");
+
 		DAOTablaCategoriaMenu daoCategoria = new DAOTablaCategoriaMenu();
 		DAOTablaPerteneceAMenu daoProducto = new DAOTablaPerteneceAMenu();
 		daoCategoria.setConn(conn);
@@ -192,6 +194,8 @@ public class DAOTablaMenu {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void updateMenu(Menu menu) throws SQLException, Exception {
+
+		if(!menu.getRestaurante().getActivo()) throw new Exception("El restaurante está por fuera del negocio");
 
 		DAOTablaCategoriaMenu daoCategoria = new DAOTablaCategoriaMenu();
 		DAOTablaPerteneceAMenu daoProducto = new DAOTablaPerteneceAMenu();

@@ -126,6 +126,8 @@ public class DAOTablaPedidoMenu {
 	 */
 	public void addPedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
 
+		if(!pedidoMenu.getMenu().getRestaurante().getActivo()) throw new Exception("El restaurante está por fuera del negocio");
+
 		verificarDisponibilidadMenu(pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
 		String sql = "INSERT INTO PEDIDO_MENU VALUES (";
 		sql += "'" + pedidoMenu.getCuenta().getNumeroCuenta() + "', ";
@@ -138,6 +140,34 @@ public class DAOTablaPedidoMenu {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		modificarPrecioCuenta(false, pedidoMenu.getMenu(),pedidoMenu.getCantidad(),pedidoMenu.getCuenta());
+	}
+	
+	public void addPedidoMenuPorNombre(String nombreRestaurante, String nombreMenu, String numeroCuenta) throws SQLException, Exception
+	{
+		DAOTablaMenu menu=new DAOTablaMenu();
+		menu.setConn(conn);
+		MenuMinimum tempMenu=menu.buscarMenusMinimumPorNombreYRestaurante(nombreMenu, nombreRestaurante);
+		menu.cerrarRecursos();
+		if(!tempMenu.getRestaurante().getActivo()) throw new Exception("El restaurante está por fuera del negocio");
+
+		DAOTablaCuenta cuenta= new DAOTablaCuenta();
+		cuenta.setConn(conn);
+		CuentaMinimum tempCuenta=cuenta.buscarCuentasMinimumPorNumeroDeCuenta(numeroCuenta);
+		cuenta.cerrarRecursos();
+		verificarDisponibilidadMenu(tempMenu,1,tempCuenta);
+		String sql = "INSERT INTO PEDIDO_MENU VALUES (";
+		sql += "'" + numeroCuenta + "', ";
+		sql += "'"+nombreMenu + "', ";
+		sql += "'" + nombreRestaurante + "', ";
+		sql += 1 + ", ";
+		sql += "'0')";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		
+		modificarPrecioCuenta(false, tempMenu,1,tempCuenta);
+		
 	}
 	/**
 	 * Verifica la disponibilidad de un menú antes de agregarlo a la BD.<br>
@@ -155,6 +185,7 @@ public class DAOTablaPedidoMenu {
 		{
 			prod.verificarDisponibilidad(p.getPlato(), p.getCantidad());
 		}
+		prod.cerrarRecursos();
 		
 	}
 	/**
@@ -211,6 +242,7 @@ public class DAOTablaPedidoMenu {
 	 * @throws Exception - Cualquier error que no corresponda a la base de datos
 	 */
 	public void updatePedidoMenu(PedidoMenu pedidoMenu) throws SQLException, Exception {
+		if(!pedidoMenu.getMenu().getRestaurante().getActivo()) throw new Exception("El restaurante está por fuera del negocio");
 		if(pedidoMenu.getCuenta().getPagada()) throw new Exception("Su cuenta ya está pagada");
 		boolean mod=false;
 		if(pedidoMenu.getEntregado()) 

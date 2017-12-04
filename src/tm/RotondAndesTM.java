@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -4529,7 +4530,7 @@ public class RotondAndesTM {
 			this.conn=darConexion();
 			conn.setAutoCommit(false);
 
-			usuario.setRestaurante(new RestauranteMinimum(restaurante.getNombre(), restaurante.getPagWeb()));
+			usuario.setRestaurante(new RestauranteMinimum(restaurante.getNombre(), restaurante.getPagWeb(),true));
 			daoU.setConn(conn);
 			usuario.setRol(Rol.LOCAL);
 			daoU.addUsuario(usuario);
@@ -7287,37 +7288,127 @@ public class RotondAndesTM {
 	//---------------------------
 	//RF18
 	//Llama al método de pedir por nombre usando mesa
-	public void registrarPedidoProdMesa() throws Exception{
+	public void registrarPedidoProdMesa(List<String> mensaje,String mesa, String correo) throws Exception{
 		//Llama al método local
-		
+		pedidoProdMesaNombre(mensaje,mesa,correo);
 		//Llama al método global
+		String msj=correo+":";
+		for(String s:mensaje)
+		{
+			msj+=s+";;;";
+		}
+		dtm.pedidoProdMesaGlobal(msj);
 		
 	}
 	
-	public void registrarPedidoMenuMesa() throws Exception{
+	public void registrarPedidoMenuMesa(List<String> mensaje, String mesa,String correo) throws Exception{
 		//Llama al método local
-		
+		pedidoMenuMesaNombre(mensaje,mesa,correo);
 		//Llama al método global
-		
+		//Llama al método global
+		String msj=correo+":"+mesa+":";
+		for(String s:mensaje)
+		{
+			msj+=s+";;;";
+		}
+		dtm.pedidoMenuMesaGlobal(msj);
 	}
 	//RF19
 	//Llama al método de retirar restaurante de la rotonda
 	public void retirarRestaurante(String nombreRestaurante) throws Exception{
-		//Restaurante a retirar de forma local
-		
-		//Restaurante a retirar de forma global
+		try
+		{
+			//Restaurante a retirar de forma local
+			retirarRestauranteLocal(nombreRestaurante);
+			//Restaurante a retirar de forma global
+			dtm.retirarRestauranteGlobal(nombreRestaurante);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 	}
 	//RFC13
 	//Llama al método RFC1
-	public List<ListaObjetos> consultarProductos(/*Json de ramos y mauricio*/) throws Exception
+	public List<ListaObjetos> consultarProductos(String inicial, String terminal, String nombreRestaurante, String catProd, Double precioMin, Double precioMax) throws Exception
 	{
+		ArrayList<CriterioOrden> criteriosOrganizacion=new ArrayList<>();
+		ArrayList<Criterio> criteriosAgrupamiento=new ArrayList<Criterio>();
+		CriterioVerdad where = new CriterioVerdad();
+		CriterioVerdad temp=null;
+		if(inicial!=null)
+		{
+			if (inicial.length()==0)
+			{
+				criteriosOrganizacion.add(new CriterioOrden(null, "FECHA_INICIO", true));
+			}
+			else 
+			{
+				criteriosAgrupamiento.add(new Criterio("FECHA_INICIO"));
+				temp = new CriterioVerdad(new Criterio("FECHA_INICIO"),inicial,null,"=",true,null,null,null,null);
+				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+			}
+		}
+		if(terminal!=null)
+		{
+			if (terminal.length()==0)
+			{
+				criteriosOrganizacion.add(new CriterioOrden(null, "FECHAFIN", true));
+			}
+			else 
+			{
+				criteriosAgrupamiento.add(new Criterio("FECHA_FIN"));
+				temp = new CriterioVerdad(new Criterio("FECHA_FIN"),terminal,null,"=",true,null,null,null,null);
+				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+			}
+		}
+		if(nombreRestaurante!=null)
+		{
+			if (nombreRestaurante.length()==0)
+			{
+				criteriosOrganizacion.add(new CriterioOrden(null, "NOMBRE_RESTAURANTE", true));
+			}
+			else 
+			{
+				criteriosAgrupamiento.add(new Criterio("NOMBRE_RESTAURANTE"));
+				temp = new CriterioVerdad(new Criterio("NOMBRE_RESTAURANTE"),nombreRestaurante,null,"=",true,null,null,null,null);
+				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+			}
+		}
+		if(catProd!=null)
+		{
+			if (catProd.length()==0)
+			{
+				criteriosOrganizacion.add(new CriterioOrden(null, "TIPO", true));
+			}
+			else 
+			{
+				criteriosAgrupamiento.add(new Criterio("TIPO"));
+				temp = new CriterioVerdad(new Criterio("TIPO"),catProd,null,"=",true,null,null,null,null);
+				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+			}
+		}
+		if(precioMin!=null)
+		{
+				criteriosAgrupamiento.add(new Criterio("PRECIO"));
+				temp = new CriterioVerdad(new Criterio("PRECIO"),precioMin+"",null,">=",true,null,null,null,null);
+				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+		}
+		if(precioMax!=null)
+		{
+			criteriosAgrupamiento.add(new Criterio("PRECIO"));
+			temp = new CriterioVerdad(new Criterio("PRECIO"),precioMax+"",null,"<=",true,null,null,null,null);
+			where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+		}
 		//Método local. Falta parsearlo a como lo tienen ramos y mauricio
-		//List<Object> list=criteriosOrganizarPorProductosComoSeQuiera(criteriosOrganizacion, criteriosAgrupamiento, agregaciones, where, having)
+		List<Object> list=new ArrayList<>();
+		list.add(criteriosOrganizarPorProductosComoSeQuiera(criteriosOrganizacion, criteriosAgrupamiento, null, where, null));
 		//Método global que mandaría el json de mauricio y ramos
 		try
 		{
-			//List<Object> other=dtm.consultarProductos(restaurante, esProd)
+			List<Object>other=dtm.consultarProductos("fechaInicio;;;"+inicial+"..."+"fechaFin;;;"+terminal+
+					"...nombreRestaurante;;;"+nombreRestaurante+"...catProd;;;"+catProd+"...precioMin;;;"+precioMin+"...precioMax;;;"+precioMax);
 			//Agregar los archivos a la lista local
 		}
 		catch(Exception e)
@@ -7329,30 +7420,271 @@ public class RotondAndesTM {
 	
 	//RFC14
 	//Llama al método RFC5
-	public List<ListaObjetos> consultarRentabilidadZona() throws Exception
+	public List<Object> consultarRentabilidadZona(String fechaInicial, String fechaFinal, String nombreRestaurante) throws Exception
 	{
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		List<Object> rta=new ArrayList<>();
 		//Método local. Falta parsealo a como lo tienen ramos y mauricio
-		//List<Object> list=zonaDarProductosTotalesPorZonaYCategoria(fechaInicial, fechaFinal, nombreRestaurante)
+		rta.add(zonaDarProductosTotalesPorZonaYCategoria(x.parse(fechaInicial), x.parse(fechaFinal), nombreRestaurante));
 		//Método global que mandaría el json de mauricio y ramos
 		try
 		{
 			//Falta parsearlo con el json de ramos y mauricio
-			//List<Object>other=dtm.consultarRentabilidadZonaGlobal();
-			
+			List<Object>other=dtm.consultarRentabilidadZonaGlobal("fechaInicio;;;"+fechaInicial+"..."+"fechaFin;;;"+fechaFinal+"...nombreRestaurante;;;"+nombreRestaurante);
+			rta.addAll(other);
 		}
 		catch(Exception e)
 		{
-			
+			e.printStackTrace();
 		}
-		return null;
+		return rta;
 	}
-	public static void main(String[] args) throws Exception {
-		RotondAndesTM tm = new RotondAndesTM("./WebContent/WEB-INF/ConnectionData/");
-		PruebasJavaContraSQL r = new PruebasJavaContraSQL();
-		r.setConn(tm.darConexion());
-		r.test();
-		r.cerrarRecursos();
+
+	public void retirarRestauranteLocal(String nombreRestaurante)throws Exception {
+		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			dao.sacarRestaurante(nombreRestaurante);
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
 		
+	}
+
+	public void reingresarRestaurante(String name) throws Exception {
+		DAOTablaRestaurante dao = new DAOTablaRestaurante();
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			dao.restituirRestaurante(name);
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+	
+	public void pedidoProdMesaNombre(List<String> mensaje,String mesa,String correo) throws Exception
+	{
+		DAOTablaCuenta c=new DAOTablaCuenta();
+		
+		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
+		try
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			c.setConn(conn);
+			String num=c.addCuentaPorCorreo(mesa, correo);
+			c.cerrarRecursos();
+			dao.setConn(conn);
+			String[] datos=null;
+			for(String s:mensaje)
+			{
+				datos=s.split("-");
+				dao.addPedidoProdPorNombre(num, datos[0], datos[1]);
+			}
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void pedidoMenuMesaNombre(List<String> mensaje, String mesa, String correo) throws Exception
+	{
+		DAOTablaCuenta c= new DAOTablaCuenta();
+		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		try
+		{
+			this.conn = darConexion();
+			conn.setAutoCommit(false);
+			c.setConn(conn);
+			String num=c.addCuentaPorCorreo(mesa, correo);
+			c.cerrarRecursos();
+			dao.setConn(conn);
+			String[] datos=null;
+			for(String s:mensaje)
+			{
+				datos=s.split("-");
+				dao.addPedidoMenuPorNombre( datos[0], datos[1],num);
+			}
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+	public String cuentaCrearCuentaUsuario(String mesa,String correo) throws Exception {
+		DAOTablaCuenta dao = new DAOTablaCuenta();
+		String rta=null;
+		try
+		{
+			this.conn=darConexion();
+			conn.setAutoCommit(false);
+			dao.setConn(conn);
+			rta=dao.addCuentaPorCorreo(mesa,correo);
+			conn.commit();
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return rta;
+	}
+
+	public UsuarioMinimum usuarioBuscarUsuarioMinimumPorCorreo(String correo) throws Exception {
+		UsuarioMinimum list =null;
+		DAOTablaUsuario dao = new DAOTablaUsuario();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			list=dao.buscarUsuarioMinimumPorCorreo(correo);
+		}
+		catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} 
+		catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null) this.conn.close();
+			}
+			catch(SQLException exception)
+			{
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return list;
 	}
 
 }

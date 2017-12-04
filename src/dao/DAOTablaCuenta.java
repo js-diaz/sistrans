@@ -711,6 +711,55 @@ public class DAOTablaCuenta {
 		else return false;
 		
 	}
+
+	public String addCuentaPorCorreo(String mesa,String correo) throws Exception {
+		Long id=null;
+		
+		DAOTablaUsuario daoU= new DAOTablaUsuario();
+		
+			daoU.setConn(conn);
+			UsuarioMinimum u=daoU.buscarUsuarioMinimumPorCorreo(correo);
+			if(u==null)
+			{
+				Usuario usuario=new Usuario("USUARIO", 0l, correo, Rol.CLIENTE, null, null, null);
+				String valor="select IDUSUARIO.NEXTVAL as VALOR from dual";
+				PreparedStatement prepStmt = conn.prepareStatement(valor);
+				recursos.add(prepStmt);
+				ResultSet rs=prepStmt.executeQuery();
+				if(rs.next())
+				{
+					usuario.setId(rs.getLong("VALOR"));
+				}
+				daoU.addUsuario(usuario);
+				u=new UsuarioMinimum("USUARIO",usuario.getId(),correo,Rol.CLIENTE);
+			}
+			if(!u.getRol().equals(Rol.CLIENTE)) throw new Exception("Este cliente no puede tener una cuenta");
+		String numeroCuenta=(int)(Math.random()*1000000)+"";
+		String sql="SELECT * FROM CUENTA WHERE NUMEROCUENTA ='"+numeroCuenta+"'";
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet r=prepStmt.executeQuery();
+		while(r.next())
+		{
+			numeroCuenta=(int)(Math.random()*1000000)+"";
+			prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			r.close();
+			r=prepStmt.executeQuery();
+		}
+		sql = "INSERT INTO CUENTA VALUES (";
+		sql += "0,'";
+		sql += numeroCuenta+ "',";
+		sql += dateFormat(new Date())+",";
+		sql+= u.getId()+",";
+		sql+=id+"," ;
+		sql+="'0')";
+		prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		return numeroCuenta;
+		
+	}
 	
 
 }

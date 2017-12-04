@@ -38,6 +38,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.rabbitmq.jms.admin.RMQConnectionFactory;
 import com.rabbitmq.jms.admin.RMQDestination;
 
+import dtm.RotondAndesDistributed;
 import dtm.VideoAndesDistributed;
 import vos.ExchangeMsg;
 import vos.ListaVideos;
@@ -60,7 +61,7 @@ public class PedidoProdMDB implements MessageListener, ExceptionListener
 	private Topic globalTopic;
 	private Topic localTopic;
 	
-	private String answer;
+	private List<String> answer;
 	
 	public PedidoProdMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
@@ -86,15 +87,14 @@ public class PedidoProdMDB implements MessageListener, ExceptionListener
 		topicConnection.close();
 	}
 	
-	public void pedidoProdMesa() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
+	public void pedidoProdMesa(String mensaje) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
-		answer="";
+		answer=new ArrayList<>();
 		String id = APP+""+System.currentTimeMillis();
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		id = DatatypeConverter.printHexBinary(md.digest(id.getBytes())).substring(0, 8);
 //		id = new String(md.digest(id.getBytes()));
-		
-		sendMessage("", REQUEST, globalTopic, id);
+		sendMessage(mensaje, REQUEST, globalTopic, id);
 		boolean waiting = true;
 
 		int count = 0;
@@ -148,16 +148,17 @@ public class PedidoProdMDB implements MessageListener, ExceptionListener
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{
-					VideoAndesDistributed dtm = VideoAndesDistributed.getInstance();
-					ListaVideos videos = dtm.getLocalVideos();
-					String payload = mapper.writeValueAsString(videos);
+					String s=mapper.readValue(ex.getPayload(), String.class);
+					RotondAndesDistributed dtm = RotondAndesDistributed.getInstance();
+					String ans=dtm.pedidoProdMesaLocal(s);
 					Topic t = new RMQDestination("", "pedido.prod.mesa", ex.getRoutingKey(), "", false);
-					sendMessage(payload, REQUEST_ANSWER, t, id);
+					sendMessage(ans, REQUEST_ANSWER, t, id);
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
-					answer = mapper.readValue(ex.getPayload(), String.class);
-					System.out.println("SE RESPONDIÓ "+answer);
+					String ans=mapper.readValue(ex.getPayload(), String.class);
+					answer.add(ans);
+					System.out.println("ANSWER "+answer);
 				}
 			}
 			

@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +41,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.rabbitmq.jms.admin.RMQConnectionFactory;
 import com.rabbitmq.jms.admin.RMQDestination;
 
+import dtm.RotondAndesDistributed;
 import dtm.VideoAndesDistributed;
 import rfc.ContenedoraRestauranteInfoFinanciera;
 import rfc.ContenedoraZonaCategoriaProducto;
@@ -91,7 +94,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 		topicConnection.close();
 	}
 	
-	public List<Object> consultarRentabilidadZona() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
+	public List<Object> consultarRentabilidadZona(String msg) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		answer.clear();
 		String id = APP+""+System.currentTimeMillis();
@@ -99,7 +102,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 		id = DatatypeConverter.printHexBinary(md.digest(id.getBytes())).substring(0, 8);
 //		id = new String(md.digest(id.getBytes()));
 		
-		sendMessage("", REQUEST, globalTopic, id);
+		sendMessage(msg, REQUEST, globalTopic, id);
 		boolean waiting = true;
 
 		int count = 0;
@@ -155,10 +158,13 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{
-					VideoAndesDistributed dtm = VideoAndesDistributed.getInstance();
-					ListaVideos videos = dtm.getLocalVideos();
-					String payload = mapper.writeValueAsString(videos);
-					Topic t = new RMQDestination("", "videos.test", ex.getRoutingKey(), "", false);
+					String s=mapper.readValue(ex.getPayload(), String.class);
+					System.out.println(s);
+					
+					RotondAndesDistributed dtm = RotondAndesDistributed.getInstance();
+					Object list=dtm.consultarRentabilidadZonaLocal(s);
+					String payload = mapper.writeValueAsString(list);
+					Topic t = new RMQDestination("", "consulta.rentabilidad", ex.getRoutingKey(), "", false);
 					sendMessage(payload, REQUEST_ANSWER, t, id);
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))

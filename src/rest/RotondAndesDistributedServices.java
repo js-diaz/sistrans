@@ -2,6 +2,7 @@
 package rest;
 
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -57,16 +58,17 @@ public class RotondAndesDistributedServices {
 	 * @return Json con todos los videos de la base de datos o json con 
      * el error que se produjo
 	 */
-	@POST
+	@GET
 	@Path("RFC13")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
 	//Falta acomodarlo al json de ramos
-	public Response consultarProductos(Object jsonRamos) {
+	public Response consultarProductos(@HeaderParam("fechaInicio") String inicial,@HeaderParam("fechaFinal") String terminal,@HeaderParam("nombreRestaurante")String nombreRestaurante,
+			@HeaderParam("catProd")String catProd,@HeaderParam("precioMin") Double precioMin,@HeaderParam("precioMax") Double precioMax,@HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<ListaObjetos> list;
 		try {
-			list = tm.consultarProductos();
+			list = tm.consultarProductos(inicial,terminal,nombreRestaurante,catProd,precioMin,precioMax);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
@@ -80,8 +82,8 @@ public class RotondAndesDistributedServices {
      * @return Json con el/los videos encontrados con el nombre que entra como parametro o json con 
      * el error que se produjo
      */
-	@POST
-	@Path("RF19")
+	@DELETE
+	@Path("{name}/RF19")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces( { MediaType.APPLICATION_JSON } )
 	public Response retirarRestaurante( @PathParam( "name" ) String name )
@@ -91,7 +93,7 @@ public class RotondAndesDistributedServices {
 		try
 		{
 			if(name==null || name.length()==0)
-				throw new Exception("El nombre de la categoría es inválido");
+				throw new Exception("El nombre del restaurante es inválido");
 			tm.retirarRestaurante(name);
 			return Response.status( 200 ).build( );			
 		}
@@ -101,6 +103,33 @@ public class RotondAndesDistributedServices {
 		}
 	}
 
+	/**
+     * Metodo que expone servicio REST usando GET que busca el video con el id que entra como parametro
+     * <b>URL: </b> http://"ip o nombre de host":8080/CategoriaAndes/rest/videos/<<id>>" para la busqueda"
+     * @param name - Nombre del video a buscar que entra en la URL como parametro 
+     * @return Json con el/los videos encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@DELETE
+	@Path("{name}/NORF19")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response reingresarRestaurante( @PathParam( "name" ) String name )
+	{
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
+		try
+		{
+			if(name==null || name.length()==0)
+				throw new Exception("El nombre del restaurante es inválido");
+			tm.reingresarRestaurante(name);
+			return Response.status( 200 ).build( );			
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
+	}
 
     /**
      * Metodo que expone servicio REST usando POST que agrega el video que recibe en Json
@@ -113,24 +142,27 @@ public class RotondAndesDistributedServices {
 	@Path("RF18")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response pedidoPorMesa(@HeaderParam("esProducto") boolean esProducto, @HeaderParam("usuarioId") Long id,String mensaje) {
+	public Response pedidoPorMesa(@HeaderParam("esProducto") boolean esProducto, @HeaderParam("correo") String correo, @HeaderParam("mesa")String mesa,List<String> mensaje) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		UsuarioMinimum u =null;
 		try {
-			u=tm.usuarioBuscarUsuarioMinimumPorId(id);
+			u=tm.usuarioBuscarUsuarioMinimumPorCorreo(correo);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		try {
-			if(!(u.getRol().equals(Rol.OPERADOR))) throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
+			
+			if((u!=null &&!(u.getRol().equals(Rol.CLIENTE))) || mensaje.isEmpty()) 
+				throw new Exception("El usuario no tiene los permisos para ingresar a esta funcionalidad");
 			if(esProducto)
-				tm.registrarPedidoProdMesa();
+				tm.registrarPedidoProdMesa(mensaje,mesa,correo);
 			else
-				tm.registrarPedidoMenuMesa();
+				tm.registrarPedidoMenuMesa(mensaje,mesa,correo);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).build();
+		
 	}
 	//Falta el json de ramos para usar esta funcionalidad
     /**
@@ -139,13 +171,12 @@ public class RotondAndesDistributedServices {
      * @param id_ Id del usuario que realiza la solicitud.
      * @return Json con el video que elimino o Json con el error que se produjo
      */
-	@POST
+	@GET
 	@Path("RFC14")
-	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response consultarRentabilidad(@HeaderParam("usuarioId") Long id,Object jsonDeRamos) {
+	public Response consultarRentabilidad(@HeaderParam("fechaInicial") String inicial,@HeaderParam("fechaFinal") String terminal,@HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
-		List<ListaObjetos> lista;
+		List<Object> lista;
 		try {
 			Usuario u = tm.usuarioBuscarUsuarioPorId( id );
 			boolean restaurante=false;
@@ -160,7 +191,7 @@ public class RotondAndesDistributedServices {
 			}
 			String nombre=null;
 			if(restaurante) nombre=u.getRestaurante().getNombre();
-			lista=tm.consultarRentabilidadZona();
+			lista=tm.consultarRentabilidadZona((inicial), (terminal), nombre);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

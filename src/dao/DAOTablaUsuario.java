@@ -657,5 +657,27 @@ public class DAOTablaUsuario {
 		return usuarios;
 	}
 
+	public UsuarioMinimum buscarUsuarioMinimumPorCorreo(String correo) throws Exception {
+		// TODO Auto-generated method stub
+		UsuarioMinimum usuario = null;
+
+		
+		String sql = "SELECT * FROM USUARIO WHERE CORREO ='" + correo+"'";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		if(rs.next()) {
+			String name = rs.getString("NOMBRE");
+			Long id2 = rs.getLong("ID");
+			String correo2 = rs.getString("CORREO");
+			Rol r = convertirARol(rs.getString("ROL"));
+			
+			usuario=(new UsuarioMinimum(name,id2,correo2, r));
+		}
+		return usuario;
+	}
+
 }
 

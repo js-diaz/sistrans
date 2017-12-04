@@ -39,6 +39,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.rabbitmq.jms.admin.RMQConnectionFactory;
 import com.rabbitmq.jms.admin.RMQDestination;
 
+import dtm.RotondAndesDistributed;
 import dtm.VideoAndesDistributed;
 import rfc.ContenedoraInformacion;
 import rfc.ListContenedoraInformacion;
@@ -90,7 +91,7 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 		topicConnection.close();
 	}
 	
-	public List<Object> consultarProductos() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
+	public List<Object> consultarProductos(String msg) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		answer.clear();
 		String id = APP+""+System.currentTimeMillis();
@@ -98,7 +99,8 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 		id = DatatypeConverter.printHexBinary(md.digest(id.getBytes())).substring(0, 8);
 //		id = new String(md.digest(id.getBytes()));
 		
-		sendMessage("", REQUEST, globalTopic, id);
+		System.out.println(msg);
+		sendMessage(msg, REQUEST, globalTopic, id);
 		boolean waiting = true;
 
 		int count = 0;
@@ -136,7 +138,6 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 		txtMsg.setText(envelope);
 		topicPublisher.publish(txtMsg);
 	}
-	//¿Cuál es el answer que vamos a retornar?
 	@Override
 	public void onMessage(Message message) 
 	{
@@ -154,10 +155,10 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{
-					VideoAndesDistributed dtm = VideoAndesDistributed.getInstance();
-					ListaVideos videos = dtm.getLocalVideos();
-					String payload = mapper.writeValueAsString(videos);
-					Topic t = new RMQDestination("", "videos.test", ex.getRoutingKey(), "", false);
+					String s=mapper.readValue(ex.getPayload(),String.class);
+					RotondAndesDistributed dtm = RotondAndesDistributed.getInstance();
+					String payload = mapper.writeValueAsString(dtm.consultarProductosLocal(s));
+					Topic t = new RMQDestination("", "consulta.producto", ex.getRoutingKey(), "", false);
 					sendMessage(payload, REQUEST_ANSWER, t, id);
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))

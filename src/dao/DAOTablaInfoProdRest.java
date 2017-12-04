@@ -102,6 +102,7 @@ public class DAOTablaInfoProdRest {
 	 */
 	public InfoProdRest buscarInfoProdRestsPorIdYRestaurante(Long id, String restaurante) throws SQLException, Exception {
 
+
 		String sql = "SELECT * FROM INFO_PROD_REST WHERE ID_PRODUCTO = " + id + " AND NOMBRE_RESTAURANTE LIKE '" + restaurante + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -122,6 +123,7 @@ public class DAOTablaInfoProdRest {
 	 */
 	public void addInfoProdRest(InfoProdRest infoProdRest) throws SQLException, Exception {
 
+		if(!infoProdRest.getRestaurante().getActivo()) throw new Exception("El restaurante está por fuera del negocio");
 		String sql = "INSERT INTO INFO_PROD_REST VALUES (";
 		sql += infoProdRest.getProducto().getId() + ", ";
 		sql += "'" + infoProdRest.getRestaurante().getNombre() + "', ";
@@ -151,6 +153,7 @@ public class DAOTablaInfoProdRest {
 	 */
 	public void updateInfoProdRest(InfoProdRest infoProdRest) throws SQLException, Exception {
 
+		if(!infoProdRest.getRestaurante().getActivo()) throw new Exception("El restaurante está por fuera del negocio");
 		String sql = "UPDATE INFO_PROD_REST SET ";
 		sql += "PRECIO = " + infoProdRest.getPrecio();
 		sql += ", COSTO = "+ infoProdRest.getCosto();
