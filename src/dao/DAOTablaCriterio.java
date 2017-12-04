@@ -672,8 +672,10 @@ public class DAOTablaCriterio {
 				ant2=where.getC2().getNombre();
 				evaluarWhere(where.getC1(),tipos);
 				evaluarWhere(where.getC2(),tipos);
-				where.setNombre(where.getNombre().replaceAll(ant1, where.getC1().getNombre()));
-				where.setNombre(where.getNombre().replaceAll(ant2, where.getC2().getNombre()));
+				System.out.println("ANT "+ant1+" "+ant2);
+				System.out.println("DES "+where.getC1().getNombre()+" "+where.getC2().getNombre());
+				where.setNombre(where.getNombre().replaceAll(ant1, where.getC1().getNombre()).replaceAll("''", "'"));
+				where.setNombre(where.getNombre().replaceAll(ant2, where.getC2().getNombre()).replaceAll("''", "'"));
 				System.out.println("TOTAL "+where.getNombre());
 			}
 			
@@ -1033,7 +1035,7 @@ public class DAOTablaCriterio {
 			{
 				temp=simplificarOrden(c.getNombre());
 				if(!temp.equals("") && buscarCriteriosProducto(simplificarOrden(c.getNombre()))==null) 
-					throw new Exception("Uno de los criterios no existe");
+					throw new Exception("Uno de los criterios no existe "+c.getNombre());
 				orderBy+=", "+c.getNombre();
 			}
 		}

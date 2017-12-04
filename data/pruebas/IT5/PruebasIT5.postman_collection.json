@@ -125,7 +125,7 @@
 							},
 							{
 								"key": "esProducto",
-								"value": "true"
+								"value": "false"
 							}
 						],
 						"body": {
@@ -489,7 +489,7 @@
 							},
 							{
 								"key": "nombreRestaurante",
-								"value": ""
+								"value": "Wikibox"
 							},
 							{
 								"key": "catProd",
@@ -505,7 +505,7 @@
 							},
 							{
 								"key": "usuarioId",
-								"value": ""
+								"value": "0"
 							}
 						],
 						"body": {},

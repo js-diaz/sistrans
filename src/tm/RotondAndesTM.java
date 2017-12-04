@@ -7316,7 +7316,7 @@ public class RotondAndesTM {
 		{
 			if (terminal.length()==0)
 			{
-				criteriosOrganizacion.add(new CriterioOrden(null, "FECHAFIN", true));
+				criteriosOrganizacion.add(new CriterioOrden(null, "FECHA_FIN", true));
 			}
 			else 
 			{
@@ -7336,7 +7336,7 @@ public class RotondAndesTM {
 			{
 				criteriosOrganizacion=new ArrayList<>();
 				criteriosAgrupamiento.add(new Criterio("NOMBRE_RESTAURANTE"));
-				temp = new CriterioVerdad(new Criterio("NOMBRE_RESTAURANTE"),""+nombreRestaurante+"",null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("NOMBRE_RESTAURANTE"),"'"+nombreRestaurante+"'",null,"=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
@@ -7350,7 +7350,7 @@ public class RotondAndesTM {
 			{
 				criteriosOrganizacion=new ArrayList<>();
 				criteriosAgrupamiento.add(new Criterio("TIPO"));
-				temp = new CriterioVerdad(new Criterio("TIPO"),""+catProd+"",null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("TIPO"),"'"+catProd+"'",null,"=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
@@ -7387,6 +7387,11 @@ public class RotondAndesTM {
 		//Método global que mandaría el json de mauricio y ramos
 		try
 		{
+			if(catProd!=null && catProd.length()>0)
+			{
+				String s=catProd.substring(1, catProd.length());
+				catProd=catProd.charAt(0)+s.toLowerCase();
+			}
 			List<Object>other=dtm.consultarProductos("fechaInicio;;;"+inicial+"..."+"fechaFin;;;"+terminal+
 					"...nombreRestaurante;;;"+nombreRestaurante+"...catProd;;;"+catProd+"...precioMin;;;"+precioMin+"...precioMax;;;"+precioMax);
 			//Agregar los archivos a la lista local

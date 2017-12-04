@@ -188,7 +188,7 @@ public class RotondAndesDistributed
 		}
 		try
 		{
-			 catProd=datos[3].split(SPLIT_PARAM)[1];
+			 catProd=datos[3].split(SPLIT_PARAM)[1].toUpperCase();
 		}
 		catch(Exception e)
 		{
@@ -269,20 +269,19 @@ public class RotondAndesDistributed
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
-		if(precioMin!=null)
+		if(!precioMin.equals("null"))
 		{
 				criteriosAgrupamiento.add(new Criterio("PRECIO"));
 				temp = new CriterioVerdad(new Criterio("PRECIO"),precioMin+"",null,">=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 		}
-		if(precioMax!=null)
+		if(!precioMax.equals("null"))
 		{
 			criteriosAgrupamiento.add(new Criterio("PRECIO"));
 			temp = new CriterioVerdad(new Criterio("PRECIO"),precioMax+"",null,"<=",true,null,null,null,null);
 			where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 		}
-		//return tm.criteriosOrganizarPorProductosComoSeQuiera(criteriosOrganizacion, criteriosAgrupamiento, agregaciones, where, having)(restaurante, esProd);
-		return null;
+		return tm.criteriosOrganizarPorProductosComoSeQuiera(criteriosOrganizacion, criteriosAgrupamiento, null, where, null);
 	}
 	//Para RFC14 usando RFC5
 	public List<Object> consultarRentabilidadZonaGlobal(String msg) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
