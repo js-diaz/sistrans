@@ -4,6 +4,7 @@ import javax.jms.JMSException;
 
 
 
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -11,7 +12,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import dtm.RotondAndesDistributed;
-import dtm.VideoAndesDistributed;
 
 
 @WebListener

@@ -788,7 +788,7 @@ public class DAOTablaCriterio {
 	public List<Criterio> darCriteriosBasicosProducto() throws SQLException, Exception
 	{
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
-				+ "LIKE 'INGREDIENTE' OR  TABLE_NAME LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'CATEGORIA_PRODUCTO' OR TABLE_NAME LIKE 'INFO_PROD_REST'))";
+				+ "LIKE 'INGREDIENTE' OR  TABLE_NAME LIKE 'RESTAURANTE'  OR TABLE_NAME LIKE 'INFO_PROD_REST'))";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -797,11 +797,14 @@ public class DAOTablaCriterio {
 		List<Criterio> c=new ArrayList<>();
 		while (rs.next()) {
 			String name2 = rs.getString("COLUMN_NAME");
-			if(name2.equals("ID") || name2.equals("NOMBRE") || name2.equals("ID_PRODUCTO")) continue;
+			if(name2.equals("DISPONIBILIDAD") || name2.equals("NOMBRE_RESTAURANTE")|| name2.equals("ID") || name2.equals("NOMBRE") || name2.equals("ID_PRODUCTO")) continue;
 			c.add(new Criterio(name2));
 		}
 		c.add(new Criterio("P.NOMBRE"));
 		c.add(new Criterio("I.ID_PRODUCTO"));
+		c.add(new Criterio("I.NOMBRE_RESTAURANTE"));
+		c.add(new Criterio("I.DISPONIBILIDAD"));
+
 		return c;
 	}
 	/**
@@ -813,9 +816,9 @@ public class DAOTablaCriterio {
 	 */
 	public Criterio buscarCriteriosProducto(String name) throws SQLException, Exception {
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
-				+ "LIKE 'INGREDIENTE' OR  TABLE_NAME LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'CATEGORIA_PRODUCTO' OR TABLE_NAME LIKE 'INFO_PROD_REST'))";
+				+ "LIKE 'INGREDIENTE' OR  TABLE_NAME LIKE 'RESTAURANTE'  OR TABLE_NAME LIKE 'INFO_PROD_REST'))";
 		String sql = "SELECT DISTINCT COLUMN_NAME FROM "+table+" WHERE COLUMN_NAME LIKE'" + name + "'";
-		if(name.equals("P.NOMBRE")||name.equals("I.ID_PRODUCTO")) return new Criterio(name);
+		if(name.equals("I.NOMBRE_RESTAURANTE") || name.equals("P.NOMBRE")||name.equals("I.ID_PRODUCTO")) return new Criterio(name);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
@@ -838,7 +841,7 @@ public class DAOTablaCriterio {
 	{
 		ContenedoraInformacion lista= new ContenedoraInformacion();
 		String table="(SELECT * FROM ALL_TAB_COLUMNS WHERE OWNER LIKE 'ISIS2304A061720' AND (TABLE_NAME LIKE 'PRODUCTO' OR TABLE_NAME "
-				+ "LIKE 'INGREDIENTE' OR  TABLE_NAME LIKE 'RESTAURANTE' OR TABLE_NAME LIKE 'CATEGORIA_PRODUCTO' OR TABLE_NAME LIKE 'INFO_PROD_REST'))";
+				+ "LIKE 'INGREDIENTE' OR  TABLE_NAME LIKE 'RESTAURANTE'  OR TABLE_NAME LIKE 'INFO_PROD_REST'))";
 		String sql = "SELECT COLUMN_NAME, DATA_TYPE FROM "+table;
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -850,7 +853,8 @@ public class DAOTablaCriterio {
 		}
 		lista.agregarInformacion("I.ID_PRODUCTO", "NUMBER");
 		lista.agregarInformacion("P.NOMBRE", "VARCHAR2");
-
+		lista.agregarInformacion("I.NOMBRE_RESTAURANTE", "VARCHAR2");
+		lista.agregarInformacion("I.DISPONIBILIDAD", "NUMBER");
 		return lista;
 	}
 	
@@ -885,6 +889,16 @@ public class DAOTablaCriterio {
 				criteriosAgrupamiento.remove(new Criterio("ID_PRODUCTO"));
 				criteriosAgrupamiento.add(new Criterio("I.ID_PRODUCTO"));
 			}
+			else if (criteriosAgrupamiento.contains(new Criterio("NOMBRE_RESTAURANTE")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("NOMBRE_RESTAURANTE"));
+				criteriosAgrupamiento.add(new Criterio("I.NOMBRE_RESTAURANTE"));
+			}
+			else if (criteriosAgrupamiento.contains(new Criterio("DISPONIBILIDAD")))
+			{
+				criteriosAgrupamiento.remove(new Criterio("DISPONIBILIDAD"));
+				criteriosAgrupamiento.add(new Criterio("I.DISPONIBILIDAD"));
+			}
 			for(Criterio c: criteriosAgrupamiento)
 			{
 				
@@ -904,6 +918,16 @@ public class DAOTablaCriterio {
 			{
 				criteriosOrganizacion.remove(new Criterio("ID_PRODUCTO"));
 				criteriosOrganizacion.add(new CriterioOrden(null, "I.ID_PRODUCTO", false));
+			}
+			else if (criteriosOrganizacion.contains(new Criterio("NOMBRE_RESTAURANTE")))
+			{
+				criteriosOrganizacion.remove(new Criterio("NOMBRE_RESTAURANTE"));
+				criteriosOrganizacion.add(new CriterioOrden(null, "I.NOMBRE_RESTAURANTE", false));
+			}
+			else if (criteriosOrganizacion.contains(new Criterio("DISPONIBILIDAD")))
+			{
+				criteriosOrganizacion.remove(new Criterio("DISPONIBILIDAD"));
+				criteriosOrganizacion.add(new CriterioOrden(null, "I.DISPONIBILIDAD", false));
 			}
 			for(CriterioOrden c: criteriosOrganizacion)
 			{
@@ -926,6 +950,16 @@ public class DAOTablaCriterio {
 				agregacionesSeleccion.remove(new Criterio("ID_PRODUCTO"));
 				agregacionesSeleccion.add(new CriterioAgregacion("I.ID_PRODUCTO",null, false));
 			}
+			else if (agregacionesSeleccion.contains(new Criterio("NOMBRE_RESTAURANTE")))
+			{
+				agregacionesSeleccion.remove(new Criterio("NOMBRE_RESTAURANTE"));
+				agregacionesSeleccion.add(new CriterioAgregacion("I.NOMBRE_RESTAURANTE",null, false));
+			}
+			else if (agregacionesSeleccion.contains(new Criterio("DISPONIBILIDAD")))
+			{
+				agregacionesSeleccion.remove(new Criterio("DISPONIBILIDAD"));
+				agregacionesSeleccion.add(new CriterioAgregacion("I.DISPONIBILIDAD",null, false));
+			}
 			for(CriterioAgregacion a: agregacionesSeleccion)
 			{
 				
@@ -936,11 +970,11 @@ public class DAOTablaCriterio {
 		
 		//Empieza la creación de los datos del query
 		//El from debería ser con ZONA, RESTAURANTE, INFO_PROD_REST, PEDIDO_PROD, MENU, PEDIDO_MENU, CUENTA. Se busca una unión de lo que respecta a producto y menú. En una tabla aparte.
-		String from ="FROM PRODUCTO P, RESTAURANTE,  INFO_PROD_REST I, CATEGORIA_PRODUCTO   ";
+		String from ="FROM PRODUCTO P, RESTAURANTE,  INFO_PROD_REST I   ";
 		String select="SELECT ";
 		String groupBy="";
 		String orderBy="";
-		String where="WHERE P.ID = CATEGORIA_PRODUCTO.ID_PRODUCTO AND "
+		String where="WHERE  "
 				+ "P.ID = I.ID_PRODUCTO AND "
 				+ " RESTAURANTE.NOMBRE = I.NOMBRE_RESTAURANTE"; 
 		String having="";

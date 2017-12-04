@@ -279,7 +279,7 @@ public class DAOTablaRestaurante {
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			String pagWeb = rs.getString("PAG_WEB");
-			Boolean activo = rs.getString("ACTIVO").equals("1");
+			Boolean activo = rs.getString("DISPONIBILIDAD").equals("1");
 			UsuarioMinimum representante = daoUsuario.buscarUsuarioMinimumPorId(rs.getLong("ID_REPRESENTANTE"));
 			ZonaMinimum zona = daoZona.buscarZonasMinimumPorName(rs.getString("NOMBRE_ZONA"));
 			restaurantes.add(new Restaurante(nombre, pagWeb, activo, zona, daoCat.consultarPorRestaurante(nombre), representante,
@@ -307,7 +307,7 @@ public class DAOTablaRestaurante {
 		while (rs.next()) {
 			String nombre = rs.getString("NOMBRE");
 			String pagWeb = rs.getString("PAG_WEB");
-			Boolean activo = rs.getString("ACTIVO").equals("1");
+			Boolean activo = rs.getString("DISPONIBILIDAD").equals("1");
 			restaurantes.add(new RestauranteMinimum(nombre, pagWeb, activo));
 		}
 		return restaurantes;

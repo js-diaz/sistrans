@@ -60,16 +60,16 @@ public class RotondAndesDistributedServices {
 	 */
 	@GET
 	@Path("RFC13")
-	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON })
 	//Falta acomodarlo al json de ramos
 	public Response consultarProductos(@HeaderParam("fechaInicio") String inicial,@HeaderParam("fechaFinal") String terminal,@HeaderParam("nombreRestaurante")String nombreRestaurante,
-			@HeaderParam("catProd")String catProd,@HeaderParam("precioMin") Double precioMin,@HeaderParam("precioMax") Double precioMax,@HeaderParam("usuarioId") Long id) {
+			@HeaderParam("catProd")String catProd,@HeaderParam("precioMin") String precioMin,@HeaderParam("precioMax") String precioMax,@HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
-		List<ListaObjetos> list;
+		List<Object> list;
 		try {
 			list = tm.consultarProductos(inicial,terminal,nombreRestaurante,catProd,precioMin,precioMax);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(list).build();
@@ -174,7 +174,7 @@ public class RotondAndesDistributedServices {
 	@GET
 	@Path("RFC14")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response consultarRentabilidad(@HeaderParam("fechaInicial") String inicial,@HeaderParam("fechaFinal") String terminal,@HeaderParam("usuarioId") Long id) {
+	public Response consultarRentabilidad(@HeaderParam("fechaInicio") String inicial,@HeaderParam("fechaFinal") String terminal,@HeaderParam("usuarioId") Long id) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		List<Object> lista;
 		try {
@@ -191,8 +191,10 @@ public class RotondAndesDistributedServices {
 			}
 			String nombre=null;
 			if(restaurante) nombre=u.getRestaurante().getNombre();
+			System.out.println("EL NOMBRE ES "+nombre+" con id de "+id+" en "+inicial+" y "+terminal);
 			lista=tm.consultarRentabilidadZona((inicial), (terminal), nombre);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(lista).build();

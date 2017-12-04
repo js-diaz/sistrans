@@ -39,7 +39,6 @@ import com.rabbitmq.jms.admin.RMQConnectionFactory;
 import com.rabbitmq.jms.admin.RMQDestination;
 
 import dtm.RotondAndesDistributed;
-import dtm.VideoAndesDistributed;
 import vos.ExchangeMsg;
 import vos.ListaVideos;
 import vos.Video;
@@ -48,7 +47,7 @@ import vos.Video;
 public class PedidoMenuMDB implements MessageListener, ExceptionListener 
 {
 	public final static int TIME_OUT = 5;
-	private final static String APP = "app1";
+	private final static String APP = "A-05";
 	
 	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQPedidoMenuGlobal";
 	private final static String LOCAL_TOPIC_NAME = "java:global/RMQPedidoMenuLocal";
@@ -149,7 +148,7 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{
-					String s=mapper.readValue(ex.getPayload(), String.class);
+					String s=ex.getPayload();
 					RotondAndesDistributed dtm = RotondAndesDistributed.getInstance();
 					String ans=dtm.pedidoMenuMesaLocal(s);
 					Topic t = new RMQDestination("", "pedido.menu.mesa", ex.getRoutingKey(), "", false);
@@ -157,7 +156,7 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
-					String ans=mapper.readValue(ex.getPayload(), String.class);
+					String ans=ex.getPayload();
 					answer.add(ans);
 					System.out.println("ANSWER "+answer);
 				}

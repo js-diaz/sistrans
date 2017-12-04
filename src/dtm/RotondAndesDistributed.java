@@ -56,7 +56,6 @@ public class RotondAndesDistributed
 	
 	private TopicConnectionFactory factory;
 	
-	private AllVideosMDB allVideosMQ;
 	
 	private ConsultarProdMDB consultarProdMQ;
 	
@@ -76,7 +75,6 @@ public class RotondAndesDistributed
 		InitialContext ctx = new InitialContext();
 		factory = (RMQConnectionFactory) ctx.lookup(MQ_CONNECTION_NAME);
 		//Inicializicación mqs
-		allVideosMQ = new AllVideosMDB(factory, ctx);
 		consultarProdMQ=new ConsultarProdMDB(factory,ctx);
 		consultarRentabilidadMQ= new ConsultarRentabilidadMDB(factory,ctx);
 		pedidoMenuMQ=new PedidoMenuMDB(factory,ctx);
@@ -85,7 +83,6 @@ public class RotondAndesDistributed
 		
 		
 		//Start MQ
-		allVideosMQ.start();
 		consultarProdMQ.start();
 		consultarRentabilidadMQ.start();
 		pedidoMenuMQ.start();
@@ -96,7 +93,6 @@ public class RotondAndesDistributed
 	
 	public void stop() throws JMSException
 	{
-		allVideosMQ.close();
 		consultarProdMQ.close();
 		consultarRentabilidadMQ.close();
 		pedidoMenuMQ.close();
@@ -152,16 +148,6 @@ public class RotondAndesDistributed
 		}
 		RotondAndesTM tm = new RotondAndesTM(path);
 		return getInstance(tm);
-	}
-	//Ejemplo
-	public ListaVideos getLocalVideos() throws Exception
-	{
-		return tm.darVideosLocal();
-	}
-	
-	public ListaVideos getRemoteVideos() throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
-	{
-		return allVideosMQ.getRemoteVideos();
 	}
 	//Para RFC13 usando RFC1
 	public List<Object> consultarProductos(String msg) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
@@ -312,7 +298,7 @@ public class RotondAndesDistributed
 		Date fechaFin=null;
 		String nombreRestaurante=null;
 		String[] valores=datos[0].split(SPLIT_PARAM);
-		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat x = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		if(valores[0].equals("fechaInicio"))
 		{
 			fechaInicio=x.parse(valores[1]);

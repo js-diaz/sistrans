@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import dao.*;
 import dtm.RotondAndesDistributed;
-import dtm.VideoAndesDistributed;
 import jms.NonReplyException;
 import rfc.ContenedoraClienteProductos;
 import rfc.ContenedoraInformacion;
@@ -4339,7 +4339,7 @@ public class RotondAndesTM {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
-		} finally {
+		} finally { 
 			try {
 				dao.cerrarRecursos();
 				if(this.conn!=null)
@@ -7232,57 +7232,6 @@ public class RotondAndesTM {
 		}
 	}
 	//Ejemplo de métodos distribuidos
-
-	public ListaVideos darVideosLocal() throws Exception {
-		ArrayList<Video> videos;
-		DAOTablaVideos daoVideos = new DAOTablaVideos();
-		try 
-		{
-			//////Transacción
-			this.conn = darConexion();
-			daoVideos.setConn(conn);
-			videos = daoVideos.darVideos();
-
-		} catch (SQLException e) {
-			System.err.println("SQLException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} catch (Exception e) {
-			System.err.println("GeneralException:" + e.getMessage());
-			e.printStackTrace();
-			throw e;
-		} finally {
-			try {
-				daoVideos.cerrarRecursos();
-				if(this.conn!=null)
-					this.conn.close();
-			} catch (SQLException exception) {
-				System.err.println("SQLException closing resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return new ListaVideos(videos);
-	}
-	/**
-	 * Método que modela la transacción que retorna todos los videos de la base de datos.
-	 * @return ListaVideos - objeto que modela  un arreglo de videos. este arreglo contiene el resultado de la búsqueda
-	 * @throws Exception -  cualquier error que se genere durante la transacción
-	 */
-	public ListaVideos darVideos() throws Exception {
-		ListaVideos remL = darVideosLocal();
-		try
-		{
-			ListaVideos resp = dtm.getRemoteVideos();
-			System.out.println(resp.getVideos().size());
-			remL.getVideos().addAll(resp.getVideos());
-		}
-		catch(NonReplyException e)
-		{
-			
-		}
-		return remL;
-	}
 	//---------------------------
 	//ITERACIÓN 5
 	//---------------------------
@@ -7331,12 +7280,12 @@ public class RotondAndesTM {
 	}
 	//RFC13
 	//Llama al método RFC1
-	public List<ListaObjetos> consultarProductos(String inicial, String terminal, String nombreRestaurante, String catProd, Double precioMin, Double precioMax) throws Exception
+	public List<Object> consultarProductos(String inicial, String terminal, String nombreRestaurante, String catProd, String precioMin, String precioMax) throws Exception
 	{
 		ArrayList<CriterioOrden> criteriosOrganizacion=new ArrayList<>();
 		ArrayList<Criterio> criteriosAgrupamiento=new ArrayList<Criterio>();
-		CriterioVerdad where = new CriterioVerdad();
 		CriterioVerdad temp=null;
+		CriterioVerdad where=new CriterioVerdad(new Criterio("PRECIO"),0+"",null,">",true,null,null,null,null);
 		if(inicial!=null)
 		{
 			if (inicial.length()==0)
@@ -7345,8 +7294,9 @@ public class RotondAndesTM {
 			}
 			else 
 			{
+				criteriosOrganizacion=new ArrayList<>();
 				criteriosAgrupamiento.add(new Criterio("FECHA_INICIO"));
-				temp = new CriterioVerdad(new Criterio("FECHA_INICIO"),inicial,null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("FECHA_INICIO"),dateFormat(inicial),null,">=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
@@ -7358,8 +7308,9 @@ public class RotondAndesTM {
 			}
 			else 
 			{
+				criteriosOrganizacion=new ArrayList<>();
 				criteriosAgrupamiento.add(new Criterio("FECHA_FIN"));
-				temp = new CriterioVerdad(new Criterio("FECHA_FIN"),terminal,null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("FECHA_FIN"),dateFormat(terminal),null,"<=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
@@ -7371,8 +7322,9 @@ public class RotondAndesTM {
 			}
 			else 
 			{
+				criteriosOrganizacion=new ArrayList<>();
 				criteriosAgrupamiento.add(new Criterio("NOMBRE_RESTAURANTE"));
-				temp = new CriterioVerdad(new Criterio("NOMBRE_RESTAURANTE"),nombreRestaurante,null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("NOMBRE_RESTAURANTE"),""+nombreRestaurante+"",null,"=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
@@ -7384,22 +7336,38 @@ public class RotondAndesTM {
 			}
 			else 
 			{
+				criteriosOrganizacion=new ArrayList<>();
 				criteriosAgrupamiento.add(new Criterio("TIPO"));
-				temp = new CriterioVerdad(new Criterio("TIPO"),catProd,null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("TIPO"),""+catProd+"",null,"=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
 		if(precioMin!=null)
 		{
+			if (precioMin.length()==0)
+			{
+				criteriosOrganizacion.add(new CriterioOrden(null, "PRECIO", true));
+			}
+			else
+			{
 				criteriosAgrupamiento.add(new Criterio("PRECIO"));
 				temp = new CriterioVerdad(new Criterio("PRECIO"),precioMin+"",null,">=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+			}
 		}
 		if(precioMax!=null)
 		{
-			criteriosAgrupamiento.add(new Criterio("PRECIO"));
-			temp = new CriterioVerdad(new Criterio("PRECIO"),precioMax+"",null,"<=",true,null,null,null,null);
-			where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+			if (precioMax.length()==0)
+			{
+				criteriosOrganizacion.add(new CriterioOrden(null, "PRECIO", true));
+			}
+			else
+			{
+				criteriosOrganizacion=new ArrayList<>();
+				criteriosAgrupamiento.add(new Criterio("PRECIO"));
+				temp = new CriterioVerdad(new Criterio("PRECIO"),precioMax+"",null,"<=",true,null,null,null,null);
+				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+			}
 		}
 		//Método local. Falta parsearlo a como lo tienen ramos y mauricio
 		List<Object> list=new ArrayList<>();
@@ -7410,21 +7378,36 @@ public class RotondAndesTM {
 			List<Object>other=dtm.consultarProductos("fechaInicio;;;"+inicial+"..."+"fechaFin;;;"+terminal+
 					"...nombreRestaurante;;;"+nombreRestaurante+"...catProd;;;"+catProd+"...precioMin;;;"+precioMin+"...precioMax;;;"+precioMax);
 			//Agregar los archivos a la lista local
+			list.addAll(other);
 		}
 		catch(Exception e)
 		{
 			
 		}
-		return null;
+		list.add(new UsuarioMinimum("A",1l,"A",Rol.CLIENTE));
+		list.add(TiposDePlato.ACOMPANAMIENTO);
+		return list;
+	}
+	
+	public String dateFormat(String fecha) throws Exception
+	{
+		SimpleDateFormat o = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		o.setTimeZone(TimeZone.getTimeZone("America/Bogota"));
+		
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		x.setTimeZone(TimeZone.getTimeZone("America/Bogota"));
+		return "TO_DATE('"+ x.format(o.parse(fecha)) + "', 'yyyy-MM-dd hh24:mi:ss')";
+
 	}
 	
 	//RFC14
 	//Llama al método RFC5
 	public List<Object> consultarRentabilidadZona(String fechaInicial, String fechaFinal, String nombreRestaurante) throws Exception
 	{
-		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat x = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		List<Object> rta=new ArrayList<>();
 		//Método local. Falta parsealo a como lo tienen ramos y mauricio
+		System.out.println(fechaInicial +" "+fechaFinal);
 		rta.add(zonaDarProductosTotalesPorZonaYCategoria(x.parse(fechaInicial), x.parse(fechaFinal), nombreRestaurante));
 		//Método global que mandaría el json de mauricio y ramos
 		try

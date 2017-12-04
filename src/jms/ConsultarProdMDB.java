@@ -40,7 +40,6 @@ import com.rabbitmq.jms.admin.RMQConnectionFactory;
 import com.rabbitmq.jms.admin.RMQDestination;
 
 import dtm.RotondAndesDistributed;
-import dtm.VideoAndesDistributed;
 import rfc.ContenedoraInformacion;
 import rfc.ListContenedoraInformacion;
 import rfc.ListaObjetos;
@@ -137,6 +136,8 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 		System.out.println(envelope);
 		txtMsg.setText(envelope);
 		topicPublisher.publish(txtMsg);
+		
+		
 	}
 	@Override
 	public void onMessage(Message message) 
@@ -155,7 +156,7 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{
-					String s=mapper.readValue(ex.getPayload(),String.class);
+					String s=ex.getPayload();
 					RotondAndesDistributed dtm = RotondAndesDistributed.getInstance();
 					String payload = mapper.writeValueAsString(dtm.consultarProductosLocal(s));
 					Topic t = new RMQDestination("", "consulta.producto", ex.getRoutingKey(), "", false);

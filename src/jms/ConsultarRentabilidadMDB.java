@@ -38,18 +38,12 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.rabbitmq.jms.admin.RMQConnectionFactory;
 import com.rabbitmq.jms.admin.RMQDestination;
 
 import dtm.RotondAndesDistributed;
-import dtm.VideoAndesDistributed;
-import rfc.ContenedoraRestauranteInfoFinanciera;
-import rfc.ContenedoraZonaCategoriaProducto;
-import rfc.ListaContenedoraInfoZonaCategoriaProducto;
-import rfc.ListaObjetos;
+
 import vos.ExchangeMsg;
-import vos.ListaVideos;
-import vos.Video;
+
 
 
 public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListener 
@@ -158,8 +152,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{
-					String s=mapper.readValue(ex.getPayload(), String.class);
-					System.out.println(s);
+					String s=ex.getPayload();
 					
 					RotondAndesDistributed dtm = RotondAndesDistributed.getInstance();
 					Object list=dtm.consultarRentabilidadZonaLocal(s);
