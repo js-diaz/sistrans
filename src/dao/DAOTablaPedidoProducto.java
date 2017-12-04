@@ -152,7 +152,7 @@ public class DAOTablaPedidoProducto {
 	public void addPedidoProdPorNombre(String numeroCuenta,String nombreRestaurante, String nombreProducto) throws SQLException, Exception {
 
 		InfoProdRest plato=verificarProductosPorNombre(nombreProducto,nombreRestaurante);
-		if(plato==null) throw new Exception("El restaurante se ha retirado del negocio");
+		if(plato==null) throw new Exception("El restaurante no tiene el producto exigido");
 		String sql = "INSERT INTO PEDIDO_PROD VALUES (";
 		sql += "'" + numeroCuenta + "', ";
 		sql +=  +plato.getProducto().getId()+ ", ";
@@ -170,7 +170,7 @@ public class DAOTablaPedidoProducto {
 		
 		//Aquí iría la cantidad si conociera alguna
 		String sql="SELECT * FROM INFO_PROD_REST, PRODUCTO WHERE NOMBRE='"+nombreProducto+"' AND ID=ID_PRODUCTO AND NOMBRE_RESTAURANTE='"+nombreRestaurante+"'"
-				+ "AND CANTIDAD>1 AND DISPONIBILIDAD='1'";
+				+ "AND DISPONIBILIDAD>1";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs=prepStmt.executeQuery();

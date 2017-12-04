@@ -89,8 +89,10 @@ public class DAOTablaCuenta {
 			List<PedidoProd> productos= darPedidosProductos(numeroCuenta);
 			UsuarioMinimum u = buscarUsuarioPorId(rs.getLong("IDUSUARIO"));
 			MesaMinimum m=buscarMesaDeCuenta(rs.getLong("MESA"));
+			String d=rs.getString("DIRECCION");
+			System.out.println("DIRECCION "+d);
 			boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
-			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u,m, pagado));
+			cuentas.add(new Cuenta(productos,menus,valor,numeroCuenta,fecha,u,m, pagado,d));
 		}
 		return cuentas;
 	}
@@ -142,7 +144,8 @@ public class DAOTablaCuenta {
 			if(!rs.wasNull())
 			 m=buscarMesaDeCuenta(rs.getLong("MESA"));
 			boolean pagado=rs.getString("PAGADA").equals("1")?true:false;
-			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u,m, pagado));
+			String d=rs.getString("DIRECCION");
+			c=(new Cuenta(productos,menus,valor,numCuenta,fecha,u,m, pagado,d));
 		}
 
 		return c;
@@ -753,8 +756,9 @@ public class DAOTablaCuenta {
 		sql += dateFormat(new Date())+",";
 		sql+= u.getId()+",";
 		sql+=id+"," ;
-		sql+="'0')";
+		sql+="'0','"+mesa+"')";
 		prepStmt = conn.prepareStatement(sql);
+		System.out.println(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		return numeroCuenta;

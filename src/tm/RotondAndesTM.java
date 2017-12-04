@@ -7239,28 +7239,40 @@ public class RotondAndesTM {
 	//Llama al método de pedir por nombre usando mesa
 	public void registrarPedidoProdMesa(List<String> mensaje,String mesa, String correo) throws Exception{
 		//Llama al método local
-		pedidoProdMesaNombre(mensaje,mesa,correo);
+		List<String> list=pedidoProdMesaNombre(mensaje,mesa,correo);
 		//Llama al método global
-		String msj=correo+":";
-		for(String s:mensaje)
+		String msj=mesa+":"+correo+":";
+		for(String s:list)
 		{
 			msj+=s+";;;";
 		}
-		dtm.pedidoProdMesaGlobal(msj);
+		try
+		{
+			dtm.pedidoProdMesaGlobal(msj);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 	}
 	
 	public void registrarPedidoMenuMesa(List<String> mensaje, String mesa,String correo) throws Exception{
 		//Llama al método local
-		pedidoMenuMesaNombre(mensaje,mesa,correo);
-		//Llama al método global
-		//Llama al método global
-		String msj=correo+":"+mesa+":";
-		for(String s:mensaje)
+		List<String> list=pedidoMenuMesaNombre(mensaje,mesa,correo);
+		String msj=mesa+":"+correo+":";
+		for(String s:list)
 		{
 			msj+=s+";;;";
 		}
-		dtm.pedidoMenuMesaGlobal(msj);
+		try
+		{
+			dtm.pedidoMenuMesaGlobal(msj);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	//RF19
 	//Llama al método de retirar restaurante de la rotonda
@@ -7501,10 +7513,10 @@ public class RotondAndesTM {
 		
 	}
 	
-	public void pedidoProdMesaNombre(List<String> mensaje,String mesa,String correo) throws Exception
+	public List<String> pedidoProdMesaNombre(List<String> mensaje,String mesa,String correo) throws Exception
 	{
 		DAOTablaCuenta c=new DAOTablaCuenta();
-		
+		List<String>list = new ArrayList<>();
 		DAOTablaPedidoProducto dao = new DAOTablaPedidoProducto();
 		try
 		{
@@ -7512,13 +7524,23 @@ public class RotondAndesTM {
 			conn.setAutoCommit(false);
 			c.setConn(conn);
 			String num=c.addCuentaPorCorreo(mesa, correo);
+			System.out.println("LA CUENTA ES "+num);
 			c.cerrarRecursos();
 			dao.setConn(conn);
 			String[] datos=null;
+			
 			for(String s:mensaje)
 			{
 				datos=s.split("-");
-				dao.addPedidoProdPorNombre(num, datos[0], datos[1]);
+				try
+				{
+					dao.addPedidoProdPorNombre(num, datos[0], datos[1]);
+				}
+				catch(Exception e)
+				{
+					list.add(s);
+				}
+				
 			}
 			conn.commit();
 		}
@@ -7546,25 +7568,35 @@ public class RotondAndesTM {
 				throw exception;
 			}
 		}
+		return list;
 	}
 	
-	public void pedidoMenuMesaNombre(List<String> mensaje, String mesa, String correo) throws Exception
+	public List<String> pedidoMenuMesaNombre(List<String> mensaje, String mesa, String correo) throws Exception
 	{
 		DAOTablaCuenta c= new DAOTablaCuenta();
 		DAOTablaPedidoMenu dao = new DAOTablaPedidoMenu();
+		List<String> list = new ArrayList<>();
 		try
 		{
 			this.conn = darConexion();
 			conn.setAutoCommit(false);
 			c.setConn(conn);
 			String num=c.addCuentaPorCorreo(mesa, correo);
+			System.out.println("NUMERO DE CUENTA "+num);
 			c.cerrarRecursos();
 			dao.setConn(conn);
 			String[] datos=null;
 			for(String s:mensaje)
 			{
-				datos=s.split("-");
-				dao.addPedidoMenuPorNombre( datos[0], datos[1],num);
+				try
+				{
+					datos=s.split("-");
+					dao.addPedidoMenuPorNombre( datos[0], datos[1],num);
+				}
+				catch(Exception e)
+				{
+					list.add(s);
+				}
 			}
 			conn.commit();
 		}
@@ -7592,6 +7624,7 @@ public class RotondAndesTM {
 				throw exception;
 			}
 		}
+		return list;
 	}
 
 	public String cuentaCrearCuentaUsuario(String mesa,String correo) throws Exception {

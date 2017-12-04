@@ -644,18 +644,24 @@ public class DAOTablaCriterio {
 			}
 			else if (where.getComparacion()!=null)
 			{
-				if(tipo.equals(tiposDatos.VARCHAR2+""))
+				System.out.println("EL TIPO DE DATO ES "+tipo+" CONTRA "+tiposDatos.VARCHAR2+" PARA "+where.getValorAnterior().getNombre());
+				if(tipo.trim().equals(tiposDatos.VARCHAR2+""))
 					{
+						System.out.println("A");
 						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "'"+where.getComparacion()+"'"));
+						System.out.println(where.getNombre());
 					}
-				else if (tipo.equals(tiposDatos.DATE+"")) 
+				else if (tipo.trim().equals(tiposDatos.DATE+"")) 
 					{
+						System.out.println("B");
 						where.setNombre(where.getNombre().replaceAll(where.getComparacion(), "TO_DATE\\('"+where.getComparacion()+"', 'yyyy-MM-dd hh24:mi:ss'\\)"));
 					}
 				else
 				{
+					System.out.println("C");
 					if(where.getOperacion()==null) throw new Exception("No se puede usar este operador para objetos diferentes a cadenas de caracteres"); 
 				}
+				System.out.println("D");
 			}
 		}
 		else
@@ -668,6 +674,7 @@ public class DAOTablaCriterio {
 				evaluarWhere(where.getC2(),tipos);
 				where.setNombre(where.getNombre().replaceAll(ant1, where.getC1().getNombre()));
 				where.setNombre(where.getNombre().replaceAll(ant2, where.getC2().getNombre()));
+				System.out.println("TOTAL "+where.getNombre());
 			}
 			
 			

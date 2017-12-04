@@ -28,11 +28,16 @@ public class Cuenta extends CuentaMinimum {
 	@JsonProperty (value="cliente")
 	private UsuarioMinimum cliente;
 	/**
-	 * Mesa a la que pertenece la cuenta.<br>
+	 * Mesa a la que pertenece la cuenta dentro de la rotonda si las transacciones son locales.<br>
 	 */
 	@JsonProperty(value="mesa")
 	private MesaMinimum mesa;
-	
+	/**
+	 * Dirección de la cuenta si la transacción es distribuida
+	 * 
+	 */
+	@JsonProperty(value="direccion")
+	private String direccion;
 	
 	/**
 	 * Constructor de la cuenta.<br>
@@ -44,12 +49,13 @@ public class Cuenta extends CuentaMinimum {
 	 * @param cliente Cliente al que se le factura.
 	 */
 	public Cuenta(@JsonProperty(value="pedidoProd")List<PedidoProd> pedidoProd, @JsonProperty(value="pedidoMenu")List<PedidoMenu> pedidoMenu, @JsonProperty(value="valor")double valor, @JsonProperty(value="numeroCuenta")String numeroCuenta,
-			@JsonProperty(value="fecha")Date fecha, @JsonProperty(value="cliente")UsuarioMinimum cliente, @JsonProperty(value="mesa") MesaMinimum mesa, @JsonProperty(value="pagada") Boolean pagada) {
+			@JsonProperty(value="fecha")Date fecha, @JsonProperty(value="cliente")UsuarioMinimum cliente, @JsonProperty(value="mesa") MesaMinimum mesa, @JsonProperty(value="pagada") Boolean pagada,@JsonProperty(value="direccion") String direccion) {
 		super(valor,numeroCuenta,fecha,pagada);
 		this.pedidoProd = pedidoProd;
 		this.pedidoMenu = pedidoMenu;
 		this.mesa=mesa;
 		this.cliente = cliente;
+		this.direccion=direccion;
 	}
 	/**
 	 * Obtiene el listado de pedidos de productos.<br>
@@ -111,6 +117,22 @@ public class Cuenta extends CuentaMinimum {
 	public void setMesa(MesaMinimum mesa)
 	{
 		this.mesa=mesa;
+	}
+	/**
+	 * Retorna el valor de la dirección de la cuenta.<br>
+	 * @return direccion
+	 */
+	public String getDireccion()
+	{
+		return direccion;
+	}
+	/**
+	 * Modifica la dirección al valor dado por parámetro-<br>
+	 * @param direccion
+	 */
+	public void setDireccion(String direccion)
+	{
+		this.direccion=direccion;
 	}
 	
 }
