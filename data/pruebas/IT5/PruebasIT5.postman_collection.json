@@ -1,15 +1,13 @@
 {
-	"variables": [],
 	"info": {
 		"name": "PruebasIT5",
-		"_postman_id": "f559aa9f-8421-b991-3955-c101cf7fc0bd",
+		"_postman_id": "56f9f590-84b6-9f34-31dd-c10f12eda589",
 		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "RF18",
-			"description": "",
 			"item": [
 				{
 					"name": "Agrega productos por nombre con correo existente",
@@ -46,10 +44,22 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t\"El Corral-BBC Porter\",\n\t\"El Corral-Ensalada César\"\n]"
+							"raw": "[\n\t\"El Corral,BBC Porter\",\n\t\"El Corral,Ensalada César\"\n]"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"RF18"
+							]
+						}
 					},
 					"response": []
 				},
@@ -88,10 +98,22 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t\"El Corral-BBC Porter\",\n\t\"El Corral-Ensalada César\"\n]"
+							"raw": "[\n\t\"El Corral,BBC Porter\",\n\t\"El Corral,Ensalada César\"\n]"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"RF18"
+							]
+						}
 					},
 					"response": []
 				},
@@ -130,10 +152,22 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t\"Domino´s-Para compartir\"\n]"
+							"raw": "[\n\t\"Domino´s,Para compartir\"\n]"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"RF18"
+							]
+						}
 					},
 					"response": []
 				},
@@ -172,10 +206,22 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t\"El Corral-BBC Porter\",\n\t\"El Corral-Ensalada\"\n]"
+							"raw": "[\n\t\"El Corral,BBC Porter\",\n\t\"El Corral,Ensalada\"\n]"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/RF18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"RF18"
+							]
+						}
 					},
 					"response": []
 				}
@@ -183,7 +229,6 @@
 		},
 		{
 			"name": "RF19",
-			"description": "",
 			"item": [
 				{
 					"name": "Desactiva el corral de la lista de restaurantes",
@@ -201,9 +246,25 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/El Corral/RF19",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/El Corral/RF19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"El Corral",
+								"RF19"
+							]
+						}
 					},
 					"response": []
 				},
@@ -236,8 +297,21 @@
 							"mode": "raw",
 							"raw": "{\n\t\"precio\" : 20.5,\n\t\"costo\" : 18.25,\n\t\"disponibilidad\" : 300,\n\t\"fechaInicio\" : \"2017-01-01\",\n\t\"fechaFin\": \"2017-10-10\",\n\t\"cantidadMaxima\" : 400,\n\t\"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"tiempo\" : 46.7},\n\t\"restaurante\" : { \"nombre\" : \"El Corral\", \"pagWeb\" : \"https://uiuc.edu\" },\n\t\"sustitutos\" : []\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/El Corral/productos",
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/El Corral/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"restaurantes",
+								"El Corral",
+								"productos"
+							]
+						}
 					},
 					"response": []
 				},
@@ -270,8 +344,21 @@
 							"mode": "raw",
 							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n\t\"plato\" : {\n\t\t\"costo\": 6811,\n    \"precio\": 14455,\n    \"disponibilidad\": 2559,\n    \"fechaInicio\": \"2017-09-03\",\n    \"fechaFin\": \"2018-06-01\",\n    \"producto\": {\n        \"personalizable\": false,\n        \"nombre\": \"Pizza de Pepperoni\",\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"Descripción\",\n        \"traduccion\": \"Traduction\",\n        \"tiempo\": 10,\n        \"id\": 1000001,\n        \"ingredientes\": [],\n        \"categorias\": []\n    },\n    \"restaurante\": {\n        \"nombre\": \"El Corral\",\n        \"pagWeb\": \"www.pagina.com\",\n        \"activo\": false\n    },\n    \"cantidadMaxima\": 2945,\n    \"sustitutos\": []\n\t}\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"cuentas",
+								"2534685989",
+								"productos"
+							]
+						}
 					},
 					"response": []
 				},
@@ -304,8 +391,21 @@
 							"mode": "raw",
 							"raw": "{\n\t\"cantidad\" : 1,\n\t\"entregado\" : 0,\n\t\"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n\t\"menu\" : {\n\t\t\"nombre\": \"Estudiantil\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"El Corral\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        }\n\t}\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"cuentas",
+								"2534685989",
+								"menus"
+							]
+						}
 					},
 					"response": []
 				},
@@ -338,8 +438,21 @@
 							"mode": "raw",
 							"raw": "{\n\t\"nombre\": \"Estudiantil2\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"El Corral\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        },\n        \"platos\": [],\n        \"categorias\": []\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/El Corral/menus",
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/restaurantes/El Corral/menus",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"restaurantes",
+								"El Corral",
+								"menus"
+							]
+						}
 					},
 					"response": []
 				},
@@ -359,9 +472,25 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/El Corral/NORF19",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/El Corral/NORF19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"El Corral",
+								"NORF19"
+							]
+						}
 					},
 					"response": []
 				}
@@ -369,7 +498,6 @@
 		},
 		{
 			"name": "RFC14",
-			"description": "",
 			"item": [
 				{
 					"name": "Prueba RFC14 para todos los restaurantes registrados",
@@ -400,9 +528,24 @@
 								"value": "0"
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/RFC14",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/RFC14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"RFC14"
+							]
+						}
 					},
 					"response": []
 				}
@@ -410,7 +553,6 @@
 		},
 		{
 			"name": "RFC13",
-			"description": "",
 			"item": [
 				{
 					"name": "Req de consulta 13 con todos los header params",
@@ -457,9 +599,24 @@
 								"value": "0"
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/RFC13",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/RFC13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"RFC13"
+							]
+						}
 					},
 					"response": []
 				},
@@ -508,9 +665,24 @@
 								"value": "0"
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/RFC13",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/RFC13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"RFC13"
+							]
+						}
 					},
 					"response": []
 				},
@@ -562,9 +734,24 @@
 								"value": "0"
 							}
 						],
-						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/RFC13",
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/VideoAndes/rest/distributed/RFC13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"VideoAndes",
+								"rest",
+								"distributed",
+								"RFC13"
+							]
+						}
 					},
 					"response": []
 				}

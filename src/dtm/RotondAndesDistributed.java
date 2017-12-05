@@ -321,25 +321,23 @@ public class RotondAndesDistributed
 		pedidoProdMQ.pedidoProdMesa(msj);
 	}
 	
-	public String pedidoProdMesaLocal(String mensaje) throws Exception
+	public List<String> pedidoProdMesaLocal(String mensaje) throws Exception
 	{
-		String[]datos=mensaje.split(":");
+		String[]datos=mensaje.split(";");
 		String mesa=datos[0];
 		String correo=datos[1];
-		ArrayList<String> list = new ArrayList<String>();
-		datos=datos[1].split(";;;");
-		for(String s:datos)
+		ArrayList<String> list = new ArrayList<>();
+		for(int i = 3; i < datos.length; i++)
 		{
-			list.add(s);
+			list.add(datos[i]);
 		}
 		try
 		{
-			tm.pedidoProdMesaNombre(list,mesa,correo);
-			return "OK";
+			return tm.pedidoProdMesaNombre(list,mesa,correo);
 		}
 		catch(Exception e)
 		{
-			return "NO OK";
+			return null;
 		}
 	}
 	
@@ -348,26 +346,23 @@ public class RotondAndesDistributed
 		pedidoMenuMQ.pedidoMenuMesa(mensaje);
 	}
 	
-	public String pedidoMenuMesaLocal(String mensaje) throws Exception
+	public List<String> pedidoMenuMesaLocal(String mensaje) throws Exception
 	{
-		//Falta definir las entradas
-		String[]datos=mensaje.split(":");
+		String[]datos=mensaje.split(";");
 		String mesa=datos[0];
 		String correo=datos[1];
 		ArrayList<String> list = new ArrayList<String>();
-		datos=datos[1].split(";;;");
-		for(String s:datos)
+		for(int i = 3; i < datos.length; i++)
 		{
-			list.add(s);
+			list.add(datos[i]);
 		}
 		try
 		{
-			tm.pedidoMenuMesaNombre(list,mesa,correo);
-			return "OK";
+			return tm.pedidoMenuMesaNombre(list,mesa,correo);
 		}
 		catch(Exception e)
 		{
-			return "NO OK";
+			return null;
 		}
 	}
 	

@@ -40,28 +40,26 @@ import com.rabbitmq.jms.admin.RMQDestination;
 
 import dtm.RotondAndesDistributed;
 import vos.ExchangeMsg;
-import vos.ListaVideos;
-import vos.Video;
 
 
 public class PedidoProdMDB implements MessageListener, ExceptionListener 
 {
 	public final static int TIME_OUT = 5;
 	private final static String APP = "A-05";
-	
+
 	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQPedidoProdGlobal";
 	private final static String LOCAL_TOPIC_NAME = "java:global/RMQPedidoProdLocal";
-	
+
 	private final static String REQUEST = "REQUEST";
 	private final static String REQUEST_ANSWER = "REQUEST_ANSWER";
-	
+
 	private TopicConnection topicConnection;
 	private TopicSession topicSession;
 	private Topic globalTopic;
 	private Topic localTopic;
-	
+
 	private List<String> answer;
-	
+
 	public PedidoProdMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
 		topicConnection = factory.createTopicConnection();
@@ -74,25 +72,25 @@ public class PedidoProdMDB implements MessageListener, ExceptionListener
 		topicSubscriber.setMessageListener(this);
 		topicConnection.setExceptionListener(this);
 	}
-	
+
 	public void start() throws JMSException
 	{
 		topicConnection.start();
 	}
-	
+
 	public void close() throws JMSException
 	{
 		topicSession.close();
 		topicConnection.close();
 	}
-	
+
 	public void pedidoProdMesa(String mensaje) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		answer=new ArrayList<>();
-		String id = APP+""+System.currentTimeMillis();
+		String id = APP + System.currentTimeMillis();
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		id = DatatypeConverter.printHexBinary(md.digest(id.getBytes())).substring(0, 8);
-//		id = new String(md.digest(id.getBytes()));
+		//		id = new String(md.digest(id.getBytes()));
 		sendMessage(mensaje, REQUEST, globalTopic, id);
 		boolean waiting = true;
 
@@ -108,13 +106,13 @@ public class PedidoProdMDB implements MessageListener, ExceptionListener
 			}
 		}
 		waiting = false;
-		
+
 		if(answer.isEmpty())
 			throw new NonReplyException("Non Response");
 		System.out.println(answer);
 	}
-	
-	
+
+
 	private void sendMessage(String payload, String status, Topic dest, String id) throws JMSException, JsonGenerationException, JsonMappingException, IOException
 	{
 		ObjectMapper mapper = new ObjectMapper();
@@ -129,7 +127,7 @@ public class PedidoProdMDB implements MessageListener, ExceptionListener
 		txtMsg.setText(envelope);
 		topicPublisher.publish(txtMsg);
 	}
-	
+
 	@Override
 	public void onMessage(Message message) 
 	{
@@ -149,9 +147,17 @@ public class PedidoProdMDB implements MessageListener, ExceptionListener
 				{
 					String s=ex.getPayload();
 					RotondAndesDistributed dtm = RotondAndesDistributed.getInstance();
-					String ans=dtm.pedidoProdMesaLocal(s);
-					Topic t = new RMQDestination("", "pedido.prod.mesa", ex.getRoutingKey(), "", false);
-					sendMessage(ans, REQUEST_ANSWER, t, id);
+					List<String> ans = dtm.pedidoProdMesaLocal(s);
+					if(ans == null) {
+						Topic t = new RMQDestination("", "pedido.prod.mesa", ex.getRoutingKey(), "", false);
+						sendMessage("NO OK", REQUEST_ANSWER, t, id);						
+					}
+					else if(ans.isEmpty()) {
+						Topic t = new RMQDestination("", "pedido.prod.mesa", ex.getRoutingKey(), "", false);
+						sendMessage("OK", REQUEST_ANSWER, t, id);
+					}
+					else {
+					}
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
@@ -160,7 +166,7 @@ public class PedidoProdMDB implements MessageListener, ExceptionListener
 					System.out.println("ANSWER "+answer);
 				}
 			}
-			
+
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -177,7 +183,7 @@ public class PedidoProdMDB implements MessageListener, ExceptionListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override

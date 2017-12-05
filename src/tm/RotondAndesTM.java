@@ -7241,10 +7241,10 @@ public class RotondAndesTM {
 		//Llama al método local
 		List<String> list=pedidoProdMesaNombre(mensaje,mesa,correo);
 		//Llama al método global
-		String msj=mesa+":"+correo+":";
+		String msj = correo + ";" + mesa + ";" + list.size();
 		for(String s:list)
 		{
-			msj+=s+";;;";
+			msj+= ";" + s;
 		}
 		try
 		{
@@ -7260,10 +7260,10 @@ public class RotondAndesTM {
 	public void registrarPedidoMenuMesa(List<String> mensaje, String mesa,String correo) throws Exception{
 		//Llama al método local
 		List<String> list=pedidoMenuMesaNombre(mensaje,mesa,correo);
-		String msj=mesa+":"+correo+":";
+		String msj = correo + ";" + mesa + ";" + list.size();
 		for(String s:list)
 		{
-			msj+=s+";;;";
+			msj += ";" + s;
 		}
 		try
 		{
@@ -7536,7 +7536,7 @@ public class RotondAndesTM {
 			
 			for(String s:mensaje)
 			{
-				datos=s.split("-");
+				datos=s.split(",");
 				try
 				{
 					dao.addPedidoProdPorNombre(num, datos[0], datos[1]);
@@ -7595,7 +7595,7 @@ public class RotondAndesTM {
 			{
 				try
 				{
-					datos=s.split("-");
+					datos=s.split(",");
 					dao.addPedidoMenuPorNombre( datos[0], datos[1],num);
 				}
 				catch(Exception e)
