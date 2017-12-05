@@ -94,7 +94,7 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 		id = DatatypeConverter.printHexBinary(md.digest(id.getBytes())).substring(0, 8);
 		//		id = new String(md.digest(id.getBytes()));
 
-		sendMessage(mensaje, REQUEST, globalTopic, id);
+		sendMessage(mensaje, REQUEST, globalTopic, id, "");
 		boolean waiting = true;
 
 		int count = 0;
@@ -116,7 +116,7 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 	}
 
 
-	private void sendMessage(String payload, String status, Topic dest, String id) throws JMSException, JsonGenerationException, JsonMappingException, IOException
+	private void sendMessage(String payload, String status, Topic dest, String id, String from) throws JMSException, JsonGenerationException, JsonMappingException, IOException
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(id);
@@ -144,7 +144,7 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 			String id = ex.getMsgId();
 			System.out.println(ex.getSender());
 			System.out.println(ex.getStatus());
-			if(!ex.getSender().equals(APP))
+			if(!ex.getSender().contains(APP))
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{
@@ -153,11 +153,20 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 					List<String> ans=dtm.pedidoMenuMesaLocal(s);
 					if(ans == null) {
 						Topic t = new RMQDestination("", "pedido.menu.mesa", ex.getRoutingKey(), "", false);
-						sendMessage("NO OK", REQUEST_ANSWER, t, id);
+						sendMessage("NO OK", REQUEST_ANSWER, t, id, ex.getSender());
 					}
 					else if(ans.isEmpty()) {
 						Topic t = new RMQDestination("", "pedido.menu.mesa", ex.getRoutingKey(), "", false);
-						sendMessage("OK", REQUEST_ANSWER, t, id);
+						sendMessage("OK", REQUEST_ANSWER, t, id, ex.getSender());
+					}
+					else {
+						String[] data = s.split(";");
+						String msj = data[0] + ";" + data[1] + ";" + ans.size();
+						for(String st : ans)
+						{
+							msj+= ";" + st;
+						}
+						sendMessage(msj, REQUEST, globalTopic, id, ex.getSender());
 					}
 
 				}
