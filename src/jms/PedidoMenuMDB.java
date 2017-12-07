@@ -120,7 +120,7 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(id);
-		ExchangeMsg msg = new ExchangeMsg("pedido.menu.general.A-05", APP, payload, status, id);
+		ExchangeMsg msg = new ExchangeMsg("pedido.menu.general.A-05", from+" "+APP, payload, status, id);
 		TopicPublisher topicPublisher = topicSession.createPublisher(dest);
 		topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 		TextMessage txtMsg = topicSession.createTextMessage();

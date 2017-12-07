@@ -7392,8 +7392,8 @@ public class RotondAndesTM {
 				String s=catProd.substring(1, catProd.length());
 				catProd=catProd.charAt(0)+s.toLowerCase();
 			}
-			List<Object>other=dtm.consultarProductos("fechaInicio;;;"+inicial+"..."+"fechaFin;;;"+terminal+
-					"...nombreRestaurante;;;"+nombreRestaurante+"...catProd;;;"+catProd+"...precioMin;;;"+precioMin+"...precioMax;;;"+precioMax);
+			List<Object>other=dtm.consultarProductos(inicial+";"+terminal+
+					";"+nombreRestaurante+";"+catProd+";"+precioMin+";"+precioMax);
 			//Agregar los archivos a la lista local
 			list.addAll(other);
 		}
@@ -7430,7 +7430,7 @@ public class RotondAndesTM {
 		try
 		{
 			//Falta parsearlo con el json de ramos y mauricio
-			List<Object>other=dtm.consultarRentabilidadZonaGlobal("fechaInicio;;;"+fechaInicial+"..."+"fechaFin;;;"+fechaFinal+"...nombreRestaurante;;;"+nombreRestaurante);
+			List<Object>other=dtm.consultarRentabilidadZonaGlobal(fechaInicial+";"+fechaFinal+";"+nombreRestaurante);
 			rta.addAll(other);
 		}
 		catch(Exception e)

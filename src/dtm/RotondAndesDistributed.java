@@ -43,10 +43,8 @@ public class RotondAndesDistributed
 {
 	private final static String QUEUE_NAME = "java:global/RMQAppQueue";
 	private final static String MQ_CONNECTION_NAME = "java:global/RMQClient";
-	
-	private static final String SPLIT_MESSAGE="...";
-	
-	private static final String SPLIT_PARAM=";;;";
+		
+	private static final String SPLIT_PARAM=";";
 	
 	private static RotondAndesDistributed instance;
 	
@@ -157,62 +155,37 @@ public class RotondAndesDistributed
 	
 	public List<ContenedoraInformacion> consultarProductosLocal(String s) throws Exception
 	{
-		String[]datos=s.split(SPLIT_MESSAGE);
-		String inicial="";
-		String terminal="";
-		String nombreRestaurante="";
-		String catProd="";
-		try
+		String[]datos=s.split(SPLIT_PARAM);
+		String inicial=null;
+		String terminal=null;
+		String nombreRestaurante=null;
+		String catProd=null;
+		String precioMin=null;
+		String precioMax=null;
+		if(!datos[0].equals("null"))
 		{
-			 inicial=datos[0].split(SPLIT_PARAM)[1];
+			inicial=datos[0];
 		}
-		catch(Exception e)
+		if(!datos[1].equals("null"))
 		{
-			
+			terminal=datos[1];
 		}
-		try
+		if(!datos[2].equals("null"))
 		{
-			 terminal=datos[1].split(SPLIT_PARAM)[1];
+			nombreRestaurante=datos[2];
 		}
-		catch(Exception e)
+		if(!datos[3].equals("null"))
 		{
-			
+			catProd=datos[3];
 		}
-		try
+		if(!datos[4].equals("null"))
 		{
-			 nombreRestaurante=datos[2].split(SPLIT_PARAM)[1];
+			precioMin=datos[4];
 		}
-		catch(Exception e)
+		if(!datos[5].equals("null"))
 		{
-			
+			precioMax=datos[5];
 		}
-		try
-		{
-			 catProd=datos[3].split(SPLIT_PARAM)[1].toUpperCase();
-		}
-		catch(Exception e)
-		{
-			
-		}
-		Double precioMin=null;
-		try
-		{
-			precioMin=Double.parseDouble(datos[4].split(SPLIT_PARAM)[1]);
-		}
-		catch(Exception e)
-		{
-			
-		}
-		Double precioMax=null;
-		try
-		{
-			precioMax=Double.parseDouble(datos[5].split(SPLIT_PARAM)[1]);
-		}
-		catch(Exception e)
-		{
-			
-		}
-		
 		ArrayList<CriterioOrden> criteriosOrganizacion=new ArrayList<>();
 		ArrayList<Criterio> criteriosAgrupamiento=new ArrayList<Criterio>();
 		CriterioVerdad where = new CriterioVerdad();
@@ -292,25 +265,22 @@ public class RotondAndesDistributed
 	
 	public List<ContenedoraZonaCategoriaProducto> consultarRentabilidadZonaLocal(String message) throws Exception
 	{
-		String[]datos=message.split(SPLIT_MESSAGE);
 		Date fechaInicio=null;
 		Date fechaFin=null;
 		String nombreRestaurante=null;
-		String[] valores=datos[0].split(SPLIT_PARAM);
+		String[] valores=message.split(SPLIT_PARAM);
 		SimpleDateFormat x = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-		if(valores[0].equals("fechaInicio"))
+		if(!valores[0].equals("null"))
 		{
-			fechaInicio=x.parse(valores[1]);
+			fechaInicio=x.parse(valores[0]);
 		}
-		valores=datos[1].split(SPLIT_PARAM);
-		if(valores[0].equals("fechaFin"))
+		if(!valores[1].equals("null"))
 		{
 			fechaFin=x.parse(valores[1]);
 		}
-		valores=datos[2].split(SPLIT_PARAM);
-		if(valores[0].equals("nombreRestaurante"))
+		if(!valores[2].equals("null"))
 		{
-			nombreRestaurante=(valores[1]);
+			nombreRestaurante=(valores[2]);
 		}
 		return tm.zonaDarProductosTotalesPorZonaYCategoria(fechaInicio, fechaFin, nombreRestaurante);
 	}
