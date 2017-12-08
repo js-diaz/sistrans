@@ -40,13 +40,10 @@ import com.rabbitmq.jms.admin.RMQDestination;
 
 import dtm.RotondAndesDistributed;
 import vos.ExchangeMsg;
-import vos.ListaVideos;
-import vos.Video;
-
 
 public class RetirarRestauranteMDB implements MessageListener, ExceptionListener 
 {
-	public final static int TIME_OUT = 600;
+	public final static int TIME_OUT = 5;
 	private final static String APP = "A-05";
 
 	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQRetirarRestauranteGlobal";
@@ -105,7 +102,6 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 			TimeUnit.SECONDS.sleep(1);
 			count++;
 		}
-		
 		if(count == TIME_OUT){
 			waiting = false;
 			throw new NonReplyException("Time Out - No Reply");
@@ -120,10 +116,10 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 	private void sendMessage(String payload, String app, String status, Topic dest, String id) throws JMSException, JsonGenerationException, JsonMappingException, IOException
 	{
 		System.out.println("ENTRA E");
-
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(id);
-		ExchangeMsg msg = new ExchangeMsg("restaurante.retiro.general.A-05", APP, payload + " " + app, status, id);
+		ExchangeMsg msg = new ExchangeMsg("restaurante.retiro.general.A-05", APP, payload + ";" + app, status, id);
+		System.out.println(msg.getPayload());
 		TopicPublisher topicPublisher = topicSession.createPublisher(dest);
 		topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 		TextMessage txtMsg = topicSession.createTextMessage();
@@ -149,9 +145,10 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 			System.out.println(ex.getStatus());
 			if(!ex.getSender().contains(APP))
 			{
-				if(ex.getStatus().equals(REQUEST) && ex.getPayload().split(" ")[1].equals(APP))
+				System.out.println(ex.getPayload());
+				if(ex.getStatus().equals(REQUEST) && ex.getPayload().split(";")[1].equals(APP))
 				{
-					String s = ex.getPayload().split(" ")[0];
+					String s = ex.getPayload().split(";")[0];
 					RotondAndesDistributed dtm= RotondAndesDistributed.getInstance();
 					String ans=dtm.retirarRestauranteLocal(s);
 					Topic t = new RMQDestination("", "restaurante", ex.getRoutingKey(), "", false);

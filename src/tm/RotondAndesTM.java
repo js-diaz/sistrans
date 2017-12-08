@@ -7536,7 +7536,7 @@ public class RotondAndesTM {
 			
 			for(String s:mensaje)
 			{
-				datos=s.split("-");
+				datos=s.split(",");
 				try
 				{
 					dao.addPedidoProdPorNombre(num, datos[0], datos[1]);
@@ -7595,7 +7595,7 @@ public class RotondAndesTM {
 			{
 				try
 				{
-					datos=s.split("-");
+					datos=s.split(",");
 					dao.addPedidoMenuPorNombre( datos[0], datos[1],num);
 				}
 				catch(Exception e)

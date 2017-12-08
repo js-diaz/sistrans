@@ -147,7 +147,6 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 		TextMessage txt = (TextMessage) message;
 		try 
 		{
-			System.out.println("ENTRA A");
 			String body = txt.getText();
 			System.out.println(body);
 			ObjectMapper mapper = new ObjectMapper();

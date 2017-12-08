@@ -302,7 +302,7 @@ public class RotondAndesDistributed
 		String mesa=datos[0];
 		String correo=datos[1];
 		ArrayList<String> list = new ArrayList<>();
-		for(int i = 3; i < datos.length; i++)
+		for(int i = 2; i < datos.length; i++)
 		{
 			list.add(datos[i]);
 		}
@@ -327,7 +327,7 @@ public class RotondAndesDistributed
 		String mesa=datos[0];
 		String correo=datos[1];
 		ArrayList<String> list = new ArrayList<String>();
-		for(int i = 3; i < datos.length; i++)
+		for(int i = 2; i < datos.length; i++)
 		{
 			list.add(datos[i]);
 		}

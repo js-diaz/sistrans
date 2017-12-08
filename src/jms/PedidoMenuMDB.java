@@ -166,7 +166,7 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 					}
 					else {
 						String[] data = s.split(";");
-						String msj = data[0] + ";" + data[1] + ";" + ans.size();
+						String msj = data[0] + ";" + data[1];
 						for(String st : ans)
 						{
 							msj+= ";" + st;
