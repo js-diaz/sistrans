@@ -119,7 +119,7 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(id);
-		ExchangeMsg msg = new ExchangeMsg("restaurante.retiro.general.A-05", APP, payload + " " + app, status, id);
+		ExchangeMsg msg = new ExchangeMsg("restaurante.retiro.general.A-05", APP, payload + ";" + app, status, id);
 		TopicPublisher topicPublisher = topicSession.createPublisher(dest);
 		topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 		TextMessage txtMsg = topicSession.createTextMessage();
@@ -145,9 +145,9 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 			System.out.println(ex.getStatus());
 			if(!ex.getSender().equals(APP))
 			{
-				if(ex.getStatus().equals(REQUEST) && ex.getPayload().split(" ")[1].equals(APP))
+				if(ex.getStatus().equals(REQUEST) && ex.getPayload().split(";")[1].equals(APP))
 				{
-					String s = ex.getPayload().split(" ")[0];
+					String s = ex.getPayload().split(";")[0];
 					RotondAndesDistributed dtm= RotondAndesDistributed.getInstance();
 					String ans=dtm.retirarRestauranteLocal(s);
 					Topic t = new RMQDestination("", "restaurante", ex.getRoutingKey(), "", false);
