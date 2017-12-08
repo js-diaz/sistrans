@@ -53,8 +53,8 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 	public final static int TIME_OUT = 5;
 	private final static String APP = "A-05";
 	
-	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQTopicAllVideos";
-	private final static String LOCAL_TOPIC_NAME = "java:global/RMQAllVideosLocal";
+	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQConsultarProductoGlobal";
+	private final static String LOCAL_TOPIC_NAME = "java:global/RMQConsultarProductoLocal";
 	
 	private final static String REQUEST = "REQUEST";
 	private final static String REQUEST_ANSWER = "REQUEST_ANSWER";
@@ -68,6 +68,7 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 	
 	public ConsultarProdMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
+		System.out.println("CONN");
 		topicConnection = factory.createTopicConnection();
 		topicSession = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 		globalTopic = (RMQDestination) ctx.lookup(GLOBAL_TOPIC_NAME);
@@ -77,6 +78,7 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 		topicSubscriber =  topicSession.createSubscriber(localTopic);
 		topicSubscriber.setMessageListener(this);
 		topicConnection.setExceptionListener(this);
+		System.out.println(globalTopic.getTopicName()+":"+localTopic.getTopicName()+";");
 	}
 	
 	public void start() throws JMSException
@@ -145,6 +147,7 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 		TextMessage txt = (TextMessage) message;
 		try 
 		{
+			System.out.println("ENTRA A");
 			String body = txt.getText();
 			System.out.println(body);
 			ObjectMapper mapper = new ObjectMapper();
@@ -152,7 +155,7 @@ public class ConsultarProdMDB implements MessageListener, ExceptionListener
 			String id = ex.getMsgId();
 			System.out.println(ex.getSender());
 			System.out.println(ex.getStatus());
-			if(!ex.getSender().equals(APP))
+			if(!ex.getSender().contains(APP))
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{

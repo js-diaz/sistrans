@@ -73,6 +73,8 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 		topicSubscriber =  topicSession.createSubscriber(localTopic);
 		topicSubscriber.setMessageListener(this);
 		topicConnection.setExceptionListener(this);
+		System.out.println(globalTopic.getTopicName()+":"+localTopic.getTopicName());
+
 	}
 
 	public void start() throws JMSException
@@ -88,6 +90,7 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 
 	public void pedidoMenuMesa(String mensaje) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
+		System.out.println(mensaje);
 		answer=new ArrayList<>();
 		String id = APP + System.currentTimeMillis();
 		MessageDigest md = MessageDigest.getInstance("MD5");
@@ -137,6 +140,8 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 		TextMessage txt = (TextMessage) message;
 		try 
 		{
+			System.out.println("ENTRA C");
+
 			String body = txt.getText();
 			System.out.println(body);
 			ObjectMapper mapper = new ObjectMapper();
@@ -166,12 +171,14 @@ public class PedidoMenuMDB implements MessageListener, ExceptionListener
 						{
 							msj+= ";" + st;
 						}
+						System.out.println(msj);
 						sendMessage(msj, REQUEST, globalTopic, id, ex.getSender());
 					}
 
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
+					System.out.println(ex.getPayload());
 					String ans=ex.getPayload();
 					answer.add(ans);
 					System.out.println("ANSWER "+answer);

@@ -70,6 +70,7 @@ public class RotondAndesDistributed
 
 	private RotondAndesDistributed() throws NamingException, JMSException
 	{
+		System.out.println("NUEVO DTM");
 		InitialContext ctx = new InitialContext();
 		factory = (RMQConnectionFactory) ctx.lookup(MQ_CONNECTION_NAME);
 		//Inicializicación mqs
@@ -253,6 +254,10 @@ public class RotondAndesDistributed
 			criteriosAgrupamiento.add(new Criterio("PRECIO"));
 			temp = new CriterioVerdad(new Criterio("PRECIO"),precioMax+"",null,"<=",true,null,null,null,null);
 			where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
+		}
+		if(precioMin.length()==0 || precioMax.length()==0)
+		{
+			criteriosOrganizacion.add(new CriterioOrden(null, "PRECIO", true));
 		}
 		return tm.criteriosOrganizarPorProductosComoSeQuiera(criteriosOrganizacion, criteriosAgrupamiento, null, where, null);
 	}

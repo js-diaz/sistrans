@@ -73,6 +73,8 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 		topicSubscriber =  topicSession.createSubscriber(localTopic);
 		topicSubscriber.setMessageListener(this);
 		topicConnection.setExceptionListener(this);
+		System.out.println(globalTopic.getTopicName()+":"+localTopic.getTopicName());
+
 	}
 	
 	public void start() throws JMSException
@@ -118,6 +120,8 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 	
 	private void sendMessage(String payload, String status, Topic dest, String id) throws JMSException, JsonGenerationException, JsonMappingException, IOException
 	{
+		System.out.println("ENTRA E");
+
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(id);
 		ExchangeMsg msg = new ExchangeMsg("restaurante.retiro.general.A-05", APP, payload, status, id);
@@ -144,7 +148,7 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 			String id = ex.getMsgId();
 			System.out.println(ex.getSender());
 			System.out.println(ex.getStatus());
-			if(!ex.getSender().equals(APP))
+			if(!ex.getSender().contains(APP))
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{

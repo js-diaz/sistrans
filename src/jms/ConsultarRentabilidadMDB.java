@@ -66,6 +66,7 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 	
 	public ConsultarRentabilidadMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
+		System.out.println("CONN");
 		topicConnection = factory.createTopicConnection();
 		topicSession = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 		globalTopic = (RMQDestination) ctx.lookup(GLOBAL_TOPIC_NAME);
@@ -75,6 +76,8 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 		topicSubscriber =  topicSession.createSubscriber(localTopic);
 		topicSubscriber.setMessageListener(this);
 		topicConnection.setExceptionListener(this);
+		System.out.println(globalTopic.getTopicName()+":"+localTopic.getTopicName());
+
 	}
 	
 	public void start() throws JMSException
@@ -125,12 +128,12 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(id);
 		ExchangeMsg msg = new ExchangeMsg("consulta.rentabilidad.global.A-05", APP, payload, status, id);
+		System.out.println(payload);
 		TopicPublisher topicPublisher = topicSession.createPublisher(dest);
 		topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 		TextMessage txtMsg = topicSession.createTextMessage();
 		txtMsg.setJMSType("TextMessage");
 		String envelope = mapper.writeValueAsString(msg);
-		System.out.println(envelope);
 		txtMsg.setText(envelope);
 		topicPublisher.publish(txtMsg);
 	}
@@ -146,14 +149,15 @@ public class ConsultarRentabilidadMDB implements MessageListener, ExceptionListe
 			ObjectMapper mapper = new ObjectMapper();
 			ExchangeMsg ex = mapper.readValue(body, ExchangeMsg.class);
 			String id = ex.getMsgId();
+			System.out.println("ENTRA B");
 			System.out.println(ex.getSender());
 			System.out.println(ex.getStatus());
-			if(!ex.getSender().equals(APP))
+			if(!ex.getSender().contains(APP))
 			{
 				if(ex.getStatus().equals(REQUEST))
 				{
 					String s=ex.getPayload();
-					
+					System.out.println(ex.getRoutingKey()+" "+ex.getSender());
 					RotondAndesDistributed dtm = RotondAndesDistributed.getInstance();
 					Object list=dtm.consultarRentabilidadZonaLocal(s);
 					String payload = mapper.writeValueAsString(list);
