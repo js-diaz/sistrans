@@ -46,22 +46,22 @@ import vos.Video;
 
 public class RetirarRestauranteMDB implements MessageListener, ExceptionListener 
 {
-	public final static int TIME_OUT = 5;
+	public final static int TIME_OUT = 600;
 	private final static String APP = "A-05";
-	
+
 	private final static String GLOBAL_TOPIC_NAME = "java:global/RMQRetirarRestauranteGlobal";
 	private final static String LOCAL_TOPIC_NAME = "java:global/RMQRetirarRestauranteLocal";
-	
+
 	private final static String REQUEST = "REQUEST";
 	private final static String REQUEST_ANSWER = "REQUEST_ANSWER";
-	
+
 	private TopicConnection topicConnection;
 	private TopicSession topicSession;
 	private Topic globalTopic;
 	private Topic localTopic;
-	
+
 	private List<String> answer;
-	
+
 	public RetirarRestauranteMDB(TopicConnectionFactory factory, InitialContext ctx) throws JMSException, NamingException 
 	{	
 		topicConnection = factory.createTopicConnection();
@@ -76,55 +76,54 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 		System.out.println(globalTopic.getTopicName()+":"+localTopic.getTopicName());
 
 	}
-	
+
 	public void start() throws JMSException
 	{
 		topicConnection.start();
 	}
-	
+
 	public void close() throws JMSException
 	{
 		topicSession.close();
 		topicConnection.close();
 	}
-	
+
 	public void retirarRestaurante(String nombreRestaurante) throws JsonGenerationException, JsonMappingException, JMSException, IOException, NonReplyException, InterruptedException, NoSuchAlgorithmException
 	{
 		answer=new ArrayList<>();
 		String id = APP+""+System.currentTimeMillis();
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		id = DatatypeConverter.printHexBinary(md.digest(id.getBytes())).substring(0, 8);
-//		id = new String(md.digest(id.getBytes()));
-		
-		sendMessage(nombreRestaurante, REQUEST, globalTopic, id);
+		//		id = new String(md.digest(id.getBytes()));
+
+		sendMessage(nombreRestaurante, "A-17", REQUEST, globalTopic, id);
+		sendMessage(nombreRestaurante, "B-14", REQUEST, globalTopic, id);
 		boolean waiting = true;
 
 		int count = 0;
-		while(TIME_OUT != count){
+		while(TIME_OUT != count && answer.size() < 2){
 			TimeUnit.SECONDS.sleep(1);
 			count++;
 		}
-		if(count == TIME_OUT){
-			if(this.answer.isEmpty()){
-				waiting = false;
-				throw new NonReplyException("Time Out - No Reply");
-			}
-		}
-		waiting = false;
 		
-		if(answer.isEmpty())
+		if(count == TIME_OUT){
+			waiting = false;
+			throw new NonReplyException("Time Out - No Reply");
+		}
+		else if(answer.size() < 2)
 			throw new NonReplyException("Non Response");
-		System.out.println(answer);
+		else
+			System.out.println(answer);
 	}
-	
-	
-	private void sendMessage(String payload, String status, Topic dest, String id) throws JMSException, JsonGenerationException, JsonMappingException, IOException
+
+
+	private void sendMessage(String payload, String app, String status, Topic dest, String id) throws JMSException, JsonGenerationException, JsonMappingException, IOException
 	{
 		System.out.println("ENTRA E");
 
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(id);
-		ExchangeMsg msg = new ExchangeMsg("restaurante.retiro.general.A-05", APP, payload, status, id);
+		ExchangeMsg msg = new ExchangeMsg("restaurante.retiro.general.A-05", APP, payload + " " + app, status, id);
 		TopicPublisher topicPublisher = topicSession.createPublisher(dest);
 		topicPublisher.setDeliveryMode(DeliveryMode.PERSISTENT);
 		TextMessage txtMsg = topicSession.createTextMessage();
@@ -134,7 +133,7 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 		txtMsg.setText(envelope);
 		topicPublisher.publish(txtMsg);
 	}
-	
+
 	@Override
 	public void onMessage(Message message) 
 	{
@@ -150,13 +149,13 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 			System.out.println(ex.getStatus());
 			if(!ex.getSender().contains(APP))
 			{
-				if(ex.getStatus().equals(REQUEST))
+				if(ex.getStatus().equals(REQUEST) && ex.getPayload().split(" ")[1].equals(APP))
 				{
-					String s=ex.getPayload();
+					String s = ex.getPayload().split(" ")[0];
 					RotondAndesDistributed dtm= RotondAndesDistributed.getInstance();
 					String ans=dtm.retirarRestauranteLocal(s);
 					Topic t = new RMQDestination("", "restaurante", ex.getRoutingKey(), "", false);
-					sendMessage(ans, REQUEST_ANSWER, t, id);
+					sendMessage(ans, ex.getSender(), REQUEST_ANSWER, t, id);
 				}
 				else if(ex.getStatus().equals(REQUEST_ANSWER))
 				{
@@ -165,7 +164,7 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 					System.out.println("ANSWER "+answer);
 				}
 			}
-			
+
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -182,7 +181,7 @@ public class RetirarRestauranteMDB implements MessageListener, ExceptionListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
