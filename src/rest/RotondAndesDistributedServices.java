@@ -199,6 +199,99 @@ public class RotondAndesDistributedServices {
 		}
 		return Response.status(200).entity(lista).build();
 	}
+	
+	/**
+	 * Metodo que expone servicio REST usando GET que da todos los videos de la base de datos.
+	 * <b>URL: </b> http://"ip o nombre de host":8080/CategoriaAndes/rest/videos
+	 * @return Json con todos los videos de la base de datos o json con 
+     * el error que se produjo
+	 */
+	@GET
+	@Path("RFC13Test")
+	@Produces({ MediaType.APPLICATION_JSON })
+	//Falta acomodarlo al json de ramos
+	public Response consultarProductosTest(String mensaje) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Object list;
+		try {
+			list = tm.dtmConsultarProductos(mensaje);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(list).build();
+	}
+
+	 /**
+     * Metodo que expone servicio REST usando GET que busca el video con el id que entra como parametro
+     * <b>URL: </b> http://"ip o nombre de host":8080/CategoriaAndes/rest/videos/<<id>>" para la busqueda"
+     * @param name - Nombre del video a buscar que entra en la URL como parametro 
+     * @return Json con el/los videos encontrados con el nombre que entra como parametro o json con 
+     * el error que se produjo
+     */
+	@DELETE
+	@Path("RF19Test")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces( { MediaType.APPLICATION_JSON } )
+	public Response retirarRestauranteTest( String mensaje )
+	{
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
+		try
+		{
+			String s=tm.dtmRetirarRestaurante(mensaje);
+			return Response.status( 200 ).entity(s).build( );			
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
+	}
+
+    /**
+     * Metodo que expone servicio REST usando POST que agrega el video que recibe en Json
+     * <b>URL: </b> http://"ip o nombre de host":8080/CategoriaAndes/rest/videos/video
+     * @param video - video a agregar
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el video que agrego o Json con el error que se produjo
+     */
+	@POST
+	@Path("RF18Test")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response pedidoPorMesaTest(String mensaje,@HeaderParam("esProducto") boolean esProducto) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		try {
+			if(esProducto)
+				tm.dtmRegistrarPedidoProd(mensaje);
+			else
+				tm.dtmRegistrarPedidoMenu(mensaje);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).build();
+		
+	}
+	//Falta el json de ramos para usar esta funcionalidad
+    /**
+     * Metodo que expone servicio REST usando DELETE que elimina el video que recibe en Json
+     * @param video - video a aliminar. 
+     * @param id_ Id del usuario que realiza la solicitud.
+     * @return Json con el video que elimino o Json con el error que se produjo
+     */
+	@GET
+	@Path("RFC14Test")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response consultarRentabilidadTest(String mensaje) {
+		RotondAndesTM tm = new RotondAndesTM(getPath());
+		Object lista;
+		try {
+			lista=tm.dtmConsultarRentabilidad(mensaje);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(lista).build();
+	}
 
 
 }
