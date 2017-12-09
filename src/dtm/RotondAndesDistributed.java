@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.jms.JMSException;
 import javax.jms.Queue;
@@ -157,40 +158,16 @@ public class RotondAndesDistributed
 	public List<ContenedoraInformacion> consultarProductosLocal(String s) throws Exception
 	{
 		String[]datos=s.split(SPLIT_PARAM);
-		String inicial=null;
-		String terminal=null;
-		String nombreRestaurante=null;
-		String catProd=null;
-		String precioMin=null;
-		String precioMax=null;
-		if(!datos[0].equals("null"))
-		{
-			inicial=datos[0];
-		}
-		if(!datos[1].equals("null"))
-		{
-			terminal=datos[1];
-		}
-		if(!datos[2].equals("null"))
-		{
-			nombreRestaurante=datos[2];
-		}
-		if(!datos[3].equals("null"))
-		{
-			catProd=datos[3];
-		}
-		if(!datos[4].equals("null"))
-		{
-			precioMin=datos[4];
-		}
-		if(!datos[5].equals("null"))
-		{
-			precioMax=datos[5];
-		}
+		String inicial=datos[0];
+		String terminal=datos[1];
+		String nombreRestaurante=datos[2];
+		String catProd=datos[3];
+		String precioMin=datos[4];
+		String precioMax=datos[5];
 		ArrayList<CriterioOrden> criteriosOrganizacion=new ArrayList<>();
 		ArrayList<Criterio> criteriosAgrupamiento=new ArrayList<Criterio>();
-		CriterioVerdad where = new CriterioVerdad();
 		CriterioVerdad temp=null;
+		CriterioVerdad where=new CriterioVerdad(new Criterio("PRECIO"),0+"",null,">",true,null,null,null,null);
 		if(!inicial.equals("null"))
 		{
 			if (inicial.length()==0)
@@ -200,7 +177,7 @@ public class RotondAndesDistributed
 			else 
 			{
 				criteriosAgrupamiento.add(new Criterio("FECHA_INICIO"));
-				temp = new CriterioVerdad(new Criterio("FECHA_INICIO"),inicial,null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("FECHA_INICIO"),dateFormat(inicial),null,"=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
@@ -213,7 +190,7 @@ public class RotondAndesDistributed
 			else 
 			{
 				criteriosAgrupamiento.add(new Criterio("FECHA_FIN"));
-				temp = new CriterioVerdad(new Criterio("FECHA_FIN"),terminal,null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("FECHA_FIN"),dateFormat(terminal),null,"=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
@@ -226,7 +203,7 @@ public class RotondAndesDistributed
 			else 
 			{
 				criteriosAgrupamiento.add(new Criterio("NOMBRE_RESTAURANTE"));
-				temp = new CriterioVerdad(new Criterio("NOMBRE_RESTAURANTE"),nombreRestaurante,null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("NOMBRE_RESTAURANTE"),"'"+nombreRestaurante+"'",null,"=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
@@ -239,7 +216,7 @@ public class RotondAndesDistributed
 			else 
 			{
 				criteriosAgrupamiento.add(new Criterio("TIPO"));
-				temp = new CriterioVerdad(new Criterio("TIPO"),catProd,null,"=",true,null,null,null,null);
+				temp = new CriterioVerdad(new Criterio("TIPO"),"'"+catProd.toUpperCase()+"'",null,"=",true,null,null,null,null);
 				where=new CriterioVerdad(null,null,null,null,true,null,where,temp,true);
 			}
 		}
@@ -259,6 +236,7 @@ public class RotondAndesDistributed
 		{
 			criteriosOrganizacion.add(new CriterioOrden(null, "PRECIO", true));
 		}
+		System.out.println("PRINT"+inicial+" "+terminal+" "+nombreRestaurante+" "+catProd+" "+precioMin+" "+precioMax);
 		return tm.criteriosOrganizarPorProductosComoSeQuiera(criteriosOrganizacion, criteriosAgrupamiento, null, where, null);
 	}
 	//Para RFC14 usando RFC5
@@ -363,6 +341,16 @@ public class RotondAndesDistributed
 	}
 	
 
+	public String dateFormat(String fecha) throws Exception
+	{
+		SimpleDateFormat o = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		o.setTimeZone(TimeZone.getTimeZone("America/Bogota"));
+		
+		SimpleDateFormat x = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		x.setTimeZone(TimeZone.getTimeZone("America/Bogota"));
+		return "TO_DATE('"+ x.format(o.parse(fecha)) + "', 'yyyy-MM-dd hh24:mi:ss')";
+
+	}
 	
 	
 }

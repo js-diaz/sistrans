@@ -92,7 +92,7 @@ public class DAOTablaZona {
 	 */
 	public Zona buscarZonasPorName(String name) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM ZONA WHERE NOMBRE LIKE '" + name + "'";
+		String sql = "SELECT * FROM ZONA WHERE NOMBRE = '" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -113,7 +113,7 @@ public class DAOTablaZona {
 	 */
 	public ZonaMinimum buscarZonasMinimumPorName(String name) throws SQLException, Exception {
 
-		String sql = "SELECT * FROM ZONA WHERE NOMBRE LIKE '" + name + "'";
+		String sql = "SELECT * FROM ZONA WHERE NOMBRE = '" + name + "'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -171,7 +171,7 @@ public class DAOTablaZona {
 		sql+="INGRESOESPECIAL='"+convertirBooleano(zona.isIngresoEspecial())+"',";
 		sql+="ABIERTAACTUALMENTE='"+convertirBooleano(zona.isAbiertaActualmente())+"',";
 		sql+="CAPACIDADOCUPADA="+zona.getCapacidadOcupada();
-		sql += " WHERE NOMBRE LIKE '" + zona.getNombre()+"'";
+		sql += " WHERE NOMBRE = '" + zona.getNombre()+"'";
 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -196,7 +196,7 @@ public class DAOTablaZona {
 		borrarMesas(zona.getNombre());
 		
 		String sql = "DELETE FROM ZONA";
-		sql += " WHERE NOMBRE LIKE '" + zona.getNombre()+"'";
+		sql += " WHERE NOMBRE = '" + zona.getNombre()+"'";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -228,7 +228,7 @@ public class DAOTablaZona {
 	public List<ContenedoraZonaCategoriaProducto> darProductosTotalesPorZonaYCategoria(Date fechaInicial, Date fechaFinal, String nombreRestaurante) throws SQLException, Exception
 	{
 		if(nombreRestaurante==null) nombreRestaurante="";
-		else nombreRestaurante="AND RESTAURANTE.NOMBRE LIKE '"+nombreRestaurante+"'";
+		else nombreRestaurante="AND RESTAURANTE.NOMBRE = '"+nombreRestaurante+"'";
 		List<ContenedoraZonaCategoriaProducto> list= new ArrayList<>();
 		ContenedoraZonaCategoriaProducto c=null;
 		CategoriaProducto cp=null;
@@ -242,15 +242,15 @@ public class DAOTablaZona {
 				+ "          FROM"
 				+ "				  (SELECT RESTAURANTE.NOMBRE_ZONA AS NOMBRE_ZONA, PRODUCTO.ID AS ID, SUM(PEDIDO_MENU.CANTIDAD) AS CANTIDADTOTAL1"
 				+ "					 FROM PRODUCTO, PEDIDO_MENU, PERTENECE_A_MENU, RESTAURANTE, CUENTA"
-				+ "					 WHERE PEDIDO_MENU.NOMBRE_MENU LIKE PERTENECE_A_MENU.NOMBRE_MENU "
-				+ "					 AND PEDIDO_MENU.NOMBRE_RESTAURANTE LIKE PERTENECE_A_MENU.NOMBRE_RESTAURANTE"
-				+ "					 AND RESTAURANTE.NOMBRE LIKE PEDIDO_MENU.NOMBRE_RESTAURANTE AND CUENTA.NUMEROCUENTA LIKE PEDIDO_MENU.NUMERO_CUENTA"
+				+ "					 WHERE PEDIDO_MENU.NOMBRE_MENU = PERTENECE_A_MENU.NOMBRE_MENU "
+				+ "					 AND PEDIDO_MENU.NOMBRE_RESTAURANTE = PERTENECE_A_MENU.NOMBRE_RESTAURANTE"
+				+ "					 AND RESTAURANTE.NOMBRE = PEDIDO_MENU.NOMBRE_RESTAURANTE AND CUENTA.NUMEROCUENTA = PEDIDO_MENU.NUMERO_CUENTA"
 				+ "					AND	CUENTA.FECHA >="+dateFormat(fechaInicial)+" AND CUENTA.FECHA<="+dateFormat(fechaFinal)
 				+ "					 AND PRODUCTO.ID = PERTENECE_A_MENU.ID_PLATO " + nombreRestaurante
 				+ "					 GROUP BY RESTAURANTE.NOMBRE_ZONA,PRODUCTO.ID) NATURAL FULL OUTER JOIN PRODUCTO  ) "
 				+ "NATURAL FULL OUTER JOIN  (SELECT RESTAURANTE.NOMBRE_ZONA AS NOMBRE_ZONA,PEDIDO_PROD.ID_PRODUCTO AS ID2,SUM(PEDIDO_PROD.CANTIDAD) AS CANTIDADTOTAL2 "
 				+ "	   FROM PEDIDO_PROD, RESTAURANTE, CUENTA "
-				+ "	 WHERE PEDIDO_PROD.NOMBRE_RESTAURANTE LIKE RESTAURANTE.NOMBRE "+ nombreRestaurante +"AND CUENTA.NUMEROCUENTA LIKE PEDIDO_PROD.NUMERO_CUENTA "
+				+ "	 WHERE PEDIDO_PROD.NOMBRE_RESTAURANTE = RESTAURANTE.NOMBRE "+ nombreRestaurante +"AND CUENTA.NUMEROCUENTA = PEDIDO_PROD.NUMERO_CUENTA "
 						+ "					AND	CUENTA.FECHA >="+dateFormat(fechaInicial)+" AND CUENTA.FECHA<="+dateFormat(fechaFinal)
 				+ "  GROUP BY RESTAURANTE.NOMBRE_ZONA,PEDIDO_PROD.ID_PRODUCTO) "
 				+ " WHERE NOMBRE_ZONA IS NOT NULL AND ID IS NOT NULL"

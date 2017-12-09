@@ -1,7 +1,35 @@
 
 package tm;
 
+
+/*
+A simple 2 phase XA demo. Both the branches talk to different RMS
+Need 2 java enabled 8.1.6 databases to run this demo.
+  -> start-1
+  -> start-2
+  -> Do some DML on 1
+  -> Do some DML on 2
+  -> end 1
+  -> end 2
+  -> prepare-1
+  -> prepare-2
+  -> commit-1
+  -> commit-2
+Please change the URL2 before running this.
+*/
+
+//You need to import the java.sql package to use JDBC
+import java.sql.*;
+import javax.sql.*;
+import oracle.jdbc.driver.*;
+import oracle.jdbc.pool.*;
+import oracle.jdbc.xa.OracleXid;
+import oracle.jdbc.xa.OracleXAException;
+import oracle.jdbc.xa.client.*;
+import javax.transaction.xa.*;
+
 import java.io.File;
+
 
 
 
@@ -7879,5 +7907,201 @@ public class RotondAndesTM {
 	}
 	
 	
+
+	public void twoPhaseCommit(String name) throws Exception {
+		
+		try
+	    {
+			File arch = new File(this.connectionDataPath);
+			Properties prop = new Properties();
+			FileInputStream in = new FileInputStream(arch);
+			prop.load(in);
+			in.close();
+			String user2 = prop.getProperty("usuario2");
+			String password2 = prop.getProperty("clave2");
+			String user3=prop.getProperty("usuario3");
+			String password3=prop.getProperty("clave3");
+			
+	       	        // Create a XADataSource instance
+	        OracleXADataSource oxds1 = new OracleXADataSource();
+	        oxds1.setURL(url);
+	        oxds1.setUser(user);
+	        oxds1.setPassword(password);
+	        
+	        System.out.println(oxds1.getURL()+" "+oxds1.getUser());
+
+
+	        OracleXADataSource oxds2 = new OracleXADataSource();
+
+	        oxds2.setURL(url);
+	        oxds2.setUser(user2);
+	        oxds2.setPassword(password2);
+	        
+	        System.out.println(oxds2.getURL()+" "+oxds2.getUser());
+	        //Hasta tener la tercera conexión
+	        /*
+	        OracleXADataSource oxds3 = new OracleXADataSource();
+
+	        oxds3.setURL(url);
+	        oxds3.setUser(user3);
+	        oxds3.setPassword(password3);
+	        
+	        System.out.println(oxds3.getURL()+" "+oxds3.getUser());
+	         */
+	    
+	        // Get a XA connection to the underlying data source
+	        XAConnection pc1  = oxds1.getXAConnection();
+
+	        // We can use the same data source 
+	        XAConnection pc2  = oxds2.getXAConnection();
+	        
+
+	        // Get the Physical Connections
+	        Connection conn1 = pc1.getConnection();
+	        Connection conn2 = pc2.getConnection();
+
+	        // Get the XA Resources
+	        XAResource oxar1 = pc1.getXAResource();
+	        XAResource oxar2 = pc2.getXAResource();
+	        
+	        // Create the Xids With the Same Global Ids
+	        Xid xid1 = createXid(1);
+	        Xid xid2 = createXid(2);
+	        // Start the Resources
+	        oxar1.start (xid1, XAResource.TMNOFLAGS);
+	        oxar2.start (xid2, XAResource.TMNOFLAGS);
+
+	        //RESOURCE 3
+	        //XAConnection pc3=oxds3.getXAConnection();
+	        //Connection conn3=pc3.getConnection();
+	        //XAResource oxar3=pc3.getXAResource();
+	        //Xid xid3=createXid(3);
+	        
+	        // Do  something with conn1 and conn2
+	        doSomeWork1 (conn1);
+	        doSomeWork2 (conn2);
+	        //doSomeWork3(conn3);
+
+	        // END both the branches -- THIS IS MUST
+	        oxar1.end(xid1, XAResource.TMSUCCESS);
+	        oxar2.end(xid2, XAResource.TMSUCCESS);
+	        //oxar3.end(xid3,XAResource.TMSUCCESS);
+	        // Prepare the RMs
+	        int prp1 =  oxar1.prepare (xid1);
+	        int prp2 =  oxar2.prepare (xid2);
+	        //int prp3=oxar3.prepare(xid3);
+	        System.out.println("Return value of prepare 1 is " + prp1);
+	        System.out.println("Return value of prepare 2 is " + prp2);
+	        //System.out.println("Return value of prepare 3 is " + prp3);
+
+	        boolean do_commit = true;
+
+	        if (!((prp1 == XAResource.XA_OK) || (prp1 == XAResource.XA_RDONLY)))
+	           do_commit = false;
+
+	        if (!((prp2 == XAResource.XA_OK) || (prp2 == XAResource.XA_RDONLY)))
+	           do_commit = false;
+	        /*
+	        if (!((prp3 == XAResource.XA_OK) || (prp3 == XAResource.XA_RDONLY)))
+		           do_commit = false;*/
+
+	       System.out.println("do_commit is " + do_commit);
+	        System.out.println("Is oxar1 same as oxar2 ? " + oxar1.isSameRM(oxar2));
+	        //System.out.println("Is oxar1 same as oxar3 ? " + oxar1.isSameRM(oxar3));
+	        //System.out.println("Is oxar2 same as oxar3 ? " + oxar2.isSameRM(oxar3));
+
+	        if (prp1 == XAResource.XA_OK)
+	          if (do_commit)
+	             oxar1.commit (xid1, false);
+	          else
+	             oxar1.rollback (xid1);
+
+	        if (prp2 == XAResource.XA_OK)
+	          if (do_commit)
+	             oxar2.commit (xid2, false);
+	          else
+	             oxar2.rollback (xid2);
+	        /*
+	        if (prp3 == XAResource.XA_OK)
+		          if (do_commit)
+		             oxar2.commit (xid3, false);
+		          else
+		             oxar2.rollback (xid3);
+		             */
+	         // Close connections
+	        conn1.close();
+	        conn1 = null;
+	        conn2.close();
+	        conn2 = null;
+	        
+	        //conn3.close();
+	        //conn3 = null;
+	        
+	        pc1.close();
+	        pc1 = null;
+	        pc2.close();
+	        pc2 = null;
+	        //pc3.close();
+	        //pc3 = null;
+
+	  
+	    } catch (SQLException sqe)
+	    {
+	      sqe.printStackTrace();
+	    } catch (XAException xae)
+	    {
+	      if (xae instanceof OracleXAException) {
+	        System.out.println("XA Error is " +
+	                      ((OracleXAException)xae).getXAError());
+	        System.out.println("SQL Error is " +
+	                      ((OracleXAException)xae).getOracleError());
+	      }
+	    }
+	}
+	
+	   Xid createXid(int bids)
+			    throws XAException
+			  {
+			    byte[] gid = new byte[1]; gid[0]= (byte) 9;
+			    byte[] bid = new byte[1]; bid[0]= (byte) bids;
+			    byte[] gtrid = new byte[64];
+			    byte[] bqual = new byte[64];
+			    System.arraycopy (gid, 0, gtrid, 0, 1);
+			    System.arraycopy (bid, 0, bqual, 0, 1);
+			    Xid xid = new OracleXid(0x1234, gtrid, bqual);
+			    return xid;
+			  }
+
+			  private  void doSomeWork1 (Connection conn)
+			   throws SQLException
+			  {
+			    // Create a Statement
+			    Statement stmt = conn.createStatement ();
+
+			    ResultSet rs=stmt.executeQuery ("select * from restaurante where nombre='El Corral'");
+
+			    if(rs.next())
+			    System.out.println(rs.getString("NOMBRE"));
+			    else
+			    	System.out.println("El restaurante no existe");
+			    stmt.close();
+			    stmt = null;
+			  }
+
+			  private  void doSomeWork2 (Connection conn)
+			    throws SQLException
+			  {
+			    // Create a Statement
+				    Statement stmt = conn.createStatement ();
+
+				    ResultSet rs=stmt.executeQuery ("select * from restaurantes where nombre='El Corral'");
+
+				    if(rs.next())
+				    System.out.println(rs.getString("NOMBRE"));
+				    else
+				    	System.out.println("El restaurante no existe");
+				    stmt.close();
+				    stmt = null;
+			  }
 
 }

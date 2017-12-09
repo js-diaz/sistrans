@@ -208,9 +208,11 @@ public class RotondAndesDistributedServices {
 	 */
 	@GET
 	@Path("RFC13Test")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	//Falta acomodarlo al json de ramos
-	public Response consultarProductosTest(String mensaje) {
+	public Response consultarProductosTest(@HeaderParam("msj")String mensaje) {
+		System.out.println(mensaje);
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Object list;
 		try {
@@ -233,8 +235,9 @@ public class RotondAndesDistributedServices {
 	@Path("RF19Test")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces( { MediaType.APPLICATION_JSON } )
-	public Response retirarRestauranteTest( String mensaje )
+	public Response retirarRestauranteTest( @HeaderParam("msj")String mensaje )
 	{
+		System.out.println(mensaje);
 		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
 		try
 		{
@@ -254,12 +257,13 @@ public class RotondAndesDistributedServices {
      * @param id_ Id del usuario que realiza la solicitud.
      * @return Json con el video que agrego o Json con el error que se produjo
      */
-	@POST
+	@GET
 	@Path("RF18Test")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response pedidoPorMesaTest(String mensaje,@HeaderParam("esProducto") boolean esProducto) {
+	public Response pedidoPorMesaTest(@HeaderParam("msj")String mensaje,@HeaderParam("esProducto") boolean esProducto) {
 		RotondAndesTM tm = new RotondAndesTM(getPath());
+		System.out.println(mensaje);
 		try {
 			if(esProducto)
 				tm.dtmRegistrarPedidoProd(mensaje);
@@ -280,8 +284,10 @@ public class RotondAndesDistributedServices {
      */
 	@GET
 	@Path("RFC14Test")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response consultarRentabilidadTest(String mensaje) {
+	public Response consultarRentabilidadTest(@HeaderParam("msj")String mensaje) {
+		System.out.println(mensaje);
 		RotondAndesTM tm = new RotondAndesTM(getPath());
 		Object lista;
 		try {
@@ -291,6 +297,25 @@ public class RotondAndesDistributedServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(lista).build();
+	}
+	@GET
+	@Path("/{name}/2PC")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response retirarRestauranteTwoPhase(@PathParam("name") String name)
+	{
+		name=name.replaceAll(RotondAndesTM.SPACE, " ");
+		RotondAndesTM tm = new RotondAndesTM( getPath( ) );
+		try
+		{
+			if(name==null || name.length()==0)
+				throw new Exception("El nombre del restaurante es inválido");
+			tm.twoPhaseCommit(name);
+			return Response.status( 200 ).build( );			
+		}
+		catch( Exception e )
+		{
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
 	}
 
 
