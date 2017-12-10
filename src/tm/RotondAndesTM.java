@@ -7921,14 +7921,17 @@ public class RotondAndesTM {
 			String password2 = prop.getProperty("clave2");
 			String user3=prop.getProperty("usuario3");
 			String password3=prop.getProperty("clave3");
-			
+			String sql1=prop.getProperty("sql1").replaceAll("nombreRestaurante", name);
+			String sql2=prop.getProperty("sql2").replaceAll("nombreRestaurante", name);
+			String sql3=prop.getProperty("sql3").replaceAll("nombreRestaurante", name);
+
 	       	        // Create a XADataSource instance
 	        OracleXADataSource oxds1 = new OracleXADataSource();
 	        oxds1.setURL(url);
 	        oxds1.setUser(user);
 	        oxds1.setPassword(password);
 	        
-	        System.out.println(oxds1.getURL()+" "+oxds1.getUser());
+	        System.out.println(oxds1.getURL()+";;;"+oxds1.getUser());
 
 
 	        OracleXADataSource oxds2 = new OracleXADataSource();
@@ -7937,17 +7940,17 @@ public class RotondAndesTM {
 	        oxds2.setUser(user2);
 	        oxds2.setPassword(password2);
 	        
-	        System.out.println(oxds2.getURL()+" "+oxds2.getUser());
+	        System.out.println(oxds2.getURL()+";;;"+oxds2.getUser());
 	        //Hasta tener la tercera conexión
-	        /*
+	        
 	        OracleXADataSource oxds3 = new OracleXADataSource();
 
 	        oxds3.setURL(url);
 	        oxds3.setUser(user3);
 	        oxds3.setPassword(password3);
 	        
-	        System.out.println(oxds3.getURL()+" "+oxds3.getUser());
-	         */
+	        System.out.println(oxds3.getURL()+";;;"+oxds3.getUser());
+	        
 	    
 	        // Get a XA connection to the underlying data source
 	        XAConnection pc1  = oxds1.getXAConnection();
@@ -7970,29 +7973,32 @@ public class RotondAndesTM {
 	        // Start the Resources
 	        oxar1.start (xid1, XAResource.TMNOFLAGS);
 	        oxar2.start (xid2, XAResource.TMNOFLAGS);
-
 	        //RESOURCE 3
-	        //XAConnection pc3=oxds3.getXAConnection();
-	        //Connection conn3=pc3.getConnection();
-	        //XAResource oxar3=pc3.getXAResource();
-	        //Xid xid3=createXid(3);
-	        
+	        XAConnection pc3=oxds3.getXAConnection();
+	        Connection conn3=pc3.getConnection();
+	        XAResource oxar3=pc3.getXAResource();
+	        Xid xid3=createXid(3);
+	        oxar3.start (xid3, XAResource.TMNOFLAGS);
+
 	        // Do  something with conn1 and conn2
-	        doSomeWork1 (conn1);
-	        doSomeWork2 (conn2);
-	        //doSomeWork3(conn3);
+	        System.out.println(1);
+	        doSomeWork (conn1,sql1);
+	        System.out.println(2);
+	        //doSomeWork (conn2,sql2);
+	        System.out.println(3);
+	        doSomeWork(conn3,sql3);
 
 	        // END both the branches -- THIS IS MUST
 	        oxar1.end(xid1, XAResource.TMSUCCESS);
 	        oxar2.end(xid2, XAResource.TMSUCCESS);
-	        //oxar3.end(xid3,XAResource.TMSUCCESS);
+	        oxar3.end(xid3,XAResource.TMSUCCESS);
 	        // Prepare the RMs
 	        int prp1 =  oxar1.prepare (xid1);
 	        int prp2 =  oxar2.prepare (xid2);
-	        //int prp3=oxar3.prepare(xid3);
+	        int prp3=oxar3.prepare(xid3);
 	        System.out.println("Return value of prepare 1 is " + prp1);
 	        System.out.println("Return value of prepare 2 is " + prp2);
-	        //System.out.println("Return value of prepare 3 is " + prp3);
+	        System.out.println("Return value of prepare 3 is " + prp3);
 
 	        boolean do_commit = true;
 
@@ -8001,14 +8007,14 @@ public class RotondAndesTM {
 
 	        if (!((prp2 == XAResource.XA_OK) || (prp2 == XAResource.XA_RDONLY)))
 	           do_commit = false;
-	        /*
+	        
 	        if (!((prp3 == XAResource.XA_OK) || (prp3 == XAResource.XA_RDONLY)))
-		           do_commit = false;*/
+		           do_commit = false;
 
 	       System.out.println("do_commit is " + do_commit);
 	        System.out.println("Is oxar1 same as oxar2 ? " + oxar1.isSameRM(oxar2));
-	        //System.out.println("Is oxar1 same as oxar3 ? " + oxar1.isSameRM(oxar3));
-	        //System.out.println("Is oxar2 same as oxar3 ? " + oxar2.isSameRM(oxar3));
+	        System.out.println("Is oxar1 same as oxar3 ? " + oxar1.isSameRM(oxar3));
+	        System.out.println("Is oxar2 same as oxar3 ? " + oxar2.isSameRM(oxar3));
 
 	        if (prp1 == XAResource.XA_OK)
 	          if (do_commit)
@@ -8021,13 +8027,13 @@ public class RotondAndesTM {
 	             oxar2.commit (xid2, false);
 	          else
 	             oxar2.rollback (xid2);
-	        /*
+	       
 	        if (prp3 == XAResource.XA_OK)
 		          if (do_commit)
-		             oxar2.commit (xid3, false);
+		             oxar3.commit (xid3, false);
 		          else
-		             oxar2.rollback (xid3);
-		             */
+		             oxar3.rollback (xid3);
+		             
 	         // Close connections
 	        conn1.close();
 	        conn1 = null;
@@ -8041,8 +8047,8 @@ public class RotondAndesTM {
 	        pc1 = null;
 	        pc2.close();
 	        pc2 = null;
-	        //pc3.close();
-	        //pc3 = null;
+	        pc3.close();
+	        pc3 = null;
 
 	  
 	    } catch (SQLException sqe)
@@ -8072,23 +8078,19 @@ public class RotondAndesTM {
 			    return xid;
 			  }
 
-			  private  void doSomeWork1 (Connection conn)
+			  private  void doSomeWork (Connection conn, String sql)
 			   throws SQLException
 			  {
 			    // Create a Statement
-			    Statement stmt = conn.createStatement ();
+			    PreparedStatement stmt = conn.prepareStatement(sql);
 
-			    ResultSet rs=stmt.executeQuery ("select * from restaurante where nombre='El Corral'");
-
-			    if(rs.next())
-			    System.out.println(rs.getString("NOMBRE"));
-			    else
-			    	System.out.println("El restaurante no existe");
+			    ResultSet rs=stmt.executeQuery();
+			    System.out.println(sql);
 			    stmt.close();
 			    stmt = null;
 			  }
 
-			  private  void doSomeWork2 (Connection conn)
+			  private  void doSomeWork2 (Connection conn, String sql)
 			    throws SQLException
 			  {
 			    // Create a Statement

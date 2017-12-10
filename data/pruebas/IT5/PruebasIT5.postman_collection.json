@@ -1093,6 +1093,63 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "RF19 2PC",
+			"description": "",
+			"item": [
+				{
+					"name": "Retiro por two phase commit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 200\"]=responseCode.code===200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "fechaInicio",
+								"value": "08/08/2016 01:12:55"
+							},
+							{
+								"key": "fechaFinal",
+								"value": "08/06/2017 01:12:55"
+							},
+							{
+								"key": "usuarioId",
+								"value": "1"
+							},
+							{
+								"key": "nombreRestaurante",
+								"value": "El Corral",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "msj",
+								"value": "08/08/2016 01:12:55;08/08/2017 01:12:55;Nlounge"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/VideoAndes/rest/distributed/El Corral/2PC",
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
