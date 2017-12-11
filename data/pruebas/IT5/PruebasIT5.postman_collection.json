@@ -287,7 +287,7 @@
 			"description": "",
 			"item": [
 				{
-					"name": "Desactiva el corral de la lista de restaurantes",
+					"name": "Desactiva Gauchos de la lista de restaurantes",
 					"event": [
 						{
 							"listen": "test",
@@ -303,7 +303,7 @@
 						"method": "DELETE",
 						"header": [],
 						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/El Corral/RF19",
+						"url": "http://localhost:8080/VideoAndes/rest/distributed/Gauchos/RF19",
 						"description": null
 					},
 					"response": []
@@ -335,9 +335,9 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"precio\" : 20.5,\n  \"costo\" : 18.25,\n  \"disponibilidad\" : 300,\n  \"fechaInicio\" : \"2017-01-01\",\n  \"fechaFin\": \"2017-10-10\",\n  \"cantidadMaxima\" : 400,\n  \"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"tiempo\" : 46.7},\n  \"restaurante\" : { \"nombre\" : \"El Corral\", \"pagWeb\" : \"https://uiuc.edu\" },\n  \"sustitutos\" : []\n}"
+							"raw": "{\n  \"precio\" : 20.5,\n  \"costo\" : 18.25,\n  \"disponibilidad\" : 300,\n  \"fechaInicio\" : \"2017-01-01\",\n  \"fechaFin\": \"2017-10-10\",\n  \"cantidadMaxima\" : 400,\n  \"producto\" : {\"id\" : 1, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"tiempo\" : 46.7},\n  \"restaurante\" : { \"nombre\" : \"Gauchos\", \"pagWeb\" : \"https://uiuc.edu\" },\n  \"sustitutos\" : []\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/El Corral/productos",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Gauchos/productos",
 						"description": null
 					},
 					"response": []
@@ -369,7 +369,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cantidad\" : 1,\n  \"entregado\" : 0,\n  \"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n  \"plato\" : {\n    \"costo\": 6811,\n    \"precio\": 14455,\n    \"disponibilidad\": 2559,\n    \"fechaInicio\": \"2017-09-03\",\n    \"fechaFin\": \"2018-06-01\",\n    \"producto\": {\n        \"personalizable\": false,\n        \"nombre\": \"Pizza de Pepperoni\",\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"Descripción\",\n        \"traduccion\": \"Traduction\",\n        \"tiempo\": 10,\n        \"id\": 1000001,\n        \"ingredientes\": [],\n        \"categorias\": []\n    },\n    \"restaurante\": {\n        \"nombre\": \"El Corral\",\n        \"pagWeb\": \"www.pagina.com\",\n        \"activo\": false\n    },\n    \"cantidadMaxima\": 2945,\n    \"sustitutos\": []\n  }\n}"
+							"raw": "{\n  \"cantidad\" : 1,\n  \"entregado\" : 0,\n  \"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n  \"plato\" : {\n    \"costo\": 6811,\n    \"precio\": 14455,\n    \"disponibilidad\": 2559,\n    \"fechaInicio\": \"2017-09-03\",\n    \"fechaFin\": \"2018-06-01\",\n    \"producto\": {\n        \"personalizable\": false,\n        \"nombre\": \"Pizza de Pepperoni\",\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"Descripción\",\n        \"traduccion\": \"Traduction\",\n        \"tiempo\": 10,\n        \"id\": 1000001,\n        \"ingredientes\": [],\n        \"categorias\": []\n    },\n    \"restaurante\": {\n        \"nombre\": \"Gauchos\",\n        \"pagWeb\": \"www.pagina.com\",\n        \"activo\": false\n    },\n    \"cantidadMaxima\": 2945,\n    \"sustitutos\": []\n  }\n}"
 						},
 						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
 						"description": null
@@ -403,7 +403,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cantidad\" : 1,\n  \"entregado\" : 0,\n  \"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n  \"menu\" : {\n    \"nombre\": \"Estudiantil\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"El Corral\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        }\n  }\n}"
+							"raw": "{\n  \"cantidad\" : 1,\n  \"entregado\" : 0,\n  \"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n  \"menu\" : {\n    \"nombre\": \"Estudiantil\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"Gauchos\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        }\n  }\n}"
 						},
 						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
 						"description": null
@@ -437,7 +437,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"Estudiantil2\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"El Corral\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        },\n        \"platos\": [],\n        \"categorias\": []\n}"
+							"raw": "{\n  \"nombre\": \"Estudiantil2\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"Gauchos\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        },\n        \"platos\": [],\n        \"categorias\": []\n}"
 						},
 						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/El Corral/menus",
 						"description": null
@@ -445,7 +445,7 @@
 					"response": []
 				},
 				{
-					"name": "Restablecer el negocio de El Corral",
+					"name": "Restablecer el negocio de Gauchos",
 					"event": [
 						{
 							"listen": "test",
@@ -461,7 +461,7 @@
 						"method": "DELETE",
 						"header": [],
 						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/El Corral/NORF19",
+						"url": "http://localhost:8080/VideoAndes/rest/distributed/Gauchos/NORF19",
 						"description": null
 					},
 					"response": []
@@ -473,7 +473,7 @@
 			"description": "",
 			"item": [
 				{
-					"name": "Desactiva el corral de la lista de restaurantes",
+					"name": "Desactiva Gauchos de la lista de restaurantes",
 					"event": [
 						{
 							"listen": "test",
@@ -494,7 +494,7 @@
 							},
 							{
 								"key": "msj",
-								"value": "El Corral;A-05"
+								"value": "Gauchos;A-05"
 							}
 						],
 						"body": {
@@ -533,9 +533,9 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"precio\" : 20.5,\n  \"costo\" : 18.25,\n  \"disponibilidad\" : 300,\n  \"fechaInicio\" : \"2017-01-01\",\n  \"fechaFin\": \"2017-10-10\",\n  \"cantidadMaxima\" : 400,\n  \"producto\" : {\"id\" : 2, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"tiempo\" : 46.7},\n  \"restaurante\" : { \"nombre\" : \"El Corral\", \"pagWeb\" : \"https://uiuc.edu\" },\n  \"sustitutos\" : []\n}"
+							"raw": "{\n  \"precio\" : 20.5,\n  \"costo\" : 18.25,\n  \"disponibilidad\" : 300,\n  \"fechaInicio\" : \"2017-01-01\",\n  \"fechaFin\": \"2017-10-10\",\n  \"cantidadMaxima\" : 400,\n  \"producto\" : {\"id\" : 2, \"nombre\" : \"Sping Loaded Cup Dispenser\", \"tipo\" : \"ENTRADA\", \"personalizable\" : 0, \"tiempo\" : 46.7},\n  \"restaurante\" : { \"nombre\" : \"Gauchos\", \"pagWeb\" : \"https://uiuc.edu\" },\n  \"sustitutos\" : []\n}"
 						},
-						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/El Corral/productos",
+						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/Gauchos/productos",
 						"description": null
 					},
 					"response": []
@@ -567,7 +567,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cantidad\" : 1,\n  \"entregado\" : 0,\n  \"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n  \"plato\" : {\n    \"costo\": 6811,\n    \"precio\": 14455,\n    \"disponibilidad\": 2559,\n    \"fechaInicio\": \"2017-09-03\",\n    \"fechaFin\": \"2018-06-01\",\n    \"producto\": {\n        \"personalizable\": false,\n        \"nombre\": \"Pizza de Pepperoni\",\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"Descripción\",\n        \"traduccion\": \"Traduction\",\n        \"tiempo\": 10,\n        \"id\": 1000001,\n        \"ingredientes\": [],\n        \"categorias\": []\n    },\n    \"restaurante\": {\n        \"nombre\": \"El Corral\",\n        \"pagWeb\": \"www.pagina.com\",\n        \"activo\": false\n    },\n    \"cantidadMaxima\": 2945,\n    \"sustitutos\": []\n  }\n}"
+							"raw": "{\n  \"cantidad\" : 1,\n  \"entregado\" : 0,\n  \"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n  \"plato\" : {\n    \"costo\": 6811,\n    \"precio\": 14455,\n    \"disponibilidad\": 2559,\n    \"fechaInicio\": \"2017-09-03\",\n    \"fechaFin\": \"2018-06-01\",\n    \"producto\": {\n        \"personalizable\": false,\n        \"nombre\": \"Pizza de Pepperoni\",\n        \"tipo\": \"PLATO_FUERTE\",\n        \"descripcion\": \"Descripción\",\n        \"traduccion\": \"Traduction\",\n        \"tiempo\": 10,\n        \"id\": 1000001,\n        \"ingredientes\": [],\n        \"categorias\": []\n    },\n    \"restaurante\": {\n        \"nombre\": \"Gauchos\",\n        \"pagWeb\": \"www.pagina.com\",\n        \"activo\": false\n    },\n    \"cantidadMaxima\": 2945,\n    \"sustitutos\": []\n  }\n}"
 						},
 						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/productos",
 						"description": null
@@ -601,7 +601,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cantidad\" : 1,\n  \"entregado\" : 0,\n  \"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n  \"menu\" : {\n    \"nombre\": \"Estudiantil\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"El Corral\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        }\n  }\n}"
+							"raw": "{\n  \"cantidad\" : 1,\n  \"entregado\" : 0,\n  \"cuenta\" : {\"valor\" : 69.61, \"numeroCuenta\" : \"2534685989\", \"fecha\" : 1185937200000},\n  \"menu\" : {\n    \"nombre\": \"Estudiantil\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"Gauchos\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        }\n  }\n}"
 						},
 						"url": "http://localhost:8080/VideoAndes/rest/cuentas/2534685989/menus",
 						"description": null
@@ -635,7 +635,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"Estudiantil2\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"El Corral\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        },\n        \"platos\": [],\n        \"categorias\": []\n}"
+							"raw": "{\n  \"nombre\": \"Estudiantil2\",\n        \"precio\": 9050,\n        \"costo\": 5269,\n        \"restaurante\": {\n            \"nombre\": \"Gauchos\",\n            \"pagWeb\": \"www.pagina.com\",\n            \"activo\": false\n        },\n        \"platos\": [],\n        \"categorias\": []\n}"
 						},
 						"url": "http://localhost:8080/VideoAndes/rest/restaurantes/El Corral/menus",
 						"description": null
@@ -643,7 +643,7 @@
 					"response": []
 				},
 				{
-					"name": "Restablecer el negocio de El Corral",
+					"name": "Restablecer el negocio de Gauchos",
 					"event": [
 						{
 							"listen": "test",
@@ -659,7 +659,7 @@
 						"method": "DELETE",
 						"header": [],
 						"body": {},
-						"url": "http://localhost:8080/VideoAndes/rest/distributed/El Corral/NORF19",
+						"url": "http://localhost:8080/VideoAndes/rest/distributed/Gauchos/NORF19",
 						"description": null
 					},
 					"response": []

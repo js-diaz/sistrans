@@ -7984,7 +7984,7 @@ public class RotondAndesTM {
 	        System.out.println(1);
 	        doSomeWork (conn1,sql1);
 	        System.out.println(2);
-	        //doSomeWork (conn2,sql2);
+	        doSomeWork (conn2,sql2);
 	        System.out.println(3);
 	        doSomeWork(conn3,sql3);
 
@@ -8040,8 +8040,8 @@ public class RotondAndesTM {
 	        conn2.close();
 	        conn2 = null;
 	        
-	        //conn3.close();
-	        //conn3 = null;
+	        conn3.close();
+	        conn3 = null;
 	        
 	        pc1.close();
 	        pc1 = null;
@@ -8081,6 +8081,7 @@ public class RotondAndesTM {
 			  private  void doSomeWork (Connection conn, String sql)
 			   throws SQLException
 			  {
+				  System.out.println(sql);
 			    // Create a Statement
 			    PreparedStatement stmt = conn.prepareStatement(sql);
 
