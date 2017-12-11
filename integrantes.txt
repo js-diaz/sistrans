@@ -1,2 +1,6 @@
-Juan Sebastián Díaz 201532686
-Sergio Guzmán Mayorga 201614859
+﻿Sección 1 Juan Sebastián Díaz 201532686
+Sección 1 Sergio Guzmán Mayorga 201614859
+Sección 1 Mauricio Neira 201424001
+Sección 1 Juan Felipe Ramos 201616932
+Sección 2 Juan Camilo Ruiz 201617394
+Sección 2 Jorge Andrés Gómez 201618492
